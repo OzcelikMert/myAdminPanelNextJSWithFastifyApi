@@ -1,0 +1,30 @@
+.custom-select {
+  .custom-select__control,
+  .custom-select__menu {
+    background: var(--theme-bg);
+  }
+
+  .custom-select__menu {
+    .custom-select__menu-list {
+      background: var(--theme-bg) !important;
+      .custom-select__option {
+        &:hover {
+          background: var(--theme-content-wrapper-bg) !important;
+        }
+      }
+      .custom-select__option--is-focused,
+      .custom-select__option--is-selected {
+        background: var(--theme-bg) !important;
+        color: var(--theme-input-color) !important;
+      }
+    }
+  }
+
+  .custom-select__single-value {
+    color: var(--theme-input-color)
+  }
+
+  .custom-select__input {
+    color: var(--theme-input-color) !important;
+  }
+}

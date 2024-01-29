@@ -1,0 +1,60 @@
+.user-card {
+  overflow: hidden;
+
+  .exit-icon {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 25px;
+  }
+
+  .user-card-body {
+    height: 500px;
+    overflow: auto;
+  }
+
+  .user-profile {
+    position: relative;
+    border-radius: 5px 0 0 5px;
+    padding: 20px 0;
+    min-height: 300px;
+  }
+
+  .user-img {
+    border-radius: 75px;
+    width: 150px;
+    height: 150px;
+  }
+
+  .social-link {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+    li {
+      display: inline-block;
+
+      a {
+        font-size: 30px;
+        margin: 0 10px 0 0;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .user-card {
+    .social-link {
+      position: absolute;
+      display: grid;
+      bottom: 100px;
+      left: 15px;
+      width: auto;
+    }
+  }
+}
+
+

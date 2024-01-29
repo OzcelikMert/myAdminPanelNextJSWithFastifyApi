@@ -1,0 +1,10 @@
+.swal2-container{
+  .swal2-timer-progress-bar-container {
+    .swal2-timer-progress-bar {
+      background: theme-gradient-color("primary") !important;
+    }
+  }
+  .swal2-confirm {
+    background: theme-gradient-color("primary") !important;
+  }
+}

@@ -1,0 +1,23 @@
+.theme-tabs {
+  min-height: 550px;
+  .nav-tabs {
+    .nav-link {
+      color: #787878;
+      &:not(.active) {
+        &:hover,
+        &:focus {
+          color: var(--theme-menu-title-active-color);
+        }
+      }
+      &.active {
+        background: var(--theme-content-wrapper-bg);
+        color: var(--theme-menu-title-active-color);
+      }
+    }
+  }
+  .tab-content {
+    .fade {
+      transition: none;
+    }
+  }
+}

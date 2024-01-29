@@ -1,0 +1,97 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* === Plugin styles === */
+@import '~react-bootstrap-typeahead/css/Typeahead';
+@import '~react-datepicker/dist/react-datepicker.css';
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+@import "mixins/variables-colors";
+
+@import "~compass-mixins/lib/compass";
+@import "~compass-mixins/lib/animate";
+@import "~bootstrap/scss/bootstrap";
+@import '~react-toastify/dist/ReactToastify.css';
+
+/* === Icon fonts === */
+@import "~@mdi/font/scss/materialdesignicons";
+@import "~font-awesome/scss/font-awesome";
+
+/* === Template mixins === */
+@import "mixins/variables";
+@import "mixins/fonts";
+@import "mixins/functions";
+@import "mixins/animation";
+@import "mixins/badges";
+@import "mixins/buttons";
+@import "mixins/misc";
+@import "mixins/color-functions";
+@import "mixins/cards";
+@import "mixins/blockqoute";
+@import "mixins/popovers";
+@import "mixins/tooltips";
+@import "mixins/no-ui-slider";
+
+@import "mixins/background";
+@import "mixins/reset";
+@import "mixins/responsive";
+@import "mixins/utilities";
+@import "mixins/tabs";
+@import "mixins/typography";
+
+/* === Core Styles === */
+@import "pages/login";
+@import "pages/home";
+@import "pages/gallery";
+@import "pages/post";
+@import "pages/user";
+@import "pages/settings";
+
+/* === Components === */
+@import "components/checkbox-radio";
+@import "components/tables";
+@import "components/badges";
+@import "components/buttons";
+@import "components/preview";
+@import "components/cards";
+@import "components/bootstrap-progress";
+@import "components/dropdowns";
+@import "components/spinner";
+@import "components/theme/form/input/index";
+@import "components/landing-screens/auth";
+@import "components/theme/users/profileCard";
+@import "components/theme/chooseImage/index";
+@import "components/contentLangauge";
+@import "components/widgets";
+@import "components/theme/table/toggleMenu";
+@import "components/theme/table/dataTable/index";
+@import "components/theme/toast";
+@import "components/theme/form";
+@import "components/theme/modal";
+
+/* === Plugin Overrides === */
+@import "components/plugin-overrides/date-picker";
+@import "components/plugin-overrides/full-calendar";
+@import "components/plugin-overrides/sweetAlert2";
+@import "components/plugin-overrides/react-bootstrap-modal";
+@import "components/plugin-overrides/cogoToast";
+@import "components/plugin-overrides/react-select";
+
+/* === Layout === */
+@import "tools/navbar";
+@import "tools/sidebar";
+@import "tools/footer";
+@import "tools/layout";
+@import "tools/spinner";
+
+/* === Theme Colors === */
+@import "theme/index";
+
+html {
+  overflow: hidden;
+}
+
+body {
+  height: 100vh;
+  overflow-y: auto;
+}

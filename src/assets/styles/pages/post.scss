@@ -1,0 +1,22 @@
+.page-post,
+.page-post-term {
+  form {
+    .post-image {
+      width: 150px
+    }
+  }
+
+  .category-badge:hover {
+    background: theme-gradient-color("primary");
+  }
+}
+
+@media (max-width: 767px) {
+  .page-post,
+  .page-post-term {
+    .list-mode-btn {
+      width: 100%;
+      padding: 15px
+    }
+  }
+}

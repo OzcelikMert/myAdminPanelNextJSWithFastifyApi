@@ -1,0 +1,7 @@
+interface PageStateCommonDocument {
+
+}
+
+export {
+    PageStateCommonDocument
+}

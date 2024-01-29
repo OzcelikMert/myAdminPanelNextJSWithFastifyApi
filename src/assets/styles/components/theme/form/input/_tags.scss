@@ -1,0 +1,48 @@
+.theme-input {
+  .tags {
+    display: inline-flex !important;
+    margin: 0 auto;
+    padding: 5px;
+    font-size: 14px;
+    border: #cecece solid 1px;
+    border-radius: 3px;
+    flex-wrap: wrap;
+
+    .tag {
+      color: var(--theme-input-color);
+      margin: 3px;
+      display: inline-flex;
+      background-color: var(--theme-content-wrapper-bg);
+      border-radius: 3px;
+      padding-left: 3px;
+
+      .delete {
+        display: inline-block;
+        margin-left: 5px;
+        margin-right: 0;
+        border-radius: 0;
+        padding: 0;
+        width: 20px;
+        font-size: 10px;
+        font-weight: bold;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        -webkit-user-select: none;
+        user-select: none;
+      }
+    }
+
+    input {
+      border: none;
+      outline: none;
+      width: 0px;
+      min-width: 30px;
+      flex-grow: 1;
+      text-overflow: ellipsis;
+      opacity: 1;
+      background: transparent;
+      color: var(--theme-input-color);
+    }
+  }
+}

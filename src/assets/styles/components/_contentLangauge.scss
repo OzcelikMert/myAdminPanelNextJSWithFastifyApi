@@ -1,0 +1,22 @@
+.content-language {
+  .label {
+    color: var(--theme-content-language-label-color);
+    background: var(--theme-content-language-bg);
+  }
+
+  .field {
+    div[class$="-control"] {
+      color: var(--theme-content-language-label-color) !important; 
+      background: var(--theme-content-language-bg);
+    }
+  }
+  .title{
+    color: red;
+  }
+}
+
+@media (max-width: 800px) {
+  .content-language {
+    margin-top: 30px;
+  }
+}

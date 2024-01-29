@@ -1,0 +1,11 @@
+// Cards Mixins 
+
+.card-header {
+  border-bottom-color: var(--theme-table-row-border-color);
+}
+
+@mixin card-inverse-variant($bg, $border, $color) {
+  background: $bg;
+  border: 1px solid $border;
+  color: $color;
+}
