@@ -1,6 +1,6 @@
-import {LanguageId, UserRoleId} from "constants/index";
 import {LanguageGetResultDocument} from "types/services/language";
 import {CurrencyId} from "constants/currencyTypes";
+import {SessionAuthDocument} from "types/models/sessionAuth.model";
 
 type AppAdminGetState = {
     isAppLoading: boolean
@@ -13,38 +13,10 @@ type AppAdminGetState = {
     pageData: {
         langId: string
     },
-    sessionData: {
-        id: string,
-        langId: LanguageId,
-        image: string,
-        name: string,
-        email: string,
-        roleId: UserRoleId,
-        permissions: number[]
-    }
+    sessionAuth: SessionAuthDocument
 }
 
-type AppAdminSetState = {
-    isAppLoading?: boolean
-    isPageLoading?: boolean
-    appData?: {
-        mainLangId?: string
-        contentLanguages?: LanguageGetResultDocument[]
-        currencyId?: CurrencyId
-    }
-    pageData?: {
-        langId?: string
-    }
-    sessionData?: {
-        id?: string,
-        langId?: LanguageId,
-        image?: string,
-        name?: string,
-        email?: string,
-        roleId?: UserRoleId,
-        permissions?: number[]
-    }
-}
+type AppAdminSetState = Partial<AppAdminGetState>
 
 export {
     AppAdminGetState,

@@ -6,8 +6,7 @@ import {SideBarPath} from "types/constants/sidebarNavs";
 import PagePaths from "constants/pagePaths";
 import clone from "clone";
 import routeLib from "lib/route.lib";
-import {UserRoleId, UserRoles} from "constants/userRoles";
-import {PermissionId} from "constants/permissions";
+import permissionUtil from "utils/permission.util";
 
 type PageState = {
     isMenuOpen: { [key: string]: any }
@@ -59,38 +58,11 @@ class Sidebar extends Component<PageProps, PageState> {
         return this.props.router.asPath.startsWith(path);
     }
 
-    checkPermission(roleId?: UserRoleId, permissionId?: PermissionId | PermissionId[]) {
-        let status = true;
-
-        if(status && roleId){
-            let sessionUserRole = UserRoles.findSingle("id", this.props.getStateApp.sessionData.roleId);
-            let role = UserRoles.findSingle("id", roleId);
-
-            status = (sessionUserRole?.rank ?? 0) >= (role?.rank?? 0);
-        }
-
-        if(status && permissionId){
-            status = false;
-
-            if(Array.isArray(permissionId)){
-                for(const permId of permissionId) {
-                    if(!status){
-                        status = this.props.getStateApp.sessionData.permissions.includes(permId);
-                    }
-                }
-            }else {
-                status = this.props.getStateApp.sessionData.permissions.includes(permissionId);
-            }
-        }
-
-        return status || this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin;
-    }
-
     Item = (props: SideBarPath) => {
         let self = this;
 
         function HasChild(_props: SideBarPath) {
-            if (!self.checkPermission(_props.roleId, _props.permId)) return null;
+            if (!permissionUtil.check(self.props.getStateApp.sessionAuth, _props.minRoleId, _props.minPermId)) return null;
             return (
                 <span className={`nav-link ${self.isPathActive(_props.path) ? 'active' : ''}`} onClick={() => routeLib.change(self.props.router, _props.path ?? PagePaths.dashboard())}>
                     <span className={`menu-title text-capitalize ${self.isPathActive(_props.path) ? 'active' : ''}`}>{self.props.t(_props.title)}</span>
@@ -100,7 +72,7 @@ class Sidebar extends Component<PageProps, PageState> {
         }
 
         function HasChildren(_props: SideBarPath) {
-            if (!self.checkPermission(_props.roleId, _props.permId)) return null;
+            if (!permissionUtil.check(self.props.getStateApp.sessionAuth, _props.minRoleId, _props.minPermId)) return null;
             let state = (_props.state) ? self.state.isMenuOpen[_props.state] : false;
             return (
                 <span>

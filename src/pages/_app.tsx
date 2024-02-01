@@ -29,14 +29,14 @@ if(typeof window !== "undefined") {
             tr: {translation: Turkish}
         },
         keySeparator: false,
-        lng: Languages.findSingle("id", localStorageUtil.adminLanguage.get)?.code || window.navigator.language.slice(0, 2) || Languages[0].code,
+        lng: Languages.findSingle("id", localStorageUtil.getLanguage())?.code || window.navigator.language.slice(0, 2) || Languages[0].code,
         fallbackLng: Languages.findSingle("id", LanguageId.English)?.code || Languages[0].code,
         interpolation: {
             escapeValue: false
         }
     });
 
-    themeUtil.changeTheme(localStorageUtil.adminTheme.get);
+    themeUtil.changeTheme(localStorageUtil.getTheme());
 }
 
 function App(props: AppProps) {

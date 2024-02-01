@@ -24,7 +24,7 @@ export default class Navbar extends Component<PageProps, PageState> {
     constructor(props: PageProps) {
         super(props);
         this.state = {
-            isDarkTheme: localStorageUtil.adminTheme.get == "dark"
+            isDarkTheme: localStorageUtil.getTheme() == "dark"
         }
     }
 
@@ -37,7 +37,7 @@ export default class Navbar extends Component<PageProps, PageState> {
             isDarkTheme: !this.state.isDarkTheme
         }, () => {
             let theme: ThemeKeys = this.state.isDarkTheme ? "dark" : "default";
-            localStorageUtil.adminTheme.set(theme);
+            localStorageUtil.setTheme(theme);
             themeUtil.changeTheme(theme)
         })
     }
