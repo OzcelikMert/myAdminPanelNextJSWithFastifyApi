@@ -6,21 +6,27 @@ import {
     ViewAddParamDocument,
 } from "types/services/view";
 
+const getNumber = () => {
+    return Api.get<ViewGetNumberResultDocument>({
+        url: [ServicePages.view, "number"]
+    });
+}
+
+const getStatistics = () => {
+    return Api.get<ViewGetStatisticsResultDocument>({
+        url: [ServicePages.view, "statistics"]
+    });
+}
+
+const add = (params: ViewAddParamDocument) => {
+    return Api.get({
+        url: [ServicePages.view, "one"],
+        data: params
+    });
+}
+
 export default {
-    getNumber() {
-        return Api.get<ViewGetNumberResultDocument>({
-            url: [ServicePages.view, "number"]
-        });
-    },
-    getStatistics() {
-        return Api.get<ViewGetStatisticsResultDocument>({
-            url: [ServicePages.view, "statistics"]
-        });
-    },
-    add(params: ViewAddParamDocument) {
-        return Api.get({
-            url: [ServicePages.view, "one"],
-            data: params
-        });
-    },
+    getNumber: getNumber,
+    getStatistics: getStatistics,
+    add: add,
 }

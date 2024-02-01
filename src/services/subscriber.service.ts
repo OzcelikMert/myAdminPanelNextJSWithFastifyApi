@@ -9,35 +9,46 @@ import {
     SubscriberGetManyParamDocument
 } from "types/services/subscriber";
 
+const getOne = (params: SubscriberGetOneParamDocument) => {
+    return Api.get<SubscriberGetResultDocument | null>({
+        url: [ServicePages.subscriber, "one"],
+        data: params
+    });
+}
+
+const getMany = (params: SubscriberGetManyParamDocument) => {
+    return Api.get<SubscriberGetResultDocument[]>({
+        url: [ServicePages.subscriber, "many"],
+        data: params
+    });
+}
+
+const add = (params: SubscriberAddDocument) => {
+    return Api.post({
+        url: [ServicePages.subscriber, "one"],
+        data: params
+    });
+}
+
+const deleteOne = (params: SubscriberDeleteOneParamDocument) => {
+    return Api.delete({
+        url: [ServicePages.subscriber, "one"],
+        data: params
+    });
+}
+
+const deleteMany = (params: SubscriberDeleteManyParamDocument) => {
+    return Api.delete({
+        url: [ServicePages.subscriber, "many"],
+        data: params
+    });
+}
+
+
 export default {
-    getOne(params: SubscriberGetOneParamDocument) {
-        return Api.get<SubscriberGetResultDocument | null>({
-            url: [ServicePages.subscriber, "one"],
-            data: params
-        });
-    },
-    getMany(params: SubscriberGetManyParamDocument) {
-        return Api.get<SubscriberGetResultDocument[]>({
-            url: [ServicePages.subscriber, "many"],
-            data: params
-        });
-    },
-    add(params: SubscriberAddDocument) {
-        return Api.post({
-            url: [ServicePages.subscriber, "one"],
-            data: params
-        });
-    },
-    deleteOne(params: SubscriberDeleteOneParamDocument) {
-        return Api.delete({
-            url: [ServicePages.subscriber, "one"],
-            data: params
-        });
-    },
-    deleteMany(params: SubscriberDeleteManyParamDocument) {
-        return Api.delete({
-            url: [ServicePages.subscriber, "many"],
-            data: params
-        });
-    },
+    getOne: getOne,
+    getMany: getMany,
+    add: add,
+    deleteOne: deleteOne,
+    deleteMany: deleteMany,
 }
