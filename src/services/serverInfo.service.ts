@@ -1,10 +1,11 @@
 import Api from "./api";
-import {ServicePages} from "constants/index";
+import {ApiEndPoints} from "constants/index";
 import ServerInfoDocument from "types/services/serverInfo";
+import {ServerInfoApiEndPoint} from "constants/apiEndPoints/serverInfo.api.endPoint";
 
 const get = () => {
     return Api.get<ServerInfoDocument>({
-        url: [ServicePages.serverInfo]
+        url: [ApiEndPoints.SERVER_INFO, ServerInfoApiEndPoint.GET]
     });
 }
 

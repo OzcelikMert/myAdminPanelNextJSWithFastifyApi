@@ -1,10 +1,11 @@
 import Api from "./api";
-import {ServicePages} from "constants/index";
+import {ApiEndPoints} from "constants/index";
 import {MailerSendParamDocument} from "types/services/mailer";
+import {MailerApiEndPoint} from "constants/apiEndPoints/mailer.api.endPoint";
 
 const send = (params: MailerSendParamDocument) => {
     return Api.post({
-        url: [ServicePages.mailer],
+        url: [ApiEndPoints.MAILER, MailerApiEndPoint.SEND],
         data: params,
     });
 }

@@ -36,7 +36,7 @@ export type PostTermGetResultDocument = {
 
 export interface PostTermGetOneParamDocument {
     langId?: string
-    _id?: string
+    _id: string
     typeId: number,
     postTypeId: number,
     url?: string

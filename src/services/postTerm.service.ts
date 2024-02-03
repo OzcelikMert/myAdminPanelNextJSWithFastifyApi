@@ -1,5 +1,5 @@
 import Api from "./api";
-import {ServicePages} from "constants/index";
+import {ApiEndPoints} from "constants/index";
 import  {
     PostTermGetResultDocument,
     PostTermUpdateManyStatusIdParamDocument,
@@ -10,52 +10,53 @@ import  {
     PostTermGetOneParamDocument,
     PostTermDeleteManyParamDocument
 } from "types/services/postTerm";
+import {PostTermApiEndPoint} from "constants/apiEndPoints/postTerm.api.endPoint";
 
 const getOne = (params: PostTermGetOneParamDocument) => {
     return Api.get<PostTermGetResultDocument | null>({
-        url: [ServicePages.postTerm, "one", params.postTypeId.toString(), params.typeId.toString()],
+        url: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.GET_WITH_ID(params._id)],
         data: params
     });
 }
 
 const getMany = (params: PostTermGetManyParamDocument) => {
     return Api.get<PostTermGetResultDocument[]>({
-        url: [ServicePages.postTerm, "many", params.postTypeId.toString()],
+        url: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.GET],
         data: params
     });
 }
 
 const add = (params: PostTermAddParamDocument) => {
     return Api.post<{_id: string}>({
-        url: [ServicePages.postTerm, "one", params.postTypeId.toString(), params.typeId.toString()],
+        url: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.ADD],
         data: params
     });
 }
 
 const updateOne = (params: PostTermUpdateOneParamDocument) => {
     return Api.put({
-        url: [ServicePages.postTerm, "one", params.postTypeId.toString(), params.typeId.toString(), params._id.toString()],
+        url: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.UPDATE_WITH_ID(params._id)],
         data: params
     });
 }
 
 const updateOneRank = (params: PostTermUpdateOneRankParamDocument) => {
     return Api.put({
-        url: [ServicePages.postTerm, "one", params.postTypeId.toString(), params.typeId.toString(), params._id.toString(), "rank"],
+        url: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
         data: params
     });
 }
 
 const updateManyStatus = (params: PostTermUpdateManyStatusIdParamDocument) => {
     return Api.put({
-        url: [ServicePages.postTerm, "many", params.postTypeId.toString(), params.typeId.toString(), "status"],
+        url: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.UPDATE_STATUS],
         data: params
     });
 }
 
 const deleteMany = (params: PostTermDeleteManyParamDocument) => {
     return Api.delete({
-        url: [ServicePages.postTerm, "many", params.postTypeId.toString(), params.typeId.toString()],
+        url: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.DELETE],
         data: params
     });
 }

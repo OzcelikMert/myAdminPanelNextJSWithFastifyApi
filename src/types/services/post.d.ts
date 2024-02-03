@@ -42,7 +42,7 @@ export type PostGetManyResultDocument = {
 
 export interface PostGetOneParamDocument {
     typeId: number,
-    _id?: string
+    _id: string
     pageTypeId?: number
     langId?: string
     url?: string

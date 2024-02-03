@@ -3,7 +3,7 @@ import {SubscriberDocument} from "../models/subscriber";
 export type SubscriberGetResultDocument = {} & SubscriberDocument
 
 export interface SubscriberGetOneParamDocument {
-    _id?: string
+    _id: string
     email?: string
 }
 

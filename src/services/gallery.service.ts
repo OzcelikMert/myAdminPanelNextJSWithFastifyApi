@@ -1,17 +1,18 @@
 import Api from "./api";
-import {ServicePages} from "constants/index";
+import {ApiEndPoints} from "constants/index";
 import GalleryDocument, {GalleryDeleteParamDocument, GalleryAddParamDocument} from "types/services/gallery";
 import {ApiRequestParamDocument} from "types/services/api";
+import {GalleryApiEndPoint} from "constants/apiEndPoints/gallery.api.endPoint";
 
 const get = () => {
     return Api.get<GalleryDocument[]>({
-        url: [ServicePages.gallery],
+        url: [ApiEndPoints.GALLERY, GalleryApiEndPoint.GET_IMAGE],
     });
 }
 
 const add = (params: GalleryAddParamDocument, onUploadProgress: ApiRequestParamDocument["onUploadProgress"]) => {
     return Api.post({
-        url: [ServicePages.gallery],
+        url: [ApiEndPoints.GALLERY, GalleryApiEndPoint.ADD_IMAGE],
         data: params,
         contentType: false,
         processData: false,
@@ -21,7 +22,7 @@ const add = (params: GalleryAddParamDocument, onUploadProgress: ApiRequestParamD
 
 const deleteMany = (params: GalleryDeleteParamDocument) => {
     return Api.delete({
-        url: [ServicePages.gallery],
+        url: [ApiEndPoints.GALLERY, GalleryApiEndPoint.DELETE_IMAGE],
         data: params
     });
 }

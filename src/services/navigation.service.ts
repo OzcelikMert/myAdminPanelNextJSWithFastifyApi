@@ -1,5 +1,5 @@
 import Api from "./api";
-import {ServicePages} from "constants/index";
+import {ApiEndPoints} from "constants/index";
 import {
     NavigationAddParamDocument,
     NavigationGetOneParamDocument,
@@ -10,52 +10,53 @@ import {
     NavigationUpdateOneParamDocument,
     NavigationUpdateOneRankParamDocument
 } from "types/services/navigation";
+import {NavigationApiEndPoint} from "constants/apiEndPoints/navigation.api.endPoint";
 
 const getOne = (params: NavigationGetOneParamDocument) =>  {
     return Api.get<NavigationGetResultDocument | null>({
-        url: [ServicePages.navigation, "one"],
+        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.GET_WITH_ID(params._id)],
         data: params,
     });
 }
 
 const getMany = (params: NavigationGetManyParamDocument) =>  {
     return Api.get<NavigationGetResultDocument[]>({
-        url: [ServicePages.navigation, "many"],
+        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.GET],
         data: params,
     });
 }
 
 const add = (params: NavigationAddParamDocument) =>  {
     return Api.post({
-        url: [ServicePages.navigation, "one"],
+        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.ADD],
         data: params,
     });
 }
 
 const updateOne = (params: NavigationUpdateOneParamDocument) =>  {
     return Api.put({
-        url: [ServicePages.navigation, "one", params._id.toString()],
+        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_WITH_ID(params._id)],
         data: params,
     });
 }
 
 const updateOneRank = (params: NavigationUpdateOneRankParamDocument) =>  {
     return Api.put({
-        url: [ServicePages.navigation, "one", params._id.toString(), "rank"],
+        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
         data: params
     });
 }
 
 const updateManyStatus = (params: NavigationUpdateManyStatusIdParamDocument) =>  {
     return Api.put({
-        url: [ServicePages.navigation, "many", "status"],
+        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_STATUS],
         data: params
     });
 }
 
 const deleteMany = (params: NavigationDeleteManyParamDocument) =>  {
     return Api.delete({
-        url: [ServicePages.navigation, "many"],
+        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.DELETE],
         data: params,
     });
 }

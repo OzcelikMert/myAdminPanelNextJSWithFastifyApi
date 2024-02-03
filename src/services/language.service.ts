@@ -1,5 +1,5 @@
 import Api from "./api";
-import {ServicePages} from "constants/index";
+import {ApiEndPoints} from "constants/index";
 import  {
     LanguageAddParamDocument,
     LanguageGetOneParamDocument,
@@ -7,45 +7,46 @@ import  {
     LanguageUpdateOneParamDocument,
     LanguageUpdateOneRankParamDocument
 } from "types/services/language";
+import {LanguageApiEndPoint} from "constants/apiEndPoints/language.api.endPoint";
 
 const getOne = (params: LanguageGetOneParamDocument) =>{
     return Api.get<LanguageGetResultDocument | null>({
-        url: [ServicePages.language, "one"],
+        url: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.GET_WITH_ID(params._id)],
         data: params
     });
 }
 
 const getMany = (params: LanguageGetManyParamDocument) => {
     return Api.get<LanguageGetResultDocument[]>({
-        url: [ServicePages.language, "many"],
+        url: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.GET],
         data: params
     });
 }
 
 const getFlags = (params: {}) => {
     return Api.get<string[]>({
-        url: [ServicePages.language, "flags"],
+        url: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.GET_FLAGS],
         data: params
     });
 }
 
 const add = (params: LanguageAddParamDocument) => {
     return Api.post({
-        url: [ServicePages.language, "one"],
+        url: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.ADD],
         data: params
     });
 }
 
 const updateOne = (params: LanguageUpdateOneParamDocument) => {
     return Api.put({
-        url: [ServicePages.language, "one", params._id.toString()],
+        url: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.UPDATE_WITH_ID(params._id)],
         data: params
     });
 }
 
 const updateOneRank = (params: LanguageUpdateOneRankParamDocument) => {
     return Api.put({
-        url: [ServicePages.language, "one", params._id.toString(), "rank"],
+        url: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
         data: params
     });
 }

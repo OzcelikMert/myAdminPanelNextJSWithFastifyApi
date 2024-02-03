@@ -12,7 +12,7 @@ export type UserGetResultDocument = {
 } & UserDocument
 
 export interface UserGetOneParamDocument {
-    _id?: string
+    _id: string
     email?: string
     password?: string
     statusId?: number
@@ -39,6 +39,21 @@ export type UserUpdateOneParamDocument = {
     _id: string
     password?: string
 } & Omit<UserAddParamDocument, "password">
+
+export interface UserUpdateProfileParamDocument {
+    image?: string,
+    name?: string,
+    comment?: string,
+    phone?: string,
+    facebook?: string,
+    instagram?: string,
+    twitter?: string
+}
+
+export interface UserUpdatePasswordParamDocument {
+    password: string
+    newPassword: string,
+}
 
 export type UserDeleteOneParamDocument = {
     _id: string

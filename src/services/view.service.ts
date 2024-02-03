@@ -1,26 +1,27 @@
 import Api from "./api";
-import {ServicePages} from "constants/index";
+import {ApiEndPoints} from "constants/index";
 import {
     ViewGetStatisticsResultDocument,
     ViewGetNumberResultDocument,
     ViewAddParamDocument,
 } from "types/services/view";
+import {ViewApiEndPoint} from "constants/apiEndPoints/view.api.endPoint";
 
 const getNumber = () => {
     return Api.get<ViewGetNumberResultDocument>({
-        url: [ServicePages.view, "number"]
+        url: [ApiEndPoints.VIEW, ViewApiEndPoint.GET_NUMBER]
     });
 }
 
 const getStatistics = () => {
     return Api.get<ViewGetStatisticsResultDocument>({
-        url: [ServicePages.view, "statistics"]
+        url: [ApiEndPoints.VIEW, ViewApiEndPoint.GET_STATISTICS]
     });
 }
 
 const add = (params: ViewAddParamDocument) => {
     return Api.get({
-        url: [ServicePages.view, "one"],
+        url: [ApiEndPoints.VIEW, ViewApiEndPoint.ADD],
         data: params
     });
 }

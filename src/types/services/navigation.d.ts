@@ -16,7 +16,7 @@ export type NavigationGetResultDocument = {
 } & Omit<NavigationDocument, "contents"|"mainId"|"authorId"|"lastAuthorId">
 
 export interface NavigationGetOneParamDocument {
-    _id?: string
+    _id: string
     langId?: string
     statusId?: number
 }

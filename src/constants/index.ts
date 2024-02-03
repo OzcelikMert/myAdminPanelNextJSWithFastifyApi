@@ -5,14 +5,14 @@ import {PostTermTypes, PostTermTypeId} from "./postTermTypes";
 import {PostTypes, PostTypeId} from "./postTypes";
 import {Status, StatusId} from "./status";
 import {UserRoles, UserRoleId} from "./userRoles";
-import ServicePages from "./servicePages";
+import ApiEndPoints from "./api.EndPoints";
 import {ComponentInputTypeId, ComponentInputTypes} from "./componentInputTypes";
 import {LanguageKeysArray} from "./languageKeys";
 import {PageTypes, PageTypeId} from "./pageTypes";
 
 export {
     LanguageKeysArray,
-    ServicePages,
+    ApiEndPoints,
     Languages, LanguageId,
     PermissionGroups, PermissionGroupId,
     Permissions, PermissionId,

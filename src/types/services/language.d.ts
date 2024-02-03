@@ -3,7 +3,7 @@ import {LanguageDocument} from "../models/language";
 export type LanguageGetResultDocument = {} & LanguageDocument
 
 export interface LanguageGetOneParamDocument {
-    _id?: string
+    _id: string
     shortKey?: string
     locale?: string
 }

@@ -10,7 +10,7 @@ export type ComponentGetResultDocument = {
 } & Omit<ComponentDocument, "types"|"authorId"|"lastAuthorId">
 
 export interface ComponentGetOneParamDocument {
-    _id?: string
+    _id: string
     langId?: string,
     elementId?: string
 }
