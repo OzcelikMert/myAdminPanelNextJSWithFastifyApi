@@ -1,27 +1,31 @@
-import Api from "./api";
 import {ApiEndPoints} from "constants/index";
 import {UserGetResultDocument} from "types/services/user";
 import {AuthLoginParamDocument, AuthGetSessionParamDocument} from "types/services/auth";
 import {AuthApiEndPoint} from "constants/apiEndPoints/auth.api.EndPoint";
+import ApiRequest from "library/api/request";
+import pathUtil from "utils/path.util";
 
 const getSession = (params: AuthGetSessionParamDocument) => {
-    return Api.get<UserGetResultDocument>({
-        url: [ApiEndPoints.AUTH, AuthApiEndPoint.GET],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.AUTH, AuthApiEndPoint.GET],
         data: params,
-    });
+    }).get<UserGetResultDocument>();
 }
 
 const login = (params: AuthLoginParamDocument) => {
-    return Api.post<UserGetResultDocument>({
-        url: [ApiEndPoints.AUTH, AuthApiEndPoint.LOGIN],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.AUTH, AuthApiEndPoint.LOGIN],
         data: params,
-    });
+    }).post<UserGetResultDocument>();
 }
 
 const logOut = () => {
-    return Api.delete({
-        url: [ApiEndPoints.AUTH, AuthApiEndPoint.LOGOUT],
-    });
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.AUTH, AuthApiEndPoint.LOGOUT],
+    }).delete();
 }
 
 export default {

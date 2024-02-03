@@ -1,4 +1,3 @@
-import Api from "./api";
 import {ApiEndPoints} from "constants/index";
 import {
     UserGetOneParamDocument,
@@ -9,54 +8,63 @@ import {
     UserDeleteOneParamDocument, UserUpdateProfileParamDocument, UserUpdatePasswordParamDocument
 } from "types/services/user";
 import {UserApiEndPoint} from "constants/apiEndPoints/user.api.endPoint";
+import ApiRequest from "library/api/request";
+import pathUtil from "utils/path.util";
 
 const getOne = (params: UserGetOneParamDocument) => {
-    return Api.get<UserGetResultDocument | null>({
-        url: [ApiEndPoints.USER, UserApiEndPoint.GET_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.USER, UserApiEndPoint.GET_WITH_ID(params._id)],
         data: params,
-    });
+    }).get<UserGetResultDocument>();
 }
 
 const getMany = (params: UserGetManyParamDocument) => {
-    return Api.get<UserGetResultDocument[]>({
-        url: [ApiEndPoints.USER, UserApiEndPoint.GET],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.USER, UserApiEndPoint.GET],
         data: params,
-    });
+    }).get<UserGetResultDocument[]>();
 }
 
 const add = (params: UserAddParamDocument) => {
-    return Api.post({
-        url: [ApiEndPoints.USER, UserApiEndPoint.ADD],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.USER, UserApiEndPoint.ADD],
         data: params,
-    });
+    }).post();
 }
 
 const updateOne = (params: UserUpdateOneParamDocument) => {
-    return Api.put({
-        url: [ApiEndPoints.USER, UserApiEndPoint.UPDATE_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.USER, UserApiEndPoint.UPDATE_WITH_ID(params._id)],
         data: params,
-    });
+    }).put();
 }
 
 const updateProfile = (params: UserUpdateProfileParamDocument) => {
-    return Api.put({
-        url: [ApiEndPoints.USER, UserApiEndPoint.UPDATE_PROFILE],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.USER, UserApiEndPoint.UPDATE_PROFILE],
         data: params,
-    });
+    }).put();
 }
 
 const updatePassword = (params: UserUpdatePasswordParamDocument) => {
-    return Api.put({
-        url: [ApiEndPoints.USER, UserApiEndPoint.UPDATE_PASSWORD],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.USER, UserApiEndPoint.UPDATE_PASSWORD],
         data: params,
-    });
+    }).put();
 }
 
 const deleteOne = (params: UserDeleteOneParamDocument) => {
-    return Api.delete({
-        url: [ApiEndPoints.USER, UserApiEndPoint.DELETE_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.USER, UserApiEndPoint.DELETE_WITH_ID(params._id)],
         data: params,
-    });
+    }).delete();
 }
 
 export default {

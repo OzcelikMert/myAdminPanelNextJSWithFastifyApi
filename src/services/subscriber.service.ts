@@ -1,4 +1,3 @@
-import Api from "./api";
 import {ApiEndPoints} from "constants/index";
 import {
     SubscriberAddDocument,
@@ -9,40 +8,47 @@ import {
     SubscriberGetManyParamDocument
 } from "types/services/subscriber";
 import {SubscriberApiEndPoint} from "constants/apiEndPoints/subscriber.api.endPoint";
+import ApiRequest from "library/api/request";
+import pathUtil from "utils/path.util";
 
 const getOne = (params: SubscriberGetOneParamDocument) => {
-    return Api.get<SubscriberGetResultDocument | null>({
-        url: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.GET_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.GET_WITH_ID(params._id)],
         data: params
-    });
+    }).get<SubscriberGetResultDocument>();
 }
 
 const getMany = (params: SubscriberGetManyParamDocument) => {
-    return Api.get<SubscriberGetResultDocument[]>({
-        url: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.GET],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.GET],
         data: params
-    });
+    }).get<SubscriberGetResultDocument[]>();
 }
 
 const add = (params: SubscriberAddDocument) => {
-    return Api.post({
-        url: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.ADD],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.ADD],
         data: params
-    });
+    }).post();
 }
 
 const deleteOne = (params: SubscriberDeleteOneParamDocument) => {
-    return Api.delete({
-        url: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.DELETE_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.DELETE_WITH_ID(params._id)],
         data: params
-    });
+    }).delete();
 }
 
 const deleteMany = (params: SubscriberDeleteManyParamDocument) => {
-    return Api.delete({
-        url: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.DELETE],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.DELETE],
         data: params
-    });
+    }).delete();
 }
 
 

@@ -1,4 +1,3 @@
-import Api from "./api";
 import {ApiEndPoints} from "constants/index";
 import  {
     LanguageAddParamDocument,
@@ -8,47 +7,55 @@ import  {
     LanguageUpdateOneRankParamDocument
 } from "types/services/language";
 import {LanguageApiEndPoint} from "constants/apiEndPoints/language.api.endPoint";
+import ApiRequest from "library/api/request";
+import pathUtil from "utils/path.util";
 
 const getOne = (params: LanguageGetOneParamDocument) =>{
-    return Api.get<LanguageGetResultDocument | null>({
-        url: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.GET_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.GET_WITH_ID(params._id)],
         data: params
-    });
+    }).get<LanguageGetResultDocument>();
 }
 
 const getMany = (params: LanguageGetManyParamDocument) => {
-    return Api.get<LanguageGetResultDocument[]>({
-        url: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.GET],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.GET],
         data: params
-    });
+    }).get<LanguageGetResultDocument[]>();
 }
 
 const getFlags = (params: {}) => {
-    return Api.get<string[]>({
-        url: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.GET_FLAGS],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.GET_FLAGS],
         data: params
-    });
+    }).get<string[]>();
 }
 
 const add = (params: LanguageAddParamDocument) => {
-    return Api.post({
-        url: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.ADD],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.ADD],
         data: params
-    });
+    }).post();
 }
 
 const updateOne = (params: LanguageUpdateOneParamDocument) => {
-    return Api.put({
-        url: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.UPDATE_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.UPDATE_WITH_ID(params._id)],
         data: params
-    });
+    }).put();
 }
 
 const updateOneRank = (params: LanguageUpdateOneRankParamDocument) => {
-    return Api.put({
-        url: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
         data: params
-    });
+    }).put();
 }
 
 export default {

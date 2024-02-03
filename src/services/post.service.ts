@@ -1,4 +1,3 @@
-import Api from "./api";
 import {ApiEndPoints} from "constants/index";
 import {
     PostAddParamDocument,
@@ -12,61 +11,71 @@ import {
     PostUpdateOneViewParamDocument
 } from "types/services/post";
 import {PostApiEndPoint} from "constants/apiEndPoints/post.api.endPoint";
+import ApiRequest from "library/api/request";
+import pathUtil from "utils/path.util";
 
 const getOne = (params: PostGetOneParamDocument) => {
-    return Api.get<PostGetOneResultDocument | null>({
-        url: [ApiEndPoints.POST, PostApiEndPoint.GET_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.POST, PostApiEndPoint.GET_WITH_ID(params._id)],
         data: params
-    });
+    }).get<PostGetOneResultDocument>();
 }
 
 const getMany = (params: PostGetManyParamDocument) => {
-    return Api.get<PostGetManyResultDocument[]>({
-        url: [ApiEndPoints.POST, PostApiEndPoint.GET],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.POST, PostApiEndPoint.GET],
         data: params
-    });
+    }).get<PostGetManyResultDocument[]>();
 }
 
 const getCount = (params: PostGetCountParamDocument) => {
-    return Api.get<number>({
-        url: [ApiEndPoints.POST, PostApiEndPoint.GET_COUNT],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.POST, PostApiEndPoint.GET_COUNT],
         data: params
-    });
+    }).get<number>();
 }
 
 const add = (params: PostAddParamDocument) => {
-    return Api.post({
-        url: [ApiEndPoints.POST, PostApiEndPoint.ADD],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.POST, PostApiEndPoint.ADD],
         data: params
-    });
+    }).post();
 }
 
 const updateOne = (params: PostUpdateOneParamDocument) =>  {
-    return Api.put({
-        url: [ApiEndPoints.POST, PostApiEndPoint.UPDATE_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.POST, PostApiEndPoint.UPDATE_WITH_ID(params._id)],
         data: params
-    });
+    }).put();
 }
 
 const updateOneRank = (params: PostUpdateOneRankParamDocument) =>  {
-    return Api.put({
-        url: [ApiEndPoints.POST, PostApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.POST, PostApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
         data: params
-    });
+    }).put();
 }
 
 const updateManyStatus = (params: PostUpdateManyStatusIdParamDocument) =>  {
-    return Api.put({
-        url: [ApiEndPoints.POST, PostApiEndPoint.UPDATE_STATUS],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.POST, PostApiEndPoint.UPDATE_STATUS],
         data: params
-    });
+    }).put();
 }
 
 const deleteMany = (params: PostDeleteManyParamDocument) =>  {
-    return Api.delete({
-        url: [ApiEndPoints.POST, PostApiEndPoint.DELETE],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.POST, PostApiEndPoint.DELETE],
         data: params
-    });
+    }).delete();
 }
 
 export default {

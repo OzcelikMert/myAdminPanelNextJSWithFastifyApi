@@ -1,4 +1,3 @@
-import Api from "./api";
 import {ApiEndPoints} from "constants/index";
 import {
     NavigationAddParamDocument,
@@ -11,54 +10,63 @@ import {
     NavigationUpdateOneRankParamDocument
 } from "types/services/navigation";
 import {NavigationApiEndPoint} from "constants/apiEndPoints/navigation.api.endPoint";
+import pathUtil from "utils/path.util";
+import ApiRequest from "library/api/request";
 
 const getOne = (params: NavigationGetOneParamDocument) =>  {
-    return Api.get<NavigationGetResultDocument | null>({
-        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.GET_WITH_ID(params._id)],
-        data: params,
-    });
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.GET_WITH_ID(params._id)],
+        data: params
+    }).get<NavigationGetResultDocument>();
 }
 
 const getMany = (params: NavigationGetManyParamDocument) =>  {
-    return Api.get<NavigationGetResultDocument[]>({
-        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.GET],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.GET],
         data: params,
-    });
+    }).get<NavigationGetResultDocument[]>();
 }
 
 const add = (params: NavigationAddParamDocument) =>  {
-    return Api.post({
-        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.ADD],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.ADD],
         data: params,
-    });
+    }).post();
 }
 
 const updateOne = (params: NavigationUpdateOneParamDocument) =>  {
-    return Api.put({
-        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_WITH_ID(params._id)],
         data: params,
-    });
+    }).put();
 }
 
 const updateOneRank = (params: NavigationUpdateOneRankParamDocument) =>  {
-    return Api.put({
-        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
         data: params
-    });
+    }).put();
 }
 
 const updateManyStatus = (params: NavigationUpdateManyStatusIdParamDocument) =>  {
-    return Api.put({
-        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_STATUS],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_STATUS],
         data: params
-    });
+    }).put();
 }
 
 const deleteMany = (params: NavigationDeleteManyParamDocument) =>  {
-    return Api.delete({
-        url: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.DELETE],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.DELETE],
         data: params,
-    });
+    }).delete();
 }
 
 export default {

@@ -3,7 +3,7 @@ import {PagePropCommonDocument} from "types/pageProps";
 import {LanguageId} from "constants/index";
 import authService from "services/auth.service";
 import PagePaths from "constants/pagePaths";
-import {ErrorCodes} from "library/api";
+import {ErrorCodes} from "library/api/methods";
 
 type PageState = {
     isAuth: boolean

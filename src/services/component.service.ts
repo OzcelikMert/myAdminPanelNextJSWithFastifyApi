@@ -1,4 +1,3 @@
-import Api from "./api";
 import {ApiEndPoints} from "constants/index";
 import {
     ComponentAddParamDocument, ComponentDeleteManyParamDocument,
@@ -7,40 +6,47 @@ import {
     ComponentGetOneParamDocument, ComponentUpdateOneParamDocument,
 } from "types/services/component";
 import {ComponentApiEndPoint} from "constants/apiEndPoints/component.api.endPoint";
+import ApiRequest from "library/api/request";
+import pathUtil from "utils/path.util";
 
 const getOne = (params: ComponentGetOneParamDocument) => {
-    return Api.get<ComponentGetResultDocument | null>({
-        url: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.GET_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.GET_WITH_ID(params._id)],
         data: params,
-    });
+    }).get<ComponentGetResultDocument>();
 }
 
 const getMany = (params: ComponentGetManyParamDocument) => {
-    return Api.get<ComponentGetResultDocument[]>({
-        url: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.GET],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.GET],
         data: params,
-    });
+    }).get<ComponentGetResultDocument[]>();
 }
 
 const add = (params: ComponentAddParamDocument) => {
-    return Api.post({
-        url: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.ADD],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.ADD],
         data: params,
-    });
+    }).post();
 }
 
 const updateOne = (params: ComponentUpdateOneParamDocument) => {
-    return Api.put({
-        url: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.UPDATE_WITH_ID(params._id)],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.UPDATE_WITH_ID(params._id)],
         data: params,
-    });
+    }).put();
 }
 
 const deleteMany = (params: ComponentDeleteManyParamDocument) => {
-    return Api.delete({
-        url: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.DELETE],
+    return new ApiRequest({
+        apiUrl: pathUtil.api,
+        endPoints: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.DELETE],
         data: params,
-    });
+    }).delete();
 }
 
 export default {
