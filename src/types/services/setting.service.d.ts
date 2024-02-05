@@ -4,7 +4,7 @@ import {
     SettingSeoContentDocument, SettingSocialMediaDocument,
     SettingStaticLanguageContentDocument,
     SettingStaticLanguageDocument
-} from "../models/setting";
+} from "../models/setting.model";
 import {SettingProjectionKeys} from "constants/settingProjections";
 
 export type SettingGetResultDocument = {

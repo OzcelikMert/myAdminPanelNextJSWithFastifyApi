@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ThemeFormCheckBox, ThemeFormSelect, ThemeFormType} from "components/theme/form";
 import HandleForm from "library/react/handles/form";
-import {PostECommerceAttributeDocument, PostECommerceVariationDocument} from "types/models/post";
+import {PostECommerceAttributeDocument, PostECommerceVariationDocument} from "types/models/post.model";
 import {Accordion, Card, Tab, Tabs} from "react-bootstrap";
 import ThemeAccordionToggle from "components/theme/accordion/toggle";
 import ThemeChooseImage from "components/theme/chooseImage";

@@ -1,4 +1,4 @@
-import {SubscriberDocument} from "../models/subscriber";
+import {SubscriberDocument} from "../models/subscriber.model";
 
 export type SubscriberGetResultDocument = {} & SubscriberDocument
 

@@ -1,4 +1,4 @@
-import {PostECommercePricingDocument} from "types/models/post";
+import {PostECommercePricingDocument} from "types/models/post.model";
 import {ProductTypeId} from "constants/productTypes";
 import {CurrencyId, CurrencyTypes} from "constants/currencyTypes";
 import {PostGetManyResultDocument} from "types/services/post.service";

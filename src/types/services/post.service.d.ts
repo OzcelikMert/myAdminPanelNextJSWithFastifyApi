@@ -6,8 +6,8 @@ import {
     PostECommerceDocument,
     PostECommerceVariationContentDocument,
     PostECommerceVariationDocument
-} from "../models/post";
-import {ComponentDocument} from "../models/component";
+} from "../models/post.model";
+import {ComponentDocument} from "../models/component.model";
 
 export interface PostAlternateDocument {
     langId: string

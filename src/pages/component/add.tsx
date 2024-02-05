@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 import PagePaths from "constants/pagePaths";
 import Image from "next/image"
 import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
-import {ComponentTypeDocument} from "types/models/component";
+import {ComponentTypeDocument} from "types/models/component.model";
 
 type PageState = {
     langKeys: ThemeFormSelectValueDocument[]

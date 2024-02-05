@@ -1,4 +1,4 @@
-import {LanguageDocument} from "../models/language";
+import {LanguageDocument} from "../models/language.model";
 
 export type LanguageGetResultDocument = {} & LanguageDocument
 

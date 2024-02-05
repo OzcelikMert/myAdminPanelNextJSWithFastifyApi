@@ -1,5 +1,5 @@
 import {UserPopulateDocument} from "./user.service";
-import {NavigationContentDocument, NavigationDocument} from "../models/navigation";
+import {NavigationContentDocument, NavigationDocument} from "../models/navigation.model";
 
 export type NavigationGetResultDocument = {
     authorId: UserPopulateDocument,

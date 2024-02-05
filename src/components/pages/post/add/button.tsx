@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PagePostAdd, {PageState as PostPageState} from "pages/post/[postTypeId]/add";
 import {ThemeFieldSet, ThemeFormType} from "components/theme/form";
-import {PostContentButtonDocument} from "types/models/post";
+import {PostContentButtonDocument} from "types/models/post.model";
 
 type PageState = {};
 

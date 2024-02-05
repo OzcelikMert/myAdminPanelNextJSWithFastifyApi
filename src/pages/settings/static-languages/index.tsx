@@ -7,7 +7,7 @@ import ThemeToast from "components/theme/toast";
 import {
     SettingUpdateStaticLanguageParamDocument
 } from "types/services/setting.service";
-import {SettingStaticLanguageDocument} from "types/models/setting";
+import {SettingStaticLanguageDocument} from "types/models/setting.model";
 
 type PageState = {
     isSubmitting: boolean

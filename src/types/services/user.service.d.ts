@@ -1,4 +1,4 @@
-import {UserDocument} from "../models/user";
+import {UserDocument} from "../models/user.model";
 
 export interface UserPopulateDocument {
     _id: string

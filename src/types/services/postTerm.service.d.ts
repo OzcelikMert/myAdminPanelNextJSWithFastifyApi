@@ -1,5 +1,5 @@
 import {UserPopulateDocument} from "./user.service";
-import {PostTermContentDocument, PostTermDocument} from "../models/postTerm";
+import {PostTermContentDocument, PostTermDocument} from "../models/postTerm.model";
 
 export interface PostTermPopulateDocument {
     _id: string,

@@ -5,7 +5,7 @@ import {
     Permissions,
     StatusId
 } from "constants/index";
-import {UserDocument} from "types/models/user";
+import {UserDocument} from "types/models/user.model";
 import {PagePropCommonDocument} from "types/pageProps";
 import imageSourceLib from "lib/imageSource.lib";
 import {ThemeFieldSet} from "../form";

@@ -7,7 +7,7 @@ import ThemeToast from "components/theme/toast";
 import {
     SettingUpdateSocialMediaParamDocument,
 } from "types/services/setting.service";
-import { SettingSocialMediaDocument } from 'types/models/setting';
+import { SettingSocialMediaDocument } from 'types/models/setting.model';
 
 type PageState = {
     isSubmitting: boolean
