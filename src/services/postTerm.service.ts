@@ -8,7 +8,7 @@ import  {
     PostTermUpdateOneParamDocument,
     PostTermGetOneParamDocument,
     PostTermDeleteManyParamDocument
-} from "types/services/postTerm";
+} from "types/services/postTerm.service";
 import {PostTermApiEndPoint} from "constants/apiEndPoints/postTerm.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";

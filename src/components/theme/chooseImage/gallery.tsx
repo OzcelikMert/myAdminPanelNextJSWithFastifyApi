@@ -5,7 +5,7 @@ import PageGalleryUpload from "pages/gallery/upload";
 import {PagePropCommonDocument} from "types/pageProps";
 import {PermissionId} from "constants/index";
 import permissionLib from "lib/permission.lib";
-import GalleryDocument from "types/services/gallery";
+import GalleryDocument from "types/services/gallery.service";
 
 type PageState = {
     formActiveKey: string

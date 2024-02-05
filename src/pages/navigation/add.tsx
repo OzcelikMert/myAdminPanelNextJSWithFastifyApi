@@ -7,7 +7,7 @@ import V from "library/variable";
 import HandleForm from "library/react/handles/form";
 import staticContentLib from "lib/staticContent.lib";
 import Swal from "sweetalert2";
-import {NavigationUpdateOneParamDocument} from "types/services/navigation";
+import {NavigationUpdateOneParamDocument} from "types/services/navigation.service";
 import navigationService from "services/navigation.service";
 import PagePaths from "constants/pagePaths";
 import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";

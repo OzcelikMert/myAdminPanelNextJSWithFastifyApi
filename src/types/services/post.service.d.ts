@@ -1,5 +1,5 @@
-import {UserPopulateDocument} from "./user";
-import {PostTermPopulateDocument} from "./postTerm";
+import {UserPopulateDocument} from "./user.service";
+import {PostTermPopulateDocument} from "./postTerm.service";
 import {
     PostContentDocument,
     PostDocument,

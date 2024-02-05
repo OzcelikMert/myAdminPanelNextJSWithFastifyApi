@@ -9,7 +9,7 @@ import {PagePropCommonDocument} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import {ThemeToggleMenuItemDocument} from "components/theme/table/toggleMenu";
 import Swal from "sweetalert2";
-import {PostTermGetResultDocument} from "types/services/postTerm";
+import {PostTermGetResultDocument} from "types/services/postTerm.service";
 import postTermService from "services/postTerm.service";
 import imageSourceLib from "lib/imageSource.lib";
 import permissionLib from "lib/permission.lib";

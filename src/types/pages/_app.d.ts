@@ -1,4 +1,4 @@
-import {LanguageGetResultDocument} from "types/services/language";
+import {LanguageGetResultDocument} from "types/services/language.service";
 import {CurrencyId} from "constants/currencyTypes";
 import {SessionAuthDocument} from "types/models/sessionAuth.model";
 

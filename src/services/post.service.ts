@@ -9,7 +9,7 @@ import {
     PostUpdateOneParamDocument,
     PostUpdateOneRankParamDocument,
     PostUpdateOneViewParamDocument
-} from "types/services/post";
+} from "types/services/post.service";
 import {PostApiEndPoint} from "constants/apiEndPoints/post.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";

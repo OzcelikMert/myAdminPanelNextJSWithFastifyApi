@@ -14,7 +14,7 @@ import staticContentLib from "lib/staticContent.lib";
 import imageSourceLib from "lib/imageSource.lib";
 import {
     PostUpdateOneParamDocument
-} from "types/services/post";
+} from "types/services/post.service";
 import componentService from "services/component.service";
 import ThemeToolTip from "components/theme/tooltip";
 import Swal from "sweetalert2";

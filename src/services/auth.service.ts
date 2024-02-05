@@ -1,6 +1,6 @@
 import {ApiEndPoints} from "constants/index";
-import {UserGetResultDocument} from "types/services/user";
-import {AuthLoginParamDocument, AuthGetSessionParamDocument} from "types/services/auth";
+import {UserGetResultDocument} from "types/services/user.service";
+import {AuthLoginParamDocument, AuthGetSessionParamDocument} from "types/services/auth.service";
 import {AuthApiEndPoint} from "constants/apiEndPoints/auth.api.EndPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";

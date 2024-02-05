@@ -5,7 +5,7 @@ import {LanguageKeysArray, ComponentInputTypeId, ComponentInputTypes, UserRoleId
 import HandleForm from "library/react/handles/form";
 import {ThemeFieldSet, ThemeForm, ThemeFormSelect, ThemeFormType} from "components/theme/form";
 import V from "library/variable";
-import {ComponentUpdateOneParamDocument} from "types/services/component";
+import {ComponentUpdateOneParamDocument} from "types/services/component.service";
 import componentService from "services/component.service";
 import ThemeChooseImage from "components/theme/chooseImage";
 import imageSourceLib from "lib/imageSource.lib";

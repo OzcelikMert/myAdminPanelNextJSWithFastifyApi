@@ -1,4 +1,4 @@
-import {UserPopulateDocument} from "./user";
+import {UserPopulateDocument} from "./user.service";
 import {NavigationContentDocument, NavigationDocument} from "../models/navigation";
 
 export type NavigationGetResultDocument = {

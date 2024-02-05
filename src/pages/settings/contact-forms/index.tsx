@@ -4,7 +4,7 @@ import {ThemeFieldSet, ThemeForm, ThemeFormType} from "components/theme/form";
 import {UserRoleId} from "constants/index";
 import settingService from "services/setting.service";
 import ThemeToast from "components/theme/toast";
-import {SettingUpdateContactFormParamDocument} from "types/services/setting";
+import {SettingUpdateContactFormParamDocument} from "types/services/setting.service";
 import {SettingContactFormDocument} from 'types/models/setting';
 
 type PageState = {

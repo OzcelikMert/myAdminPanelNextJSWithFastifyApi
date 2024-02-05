@@ -8,7 +8,7 @@ import {
     NavigationGetResultDocument,
     NavigationUpdateOneParamDocument,
     NavigationUpdateOneRankParamDocument
-} from "types/services/navigation";
+} from "types/services/navigation.service";
 import {NavigationApiEndPoint} from "constants/apiEndPoints/navigation.api.endPoint";
 import pathUtil from "utils/path.util";
 import ApiRequest from "library/api/request";

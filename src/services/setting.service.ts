@@ -8,7 +8,7 @@ import {
     SettingUpdateSocialMediaParamDocument,
     SettingUpdateStaticLanguageParamDocument,
     SettingGetResultDocument
-} from "types/services/setting";
+} from "types/services/setting.service";
 import {SettingApiEndPoint} from "constants/apiEndPoints/setting.api.endPoint";
 import pathUtil from "utils/path.util";
 import ApiRequest from "library/api/request";

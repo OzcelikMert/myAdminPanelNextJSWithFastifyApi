@@ -8,7 +8,7 @@ import HandleForm from "library/react/handles/form";
 import staticContentLib from "lib/staticContent.lib";
 import Swal from "sweetalert2";
 import PagePaths from "constants/pagePaths";
-import {LanguageUpdateOneParamDocument} from "types/services/language";
+import {LanguageUpdateOneParamDocument} from "types/services/language.service";
 import languageService from "services/language.service";
 import imageSourceLib from "lib/imageSource.lib";
 import Image from "next/image";

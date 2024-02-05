@@ -5,7 +5,7 @@ import  {
     LanguageGetResultDocument, LanguageGetManyParamDocument,
     LanguageUpdateOneParamDocument,
     LanguageUpdateOneRankParamDocument
-} from "types/services/language";
+} from "types/services/language.service";
 import {LanguageApiEndPoint} from "constants/apiEndPoints/language.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";

@@ -5,7 +5,7 @@ import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import permissionLib from "lib/permission.lib";
 import ThemeToast from "components/theme/toast";
-import {ComponentGetResultDocument} from "types/services/component";
+import {ComponentGetResultDocument} from "types/services/component.service";
 import componentService from "services/component.service";
 import PagePaths from "constants/pagePaths";
 import ThemeDataTable from "components/theme/table/dataTable";

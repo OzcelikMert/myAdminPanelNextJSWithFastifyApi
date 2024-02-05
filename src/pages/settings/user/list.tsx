@@ -3,7 +3,7 @@ import {PagePropCommonDocument} from "types/pageProps";
 import {PermissionId, Status, UserRoleId, UserRoles} from "constants/index";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
-import {UserGetResultDocument} from "types/services/user";
+import {UserGetResultDocument} from "types/services/user.service";
 import ThemeUsersProfileCard from "components/theme/users/profileCard";
 import userService from "services/user.service";
 import imageSourceLib from "lib/imageSource.lib";

@@ -3,7 +3,7 @@ import {
     ViewGetStatisticsResultDocument,
     ViewGetNumberResultDocument,
     ViewAddParamDocument,
-} from "types/services/view";
+} from "types/services/view.service";
 import {ViewApiEndPoint} from "constants/apiEndPoints/view.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";

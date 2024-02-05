@@ -1,4 +1,4 @@
-import {UserPopulateDocument} from "./user";
+import {UserPopulateDocument} from "./user.service";
 import {ComponentDocument, ComponentTypeContentDocument, ComponentTypeDocument} from "types/models/component";
 
 export type ComponentGetResultDocument = {

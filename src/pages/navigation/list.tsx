@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import permissionLib from "lib/permission.lib";
 import ThemeToast from "components/theme/toast";
 import ThemeDataTable from "components/theme/table/dataTable";
-import {NavigationGetResultDocument} from "types/services/navigation";
+import {NavigationGetResultDocument} from "types/services/navigation.service";
 import navigationService from "services/navigation.service";
 import PagePaths from "constants/pagePaths";
 import {ThemeToggleMenuItemDocument} from "components/theme/table/toggleMenu";

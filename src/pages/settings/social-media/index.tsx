@@ -6,7 +6,7 @@ import settingService from "services/setting.service";
 import ThemeToast from "components/theme/toast";
 import {
     SettingUpdateSocialMediaParamDocument,
-} from "types/services/setting";
+} from "types/services/setting.service";
 import { SettingSocialMediaDocument } from 'types/models/setting';
 
 type PageState = {

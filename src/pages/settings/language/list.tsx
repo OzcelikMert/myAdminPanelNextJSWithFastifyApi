@@ -3,7 +3,7 @@ import {PagePropCommonDocument} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import ThemeDataTable from "components/theme/table/dataTable";
 import PagePaths from "constants/pagePaths";
-import {LanguageGetResultDocument} from "types/services/language";
+import {LanguageGetResultDocument} from "types/services/language.service";
 import languageService from "services/language.service";
 import Image from "next/image";
 import imageSourceLib from "lib/imageSource.lib";

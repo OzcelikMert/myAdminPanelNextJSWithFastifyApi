@@ -4,7 +4,7 @@ import {ThemeForm, ThemeFormSelect} from "components/theme/form";
 import HandleForm from "library/react/handles/form";
 import settingService from "services/setting.service";
 import ThemeToast from "components/theme/toast";
-import {SettingUpdateECommerceParamDocument} from "types/services/setting";
+import {SettingUpdateECommerceParamDocument} from "types/services/setting.service";
 import {Tab, Tabs} from "react-bootstrap";
 import {CurrencyId, CurrencyTypes} from "constants/currencyTypes";
 import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";

@@ -9,7 +9,7 @@ import permissionLib from "lib/permission.lib";
 import {PermissionId} from "constants/index";
 import ThemeDataTable from "components/theme/table/dataTable";
 import Image from "next/image"
-import GalleryDocument from "types/services/gallery";
+import GalleryDocument from "types/services/gallery.service";
 
 type PageState = {
     items: GalleryDocument[]

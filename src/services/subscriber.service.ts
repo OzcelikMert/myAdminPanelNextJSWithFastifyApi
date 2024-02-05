@@ -6,7 +6,7 @@ import {
     SubscriberDeleteManyParamDocument,
     SubscriberGetResultDocument,
     SubscriberGetManyParamDocument
-} from "types/services/subscriber";
+} from "types/services/subscriber.service";
 import {SubscriberApiEndPoint} from "constants/apiEndPoints/subscriber.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";

@@ -5,7 +5,7 @@ import {TableColumn} from "react-data-table-component";
 import {ThemeToggleMenuItemDocument} from "components/theme/table/toggleMenu";
 import Swal from "sweetalert2";
 import postService from "services/post.service";
-import {PostGetManyResultDocument} from "types/services/post";
+import {PostGetManyResultDocument} from "types/services/post.service";
 import imageSourceLib from "lib/imageSource.lib";
 import permissionLib from "lib/permission.lib";
 import ThemeToast from "components/theme/toast";

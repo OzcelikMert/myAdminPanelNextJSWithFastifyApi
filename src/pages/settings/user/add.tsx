@@ -9,7 +9,7 @@ import V, {DateMask} from "library/variable";
 import userService from "services/user.service";
 import staticContentLib from "lib/staticContent.lib";
 import PagePaths from "constants/pagePaths";
-import {UserUpdateOneParamDocument} from "types/services/user";
+import {UserUpdateOneParamDocument} from "types/services/user.service";
 import Swal from "sweetalert2";
 import permissionLib from "lib/permission.lib";
 import {PermissionDocument, PermissionGroupDocument} from "types/constants";

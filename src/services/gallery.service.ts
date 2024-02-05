@@ -1,5 +1,5 @@
 import {ApiEndPoints} from "constants/index";
-import GalleryDocument, {GalleryDeleteParamDocument, GalleryAddParamDocument} from "types/services/gallery";
+import GalleryDocument, {GalleryDeleteParamDocument, GalleryAddParamDocument} from "types/services/gallery.service";
 import {GalleryApiEndPoint} from "constants/apiEndPoints/gallery.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";

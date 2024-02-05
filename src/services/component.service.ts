@@ -4,7 +4,7 @@ import {
     ComponentGetResultDocument,
     ComponentGetManyParamDocument,
     ComponentGetOneParamDocument, ComponentUpdateOneParamDocument,
-} from "types/services/component";
+} from "types/services/component.service";
 import {ComponentApiEndPoint} from "constants/apiEndPoints/component.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";

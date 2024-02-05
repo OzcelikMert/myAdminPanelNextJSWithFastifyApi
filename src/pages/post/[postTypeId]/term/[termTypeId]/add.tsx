@@ -9,7 +9,7 @@ import ThemeChooseImage from "components/theme/chooseImage";
 import postTermService from "services/postTerm.service";
 import staticContentLib from "lib/staticContent.lib";
 import imageSourceLib from "lib/imageSource.lib";
-import {PostTermUpdateOneParamDocument} from "types/services/postTerm";
+import {PostTermUpdateOneParamDocument} from "types/services/postTerm.service";
 import Swal from "sweetalert2";
 import Image from "next/image"
 import PostLib from "lib/post.lib";

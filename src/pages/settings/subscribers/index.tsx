@@ -5,7 +5,7 @@ import  {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import permissionLib from "lib/permission.lib";
 import ThemeToast from "components/theme/toast";
-import {SubscriberGetResultDocument} from "types/services/subscriber";
+import {SubscriberGetResultDocument} from "types/services/subscriber.service";
 import subscriberService from "services/subscriber.service";
 import {ThemeToggleMenuItemDocument} from "components/theme/table/toggleMenu";
 import ThemeDataTable from "components/theme/table/dataTable";

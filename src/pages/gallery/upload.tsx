@@ -4,7 +4,7 @@ import UploadingFilesDocument from "types/pages/gallery/upload";
 import galleryService from "services/gallery.service";
 import ThemeToast from "components/theme/toast";
 import Image from "next/image"
-import GalleryDocument from "types/services/gallery";
+import GalleryDocument from "types/services/gallery.service";
 
 type PageState = {
     isDragging: boolean,

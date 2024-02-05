@@ -1,7 +1,7 @@
 import {PostECommercePricingDocument} from "types/models/post";
 import {ProductTypeId} from "constants/productTypes";
 import {CurrencyId, CurrencyTypes} from "constants/currencyTypes";
-import {PostGetManyResultDocument} from "types/services/post";
+import {PostGetManyResultDocument} from "types/services/post.service";
 
 const getCurrencyType = (currencyId: CurrencyId = CurrencyId.TurkishLira) => {
     return CurrencyTypes.findSingle("id", currencyId);

@@ -20,8 +20,8 @@ class ApiRequest {
         return apiUrl.removeLastChar();
     }
 
-    private async request(method: ApiRequestParamMethodDocument) : Promise<ApiResult> {
-        let apiResult = new ApiResult();
+    private async request<Data = any, CustomData = any>(method: ApiRequestParamMethodDocument) {
+        let apiResult = new ApiResult<Data, CustomData>();
 
         try {
             let resData = await axios.request({
@@ -49,20 +49,20 @@ class ApiRequest {
         return apiResult;
     }
 
-    async get<Data = any, CustomData = any>(): Promise<ApiResult<Data, CustomData>> {
-        return await this.request("GET");
+    async get<Data = any, CustomData = any>() {
+        return await this.request<Data, CustomData>("GET");
     }
 
-    async post<Data = any, CustomData = any>(): Promise<ApiResult<Data, CustomData>> {
-        return await this.request("POST");
+    async post<Data = any, CustomData = any>() {
+        return await this.request<Data, CustomData>("POST");
     }
 
-    async put<Data = any, CustomData = any>(): Promise<ApiResult<Data, CustomData>> {
-        return await this.request("PUT");
+    async put<Data = any, CustomData = any>() {
+        return await this.request<Data, CustomData>("PUT");
     }
 
-    async delete<Data = any, CustomData = any>(): Promise<ApiResult<Data, CustomData>> {
-        return await this.request("DELETE");
+    async delete<Data = any, CustomData = any>() {
+        return await this.request<Data, CustomData>("DELETE");
     }
 }
 

@@ -6,7 +6,7 @@ import {
     UserGetResultDocument,
     UserAddParamDocument,
     UserDeleteOneParamDocument, UserUpdateProfileParamDocument, UserUpdatePasswordParamDocument
-} from "types/services/user";
+} from "types/services/user.service";
 import {UserApiEndPoint} from "constants/apiEndPoints/user.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";
