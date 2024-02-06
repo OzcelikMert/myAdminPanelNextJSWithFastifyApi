@@ -31,13 +31,11 @@ export type PostTermGetResultDocument = {
 } & Omit<PostTermDocument, "contents"|"authorId"|"lastAuthorId"|"mainId">
 
 export interface PostTermGetOneParamDocument {
+    _id: string
     langId?: string
-    _id?: string
     typeId: PostTermTypeId,
     postTypeId: PostTypeId,
     statusId?: StatusId,
-    url?: string
-    ignoreTermId?: string[]
 }
 
 export interface PostTermGetManyParamDocument {

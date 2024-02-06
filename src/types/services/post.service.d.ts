@@ -48,9 +48,7 @@ export interface PostGetOneParamDocument {
     _id: string
     pageTypeId?: PageTypeId
     langId?: string
-    url?: string
     statusId?: StatusId,
-    ignorePostId?: string[]
 }
 
 export interface PostGetManyParamDocument {

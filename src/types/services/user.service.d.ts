@@ -15,11 +15,7 @@ export type UserGetResultDocument = {
 
 export interface UserGetOneParamDocument {
     _id: string
-    email?: string
-    password?: string
     statusId?: StatusId
-    url?: string
-    roleId?: UserRoleId
 }
 
 export interface UserGetManyParamDocument {
