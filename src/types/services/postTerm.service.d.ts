@@ -1,5 +1,8 @@
 import {UserPopulateDocument} from "./user.service";
 import {PostTermContentDocument, PostTermDocument} from "../models/postTerm.model";
+import {PostTermTypeId} from "constants/postTermTypes";
+import {PostTypeId} from "constants/postTypes";
+import {StatusId} from "constants/status";
 
 export interface PostTermPopulateDocument {
     _id: string,
@@ -21,14 +24,7 @@ export interface PostTermAlternateDocument {
 export type PostTermGetResultDocument = {
     authorId: UserPopulateDocument,
     lastAuthorId: UserPopulateDocument,
-    mainId?: {
-        _id: string
-        contents: {
-            langId: string
-            title: string,
-            url: string,
-        }
-    },
+    mainId?: PostTermPopulateDocument,
     contents?: PostTermContentDocument
     alternates?: PostTermAlternateDocument[],
     postCount?: number
@@ -36,22 +32,22 @@ export type PostTermGetResultDocument = {
 
 export interface PostTermGetOneParamDocument {
     langId?: string
-    _id: string
-    typeId: number,
-    postTypeId: number,
+    _id?: string
+    typeId: PostTermTypeId,
+    postTypeId: PostTypeId,
+    statusId?: StatusId,
     url?: string
-    statusId?: number,
-    ignoreTermId?: string[],
+    ignoreTermId?: string[]
 }
 
 export interface PostTermGetManyParamDocument {
     langId?: string
     _id?: string[]
-    typeId?: number[],
-    postTypeId: number,
+    typeId?: PostTermTypeId[],
+    postTypeId: PostTypeId,
     url?: string
     title?: string
-    statusId?: number,
+    statusId?: StatusId,
     ignoreTermId?: string[],
     count?: number
     page?: number
@@ -67,20 +63,20 @@ export type PostTermUpdateOneParamDocument = {
 
 export type PostTermUpdateOneRankParamDocument = {
     _id: string,
-    postTypeId: number,
-    typeId: number
+    postTypeId: PostTypeId,
+    typeId: PostTermTypeId
     rank: number,
 }
 
 export type PostTermUpdateManyStatusIdParamDocument = {
     _id: string[],
-    postTypeId: number,
-    typeId: number
+    postTypeId: PostTypeId,
+    typeId: PostTermTypeId
     statusId: number,
 }
 
 export interface PostTermDeleteManyParamDocument {
     _id: string[]
-    typeId: number,
-    postTypeId: number
+    typeId: PostTermTypeId,
+    postTypeId: PostTypeId
 }

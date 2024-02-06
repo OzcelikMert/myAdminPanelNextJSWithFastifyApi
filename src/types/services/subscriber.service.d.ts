@@ -15,8 +15,8 @@ export interface SubscriberGetManyParamDocument {
 export type SubscriberAddDocument = {} & Omit<SubscriberDocument, "_id">
 
 export interface SubscriberDeleteOneParamDocument {
-    email: string
-    _id: string
+    email?: string
+    _id?: string
 }
 
 export interface SubscriberDeleteManyParamDocument {

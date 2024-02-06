@@ -14,7 +14,6 @@ export type SettingGetResultDocument = {
 
 export type SettingGetParamDocument = {
     langId?: string
-    getContactFormPasswords?: boolean
     projection?: SettingProjectionKeys
 }
 

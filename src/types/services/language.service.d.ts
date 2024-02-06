@@ -1,4 +1,5 @@
 import {LanguageDocument} from "../models/language.model";
+import {StatusId} from "constants/status";
 
 export type LanguageGetResultDocument = {} & LanguageDocument
 
@@ -10,7 +11,7 @@ export interface LanguageGetOneParamDocument {
 
 export interface LanguageGetManyParamDocument {
     _id?: string[]
-    statusId?: number
+    statusId?: StatusId
 }
 
 export type LanguageAddParamDocument = {} & Omit<LanguageDocument, "_id">

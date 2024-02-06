@@ -8,6 +8,9 @@ import {
     PostECommerceVariationDocument
 } from "../models/post.model";
 import {ComponentDocument} from "../models/component.model";
+import {PostTypeId} from "constants/postTypes";
+import {PageTypeId} from "constants/pageTypes";
+import {StatusId} from "constants/status";
 
 export interface PostAlternateDocument {
     langId: string
@@ -41,32 +44,35 @@ export type PostGetManyResultDocument = {
 } & Omit<PostGetOneResultDocument, "eCommerce"|"components">
 
 export interface PostGetOneParamDocument {
-    typeId: number,
+    typeId: PostTypeId,
     _id: string
-    pageTypeId?: number
+    pageTypeId?: PageTypeId
     langId?: string
     url?: string
-    statusId?: number,
+    statusId?: StatusId,
     ignorePostId?: string[]
 }
 
 export interface PostGetManyParamDocument {
     _id?: string[]
     isRecent?: boolean
-    typeId?: number[],
-    pageTypeId?: number[]
+    typeId?: PostTypeId[],
+    pageTypeId?: PageTypeId[]
     langId?: string
-    statusId?: number,
+    statusId?: StatusId,
     count?: number,
     page?: number
     ignorePostId?: string[]
     title?: string
     ignoreDefaultLanguage?: boolean
+    categories?: string[]
 }
 
 export interface PostGetCountParamDocument {
-    typeId: number
-    statusId?: number
+    typeId: PostTypeId
+    statusId?: StatusId
+    title?: string
+    categories?: string[]
 }
 
 export type PostAddParamDocument = {} & Omit<PostDocument, "_id"|"views"|"authorId"|"lastAuthorId">
@@ -77,23 +83,23 @@ export type PostUpdateOneParamDocument = {
 
 export type PostUpdateOneRankParamDocument = {
     _id: string
-    typeId: number
+    typeId: PostTypeId
     rank: number
 }
 
 export type PostUpdateOneViewParamDocument = {
     _id: string,
-    typeId: number
+    typeId: PostTypeId
     langId: string
 }
 
 export type PostUpdateManyStatusIdParamDocument = {
     _id: string[],
-    typeId: number
-    statusId: number,
+    typeId: PostTypeId
+    statusId: StatusId,
 }
 
 export interface PostDeleteManyParamDocument {
     _id: string[]
-    typeId: number
+    typeId: PostTypeId
 }
