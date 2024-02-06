@@ -1,4 +1,4 @@
-import {ApiEndPoints} from "constants/index";
+import {ApiEndPoints} from "constants/apiEndPoints";
 import {UserGetResultDocument} from "types/services/user.service";
 import {AuthLoginParamDocument, AuthGetSessionParamDocument} from "types/services/auth.service";
 import {AuthApiEndPoint} from "constants/apiEndPoints/auth.api.EndPoint";

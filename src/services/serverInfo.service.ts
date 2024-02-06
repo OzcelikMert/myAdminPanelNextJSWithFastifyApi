@@ -1,4 +1,4 @@
-import {ApiEndPoints} from "constants/index";
+import {ApiEndPoints} from "constants/apiEndPoints";
 import ServerInfoDocument from "types/services/serverInfo.service";
 import {ServerInfoApiEndPoint} from "constants/apiEndPoints/serverInfo.api.endPoint";
 import ApiRequest from "library/api/request";

@@ -1,14 +1,16 @@
-import {ApiEndPoints} from "constants/index";
-import GalleryDocument, {GalleryDeleteParamDocument, GalleryAddParamDocument} from "types/services/gallery.service";
+import {ApiEndPoints} from "constants/apiEndPoints";
+import {GalleryDeleteManyParamDocument, GalleryAddParamDocument, GalleryGetManyParamDocument} from "types/services/gallery.service";
 import {GalleryApiEndPoint} from "constants/apiEndPoints/gallery.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";
 import {ApiRequestParamDocument} from "library/types/api";
+import {GalleryDocument} from "types/models/gallery.model";
 
-const get = () => {
+const get = (params: GalleryGetManyParamDocument) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
-        endPoints: [ApiEndPoints.GALLERY, GalleryApiEndPoint.GET_IMAGE]
+        endPoints: [ApiEndPoints.GALLERY, GalleryApiEndPoint.GET_IMAGE],
+        data: params
     }).get<GalleryDocument[]>();
 }
 
@@ -23,7 +25,7 @@ const add = (params: GalleryAddParamDocument, onUploadProgress: ApiRequestParamD
     }).post();
 }
 
-const deleteMany = (params: GalleryDeleteParamDocument) => {
+const deleteMany = (params: GalleryDeleteManyParamDocument) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.GALLERY, GalleryApiEndPoint.DELETE_IMAGE],

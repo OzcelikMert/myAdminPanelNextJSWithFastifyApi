@@ -1,4 +1,4 @@
-import {ApiEndPoints} from "constants/index";
+import {ApiEndPoints} from "constants/apiEndPoints";
 import {MailerSendParamDocument} from "types/services/mailer.service";
 import {MailerApiEndPoint} from "constants/apiEndPoints/mailer.api.endPoint";
 import ApiRequest from "library/api/request";

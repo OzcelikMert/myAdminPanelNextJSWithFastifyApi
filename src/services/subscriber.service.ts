@@ -1,4 +1,4 @@
-import {ApiEndPoints} from "constants/index";
+import {ApiEndPoints} from "constants/apiEndPoints";
 import {
     SubscriberAddDocument,
     SubscriberGetOneParamDocument,

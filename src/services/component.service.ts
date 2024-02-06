@@ -1,4 +1,3 @@
-import {ApiEndPoints} from "constants/index";
 import {
     ComponentAddParamDocument, ComponentDeleteManyParamDocument,
     ComponentGetResultDocument,
@@ -8,6 +7,7 @@ import {
 import {ComponentApiEndPoint} from "constants/apiEndPoints/component.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";
+import {ApiEndPoints} from "constants/apiEndPoints";
 
 const getOne = (params: ComponentGetOneParamDocument) => {
     return new ApiRequest({

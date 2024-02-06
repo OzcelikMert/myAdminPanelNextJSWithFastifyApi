@@ -1,4 +1,4 @@
-const ApiEndPoints = {
+export const ApiEndPoints = {
     AUTH: "/auth",
     USER: "/user",
     POST: "/post",
@@ -14,5 +14,3 @@ const ApiEndPoints = {
     SITEMAP: "/sitemap",
     NAVIGATION: "/navigation"
 }
-
-export default ApiEndPoints;
