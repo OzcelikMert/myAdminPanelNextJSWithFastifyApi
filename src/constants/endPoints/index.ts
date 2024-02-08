@@ -12,5 +12,6 @@ export const EndPoints = {
     ECOMMERCE: "/e-commerce",
     SETTINGS: "/settings",
     USER: "/user",
+    SUBSCRIBER: "/subscriber",
     LANGUAGE: "/language"
 }

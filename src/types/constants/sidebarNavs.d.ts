@@ -4,6 +4,7 @@ import {UserRoleId} from "constants/userRoles";
 
 export interface SideBarPath {
     path: string,
+    maskPath?: string
     title: LanguageKeys,
     icon?: string,
     state?: string,

@@ -12,7 +12,7 @@ const nextConfig = {
                 destination: "/:path*"
             },
             {
-                source: "/e-commerce/product/:path*",
+                source: "/e-commerce/:path*",
                 destination: "/:path*"
             }
         ]
