@@ -1,6 +1,5 @@
 import LanguageKeys from "types/languages";
-import {PermissionId} from "constants/permissions";
-import {UserRoleId} from "constants/userRoles";
+import {EndPointPermissionDocument} from "types/constants/endPoint.permissions";
 
 export interface SideBarPath {
     path: string,
@@ -9,6 +8,5 @@ export interface SideBarPath {
     icon?: string,
     state?: string,
     subPaths?: SideBarPath[]
-    minPermId?: PermissionId | PermissionId[]
-    minRoleId?: UserRoleId
+    permission?: EndPointPermissionDocument
 }

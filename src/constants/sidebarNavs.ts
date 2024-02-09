@@ -1,6 +1,4 @@
-import {PermissionId} from "./permissions";
 import {PostTypeId} from "./postTypes";
-import {UserRoleId} from "./userRoles";
 import {SideBarPath} from "types/constants/sidebarNavs";
 import {EndPoints} from "constants/endPoints";
 import {GalleryEndPoint} from "constants/endPoints/gallery.endPoint";
@@ -11,6 +9,15 @@ import {ECommerceEndPoint} from "constants/endPoints/eCommerce.endPoint";
 import {UserEndPoint} from "constants/endPoints/user.endPoint";
 import {SettingsEndPoint} from "constants/endPoints/settings.endPoint";
 import {LanguageEndPoint} from "constants/endPoints/language.endPoint";
+import {NavigationEndPointPermission} from "constants/endPointPermissions/navigation.endPoint.permission";
+import {PostEndPointPermission} from "constants/endPointPermissions/post.endPoint.permission";
+import {ThemeContentEndPointPermission} from "constants/endPointPermissions/themeContent.endPoint.permission";
+import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
+import {ECommerceEndPointPermission} from "constants/endPointPermissions/eCommerce.endPoint.permission";
+import {UserEndPointPermission} from "constants/endPointPermissions/user.endPoint.permission";
+import {SubscriberEndPointPermission} from "constants/endPointPermissions/subscriber.endPoint.permission";
+import {LanguageEndPointPermission} from "constants/endPointPermissions/language.endPoint.permission";
+import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
 
 const SidebarNav: SideBarPath[] = [
     {path: EndPoints.DASHBOARD, icon: `home`, title: "dashboard"},
@@ -24,7 +31,6 @@ const SidebarNav: SideBarPath[] = [
                 path: GalleryEndPoint.UPLOAD,
                 icon: `upload`,
                 title: "upload",
-                minPermId: PermissionId.GalleryEdit,
             },
             {path: GalleryEndPoint.LIST, title: "list"}
         ]
@@ -34,12 +40,12 @@ const SidebarNav: SideBarPath[] = [
         icon: `navigation-variant`,
         title: "navigations",
         state: `navigates`,
-        minPermId: [PermissionId.NavigationAdd, PermissionId.NavigationEdit, PermissionId.NavigationDelete],
+        permission: NavigationEndPointPermission.SIDEBAR_NAV,
         subPaths: [
             {
                 path: NavigationEndPoint.ADD,
                 title: "add",
-                minPermId: PermissionId.NavigationAdd
+                permission: NavigationEndPointPermission.ADD
             },
             {path: NavigationEndPoint.LIST, title: "list"}
         ]
@@ -49,12 +55,12 @@ const SidebarNav: SideBarPath[] = [
         icon: `note-multiple`,
         title: "pages",
         state: `pages`,
-        minPermId: [PermissionId.PageAdd, PermissionId.PageEdit, PermissionId.PageDelete],
+        permission: PostEndPointPermission.SIDEBAR_NAV_PAGE,
         subPaths: [
             {
                 path: PostEndPoint.ADD,
                 title: "add",
-                minPermId: PermissionId.PageAdd
+                permission: PostEndPointPermission.ADD_PAGE
             },
             {path: PostEndPoint.LIST, title: "list"}
         ]
@@ -64,17 +70,18 @@ const SidebarNav: SideBarPath[] = [
         icon: `collage`,
         title: "themeContents",
         state: `themeContents`,
+        permission: ThemeContentEndPointPermission.SIDEBAR_NAV,
         subPaths: [
             {
                 path: EndPoints.POST(PostTypeId.Blog),
                 title: "blogs",
                 state: `blogs`,
-                minPermId: [PermissionId.BlogAdd, PermissionId.BlogEdit, PermissionId.BlogDelete],
+                permission: PostEndPointPermission.SIDEBAR_NAV_BLOG,
                 subPaths: [
                     {
                         path: PostEndPoint.ADD,
                         title: "add",
-                        minPermId: PermissionId.BlogAdd
+                        permission: PostEndPointPermission.ADD_BLOG
                     },
                     {path: PostEndPoint.LIST, title: "list"}
                 ]
@@ -83,12 +90,12 @@ const SidebarNav: SideBarPath[] = [
                 path: EndPoints.POST(PostTypeId.Portfolio),
                 title: "portfolios",
                 state: `portfolios`,
-                minPermId: [PermissionId.PortfolioAdd, PermissionId.PortfolioEdit, PermissionId.PortfolioDelete],
+                permission: PostEndPointPermission.SIDEBAR_NAV_PORTFOLIO,
                 subPaths: [
                     {
                         path: PostEndPoint.ADD,
                         title: "add",
-                        minPermId: PermissionId.PortfolioAdd
+                        permission: PostEndPointPermission.ADD_PORTFOLIO
                     },
                     {path: PostEndPoint.LIST, title: "list"}
                 ]
@@ -97,12 +104,12 @@ const SidebarNav: SideBarPath[] = [
                 path: EndPoints.POST(PostTypeId.Slider),
                 title: "sliders",
                 state: `sliders`,
-                minPermId: [PermissionId.SliderAdd, PermissionId.SliderEdit, PermissionId.SliderDelete],
+                permission: PostEndPointPermission.SIDEBAR_NAV_SLIDER,
                 subPaths: [
                     {
                         path: PostEndPoint.ADD,
                         title: "add",
-                        minPermId: PermissionId.SliderAdd
+                        permission: PostEndPointPermission.ADD_SLIDER
                     },
                     {path: PostEndPoint.LIST, title: "list"}
                 ]
@@ -111,12 +118,12 @@ const SidebarNav: SideBarPath[] = [
                 path: EndPoints.POST(PostTypeId.Reference),
                 title: "references",
                 state: `references`,
-                minPermId: [PermissionId.ReferenceAdd, PermissionId.ReferenceEdit, PermissionId.ReferenceDelete],
+                permission: PostEndPointPermission.SIDEBAR_NAV_REFERENCE,
                 subPaths: [
                     {
                         path: PostEndPoint.ADD,
                         title: "add",
-                        minPermId: PermissionId.ReferenceAdd
+                        permission: PostEndPointPermission.ADD_REFERENCE
                     },
                     {path: PostEndPoint.LIST, title: "list"}
                 ]
@@ -125,12 +132,12 @@ const SidebarNav: SideBarPath[] = [
                 path: EndPoints.POST(PostTypeId.Service),
                 title: "services",
                 state: `services`,
-                minPermId: [PermissionId.ServiceAdd, PermissionId.ServiceEdit, PermissionId.ServiceDelete],
+                permission: PostEndPointPermission.SIDEBAR_NAV_SERVICE,
                 subPaths: [
                     {
                         path: PostEndPoint.ADD,
                         title: "add",
-                        minPermId: PermissionId.ServiceAdd
+                        permission: PostEndPointPermission.ADD_SERVICE
                     },
                     {path: PostEndPoint.LIST, title: "list"}
                 ]
@@ -139,12 +146,12 @@ const SidebarNav: SideBarPath[] = [
                 path: EndPoints.POST(PostTypeId.Testimonial),
                 title: "testimonials",
                 state: `testimonials`,
-                minPermId: [PermissionId.TestimonialAdd, PermissionId.TestimonialEdit, PermissionId.TestimonialDelete],
+                permission: PostEndPointPermission.SIDEBAR_NAV_TESTIMONIAL,
                 subPaths: [
                     {
                         path: PostEndPoint.ADD,
                         title: "add",
-                        minPermId: PermissionId.TestimonialAdd
+                        permission: PostEndPointPermission.ADD_TESTIMONIAL
                     },
                     {path: PostEndPoint.LIST, title: "list"}
                 ]
@@ -153,12 +160,12 @@ const SidebarNav: SideBarPath[] = [
                 path: EndPoints.POST(PostTypeId.BeforeAndAfter),
                 title: "beforeAndAfter",
                 state: `beforeAndAfter`,
-                minPermId: [PermissionId.BeforeAndAfterAdd, PermissionId.BeforeAndAfterEdit, PermissionId.BeforeAndAfterDelete],
+                permission: PostEndPointPermission.SIDEBAR_NAV_BEFORE_AND_AFTER,
                 subPaths: [
                     {
                         path: PostEndPoint.ADD,
                         title: "add",
-                        minPermId: PermissionId.BeforeAndAfterAdd
+                        permission: PostEndPointPermission.ADD_BEFORE_AND_AFTER
                     },
                     {path: PostEndPoint.LIST, title: "list"}
                 ]
@@ -170,12 +177,12 @@ const SidebarNav: SideBarPath[] = [
         icon: `shape`,
         title: "components",
         state: `components`,
-        minPermId: [PermissionId.ComponentEdit],
+        permission: ComponentEndPointPermission.SIDEBAR_NAV,
         subPaths: [
             {
                 path: ComponentEndPoint.ADD,
                 title: "add",
-                minRoleId: UserRoleId.SuperAdmin,
+                permission: ComponentEndPointPermission.ADD,
             },
             {path: ComponentEndPoint.LIST, title: "list"}
         ]
@@ -185,18 +192,18 @@ const SidebarNav: SideBarPath[] = [
         icon: `market`,
         title: "eCommerce",
         state: `eCommerce`,
-        minPermId: [PermissionId.ECommerce],
+        permission: ECommerceEndPointPermission.SIDEBAR_NAV,
         subPaths: [
             {
                 path: EndPoints.POST(PostTypeId.Product),
                 title: "product",
                 state: `eCommerceProduct`,
-                minPermId: [PermissionId.ProductAdd, PermissionId.ProductEdit, PermissionId.ProductDelete],
+                permission: PostEndPointPermission.SIDEBAR_NAV_PRODUCT,
                 subPaths: [
                     {
                         path: PostEndPoint.ADD,
                         title: "add",
-                        minPermId: PermissionId.ProductAdd,
+                        permission: PostEndPointPermission.ADD_PRODUCT,
                     },
                     {path: PostEndPoint.LIST, title: "list"}
                 ]
@@ -204,7 +211,7 @@ const SidebarNav: SideBarPath[] = [
             {
                 path: ECommerceEndPoint.SETTINGS,
                 title: "settings",
-                minRoleId: UserRoleId.Admin
+                permission: ECommerceEndPointPermission.SETTINGS
             },
         ]
     },
@@ -213,11 +220,12 @@ const SidebarNav: SideBarPath[] = [
         icon: `account-multiple`,
         title: "users",
         state: `users`,
+        permission: UserEndPointPermission.SIDEBAR_NAV,
         subPaths: [
             {
                 path: UserEndPoint.ADD,
                 title: "add",
-                minPermId: PermissionId.UserAdd
+                permission: UserEndPointPermission.ADD
             },
             {path: UserEndPoint.LIST, title: "list"}
         ]
@@ -225,24 +233,24 @@ const SidebarNav: SideBarPath[] = [
     {
         path: EndPoints.SUBSCRIBER,
         title: "subscribers",
-        minPermId: PermissionId.SubscriberEdit
+        permission: SubscriberEndPointPermission.SIDEBAR_NAV
     },
     {
         path: EndPoints.LANGUAGE,
         icon: `languages`,
         title: "languages",
         state: `languages`,
-        minRoleId: UserRoleId.SuperAdmin,
+        permission: LanguageEndPointPermission.SIDEBAR_NAV,
         subPaths: [
             {
                 path: LanguageEndPoint.ADD,
                 title: "add",
-                minRoleId: UserRoleId.SuperAdmin
+                permission: LanguageEndPointPermission.SIDEBAR_NAV
             },
             {
                 path: LanguageEndPoint.LIST,
                 title: "list",
-                minRoleId: UserRoleId.SuperAdmin
+                permission: LanguageEndPointPermission.SIDEBAR_NAV
             }
         ]
     },
@@ -251,32 +259,33 @@ const SidebarNav: SideBarPath[] = [
         icon: `cog`,
         title: "settings",
         state: `settings`,
+        permission: SettingsEndPointPermission.SIDEBAR_NAV,
         subPaths: [
+            {
+                path: SettingsEndPoint.GENERAL,
+                title: "general",
+                permission: SettingsEndPointPermission.UPDATE_GENERAL
+            },
             {
                 path: SettingsEndPoint.SEO,
                 icon: `magnify`,
                 title: "seo",
-                minPermId: PermissionId.SeoEdit
-            },
-            {
-                path: SettingsEndPoint.GENERAL,
-                title: "general",
-                minPermId: PermissionId.SettingEdit
+                permission: SettingsEndPointPermission.UPDATE_SEO
             },
             {
                 path: SettingsEndPoint.CONTACT_FORMS,
                 title: "contactForms",
-                minRoleId: UserRoleId.Admin,
+                permission: SettingsEndPointPermission.UPDATE_CONTACT_FORM,
             },
             {
                 path: SettingsEndPoint.STATIC_LANGUAGES,
                 title: "staticLanguages",
-                minPermId: PermissionId.StaticLanguage
+                permission: SettingsEndPointPermission.UPDATE_STATIC_LANGUAGE
             },
             {
                 path: SettingsEndPoint.SOCIAL_MEDIA,
                 title: "socialMedia",
-                minPermId: PermissionId.SettingEdit
+                permission: SettingsEndPointPermission.UPDATE_SOCIAL_MEDIA
             },
         ]
     },
