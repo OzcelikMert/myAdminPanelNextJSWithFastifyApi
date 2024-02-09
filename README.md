@@ -6,3 +6,4 @@ Things to do:
 - yeni permission sistemini yap apidekine benzer olsun
 - Diller icin export import yap
 - Yaptigin tum guncellemelerin hata kontrolunu yap
+- tum dosyalarinda export defaultlari export olarak duzenle ve artik constlar gibi degerleri buyuk harflerle baslatarak cekme zorunlulugu yap (opsiyonel)
