@@ -1,5 +1,5 @@
 import {CurrencyId} from "constants/currencyTypes";
-import LanguageKeys from "types/languages";
+import {LanguageKeys} from "types/languages";
 
 export interface SettingDocument {
     defaultLangId: string

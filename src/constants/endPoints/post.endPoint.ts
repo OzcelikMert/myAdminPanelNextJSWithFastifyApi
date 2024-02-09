@@ -2,7 +2,7 @@ import {PostTermTypeId} from "constants/postTermTypes";
 
 export const PostEndPoint = {
     ADD: "/add",
-    EDIT: (_id: string)  => `/edit/${_id}`,
+    EDIT: (_id?: string)  => `/edit/${_id ?? ":_id"}`,
     LIST: "/list",
-    TERM: (typeId: PostTermTypeId) => `/term/${typeId}`,
+    TERM: (typeId?: PostTermTypeId) => `/term/${typeId ?? ":termTypeId"}`,
 }

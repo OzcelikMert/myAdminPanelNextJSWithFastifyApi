@@ -1,12 +1,8 @@
-import {PageTypeId} from "constants/index";
-import LanguageKeys from "../languages";
+import {PageTypeId} from "constants/pageTypes";
+import {LanguageKeys} from "../languages";
 
-interface PageTypeDocument {
+export interface PageTypeDocument {
     id: PageTypeId,
     rank: number,
     langKey: LanguageKeys
-}
-
-export {
-    PageTypeDocument
 }

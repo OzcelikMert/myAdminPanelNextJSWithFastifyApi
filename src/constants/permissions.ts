@@ -1,7 +1,7 @@
-import {PermissionDocument} from "types/constants";
+import {PermissionDocument} from "types/constants/permissions";
 import {PermissionGroupId} from "./permissionGroups";
 
-enum PermissionId {
+export enum PermissionId {
     BlogAdd = 1,
     BlogEdit,
     BlogDelete,
@@ -44,7 +44,7 @@ enum PermissionId {
     BeforeAndAfterDelete,
 }
 
-const Permissions: Array<PermissionDocument> = [
+export const Permissions: Array<PermissionDocument> = [
     {id: PermissionId.BlogAdd, groupId: PermissionGroupId.Blog, defaultRoleRank: 2, langKey: "add"},
     {id: PermissionId.BlogEdit, groupId: PermissionGroupId.Blog, defaultRoleRank: 3, langKey: "edit"},
     {id: PermissionId.BlogDelete, groupId: PermissionGroupId.Blog, defaultRoleRank: 3, langKey: "delete"},
@@ -86,5 +86,3 @@ const Permissions: Array<PermissionDocument> = [
     {id: PermissionId.BeforeAndAfterEdit, groupId: PermissionGroupId.BeforeAndAfter, defaultRoleRank: 3, langKey: "edit"},
     {id: PermissionId.BeforeAndAfterDelete, groupId: PermissionGroupId.BeforeAndAfter, defaultRoleRank: 3, langKey: "delete"},
 ]
-
-export {Permissions, PermissionId};

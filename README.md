@@ -7,3 +7,4 @@ Things to do:
 - Diller icin export import yap
 - Yaptigin tum guncellemelerin hata kontrolunu yap
 - tum dosyalarinda export defaultlari export olarak duzenle ve artik constlar gibi degerleri buyuk harflerle baslatarak cekme zorunlulugu yap (opsiyonel)
+- tum interfacelerdeki Document ekini sil onun yerine I kullan basinda

@@ -7,7 +7,7 @@ export const EndPoints = {
     GALLERY: "/gallery",
     COMPONENT: "/component",
     NAVIGATION: "/navigation",
-    POST: (typeId: PostTypeId) => `/post/${typeId}`,
+    POST: (typeId?: PostTypeId) => `/post/${typeId ?? ":postTypeId"}`,
     THEME_CONTENT: "/theme-content",
     ECOMMERCE: "/e-commerce",
     SETTINGS: "/settings",

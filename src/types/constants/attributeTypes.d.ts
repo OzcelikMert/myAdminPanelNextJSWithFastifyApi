@@ -1,4 +1,4 @@
-import LanguageKeys from "../languages";
+import {LanguageKeys} from "../languages";
 import {AttributeTypeId} from "constants/attributeTypes";
 
 export interface AttributeTypeDocument {

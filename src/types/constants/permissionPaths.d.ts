@@ -1,6 +1,7 @@
-import {PermissionId, UserRoleId} from "constants/index";
+import {PermissionId} from "constants/permissions";
+import {UserRoleId} from "constants/userRoles";
 
-interface PermissionPathDocument {
+export interface PermissionPathDocument {
     path: string,
     permissionId?: PermissionId,
     userRoleId?: UserRoleId

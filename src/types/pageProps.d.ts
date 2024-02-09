@@ -1,4 +1,4 @@
-import LanguageKeys from "./languages";
+import {LanguageKeys} from "./languages";
 import {AppAdminGetState, AppAdminSetState} from "./pages/_app";
 import {AppProps} from "next/app";
 

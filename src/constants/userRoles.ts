@@ -1,6 +1,6 @@
-import {UserRoleDocument} from "types/constants";
+import {UserRoleDocument} from "types/constants/userRoles";
 
-enum UserRoleId {
+export enum UserRoleId {
     User = 1,
     Author,
     Editor,
@@ -8,12 +8,10 @@ enum UserRoleId {
     SuperAdmin
 }
 
-const UserRoles: Array<UserRoleDocument> = [
+export const UserRoles: Array<UserRoleDocument> = [
     {id: UserRoleId.User, rank: 1, langKey: "user"},
     {id: UserRoleId.Author, rank: 2, langKey: "author"},
     {id: UserRoleId.Editor, rank: 3, langKey: "editor"},
     {id: UserRoleId.Admin, rank: 4, langKey: "admin"},
     {id: UserRoleId.SuperAdmin, rank: 5, langKey: "superAdmin"}
 ]
-
-export {UserRoles, UserRoleId};

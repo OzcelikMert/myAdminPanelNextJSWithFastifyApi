@@ -1,23 +1,28 @@
-import PagePaths from "constants/pagePaths";
+import {EndPoints} from "constants/endPoints";
+import pathLib from "lib/path.lib";
+import {PostEndPoint} from "constants/endPoints/post.endPoint";
+import {PostTermEndPoint} from "constants/endPoints/postTerm.endPoint";
+import {NavigationEndPoint} from "constants/endPoints/navigation.endPoint";
+import {ComponentEndPoint} from "constants/endPoints/component.endPoint";
+import {SettingsEndPoint} from "constants/endPoints/settings.endPoint";
 
-const MultiLanguagePaths = [
-    PagePaths.post().list(),
-    PagePaths.post().edit(),
-    PagePaths.post().term().edit(),
-    PagePaths.post().term().list(),
-    PagePaths.eCommerce().product().list(),
-    PagePaths.eCommerce().product().edit(),
-    PagePaths.eCommerce().product().term().edit(),
-    PagePaths.eCommerce().product().term().list(),
-    PagePaths.themeContent().post().list(),
-    PagePaths.themeContent().post().edit(),
-    PagePaths.themeContent().post().term().edit(),
-    PagePaths.themeContent().post().term().list(),
-    PagePaths.navigation().list(),
-    PagePaths.navigation().edit(),
-    PagePaths.component().edit(),
-    PagePaths.settings().staticLanguages(),
-    PagePaths.settings().seo()
+export const MultiLanguagePaths = [
+    pathLib.setPath(EndPoints.POST(), PostEndPoint.LIST),
+    pathLib.setPath(EndPoints.POST(), PostEndPoint.EDIT()),
+    pathLib.setPath(EndPoints.POST(), PostEndPoint.TERM(), PostTermEndPoint.LIST),
+    pathLib.setPath(EndPoints.POST(), PostEndPoint.TERM(), PostTermEndPoint.EDIT()),
+    pathLib.setPath(EndPoints.ECOMMERCE, EndPoints.POST(), PostEndPoint.LIST),
+    pathLib.setPath(EndPoints.ECOMMERCE, EndPoints.POST(), PostEndPoint.EDIT()),
+    pathLib.setPath(EndPoints.ECOMMERCE, EndPoints.POST(), PostEndPoint.TERM(), PostTermEndPoint.LIST),
+    pathLib.setPath(EndPoints.ECOMMERCE, EndPoints.POST(), PostEndPoint.TERM(), PostTermEndPoint.EDIT()),
+    pathLib.setPath(EndPoints.THEME_CONTENT, EndPoints.POST(), PostEndPoint.LIST),
+    pathLib.setPath(EndPoints.THEME_CONTENT, EndPoints.POST(), PostEndPoint.EDIT()),
+    pathLib.setPath(EndPoints.THEME_CONTENT, EndPoints.POST(), PostEndPoint.TERM(), PostTermEndPoint.LIST),
+    pathLib.setPath(EndPoints.THEME_CONTENT, EndPoints.POST(), PostEndPoint.TERM(), PostTermEndPoint.EDIT()),
+    pathLib.setPath(EndPoints.NAVIGATION, NavigationEndPoint.LIST),
+    pathLib.setPath(EndPoints.NAVIGATION, NavigationEndPoint.EDIT()),
+    pathLib.setPath(EndPoints.COMPONENT, ComponentEndPoint.LIST),
+    pathLib.setPath(EndPoints.COMPONENT, ComponentEndPoint.EDIT()),
+    pathLib.setPath(EndPoints.SETTINGS, SettingsEndPoint.STATIC_LANGUAGES),
+    pathLib.setPath(EndPoints.SETTINGS, SettingsEndPoint.SEO),
 ]
-
-export default MultiLanguagePaths;

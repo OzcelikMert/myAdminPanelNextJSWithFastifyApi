@@ -1,11 +1,9 @@
-import {LanguageId} from "constants/index";
+import {LanguageId} from "constants/languages";
 
-interface LanguageDocument {
+export interface LanguageDocument {
     id: LanguageId,
     code: string,
     title: string,
     rank: number,
     image: string
 }
-
-export {LanguageDocument}

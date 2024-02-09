@@ -1,13 +1,10 @@
-import LanguageKeys from "../languages";
-import {PermissionGroupId, PermissionId} from "constants/index";
+import {LanguageKeys} from "../languages";
+import {PermissionId} from "constants/permissions";
+import {PermissionGroupId} from "constants/permissionGroups";
 
-interface PermissionDocument {
+export interface PermissionDocument {
     id: PermissionId,
     groupId: PermissionGroupId,
     defaultRoleRank: number,
     langKey: LanguageKeys
-}
-
-export {
-    PermissionDocument
 }

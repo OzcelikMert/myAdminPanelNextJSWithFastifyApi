@@ -1,6 +1,6 @@
-import {StatusDocument} from "types/constants";
+import {StatusDocument} from "types/constants/status";
 
-enum StatusId {
+export enum StatusId {
     Active = 1,
     InProgress,
     Pending,
@@ -9,7 +9,7 @@ enum StatusId {
     Deleted
 }
 
-const Status: Array<StatusDocument> = [
+export const Status: Array<StatusDocument> = [
     {id: StatusId.Active, rank: 1, langKey: "active"},
     {id: StatusId.InProgress, rank: 2, langKey: "inProgress"},
     {id: StatusId.Pending, rank: 3, langKey: "pending"},
@@ -17,5 +17,3 @@ const Status: Array<StatusDocument> = [
     {id: StatusId.Banned, rank: 5, langKey: "banned"},
     {id: StatusId.Deleted, rank: 6, langKey: "deleted"}
 ]
-
-export {Status, StatusId};

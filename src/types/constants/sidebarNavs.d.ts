@@ -1,4 +1,4 @@
-import LanguageKeys from "types/languages";
+import {LanguageKeys} from "types/languages";
 import {EndPointPermissionDocument} from "types/constants/endPoint.permissions";
 
 export interface SideBarPath {

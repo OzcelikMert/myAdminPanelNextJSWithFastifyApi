@@ -1,12 +1,8 @@
-import {PostTermTypeId} from "constants/index";
-import LanguageKeys from "../languages";
+import {LanguageKeys} from "../languages";
+import {PostTermTypeId} from "constants/postTermTypes";
 
-interface PostTermTypeDocument {
+export interface PostTermTypeDocument {
     id: PostTermTypeId,
     rank: number,
     langKey: LanguageKeys
-}
-
-export {
-    PostTermTypeDocument
 }

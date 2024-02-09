@@ -19,7 +19,7 @@ import {SubscriberEndPointPermission} from "constants/endPointPermissions/subscr
 import {LanguageEndPointPermission} from "constants/endPointPermissions/language.endPoint.permission";
 import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
 
-const SidebarNav: SideBarPath[] = [
+export const SidebarNav: SideBarPath[] = [
     {path: EndPoints.DASHBOARD, icon: `home`, title: "dashboard"},
     {
         path: EndPoints.GALLERY,
@@ -290,5 +290,3 @@ const SidebarNav: SideBarPath[] = [
         ]
     },
 ];
-
-export default SidebarNav;

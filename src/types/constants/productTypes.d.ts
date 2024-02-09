@@ -1,4 +1,4 @@
-import LanguageKeys from "../languages";
+import {LanguageKeys} from "../languages";
 import {ProductTypeId} from "constants/productTypes";
 
 export interface ProductTypeDocument {

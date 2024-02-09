@@ -1,12 +1,8 @@
-import {UserRoleId} from "constants/index";
-import LanguageKeys from "../languages";
+import {LanguageKeys} from "../languages";
+import {UserRoleId} from "constants/userRoles";
 
-interface UserRoleDocument {
+export interface UserRoleDocument {
     id: UserRoleId,
     rank: number,
     langKey: LanguageKeys
-}
-
-export {
-    UserRoleDocument
 }
