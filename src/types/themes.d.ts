@@ -1,5 +1,5 @@
-import {ThemeKeysArray} from "constants/themeKeys";
+import {themeKeysArray} from "constants/themeKeys";
 
-type ThemeKeys = typeof ThemeKeysArray[number];
+type ThemeKeys = typeof themeKeysArray[number];
 
 export default ThemeKeys;

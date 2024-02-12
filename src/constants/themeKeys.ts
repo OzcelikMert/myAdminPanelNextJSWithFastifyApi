@@ -1,4 +1,4 @@
-export const ThemeKeysArray = [
+export const themeKeysArray = [
     "default",
     "dark"
 ]  as const;

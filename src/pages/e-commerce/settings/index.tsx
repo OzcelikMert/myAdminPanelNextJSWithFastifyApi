@@ -6,7 +6,7 @@ import settingService from "services/setting.service";
 import ThemeToast from "components/theme/toast";
 import {SettingUpdateECommerceParamDocument} from "types/services/setting.service";
 import {Tab, Tabs} from "react-bootstrap";
-import {CurrencyId, CurrencyTypes} from "constants/currencyTypes";
+import {CurrencyId, currencyTypes} from "constants/currencyTypes";
 import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
 
 type PageState = {
@@ -64,7 +64,7 @@ export default class PageECommerceSettings extends Component<PageProps, PageStat
 
     getCurrencyTypes() {
         this.setState({
-            currencyTypes: CurrencyTypes.map(currency => ({
+            currencyTypes: currencyTypes.map(currency => ({
                 label: `${currency.title} (${currency.icon})`,
                 value: currency.id.toString()
             }))

@@ -17,7 +17,7 @@ import ProviderPermission from "components/providers/permission.provider";
 import ProviderAppInit from "components/providers/app.init.provider";
 import Variable from "library/variable";
 import {ToastContainer} from "react-toastify";
-import MultiLanguagePaths from "constants/multiLanguagePaths";
+import multiLanguagePaths from "constants/multiLanguagePaths";
 import {CurrencyId} from "constants/currencyTypes";
 
 type PageState = {
@@ -114,7 +114,7 @@ class ComponentApp extends Component<PageProps, PageState> {
                         <ThemeBreadCrumb breadCrumbs={this.state.breadCrumbTitle.split(" - ")}/>
                     </div>
                     {
-                        MultiLanguagePaths.includes(path)
+                        multiLanguagePaths.includes(path)
                             ? <div className="col-md-4 p-0 content-language">
                                 <ThemeContentLanguage
                                     t={props.t}

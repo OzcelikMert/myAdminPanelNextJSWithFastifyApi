@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {PagePropCommonDocument} from "types/pageProps";
-import {ProductTypeId, ProductTypes} from "constants/productTypes";
+import {ProductTypeId, productTypes} from "constants/productTypes";
 
 type PageState = {};
 
@@ -15,7 +15,7 @@ export default class ThemeBadgeProductType extends Component<PageProps, PageStat
         return (
             <label className={`badge badge-gradient-${getProductTypeColor(this.props.productTypeId)} text-start ${this.props.className ?? ""}`}>
                 {
-                    this.props.t(ProductTypes.findSingle("id", this.props.productTypeId)?.langKey ?? "[noLangAdd]")
+                    this.props.t(productTypes.findSingle("id", this.props.productTypeId)?.langKey ?? "[noLangAdd]")
                 }
             </label>
         )

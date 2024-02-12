@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import dynamic from "next/dynamic";
 import {PagePropCommonDocument} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
-import {PostTypeId, PostTypes} from "constants/index";
+import {PostTypeId, postTypes} from "constants/index";
 import {PostGetManyResultDocument} from "types/services/post.service";
 import postService from "services/post.service";
 import viewService from "services/view.service";
@@ -171,7 +171,7 @@ class PageDashboard extends Component<PageProps, PageState> {
                         className={`badge badge-gradient-primary cursor-pointer`}
                     >
                         {
-                            this.props.t(PostTypes.findSingle("id", row.typeId)?.langKey ?? "[noLangAdd]")
+                            this.props.t(postTypes.findSingle("id", row.typeId)?.langKey ?? "[noLangAdd]")
                         }
                     </label>
                 )

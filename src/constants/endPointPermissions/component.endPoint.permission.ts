@@ -17,8 +17,14 @@ const sidebarNav: EndPointPermissionDocument = {
     minUserRoleId: UserRoleId.SuperAdmin
 }
 
+const remove: EndPointPermissionDocument = {
+    permissionId: [],
+    minUserRoleId: UserRoleId.SuperAdmin
+}
+
 export const ComponentEndPointPermission = {
+    SIDEBAR_NAV: sidebarNav,
     ADD: add,
     UPDATE: update,
-    SIDEBAR_NAV: sidebarNav
+    DELETE: remove
 }

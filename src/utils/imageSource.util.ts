@@ -1,12 +1,12 @@
 import V from "library/variable";
 import {emptyImage} from "components/theme/chooseImage";
-import pathUtil from "utils/path.util";
+import {PathUtil} from "utils/path.util";
 
 const getUploadedImageSrc = (imageName?: string): any => {
     return imageName && !V.isEmpty(imageName)
         ? (imageName.isUrl())
             ? imageName
-            : pathUtil.uploads.images + imageName
+            : PathUtil.getImageURL() + imageName
         : emptyImage
 }
 
@@ -14,11 +14,11 @@ const getUploadedFlagSrc = (imageName?: string): any => {
     return imageName && !V.isEmpty(imageName)
         ? (imageName.isUrl())
             ? imageName
-            : pathUtil.uploads.flags + imageName
+            : PathUtil.getFlagURL() + imageName
         : emptyImage
 }
 
-export default {
+export const ImageSourceUtil = {
     getUploadedImageSrc: getUploadedImageSrc,
     getUploadedFlagSrc: getUploadedFlagSrc
 }

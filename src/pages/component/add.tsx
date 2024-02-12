@@ -1,7 +1,7 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import {PagePropCommonDocument} from "types/pageProps";
-import {LanguageKeysArray, ComponentInputTypeId, ComponentInputTypes, UserRoleId, PostTypeId} from "constants/index";
+import {languageKeysArray, ComponentInputTypeId, ComponentInputTypes, UserRoleId, PostTypeId} from "constants/index";
 import HandleForm from "library/react/handles/form";
 import {ThemeFieldSet, ThemeForm, ThemeFormSelect, ThemeFormType} from "components/theme/form";
 import V from "library/variable";
@@ -82,7 +82,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
 
     getLangKeys() {
         this.setState((state: PageState) => {
-            state.langKeys = LanguageKeysArray.map(langKey => ({label: langKey, value: langKey}))
+            state.langKeys = languageKeysArray.map(langKey => ({label: langKey, value: langKey}))
             return state;
         })
     }

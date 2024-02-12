@@ -1,3 +1,3 @@
-import {LanguageKeysArray} from "constants/languageKeys";
+import {languageKeysArray} from "constants/languageKeys";
 
-export type LanguageKeys = typeof LanguageKeysArray[number];
+export type LanguageKeys = typeof languageKeysArray[number];

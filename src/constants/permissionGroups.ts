@@ -20,7 +20,7 @@ export enum PermissionGroupId {
     BeforeAndAfter
 }
 
-export const PermissionGroups: Array<PermissionGroupDocument> = [
+export const permissionGroups: Array<PermissionGroupDocument> = [
     {id: PermissionGroupId.Blog, rank: 1, langKey: "blogs"},
     {id: PermissionGroupId.Portfolio, rank: 2, langKey: "portfolios"},
     {id: PermissionGroupId.Slider, rank: 3, langKey: "sliders"},

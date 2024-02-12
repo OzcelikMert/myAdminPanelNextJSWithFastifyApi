@@ -6,7 +6,7 @@ export enum CurrencyId {
     Euro,
 }
 
-export const CurrencyTypes: Array<CurrencyTypeDocument> = [
+export const currencyTypes: Array<CurrencyTypeDocument> = [
     {id: CurrencyId.TurkishLira, title: "Turkish Lira", icon: "TL"},
     {id: CurrencyId.Dollar, title: "Dollar", icon: "$"},
     {id: CurrencyId.Euro, title: "Euro", icon: "€"},

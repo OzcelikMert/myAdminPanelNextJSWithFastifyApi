@@ -8,7 +8,7 @@ export enum ComponentInputTypeId {
     Number
 }
 
-export const ComponentInputTypes: Array<ThemeGroupTypeDocument> = [
+export const componentInputTypes: Array<ThemeGroupTypeDocument> = [
     {id: ComponentInputTypeId.Text, langKey: "text"},
     {id: ComponentInputTypeId.TextArea, langKey: "textArea"},
     {id: ComponentInputTypeId.Image, langKey: "image"},

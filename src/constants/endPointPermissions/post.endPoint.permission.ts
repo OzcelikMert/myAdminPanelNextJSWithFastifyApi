@@ -12,6 +12,11 @@ const updateSlider: EndPointPermissionDocument = {
     minUserRoleId: UserRoleId.Author
 }
 
+const removeSlider: EndPointPermissionDocument = {
+    permissionId: [PermissionId.SliderDelete],
+    minUserRoleId: UserRoleId.Author
+}
+
 const sidebarNavSlider: EndPointPermissionDocument = {
     permissionId: [PermissionId.SliderAdd, PermissionId.SliderEdit, PermissionId.SliderDelete],
     minUserRoleId: UserRoleId.Author
@@ -24,6 +29,11 @@ const addPage: EndPointPermissionDocument = {
 
 const updatePage: EndPointPermissionDocument = {
     permissionId: [PermissionId.PageEdit],
+    minUserRoleId: UserRoleId.Author
+}
+
+const removePage: EndPointPermissionDocument = {
+    permissionId: [PermissionId.PageDelete],
     minUserRoleId: UserRoleId.Author
 }
 
@@ -42,6 +52,11 @@ const updateBlog: EndPointPermissionDocument = {
     minUserRoleId: UserRoleId.Author
 }
 
+const removeBlog: EndPointPermissionDocument = {
+    permissionId: [PermissionId.BlogDelete],
+    minUserRoleId: UserRoleId.Author
+}
+
 const sidebarNavBlog: EndPointPermissionDocument = {
     permissionId: [PermissionId.BlogAdd, PermissionId.BlogEdit, PermissionId.BlogDelete],
     minUserRoleId: UserRoleId.Author
@@ -54,6 +69,11 @@ const addReference: EndPointPermissionDocument = {
 
 const updateReference: EndPointPermissionDocument = {
     permissionId: [PermissionId.ReferenceEdit],
+    minUserRoleId: UserRoleId.Author
+}
+
+const removeReference: EndPointPermissionDocument = {
+    permissionId: [PermissionId.ReferenceDelete],
     minUserRoleId: UserRoleId.Author
 }
 
@@ -72,6 +92,11 @@ const updatePortfolio: EndPointPermissionDocument = {
     minUserRoleId: UserRoleId.Author
 }
 
+const removePortfolio: EndPointPermissionDocument = {
+    permissionId: [PermissionId.PortfolioDelete],
+    minUserRoleId: UserRoleId.Author
+}
+
 const sidebarNavPortfolio: EndPointPermissionDocument = {
     permissionId: [PermissionId.PortfolioAdd, PermissionId.PortfolioEdit, PermissionId.PortfolioDelete],
     minUserRoleId: UserRoleId.Author
@@ -84,6 +109,11 @@ const addTestimonial: EndPointPermissionDocument = {
 
 const updateTestimonial: EndPointPermissionDocument = {
     permissionId: [PermissionId.TestimonialEdit],
+    minUserRoleId: UserRoleId.Author
+}
+
+const removeTestimonial: EndPointPermissionDocument = {
+    permissionId: [PermissionId.TestimonialDelete],
     minUserRoleId: UserRoleId.Author
 }
 
@@ -102,6 +132,11 @@ const updateService: EndPointPermissionDocument = {
     minUserRoleId: UserRoleId.Author
 }
 
+const removeService: EndPointPermissionDocument = {
+    permissionId: [PermissionId.ServiceDelete],
+    minUserRoleId: UserRoleId.Author
+}
+
 const sidebarNavService: EndPointPermissionDocument = {
     permissionId: [PermissionId.ServiceAdd, PermissionId.ServiceEdit, PermissionId.ServiceDelete],
     minUserRoleId: UserRoleId.Author
@@ -114,6 +149,11 @@ const addProduct: EndPointPermissionDocument = {
 
 const updateProduct: EndPointPermissionDocument = {
     permissionId: [PermissionId.ProductEdit],
+    minUserRoleId: UserRoleId.Author
+}
+
+const removeProduct: EndPointPermissionDocument = {
+    permissionId: [PermissionId.ProductDelete],
     minUserRoleId: UserRoleId.Author
 }
 
@@ -132,6 +172,11 @@ const updateBeforeAndAfter: EndPointPermissionDocument = {
     minUserRoleId: UserRoleId.Author
 }
 
+const removeBeforeAndAfter: EndPointPermissionDocument = {
+    permissionId: [PermissionId.BeforeAndAfterDelete],
+    minUserRoleId: UserRoleId.Author
+}
+
 const sidebarNavBeforeAndAfter: EndPointPermissionDocument = {
     permissionId: [PermissionId.BeforeAndAfterAdd, PermissionId.BeforeAndAfterEdit, PermissionId.BeforeAndAfterDelete],
     minUserRoleId: UserRoleId.Author
@@ -140,29 +185,38 @@ const sidebarNavBeforeAndAfter: EndPointPermissionDocument = {
 export const PostEndPointPermission = {
     ADD_SLIDER: addSlider,
     UPDATE_SLIDER: updateSlider,
+    DELETE_SLIDER: removeSlider,
     SIDEBAR_NAV_SLIDER: sidebarNavSlider,
     ADD_PAGE: addPage,
     UPDATE_PAGE: updatePage,
+    DELETE_PAGE: removePage,
     SIDEBAR_NAV_PAGE: sidebarNavPage,
     ADD_BLOG: addBlog,
     UPDATE_BLOG: updateBlog,
+    DELETE_BLOG: removeBlog,
     SIDEBAR_NAV_BLOG: sidebarNavBlog,
     ADD_REFERENCE: addReference,
     UPDATE_REFERENCE: updateReference,
+    DELETE_REFERENCE: removeReference,
     SIDEBAR_NAV_REFERENCE: sidebarNavReference,
     ADD_PORTFOLIO: addPortfolio,
     UPDATE_PORTFOLIO: updatePortfolio,
+    DELETE_PORTFOLIO: removePortfolio,
     SIDEBAR_NAV_PORTFOLIO: sidebarNavPortfolio,
     ADD_TESTIMONIAL: addTestimonial,
     UPDATE_TESTIMONIAL: updateTestimonial,
+    DELETE_TESTIMONIAL: removeTestimonial,
     SIDEBAR_NAV_TESTIMONIAL: sidebarNavTestimonial,
     ADD_SERVICE: addService,
     UPDATE_SERVICE: updateService,
+    DELETE_SERVICE: removeService,
     SIDEBAR_NAV_SERVICE: sidebarNavService,
     ADD_PRODUCT: addProduct,
     UPDATE_PRODUCT: updateProduct,
+    DELETE_PRODUCT: removeProduct,
     SIDEBAR_NAV_PRODUCT: sidebarNavProduct,
     ADD_BEFORE_AND_AFTER: addBeforeAndAfter,
     UPDATE_BEFORE_AND_AFTER: updateBeforeAndAfter,
+    DELETE_BEFORE_AND_AFTER: removeBeforeAndAfter,
     SIDEBAR_NAV_BEFORE_AND_AFTER: sidebarNavBeforeAndAfter
 }

@@ -5,7 +5,7 @@ export enum AttributeTypeId {
     Image,
 }
 
-export const AttributeTypes: Array<AttributeTypeDocument> = [
+export const attributeTypes: Array<AttributeTypeDocument> = [
     {id: AttributeTypeId.Text, rank: 1, langKey: "text"},
     {id: AttributeTypeId.Image, rank: 2, langKey: "image"},
 ]

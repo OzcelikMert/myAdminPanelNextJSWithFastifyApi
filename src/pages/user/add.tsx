@@ -2,7 +2,7 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import moment from "moment";
 import {PagePropCommonDocument} from "types/pageProps";
-import {PermissionGroups, Permissions, StatusId, UserRoleId, UserRoles} from "constants/index";
+import {PermissionGroups, Permissions, StatusId, UserRoleId, userRoles} from "constants/index";
 import HandleForm from "library/react/handles/form";
 import {ThemeFieldSet, ThemeForm, ThemeFormCheckBox, ThemeFormSelect, ThemeFormType} from "components/theme/form";
 import V, {DateMask} from "library/variable";
@@ -88,9 +88,9 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
 
     getRoles() {
         this.setState((state: PageState) => {
-            let findUserRole = UserRoles.findSingle("id", this.props.getStateApp.sessionData.roleId);
-            state.userRoles = staticContentLib.getUserRolesForSelect(
-                UserRoles.map(userRole => findUserRole && (findUserRole.rank > userRole.rank) ? userRole.id : 0).filter(roleId => roleId !== 0),
+            let findUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionData.roleId);
+            state.userRoles = staticContentLib.getuserRolesForSelect(
+                userRoles.map(userRole => findUserRole && (findUserRole.rank > userRole.rank) ? userRole.id : 0).filter(roleId => roleId !== 0),
                 this.props.t
             );
             state.formData.roleId = UserRoleId.User;
@@ -173,7 +173,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
     }
 
     onChangeUserRole(roleId: number) {
-        let role = UserRoles.findSingle("id", roleId);
+        let role = userRoles.findSingle("id", roleId);
         let permsForRole = Permissions.filter(perm => role && (perm.defaultRoleRank <= role.rank));
         this.setState((state: PageState) => {
             state.formData.permissions = [];

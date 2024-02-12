@@ -10,7 +10,7 @@ const sidebarNav: EndPointPermissionDocument = {
         ...PostEndPointPermission.SIDEBAR_NAV_REFERENCE.permissionId,
         ...PostEndPointPermission.SIDEBAR_NAV_SERVICE.permissionId,
         ...PostEndPointPermission.SIDEBAR_NAV_TESTIMONIAL.permissionId,
-        ...PostEndPointPermission.ADD_BEFORE_AND_AFTER.permissionId
+        ...PostEndPointPermission.SIDEBAR_NAV_BEFORE_AND_AFTER.permissionId
     ],
     minUserRoleId: UserRoleId.Author
 }

@@ -2,7 +2,7 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import {ThemeForm, ThemeFormSelect, ThemeFormType,} from "components/theme/form"
 import {PagePropCommonDocument} from "types/pageProps";
-import {PostTermTypeId, PostTermTypes, PostTypeId, StatusId} from "constants/index";
+import {PostTermTypeId, postTermTypes, PostTypeId, StatusId} from "constants/index";
 import V from "library/variable";
 import HandleForm from "library/react/handles/form";
 import ThemeChooseImage from "components/theme/chooseImage";

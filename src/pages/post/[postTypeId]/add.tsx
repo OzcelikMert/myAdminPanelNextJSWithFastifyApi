@@ -2,7 +2,7 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import moment from "moment";
 import {ThemeForm, ThemeFormCheckBox, ThemeFormSelect, ThemeFormType} from "components/theme/form"
-import {LanguageKeysArray, PageTypes, PostTermTypeId, PostTypeId, StatusId} from "constants/index";
+import {languageKeysArray, PageTypes, PostTermTypeId, PostTypeId, StatusId} from "constants/index";
 import {PagePropCommonDocument} from "types/pageProps";
 import V from "library/variable";
 import Variable from "library/variable";
@@ -21,7 +21,7 @@ import Swal from "sweetalert2";
 import Image from "next/image"
 import dynamic from "next/dynamic";
 import PostLib from "lib/post.lib";
-import {ProductTypeId, ProductTypes} from "constants/productTypes";
+import {ProductTypeId, productTypes} from "constants/productTypes";
 import {AttributeTypes} from "constants/attributeTypes";
 import postLib from "lib/post.lib";
 import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
@@ -161,7 +161,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
 
     getLangKeys() {
         this.setState((state: PageState) => {
-            state.langKeys = LanguageKeysArray.map(langKey => ({label: langKey, value: langKey}))
+            state.langKeys = languageKeysArray.map(langKey => ({label: langKey, value: langKey}))
             return state;
         })
     }
@@ -178,7 +178,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
 
     getProductTypes() {
         this.setState((state: PageState) => {
-            state.productTypes = ProductTypes.map(product => ({
+            state.productTypes = productTypes.map(product => ({
                 label: this.props.t(product.langKey),
                 value: product.id
             }))

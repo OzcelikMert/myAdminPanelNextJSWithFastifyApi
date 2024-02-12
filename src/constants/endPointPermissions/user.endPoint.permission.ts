@@ -12,6 +12,11 @@ const update: EndPointPermissionDocument = {
     minUserRoleId: UserRoleId.Editor
 }
 
+const remove: EndPointPermissionDocument = {
+    permissionId: [PermissionId.UserDelete],
+    minUserRoleId: UserRoleId.Editor
+}
+
 const sidebarNav: EndPointPermissionDocument = {
     permissionId: [PermissionId.UserAdd, PermissionId.UserEdit, PermissionId.UserDelete],
     minUserRoleId: UserRoleId.Editor
@@ -20,5 +25,6 @@ const sidebarNav: EndPointPermissionDocument = {
 export const UserEndPointPermission = {
     ADD: add,
     UPDATE: update,
+    DELETE: remove,
     SIDEBAR_NAV: sidebarNav
 }

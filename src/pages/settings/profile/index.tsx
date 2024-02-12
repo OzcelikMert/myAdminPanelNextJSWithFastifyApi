@@ -5,7 +5,7 @@ import HandleForm from "library/react/handles/form";
 import {
     PermissionGroups,
     Permissions,
-    UserRoles
+    userRoles
 } from "constants/index";
 import ThemeChooseImage from "components/theme/chooseImage";
 import userService from "services/user.service";

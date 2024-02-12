@@ -39,10 +39,10 @@ const sidebarNav: EndPointPermissionDocument = {
 }
 
 export const SettingsEndPointPermission = {
-    SIDEBAR_NAV: sidebarNav,
     UPDATE_GENERAL: updateGeneral,
     UPDATE_SEO: updateSEO,
     UPDATE_CONTACT_FORM: updateContactForm,
     UPDATE_STATIC_LANGUAGE: updateStaticLanguage,
     UPDATE_SOCIAL_MEDIA: updateSocialMedia,
+    SIDEBAR_NAV: sidebarNav,
 }

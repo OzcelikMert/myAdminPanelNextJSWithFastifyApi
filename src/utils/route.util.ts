@@ -4,6 +4,6 @@ const change = (route: PagePropCommonDocument["router"], path: string, as?: stri
     return route.push(path, as ?? path, {shallow: true})
 }
 
-export default {
+export const RouteUtil = {
     change: change
 }

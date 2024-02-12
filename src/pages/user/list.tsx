@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {PagePropCommonDocument} from "types/pageProps";
-import {PermissionId, Status, UserRoleId, UserRoles} from "constants/index";
+import {PermissionId, Status, UserRoleId, userRoles} from "constants/index";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import {UserGetResultDocument} from "types/services/user.service";
@@ -152,7 +152,7 @@ export default class PageUserList extends Component<PageProps, PageState> {
             {
                 id: "userRole",
                 name: this.props.t("role"),
-                selector: row => UserRoles.findSingle("id", row.roleId)?.rank ?? 0,
+                selector: row => userRoles.findSingle("id", row.roleId)?.rank ?? 0,
                 sortable: true,
                 cell: row => <ThemeBadgeUserRole t={this.props.t} userRoleId={row.roleId} />
             },
@@ -183,8 +183,8 @@ export default class PageUserList extends Component<PageProps, PageState> {
                 button: true,
                 width: "70px",
                 cell: row => {
-                    let sessionUserRole = UserRoles.findSingle("id", this.props.getStateApp.sessionData.roleId);
-                    let rowUserRole = UserRoles.findSingle("id", row.roleId);
+                    let sessionUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionData.roleId);
+                    let rowUserRole = userRoles.findSingle("id", row.roleId);
                     return (
                         (sessionUserRole && rowUserRole) &&
                         (rowUserRole.rank < sessionUserRole.rank) &&
@@ -205,8 +205,8 @@ export default class PageUserList extends Component<PageProps, PageState> {
                 button: true,
                 width: "70px",
                 cell: row => {
-                    let sessionUserRole = UserRoles.findSingle("id", this.props.getStateApp.sessionData.roleId);
-                    let rowUserRole = UserRoles.findSingle("id", row.roleId);
+                    let sessionUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionData.roleId);
+                    let rowUserRole = userRoles.findSingle("id", row.roleId);
                     return (
                         (sessionUserRole && rowUserRole) &&
                         (rowUserRole.rank < sessionUserRole.rank) &&

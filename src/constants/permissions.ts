@@ -44,7 +44,7 @@ export enum PermissionId {
     BeforeAndAfterDelete,
 }
 
-export const Permissions: Array<PermissionDocument> = [
+export const permissions: Array<PermissionDocument> = [
     {id: PermissionId.BlogAdd, groupId: PermissionGroupId.Blog, defaultRoleRank: 2, langKey: "add"},
     {id: PermissionId.BlogEdit, groupId: PermissionGroupId.Blog, defaultRoleRank: 3, langKey: "edit"},
     {id: PermissionId.BlogDelete, groupId: PermissionGroupId.Blog, defaultRoleRank: 3, langKey: "delete"},

@@ -8,7 +8,7 @@ export enum UserRoleId {
     SuperAdmin
 }
 
-export const UserRoles: Array<UserRoleDocument> = [
+export const userRoles: Array<UserRoleDocument> = [
     {id: UserRoleId.User, rank: 1, langKey: "user"},
     {id: UserRoleId.Author, rank: 2, langKey: "author"},
     {id: UserRoleId.Editor, rank: 3, langKey: "editor"},

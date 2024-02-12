@@ -17,6 +17,11 @@ const update: EndPointPermissionDocument = {
     minUserRoleId: UserRoleId.SuperAdmin
 }
 
+const remove: EndPointPermissionDocument = {
+    permissionId: [],
+    minUserRoleId: UserRoleId.SuperAdmin
+}
+
 const sidebarNav: EndPointPermissionDocument = {
     permissionId: [],
     minUserRoleId: UserRoleId.SuperAdmin
@@ -26,5 +31,6 @@ export const LanguageEndPointPermission = {
     GET_FLAGS: getFlags,
     ADD: add,
     UPDATE: update,
-    SIDEBAR_NAV: sidebarNav
+    DELETE: remove,
+    SIDEBAR_NAV: sidebarNav,
 }

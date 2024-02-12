@@ -7,7 +7,7 @@ export enum PageTypeId {
     Contact
 }
 
-export const PageTypes: Array<PageTypeDocument> = [
+export const pageTypes: Array<PageTypeDocument> = [
     {id: PageTypeId.Default, rank: 1, langKey: "default"},
     {id: PageTypeId.HomePage, rank: 2, langKey: "homePage"},
     {id: PageTypeId.Blogs, rank: 3, langKey: "blogs"},

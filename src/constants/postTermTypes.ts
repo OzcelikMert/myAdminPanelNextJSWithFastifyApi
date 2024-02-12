@@ -7,7 +7,7 @@ export enum PostTermTypeId {
     Variations
 }
 
-export const PostTermTypes: Array<PostTermTypeDocument> = [
+export const postTermTypes: Array<PostTermTypeDocument> = [
     {id: PostTermTypeId.Category, rank: 1, langKey: "category"},
     {id: PostTermTypeId.Tag, rank: 2, langKey: "tag"},
     {id: PostTermTypeId.Attributes, rank: 1, langKey: "attribute"},

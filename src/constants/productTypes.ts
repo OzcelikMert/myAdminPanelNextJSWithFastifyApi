@@ -6,7 +6,7 @@ export enum ProductTypeId {
     ExternalProduct
 }
 
-export const ProductTypes: Array<ProductTypeDocument> = [
+export const productTypes: Array<ProductTypeDocument> = [
     {id: ProductTypeId.SimpleProduct, rank: 1, langKey: "simpleProduct"},
     {id: ProductTypeId.VariableProduct, rank: 2, langKey: "variableProduct"}
 ]

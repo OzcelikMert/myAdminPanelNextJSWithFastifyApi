@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {PagePropCommonDocument} from "types/pageProps";
-import {UserRoleId, UserRoles} from "constants/userRoles";
+import {UserRoleId, userRoles} from "constants/userRoles";
 
 type PageState = {};
 
@@ -15,7 +15,7 @@ export default class ThemeBadgeUserRole extends Component<PageProps, PageState> 
         return (
             <label className={`badge badge-gradient-${getUserRoleColor(this.props.userRoleId)} text-start ${this.props.className ?? ""}`}>
                 {
-                    this.props.t(UserRoles.findSingle("id", this.props.userRoleId)?.langKey ?? "[noLangAdd]")
+                    this.props.t(userRoles.findSingle("id", this.props.userRoleId)?.langKey ?? "[noLangAdd]")
                 }
             </label>
         )
