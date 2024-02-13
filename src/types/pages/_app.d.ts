@@ -2,23 +2,25 @@ import {ILanguageGetResultService} from "types/services/language.service";
 import {CurrencyId} from "constants/currencyTypes";
 import {ISessionAuthModel} from "types/models/sessionAuth.model";
 
-type IAppGetState = {
+export type IGetStateApp = {
     isAppLoading: boolean
     isPageLoading: boolean
-    appData: {
-        mainLangId: string
-        contentLanguages: ILanguageGetResultService[]
-        currencyId: CurrencyId
-    }
-    pageData: {
-        langId: string
-    },
+    appData: IGetStateAppAppData
+    pageData: IGetStateAppPageData,
     sessionAuth?: ISessionAuthModel
 }
 
-type IAppSetState = Partial<IAppGetState>
-
-export {
-    IAppGetState,
-    IAppSetState
+export type IGetStateAppAppData = {
+    mainLangId: string
+    contentLanguages: ILanguageGetResultService[]
+    currencyId: CurrencyId
 }
+
+export type IGetStateAppPageData = {
+    langId: string
+}
+
+export type ISetStateApp = {
+    appData?: Partial<IGetStateAppAppData>
+    pageData?: Partial<IGetStateAppPageData>
+} & Partial<Omit<IGetStateApp, "appData"|"pageData">>

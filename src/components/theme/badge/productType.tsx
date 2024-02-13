@@ -2,15 +2,15 @@ import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ProductTypeId, productTypes} from "constants/productTypes";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     t: IPagePropCommon["t"]
     productTypeId: ProductTypeId
     className?: string
 };
 
-export default class ThemeBadgeProductType extends Component<PageProps, PageState> {
+export default class ComponentThemeBadgeProductType extends Component<IPageProps, IPageState> {
     render() {
         return (
             <label className={`badge badge-gradient-${getProductTypeColor(this.props.productTypeId)} text-start ${this.props.className ?? ""}`}>

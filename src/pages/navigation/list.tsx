@@ -4,17 +4,17 @@ import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import permissionLib from "lib/permission.lib";
-import ThemeToast from "components/theme/toast";
-import ThemeDataTable from "components/theme/table/dataTable";
+import ComponentToast from "components/elements/toast";
+import ComponentDataTable from "components/elements/table/dataTable";
 import {INavigationGetResultService} from "types/services/navigation.service";
 import navigationService from "services/navigation.service";
 import PagePaths from "constants/pagePaths";
-import {ThemeToggleMenuItemDocument} from "components/theme/table/toggleMenu";
-import ThemeBadgeStatus, {getStatusIcon} from "components/theme/badge/status";
-import ThemeTableUpdatedBy from "components/theme/table/updatedBy";
-import ThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
+import {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
+import ComponentThemeBadgeStatus, {getStatusIcon} from "components/theme/badge/status";
+import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
+import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
 
-type PageState = {
+type IPageState = {
     searchKey: string
     items: INavigationGetResultService[],
     showingItems: INavigationGetResultService[]
@@ -24,10 +24,10 @@ type PageState = {
     isShowModalUpdateRank: boolean
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PageNavigationList extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PageNavigationList extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             searchKey: "",
@@ -48,7 +48,7 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
         })
     }
 
-    async componentDidUpdate(prevProps: Readonly<PageProps>) {
+    async componentDidUpdate(prevProps: Readonly<IPageProps>) {
         if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
             this.props.setStateApp({
                 isPageLoading: true
@@ -73,7 +73,7 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
             langId: this.props.getStateApp.pageData.langId,
             ignoreDefaultLanguage: true
         })).data;
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.items = items;
             state.showingItems = items.filter(item => item.statusId !== StatusId.Deleted);
             return state;
@@ -92,7 +92,7 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
                 showCancelButton: true
             });
             if (result.isConfirmed) {
-                const loadingToast = new ThemeToast({
+                const loadingToast = new ComponentToast({
                     content: this.props.t("deleting"),
                     type: "loading"
                 });
@@ -100,11 +100,11 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
                 let resData = await navigationService.deleteMany({_id: selectedItemId});
                 loadingToast.hide();
                 if (resData.status) {
-                    this.setState((state: PageState) => {
+                    this.setState((state: IPageState) => {
                         state.items = state.items.filter(item => !selectedItemId.includes(item._id));
                         return state;
                     }, () => {
-                        new ThemeToast({
+                        new ComponentToast({
                             type: "success",
                             title: this.props.t("successful"),
                             content: this.props.t("itemDeleted")
@@ -114,14 +114,14 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
                 }
             }
         } else {
-            const loadingToast = new ThemeToast({
+            const loadingToast = new ComponentToast({
                 content: this.props.t("updating"),
                 type: "loading"
             });
             let resData = await navigationService.updateManyStatus({_id: selectedItemId, statusId: statusId});
             loadingToast.hide();
             if (resData.status) {
-                this.setState((state: PageState) => {
+                this.setState((state: IPageState) => {
                     state.items.map(item => {
                         if (selectedItemId.includes(item._id)) {
                             item.statusId = statusId;
@@ -129,7 +129,7 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
                     })
                     return state;
                 }, () => {
-                    new ThemeToast({
+                    new ComponentToast({
                         type: "success",
                         title: this.props.t("successful"),
                         content: this.props.t("statusUpdated")
@@ -147,7 +147,7 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
         });
 
         if(resData.status){
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 let item = this.state.items.findSingle("_id", this.state.selectedItemId);
                 if(item){
                     item.rank = rank;
@@ -156,7 +156,7 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
             }, () => {
                 this.onChangeListMode(this.state.listMode)
                 let item = this.state.items.findSingle("_id", this.state.selectedItemId);
-                new ThemeToast({
+                new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),
                     content: `'${item?.contents?.title}' ${this.props.t("itemEdited")}`,
@@ -166,8 +166,8 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
         }
     }
 
-    onSelect(selectedRows: PageState["showingItems"]) {
-        this.setState((state: PageState) => {
+    onSelect(selectedRows: IPageState["showingItems"]) {
+        this.setState((state: IPageState) => {
             state.selectedItems = selectedRows;
             return state;
         })
@@ -180,8 +180,8 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
         })
     }
 
-    onChangeListMode(mode: PageState["listMode"]) {
-        this.setState((state: PageState) => {
+    onChangeListMode(mode: IPageState["listMode"]) {
+        this.setState((state: IPageState) => {
             state.listMode = mode;
             state.showingItems = [];
             state.selectedItems = [];
@@ -220,7 +220,7 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
         ).map(item => ({label: this.props.t(item.langKey), value: item.id, icon: getStatusIcon(item.id)}))
     }
 
-    get getTableColumns(): TableColumn<PageState["showingItems"][0]>[] {
+    get getTableColumns(): TableColumn<IPageState["showingItems"][0]>[] {
         return [
             {
                 name: this.props.t("title"),
@@ -241,12 +241,12 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
             {
                 name: this.props.t("status"),
                 sortable: true,
-                cell: row => <ThemeBadgeStatus t={this.props.t} statusId={row.statusId}/>
+                cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId}/>
             },
             {
                 name: this.props.t("updatedBy"),
                 sortable: true,
-                cell: row => <ThemeTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""}/>
+                cell: row => <ComponentTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""}/>
             },
             {
                 name: this.props.t("rank"),
@@ -264,7 +264,7 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
                 name: this.props.t("createdDate"),
                 sortable: true,
                 selector: row => new Date(row.createdAt || "").toLocaleDateString(),
-                sortFunction: (a, b) => ThemeDataTable.dateSort(a, b)
+                sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
             },
             {
                 name: "",
@@ -288,7 +288,7 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
         let item = this.state.items.findSingle("_id", this.state.selectedItemId);
         return this.props.getStateApp.isPageLoading ? null : (
             <div className="page-navigation">
-                <ThemeModalUpdateItemRank
+                <ComponentThemeModalUpdateItemRank
                     t={this.props.t}
                     isShow={this.state.isShowModalUpdateRank}
                     onHide={() => this.setState({isShowModalUpdateRank: false})}
@@ -316,7 +316,7 @@ export default class PageNavigationList extends Component<PageProps, PageState> 
                     <div className="card">
                         <div className="card-body">
                             <div className="table-post">
-                                <ThemeDataTable
+                                <ComponentDataTable
                                     columns={this.getTableColumns.filter(column => typeof column.name !== "undefined")}
                                     data={this.state.showingItems}
                                     onSelect={rows => this.onSelect(rows)}

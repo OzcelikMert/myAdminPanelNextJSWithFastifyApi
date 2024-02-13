@@ -1,27 +1,27 @@
 import React, {Component} from 'react'
 import JoditEditor, {Jodit} from "jodit-react";
 import {IJodit} from "jodit/index";
-import ThemeChooseImage from "components/theme/chooseImage";
+import ComponentThemeChooseImage from "components/theme/chooseImage";
 import {IPagePropCommon} from "types/pageProps";
 import {Config} from "jodit/types/config";
 import Spinner from "react-bootstrap/Spinner";
-import imageSourceLib from "lib/imageSource.lib";
+import {ImageSourceUtil} from "utils/imageSource.util";
 
-type PageState = {
+type IPageState = {
     value: string
     config: Partial<Config>
     isGalleryShow: boolean
     isLoading: boolean
 };
 
-type PageProps = {
+type IPageProps = {
     value: string,
     onChange: (newContent: string) => void
 } & IPagePropCommon;
 
-export default class ThemeRichTextBox extends Component<PageProps, PageState> {
+export default class ComponentThemeRichTextBox extends Component<IPageProps, IPageState> {
     editor: IJodit | null;
-    constructor(props: PageProps) {
+    constructor(props: IPageProps) {
         super(props);
         this.editor = null;
         this.state = {
@@ -116,25 +116,29 @@ export default class ThemeRichTextBox extends Component<PageProps, PageState> {
     render() {
         return this.state.isLoading ? <Spinner animation="border" /> : (
             <div id={`themeRichTextBox_${String.createId()}`}>
-                <ThemeChooseImage
+                <ComponentThemeChooseImage
                     {...this.props}
                     isShow={this.state.isGalleryShow}
                     onHide={() => this.setState({isGalleryShow: false})}
                     onSelected={images => {
                         if(this.editor){
                             for(let image of images){
-                                this.editor.selection.insertImage(imageSourceLib.getUploadedImageSrc(image))
+                                this.editor.selection.insertImage(ImageSourceUtil.getUploadedImageSrc(image))
                             }
                         }
                     }}
                     isMulti={true}
                 />
                 <React.Fragment>
-                    <JoditEditor
+                    {
+                        /*
+                        <JoditEditor
                         value={this.state.value}
                         config={this.state.config}
                         onBlur={newContent => this.props.onChange(newContent)}
-                    />
+                        />
+                         */
+                    }
                 </React.Fragment>
             </div>
         )

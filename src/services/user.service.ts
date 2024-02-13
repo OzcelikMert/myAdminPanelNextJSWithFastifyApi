@@ -9,11 +9,11 @@ import {
 } from "types/services/user.service";
 import {UserApiEndPoint} from "constants/apiEndPoints/user.api.endPoint";
 import ApiRequest from "library/api/request";
-import pathUtil from "utils/path.util";
+import {PathUtil} from "utils/path.util";
 
 const getOne = (params: IUserGetOneParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.GET_WITH_ID(params._id)],
         data: params,
     }).get<IUserGetResultService>();
@@ -21,7 +21,7 @@ const getOne = (params: IUserGetOneParamService) => {
 
 const getMany = (params: IUserGetManyParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.GET],
         data: params,
     }).get<IUserGetResultService[]>();
@@ -29,7 +29,7 @@ const getMany = (params: IUserGetManyParamService) => {
 
 const add = (params: IUserAddParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.ADD],
         data: params,
     }).post();
@@ -37,7 +37,7 @@ const add = (params: IUserAddParamService) => {
 
 const updateOne = (params: IUserUpdateOneParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.UPDATE_WITH_ID(params._id)],
         data: params,
     }).put();
@@ -45,7 +45,7 @@ const updateOne = (params: IUserUpdateOneParamService) => {
 
 const updateProfile = (params: IUserUpdateProfileParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.UPDATE_PROFILE],
         data: params,
     }).put();
@@ -53,7 +53,7 @@ const updateProfile = (params: IUserUpdateProfileParamService) => {
 
 const updatePassword = (params: IUserUpdatePasswordParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.UPDATE_PASSWORD],
         data: params,
     }).put();
@@ -61,7 +61,7 @@ const updatePassword = (params: IUserUpdatePasswordParamService) => {
 
 const deleteOne = (params: IUserDeleteOneParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.DELETE_WITH_ID(params._id)],
         data: params,
     }).delete();

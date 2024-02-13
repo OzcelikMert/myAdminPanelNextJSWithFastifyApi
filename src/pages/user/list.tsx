@@ -4,29 +4,29 @@ import {PermissionId, Status, UserRoleId, userRoles} from "constants/index";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import {IUserGetResultService} from "types/services/user.service";
-import ThemeUsersProfileCard from "components/theme/users/profileCard";
+import ComponentThemeUsersProfileCard from "components/theme/users/profileCard";
 import userService from "services/user.service";
 import imageSourceLib from "lib/imageSource.lib";
 import permissionLib from "lib/permission.lib";
-import ThemeToast from "components/theme/toast";
+import ComponentToast from "components/elements/toast";
 import PagePaths from "constants/pagePaths";
-import ThemeDataTable from "components/theme/table/dataTable";
+import ComponentDataTable from "components/elements/table/dataTable";
 import Image from "next/image"
-import ThemeBadgeStatus from "components/theme/badge/status";
-import ThemeBadgeUserRole from "components/theme/badge/userRole";
+import ComponentThemeBadgeStatus from "components/theme/badge/status";
+import ComponentThemeBadgeUserRole from "components/theme/badge/userRole";
 
-type PageState = {
+type IPageState = {
     searchKey: string
     items: IUserGetResultService[]
-    showingItems: PageState["items"]
+    showingItems: IPageState["items"]
     isViewItemInfo: boolean
     selectedItemId: string
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PageUserList extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PageUserList extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             searchKey: "",
@@ -56,7 +56,7 @@ export default class PageUserList extends Component<PageProps, PageState> {
     async getItems() {
         let items = (await userService.getMany({})).data;
         items = items.orderBy("roleId", "desc");
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.items = state.items.sort(item => {
                 let sort = 0;
                 if (item._id == this.props.getStateApp.sessionData.id) {
@@ -81,7 +81,7 @@ export default class PageUserList extends Component<PageProps, PageState> {
                 showCancelButton: true
             });
             if (result.isConfirmed) {
-                const loadingToast = new ThemeToast({
+                const loadingToast = new ComponentToast({
                     content: this.props.t("deleting"),
                     type: "loading"
                 });
@@ -89,11 +89,11 @@ export default class PageUserList extends Component<PageProps, PageState> {
                 let resData = await userService.deleteOne({_id: userId})
                 loadingToast.hide();
                 if (resData.status) {
-                    this.setState((state: PageState) => {
+                    this.setState((state: IPageState) => {
                         state.items = state.items.filter(item => userId !== item._id);
                         return state;
                     }, () => {
-                        new ThemeToast({
+                        new ComponentToast({
                             type: "success",
                             title: this.props.t("successful"),
                             content: this.props.t("itemDeleted")
@@ -123,7 +123,7 @@ export default class PageUserList extends Component<PageProps, PageState> {
         this.props.router.push(path);
     }
 
-    get getTableColumns(): TableColumn<PageState["items"][0]>[] {
+    get getTableColumns(): TableColumn<IPageState["items"][0]>[] {
         return [
             {
                 name: this.props.t("image"),
@@ -154,19 +154,19 @@ export default class PageUserList extends Component<PageProps, PageState> {
                 name: this.props.t("role"),
                 selector: row => userRoles.findSingle("id", row.roleId)?.rank ?? 0,
                 sortable: true,
-                cell: row => <ThemeBadgeUserRole t={this.props.t} userRoleId={row.roleId} />
+                cell: row => <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={row.roleId} />
             },
             {
                 name: this.props.t("status"),
                 selector: row => Status.findSingle("id", row.statusId)?.rank ?? 0,
                 sortable: true,
-                cell: row => <ThemeBadgeStatus t={this.props.t} statusId={row.statusId} />
+                cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId} />
             },
             {
                 name: this.props.t("createdDate"),
                 sortable: true,
                 selector: row => new Date(row.createdAt || "").toLocaleDateString(),
-                sortFunction: (a, b) => ThemeDataTable.dateSort(a, b)
+                sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
             },
             {
                 name: "",
@@ -231,7 +231,7 @@ export default class PageUserList extends Component<PageProps, PageState> {
                 {
                     (() => {
                         let userInfo = this.state.items.findSingle("_id", this.state.selectedItemId);
-                        return userInfo ? <ThemeUsersProfileCard
+                        return userInfo ? <ComponentThemeUsersProfileCard
                             router={this.props.router}
                             t={this.props.t}
                             onClose={() => {
@@ -247,7 +247,7 @@ export default class PageUserList extends Component<PageProps, PageState> {
                     <div className="card">
                         <div className="card-body">
                             <div className="table-user">
-                                <ThemeDataTable
+                                <ComponentDataTable
                                     columns={this.getTableColumns}
                                     data={this.state.showingItems}
                                     t={this.props.t}

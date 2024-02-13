@@ -2,19 +2,19 @@ import React, {Component} from 'react';
 import {IPagePropCommon} from "types/pageProps";
 import PagePaths from "constants/pagePaths";
 import permissionLib from "lib/permission.lib";
-import ThemeToast from "components/theme/toast";
+import ComponentToast from "components/elements/toast";
 
-type PageState = {
+type IPageState = {
     permissionIsValid: boolean
     isLoading: boolean
 };
 
-type PageProps = {
+type IPageProps = {
     children?: any
 } & IPagePropCommon;
 
-export default class ProviderPermission extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentProviderPermission extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             permissionIsValid: false,
@@ -44,7 +44,7 @@ export default class ProviderPermission extends Component<PageProps, PageState> 
             )
         ) {
             permissionIsValid = false;
-            new ThemeToast({
+            new ComponentToast({
                 type: "error",
                 title: this.props.t("error"),
                 content: this.props.t("noPerm"),

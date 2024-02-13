@@ -1,21 +1,21 @@
 import React, {Component} from 'react';
 import {Tab, Tabs} from "react-bootstrap";
-import ThemeChooseImage from "components/theme/chooseImage";
+import ComponentThemeChooseImage from "components/theme/chooseImage";
 import Image from "next/image";
-import imageSourceLib from "lib/imageSource.lib";
-import PagePostAdd, {PageState as PostPageState} from "pages/post/[postTypeId]/add";
-import ThemeFieldSet from "components/theme/fieldSet";
+import PagePostAdd, {IPageState as PostPageState} from "pages/post/[postTypeId]/add";
+import ComponentFieldSet from "components/elements/fieldSet";
+import {ImageSourceUtil} from "utils/imageSource.util";
 
-type PageState = {
+type IPageState = {
     mainTabActiveKey: string
 }
 
-type PageProps = {
+type IPageProps = {
     page: PagePostAdd
 };
 
-export default class ComponentPagePostAddBeforeAndAfter extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentPagePostAddBeforeAndAfter extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             mainTabActiveKey: "general"
@@ -33,7 +33,7 @@ export default class ComponentPagePostAddBeforeAndAfter extends Component<PagePr
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeChooseImage
+                    <ComponentThemeChooseImage
                         {...this.props.page.props}
                         isShow={this.props.page.state.isSelectionImages}
                         onHide={() => this.props.page.setState({isSelectionImages: false})}
@@ -59,7 +59,7 @@ export default class ComponentPagePostAddBeforeAndAfter extends Component<PagePr
                             this.props.page.state.formData.beforeAndAfter?.images.map(image => (
                                 <div className="col-md-3 mb-3">
                                     <Image
-                                        src={imageSourceLib.getUploadedImageSrc(image)}
+                                        src={ImageSourceUtil.getUploadedImageSrc(image)}
                                         alt="Empty Image"
                                         className="post-image img-fluid"
                                         width={100}
@@ -78,8 +78,8 @@ export default class ComponentPagePostAddBeforeAndAfter extends Component<PagePr
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFieldSet legend={this.props.page.props.t("imageBefore")}>
-                        <ThemeChooseImage
+                    <ComponentFieldSet legend={this.props.page.props.t("imageBefore")}>
+                        <ComponentThemeChooseImage
                             {...this.props.page.props}
                             isShow={this.props.page.state.isSelectionImageBefore}
                             onHide={() => this.props.page.setState({isSelectionImageBefore: false})}
@@ -92,7 +92,7 @@ export default class ComponentPagePostAddBeforeAndAfter extends Component<PagePr
                         />
                         <div>
                             <Image
-                                src={imageSourceLib.getUploadedImageSrc(this.props.page.state.formData.beforeAndAfter?.imageBefore)}
+                                src={ImageSourceUtil.getUploadedImageSrc(this.props.page.state.formData.beforeAndAfter?.imageBefore)}
                                 alt="Empty Image"
                                 className="post-image img-fluid"
                                 width={100}
@@ -106,11 +106,11 @@ export default class ComponentPagePostAddBeforeAndAfter extends Component<PagePr
                                 }}
                             ><i className="fa fa-pencil-square-o"></i></button>
                         </div>
-                    </ThemeFieldSet>
+                    </ComponentFieldSet>
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFieldSet legend={this.props.page.props.t("imageAfter")}>
-                        <ThemeChooseImage
+                    <ComponentFieldSet legend={this.props.page.props.t("imageAfter")}>
+                        <ComponentThemeChooseImage
                             {...this.props.page.props}
                             isShow={this.props.page.state.isSelectionImageAfter}
                             onHide={() => this.props.page.setState({isSelectionImageAfter: false})}
@@ -123,7 +123,7 @@ export default class ComponentPagePostAddBeforeAndAfter extends Component<PagePr
                         />
                         <div>
                             <Image
-                                src={imageSourceLib.getUploadedImageSrc(this.props.page.state.formData.beforeAndAfter?.imageAfter)}
+                                src={ImageSourceUtil.getUploadedImageSrc(this.props.page.state.formData.beforeAndAfter?.imageAfter)}
                                 alt="Empty Image"
                                 className="post-image img-fluid"
                                 width={100}
@@ -137,7 +137,7 @@ export default class ComponentPagePostAddBeforeAndAfter extends Component<PagePr
                                 }}
                             ><i className="fa fa-pencil-square-o"></i></button>
                         </div>
-                    </ThemeFieldSet>
+                    </ComponentFieldSet>
                 </div>
             </div>
         );

@@ -4,15 +4,16 @@ import languageService from "services/language.service";
 import settingService from "services/setting.service";
 import {StatusId} from "constants/status";
 import {CurrencyId} from "constants/currencyTypes";
+import {SettingProjectionKeys} from "constants/settingProjections";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     children?: any
 } & IPagePropCommon;
 
-export default class ProviderAppInit extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentProviderAppInit extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {}
     }
@@ -40,7 +41,7 @@ export default class ProviderAppInit extends Component<PageProps, PageState> {
     }
 
     async getContentMainLanguage() {
-        let resData = await settingService.get({projection: "general"});
+        let resData = await settingService.get({projection: SettingProjectionKeys.General});
         if (resData.status && resData.data) {
             let data = resData.data;
             this.props.setStateApp({
@@ -55,7 +56,7 @@ export default class ProviderAppInit extends Component<PageProps, PageState> {
     }
 
     async getSettingECommerce() {
-        let resData = await settingService.get({projection: "eCommerce"});
+        let resData = await settingService.get({projection: SettingProjectionKeys.ECommerce});
         if (resData.status && resData.data) {
             let data = resData.data;
             this.props.setStateApp({

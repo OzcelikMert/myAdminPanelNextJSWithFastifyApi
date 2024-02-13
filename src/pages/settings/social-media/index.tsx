@@ -1,23 +1,23 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {ThemeFieldSet, ThemeForm, ThemeFormSelect, ThemeFormType} from "components/theme/form";
+import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import {UserRoleId} from "constants/index";
 import settingService from "services/setting.service";
-import ThemeToast from "components/theme/toast";
+import ComponentToast from "components/elements/toast";
 import {
     ISettingUpdateSocialMediaParamService,
 } from "types/services/setting.service";
 import { ISettingSocialMediaModel } from 'types/models/setting.model';
 
-type PageState = {
+type IPageState = {
     isSubmitting: boolean
     formData: ISettingUpdateSocialMediaParamService,
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PageSettingsSocialMedia extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PageSettingsSocialMedia extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             isSubmitting: false,
@@ -43,7 +43,7 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
         let resData = await settingService.get({projection: "socialMedia"})
         if (resData.status && resData.data) {
             let setting = resData.data;
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 state.formData = {
                     socialMedia: setting.socialMedia || []
                 }
@@ -59,7 +59,7 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
         }, async () => {
             let resData = await settingService.updateSocialMedia(this.state.formData)
             if (resData.status) {
-                new ThemeToast({
+                new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),
                     content: this.props.t("settingsUpdated")
@@ -73,14 +73,14 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
     }
 
     onInputChange(data: any, key: string, value: any) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             data[key] = value;
             return state;
         })
     }
 
     onCreate() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.formData.socialMedia = [{
                 _id: String.createId(),
                 elementId: "",
@@ -92,21 +92,21 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
     }
 
     onAccept(data: ISettingSocialMediaModel) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             data.isEditing = false;
             return state;
         })
     }
 
     onDelete(data: ISettingSocialMediaModel[], index: number) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             data.remove(index);
             return state;
         })
     }
 
     onEdit(data: ISettingSocialMediaModel) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             data.isEditing = true;
             return state;
         })
@@ -116,7 +116,7 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
         const SocialMedia = (props: ISettingSocialMediaModel, index: number) => {
             return (
                 <div className="col-md-12 mt-3">
-                    <ThemeFieldSet
+                    <ComponentFieldSet
                         legend={`${this.props.t("socialMedia")} (#${props.elementId})`}
                         legendElement={
                             this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
@@ -127,7 +127,7 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
                     >
                         <div className="row mt-2">
                             <div className="col-md-12">
-                                <ThemeFormType
+                                <ComponentFormType
                                     type="url"
                                     title={props.title}
                                     value={props.url}
@@ -135,7 +135,7 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
                                 />
                             </div>
                         </div>
-                    </ThemeFieldSet>
+                    </ComponentFieldSet>
                 </div>
             )
         }
@@ -143,10 +143,10 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
         const EditSocialMedia = (props: ISettingSocialMediaModel, index: number) => {
             return (
                 <div className="col-md-12 mt-3">
-                    <ThemeFieldSet legend={this.props.t("newSocialMedia")}>
+                    <ComponentFieldSet legend={this.props.t("newSocialMedia")}>
                         <div className="row mt-3">
                             <div className="col-md-12">
-                                <ThemeFormType
+                                <ComponentFormType
                                     type="text"
                                     title={this.props.t("elementId")}
                                     value={props.elementId}
@@ -154,7 +154,7 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
                                 />
                             </div>
                             <div className="col-md-12 mt-3">
-                                <ThemeFormType
+                                <ComponentFormType
                                     type="text"
                                     title={this.props.t("title")}
                                     value={props.title}
@@ -168,7 +168,7 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
                                         onClick={() => this.onDelete(this.state.formData.socialMedia, index)}>{this.props.t("delete")}</button>
                             </div>
                         </div>
-                    </ThemeFieldSet>
+                    </ComponentFieldSet>
                 </div>
             )
         }
@@ -203,7 +203,7 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
             <div className="page-settings">
                 <div className="row">
                     <div className="col-md-12">
-                        <ThemeForm
+                        <ComponentForm
                             isActiveSaveButton={true}
                             saveButtonText={this.props.t("save")}
                             saveButtonLoadingText={this.props.t("loading")}
@@ -217,7 +217,7 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
                                     </div>
                                 </div>
                             </div>
-                        </ThemeForm>
+                        </ComponentForm>
                     </div>
                 </div>
             </div>

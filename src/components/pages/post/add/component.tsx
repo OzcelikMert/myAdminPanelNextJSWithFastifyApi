@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
-import PagePostAdd, {PageState as PostPageState} from "pages/post/[postTypeId]/add";
-import {ThemeFormSelect} from "components/theme/form";
+import PagePostAdd, {IPageState as PostPageState} from "pages/post/[postTypeId]/add";
+import {ComponentFormSelect} from "components/elements/form";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     page: PagePostAdd
 };
 
-export default class ComponentPagePostAddComponent extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentPagePostAddComponent extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {}
     }
@@ -46,7 +46,7 @@ export default class ComponentPagePostAddComponent extends Component<PageProps, 
                             className="mdi mdi-trash-can"></i></button>
                     </div>
                     <div className="col-9 col-lg-11">
-                        <ThemeFormSelect
+                        <ComponentFormSelect
                             title={this.props.page.props.t("component")}
                             options={this.props.page.state.components}
                             value={this.props.page.state.components?.filter(item => item.value == props.componentId)}

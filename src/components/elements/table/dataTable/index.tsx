@@ -1,17 +1,21 @@
 import React, {Component} from 'react'
 import DataTable, {TableProps} from "react-data-table-component";
-import {IPagePropCommon} from "types/pageProps";
-import {ThemeFormCheckBox, ThemeFormType} from "../../form";
-import ThemeTableToggleMenu, {ThemeToggleMenuItemDocument} from "components/theme/table/toggleMenu";
+import {ComponentFormCheckBox, ComponentFormType} from "components/elements/form";
+import ComponentTableToggleMenu, {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
 
-type PageState = {
+type IPagePropI18 = {
+    search?: string
+    noRecords?: string
+}
+
+type IPageState = {
     selectedItems: any[],
     clearSelectedRows: boolean
     searchKey: string
 };
 
-type PageProps<T> = {
-    t: IPagePropCommon["t"],
+type IPageProps<T> = {
+    i18: IPagePropI18,
     onSelect?: (rows: T[]) => void
     onSearch?: (searchKey: string) => void
     isSearchable?: boolean
@@ -24,7 +28,7 @@ type PageProps<T> = {
     onSubmitToggleMenuItem?: (value: any) => void
 } & TableProps<T>;
 
-export default class ThemeDataTable<T> extends Component<PageProps<T>, PageState> {
+export default class ComponentDataTable<T> extends Component<IPageProps<T>, IPageState> {
     listPage: number = 0;
     listPagePerCount: number = 10;
 
@@ -32,7 +36,7 @@ export default class ThemeDataTable<T> extends Component<PageProps<T>, PageState
         return new Date(a.createdAt || "").getTime() > new Date(b.createdAt || "").getTime() ? 1 : -1
     }
 
-    constructor(props: PageProps<any>) {
+    constructor(props: IPageProps<any>) {
         super(props);
         this.state = {
             clearSelectedRows: false,
@@ -41,7 +45,7 @@ export default class ThemeDataTable<T> extends Component<PageProps<T>, PageState
         }
     }
 
-    componentDidUpdate(prevProps: Readonly<PageProps<T>>, prevState: Readonly<PageState>) {
+    componentDidUpdate(prevProps: Readonly<IPageProps<T>>, prevState: Readonly<IPageState>) {
         if (JSON.stringify(prevProps.selectedRows) !== JSON.stringify(this.props.selectedRows)) {
             this.setState({
                 selectedItems: this.props.selectedRows ?? []
@@ -66,7 +70,7 @@ export default class ThemeDataTable<T> extends Component<PageProps<T>, PageState
     }
 
     onSelect(item: T, remove: boolean = true) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             let findIndex = state.selectedItems.indexOfKey("", item);
 
             if (findIndex > -1) {
@@ -90,7 +94,7 @@ export default class ThemeDataTable<T> extends Component<PageProps<T>, PageState
         if(this.props.isActiveToggleMenu){
             if(columns.length > 0){
                 columns[0].name = this.state.selectedItems.length > 0 ? (
-                    <ThemeTableToggleMenu
+                    <ComponentTableToggleMenu
                         items={this.props.toggleMenuItems ?? []}
                         onChange={(value) => this.props.onSubmitToggleMenuItem ? this.props.onSubmitToggleMenuItem(value) : null}
                     />
@@ -105,7 +109,7 @@ export default class ThemeDataTable<T> extends Component<PageProps<T>, PageState
                 {
                     name: !this.props.isAllSelectable ? null : (
                         <div>
-                            <ThemeFormCheckBox
+                            <ComponentFormCheckBox
                                 checked={this.isCheckedSelectAll}
                                 onChange={e => this.onSelectAll()}
                             />
@@ -114,7 +118,7 @@ export default class ThemeDataTable<T> extends Component<PageProps<T>, PageState
                     width: "55px",
                     cell: (row: any) => (
                         <div>
-                            <ThemeFormCheckBox
+                            <ComponentFormCheckBox
                                 checked={this.state.selectedItems.includes(row)}
                                 onChange={e => this.onSelect(row)}
                             />
@@ -143,8 +147,8 @@ export default class ThemeDataTable<T> extends Component<PageProps<T>, PageState
                     <div className="row pt-2 pb-2 m-0">
                         <div className="col-md-8"></div>
                         <div className="col-md-4">
-                            <ThemeFormType
-                                title={`${this.props.t("search")}`}
+                            <ComponentFormType
+                                title={`${this.props.i18.search ?? "Search"}`}
                                 type="text"
                                 value={this.state.searchKey}
                                 onChange={(e: any) => this.onSearch(e)}
@@ -169,7 +173,7 @@ export default class ThemeDataTable<T> extends Component<PageProps<T>, PageState
                         clearSelectedRows={this.state.clearSelectedRows}
                         noDataComponent={
                             <h5>
-                                {this.props.t("noRecords")}<i className="mdi mdi-emoticon-sad-outline"></i>
+                                {this.props.i18.noRecords ?? "There are no records to display"}<i className="mdi mdi-emoticon-sad-outline"></i>
                             </h5>
                         }
                         paginationComponentOptions={{

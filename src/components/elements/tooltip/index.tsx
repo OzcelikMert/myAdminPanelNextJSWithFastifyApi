@@ -1,15 +1,15 @@
 import React, {Component} from "react";
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     message: string
     children: React.ReactElement
 };
 
-class ThemeToolTip extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+class ComponentToolTip extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
     }
 
@@ -27,4 +27,4 @@ class ThemeToolTip extends Component<PageProps, PageState> {
     }
 }
 
-export default ThemeToolTip;
+export default ComponentToolTip;

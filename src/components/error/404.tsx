@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import {IPagePropCommon} from "types/pageProps";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
 
 } & IPagePropCommon;
 
-export default class ComponentError404 extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentError404 extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {}
     }

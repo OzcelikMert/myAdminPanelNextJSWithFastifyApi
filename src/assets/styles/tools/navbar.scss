@@ -354,7 +354,7 @@
   }
 }
 
-/* Navbar color variations */
+/* ComponentToolNavbar color variations */
 @each $color, $value in $theme-gradient-colors {
   .navbar {
     &.navbar-#{$color} {

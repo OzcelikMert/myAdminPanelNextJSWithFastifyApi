@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 
-type PageState = {} & any;
+type IPageState = {} & any;
 
-type PageProps = {
+type IPageProps = {
     text?: string
 };
 
-class ThemeFormLoadingButton extends Component<PageProps, PageState> {
+class ComponentFormLoadingButton extends Component<IPageProps, IPageState> {
     render () {
         return (
             <button className="btn btn-gradient-dark float-end btn-save" disabled={true} type={"button"}>
@@ -17,4 +17,4 @@ class ThemeFormLoadingButton extends Component<PageProps, PageState> {
     }
 }
 
-export default ThemeFormLoadingButton;
+export default ComponentFormLoadingButton;

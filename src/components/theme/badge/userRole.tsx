@@ -2,15 +2,15 @@ import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {UserRoleId, userRoles} from "constants/userRoles";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     t: IPagePropCommon["t"]
     userRoleId: UserRoleId
     className?: string
 };
 
-export default class ThemeBadgeUserRole extends Component<PageProps, PageState> {
+export default class ComponentThemeBadgeUserRole extends Component<IPageProps, IPageState> {
     render() {
         return (
             <label className={`badge badge-gradient-${getUserRoleColor(this.props.userRoleId)} text-start ${this.props.className ?? ""}`}>

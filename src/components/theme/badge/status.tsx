@@ -1,22 +1,22 @@
 import React, {Component} from 'react'
-import {Status, StatusId} from "constants/status";
+import {status, StatusId} from "constants/status";
 import {IPagePropCommon} from "types/pageProps";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     t: IPagePropCommon["t"]
     statusId: StatusId
     className?: string
 };
 
-export default class ThemeBadgeStatus extends Component<PageProps, PageState> {
+export default class ComponentThemeBadgeStatus extends Component<IPageProps, IPageState> {
     render() {
         return (
             <label className={`badge badge-gradient-${getStatusColor(this.props.statusId)} text-start ${this.props.className ?? ""}`}>
                 <i className={`${getStatusIcon(this.props.statusId)} me-2`}></i>
                 {
-                    this.props.t(Status.findSingle("id", this.props.statusId)?.langKey ?? "[noLangAdd]")
+                    this.props.t(status.findSingle("id", this.props.statusId)?.langKey ?? "[noLangAdd]")
                 }
             </label>
         )

@@ -1,21 +1,21 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {ThemeFieldSet, ThemeForm, ThemeFormType} from "components/theme/form";
+import {ComponentFieldSet, ComponentForm, ComponentFormType} from "components/elements/form";
 import {UserRoleId} from "constants/index";
 import settingService from "services/setting.service";
-import ThemeToast from "components/theme/toast";
+import ComponentToast from "components/elements/toast";
 import {ISettingUpdateContactFormParamService} from "types/services/setting.service";
 import {ISettingContactFormModel} from 'types/models/setting.model';
 
-type PageState = {
+type IPageState = {
     isSubmitting: boolean
     formData: ISettingUpdateContactFormParamService
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-class PageSettingsContactForms extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+class PageSettingsContactForms extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             isSubmitting: false,
@@ -41,7 +41,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
         let resData = await settingService.get({projection: "contactForm"})
         if (resData.status && resData.data) {
             let setting = resData.data;
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 state.formData = {
                     contactForms: setting.contactForms ?? []
                 }
@@ -57,7 +57,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
         }, async () => {
             let resData = await settingService.updateContactForm(this.state.formData);
             if (resData.status) {
-                new ThemeToast({
+                new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),
                     content: this.props.t("settingsUpdated")
@@ -69,14 +69,14 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
     }
 
     onInputChange(data: any, key: string, value: any) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             data[key] = value;
             return state;
         })
     }
 
     onCreate() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.formData.contactForms = [{
                 _id: String.createId(),
                 key: "",
@@ -93,21 +93,21 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
     }
 
     onAccept(data: ISettingContactFormModel) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             data.isEditing = false;
             return state;
         })
     }
 
     onDelete(data: ISettingContactFormModel[], index: number) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             data.splice(index, 1);
             return state;
         })
     }
 
     onEdit(data: ISettingContactFormModel) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             data.isEditing = true;
             return state;
         })
@@ -117,7 +117,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
         const ContactForm = (contactFormProps: ISettingContactFormModel, contactFormIndex: number) => {
             return (
                 <div className="col-md-12 mt-4">
-                    <ThemeFieldSet
+                    <ComponentFieldSet
                         legend={`${this.props.t("contactForm")} (#${contactFormProps.key})`}
                         legendElement={
                             this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
@@ -128,7 +128,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
                     >
                         <div className="row">
                             <div className="col-md-12 mt-4">
-                                <ThemeFormType
+                                <ComponentFormType
                                     type="text"
                                     title={this.props.t("name")}
                                     value={contactFormProps.name}
@@ -136,7 +136,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
                                 />
                             </div>
                             <div className="col-md-12 mt-4">
-                                <ThemeFormType
+                                <ComponentFormType
                                     type="text"
                                     title={this.props.t("outGoingEmail")}
                                     value={contactFormProps.outGoingEmail}
@@ -144,7 +144,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
                                 />
                             </div>
                             <div className="col-md-12 mt-4">
-                                <ThemeFormType
+                                <ComponentFormType
                                     type="text"
                                     title={this.props.t("email")}
                                     value={contactFormProps.email}
@@ -152,7 +152,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
                                 />
                             </div>
                             <div className="col-md-12 mt-4">
-                                <ThemeFormType
+                                <ComponentFormType
                                     type="password"
                                     title={this.props.t("password")}
                                     value={contactFormProps.password}
@@ -160,7 +160,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
                                 />
                             </div>
                             <div className="col-md-12 mt-4">
-                                <ThemeFormType
+                                <ComponentFormType
                                     type="text"
                                     title={this.props.t("outGoingServer")}
                                     value={contactFormProps.outGoingServer}
@@ -168,7 +168,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
                                 />
                             </div>
                             <div className="col-md-12 mt-4">
-                                <ThemeFormType
+                                <ComponentFormType
                                     type="text"
                                     title={this.props.t("inComingServer")}
                                     value={contactFormProps.inComingServer}
@@ -176,7 +176,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
                                 />
                             </div>
                             <div className="col-md-12 mt-4">
-                                <ThemeFormType
+                                <ComponentFormType
                                     type="text"
                                     title={this.props.t("port")}
                                     value={contactFormProps.port}
@@ -184,7 +184,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
                                 />
                             </div>
                         </div>
-                    </ThemeFieldSet>
+                    </ComponentFieldSet>
                 </div>
             )
         }
@@ -192,10 +192,10 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
         const EditContactForm = (contactFormProps: ISettingContactFormModel, contactFormIndex: number) => {
             return (
                 <div className="col-md-12 mt-3">
-                    <ThemeFieldSet legend={this.props.t("newContactForm")}>
+                    <ComponentFieldSet legend={this.props.t("newContactForm")}>
                         <div className="row mt-3">
                             <div className="col-md-12">
-                                <ThemeFormType
+                                <ComponentFormType
                                     title={`${this.props.t("key")}*`}
                                     type="text"
                                     required={true}
@@ -210,7 +210,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
                                         onClick={() => this.onDelete(this.state.formData.contactForms, contactFormIndex)}>{this.props.t("delete")}</button>
                             </div>
                         </div>
-                    </ThemeFieldSet>
+                    </ComponentFieldSet>
                 </div>
             )
         }
@@ -244,7 +244,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
             <div className="page-settings">
                 <div className="row">
                     <div className="col-md-12">
-                        <ThemeForm
+                        <ComponentForm
                             isActiveSaveButton={true}
                             saveButtonText={this.props.t("save")}
                             saveButtonLoadingText={this.props.t("loading")}
@@ -258,7 +258,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
                                     </div>
                                 </div>
                             </div>
-                        </ThemeForm>
+                        </ComponentForm>
                     </div>
                 </div>
             </div>

@@ -2,41 +2,41 @@ import React, {Component} from 'react'
 import {PageTypeId, PageTypes, PostTermTypeId, PostTypeId, Status, StatusId} from "constants/index";
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
-import {ThemeToggleMenuItemDocument} from "components/theme/table/toggleMenu";
+import {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
 import Swal from "sweetalert2";
 import postService from "services/post.service";
 import {IPostGetManyResultService} from "types/services/post.service";
 import imageSourceLib from "lib/imageSource.lib";
 import permissionLib from "lib/permission.lib";
-import ThemeToast from "components/theme/toast";
-import ThemeDataTable from "components/theme/table/dataTable";
+import ComponentToast from "components/elements/toast";
+import ComponentDataTable from "components/elements/table/dataTable";
 import Image from "next/image"
 import PostLib from "lib/post.lib";
 import postLib from "lib/post.lib";
-import ThemeBadgeStatus, {getStatusIcon} from "components/theme/badge/status";
-import ThemeTableUpdatedBy from "components/theme/table/updatedBy";
-import ThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
+import ComponentThemeBadgeStatus, {getStatusIcon} from "components/theme/badge/status";
+import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
+import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
 import {ProductTypeId} from "constants/productTypes";
 import productLib from "lib/product.lib";
 import {CurrencyId} from "constants/currencyTypes";
-import ThemeBadgeProductType from "components/theme/badge/productType";
-import ThemeBadgePageType from "components/theme/badge/pageType";
+import ComponentThemeBadgeProductType from "components/theme/badge/productType";
+import ComponentThemeBadgePageType from "components/theme/badge/pageType";
 
-type PageState = {
+type IPageState = {
     typeId: PostTypeId
     searchKey: string
     items: IPostGetManyResultService[],
-    showingItems: PageState["items"]
-    selectedItems: PageState["items"]
+    showingItems: IPageState["items"]
+    selectedItems: IPageState["items"]
     listMode: "list" | "deleted"
     selectedItemId: string
     isShowModalUpdateRank: boolean
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PagePostList extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PagePostList extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             typeId: Number(this.props.router.query.postTypeId ?? 1),
@@ -58,7 +58,7 @@ export default class PagePostList extends Component<PageProps, PageState> {
         })
     }
 
-    async componentDidUpdate(prevProps: Readonly<PageProps>) {
+    async componentDidUpdate(prevProps: Readonly<IPageProps>) {
         let typeId = Number(this.props.router.query.postTypeId ?? 1);
         if (typeId !== this.state.typeId) {
             this.setState({
@@ -98,7 +98,7 @@ export default class PagePostList extends Component<PageProps, PageState> {
             langId: this.props.getStateApp.pageData.langId,
             ignoreDefaultLanguage: true
         })).data;
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.items = items;
             state.showingItems = items.filter(item => item.statusId !== StatusId.Deleted);
             return state;
@@ -117,7 +117,7 @@ export default class PagePostList extends Component<PageProps, PageState> {
                 showCancelButton: true
             });
             if (result.isConfirmed) {
-                const loadingToast = new ThemeToast({
+                const loadingToast = new ComponentToast({
                     content: this.props.t("deleting"),
                     type: "loading"
                 });
@@ -125,11 +125,11 @@ export default class PagePostList extends Component<PageProps, PageState> {
                 let resData = await postService.deleteMany({_id: selectedItemId, typeId: this.state.typeId})
                 loadingToast.hide();
                 if (resData.status) {
-                    this.setState((state: PageState) => {
+                    this.setState((state: IPageState) => {
                         state.items = state.items.filter(item => !selectedItemId.includes(item._id));
                         return state;
                     }, () => {
-                        new ThemeToast({
+                        new ComponentToast({
                             type: "success",
                             title: this.props.t("successful"),
                             content: this.props.t("itemDeleted")
@@ -139,7 +139,7 @@ export default class PagePostList extends Component<PageProps, PageState> {
                 }
             }
         } else {
-            const loadingToast = new ThemeToast({
+            const loadingToast = new ComponentToast({
                 content: this.props.t("updating"),
                 type: "loading"
             });
@@ -151,7 +151,7 @@ export default class PagePostList extends Component<PageProps, PageState> {
             })
             loadingToast.hide();
             if (resData.status) {
-                this.setState((state: PageState) => {
+                this.setState((state: IPageState) => {
                     state.items.map((item, index) => {
                         if (selectedItemId.includes(item._id)) {
                             item.statusId = statusId;
@@ -159,7 +159,7 @@ export default class PagePostList extends Component<PageProps, PageState> {
                     })
                     return state;
                 }, () => {
-                    new ThemeToast({
+                    new ComponentToast({
                         type: "success",
                         title: this.props.t("successful"),
                         content: this.props.t("statusUpdated")
@@ -178,7 +178,7 @@ export default class PagePostList extends Component<PageProps, PageState> {
         });
 
         if(resData.status){
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 let item = this.state.items.findSingle("_id", this.state.selectedItemId);
                 if(item){
                     item.rank = rank;
@@ -187,7 +187,7 @@ export default class PagePostList extends Component<PageProps, PageState> {
             }, () => {
                 this.onChangeListMode(this.state.listMode)
                 let item = this.state.items.findSingle("_id", this.state.selectedItemId);
-                new ThemeToast({
+                new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),
                     content: `'${item?.contents?.title}' ${this.props.t("itemEdited")}`,
@@ -197,8 +197,8 @@ export default class PagePostList extends Component<PageProps, PageState> {
         }
     }
 
-    onSelect(selectedRows: PageState["showingItems"]) {
-        this.setState((state: PageState) => {
+    onSelect(selectedRows: IPageState["showingItems"]) {
+        this.setState((state: IPageState) => {
             state.selectedItems = selectedRows;
             return state;
         })
@@ -211,8 +211,8 @@ export default class PagePostList extends Component<PageProps, PageState> {
         })
     }
 
-    onChangeListMode(mode: PageState["listMode"]) {
-        this.setState((state: PageState) => {
+    onChangeListMode(mode: IPageState["listMode"]) {
+        this.setState((state: IPageState) => {
             state.listMode = mode;
             state.showingItems = [];
             state.selectedItems = [];
@@ -258,7 +258,7 @@ export default class PagePostList extends Component<PageProps, PageState> {
         ).map(item => ({label: this.props.t(item.langKey), value: item.id, icon: getStatusIcon(item.id)}))
     }
 
-    get getTableColumns(): TableColumn<PageState["showingItems"][0]>[] {
+    get getTableColumns(): TableColumn<IPageState["showingItems"][0]>[] {
         return [
             {
                 name: this.props.t("image"),
@@ -328,7 +328,7 @@ export default class PagePostList extends Component<PageProps, PageState> {
                         name: this.props.t("productType"),
                         selector: row => row.eCommerce?.typeId || 0,
                         sortable: true,
-                        cell: row => <ThemeBadgeProductType t={this.props.t} productTypeId={row.eCommerce?.typeId || ProductTypeId.SimpleProduct} />
+                        cell: row => <ComponentThemeBadgeProductType t={this.props.t} productTypeId={row.eCommerce?.typeId || ProductTypeId.SimpleProduct} />
                     } : {}
             ),
             (
@@ -361,18 +361,18 @@ export default class PagePostList extends Component<PageProps, PageState> {
                         name: this.props.t("pageType"),
                         selector: row => this.props.t(PageTypes.findSingle("id", (row.pageTypeId ? row.pageTypeId : PageTypeId.Default))?.langKey ?? "[noLangAdd]"),
                         sortable: true,
-                        cell: row => <ThemeBadgePageType t={this.props.t} pageTypeId={row.pageTypeId || PageTypeId.Default} />
+                        cell: row => <ComponentThemeBadgePageType t={this.props.t} pageTypeId={row.pageTypeId || PageTypeId.Default} />
                     } : {}
             ),
             {
                 name: this.props.t("status"),
                 sortable: true,
-                cell: row => <ThemeBadgeStatus t={this.props.t} statusId={row.statusId} />
+                cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId} />
             },
             {
                 name: this.props.t("updatedBy"),
                 sortable: true,
-                cell: row => <ThemeTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""} />
+                cell: row => <ComponentTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""} />
             },
             {
                 name: this.props.t("rank"),
@@ -390,7 +390,7 @@ export default class PagePostList extends Component<PageProps, PageState> {
                 name: this.props.t("createdDate"),
                 sortable: true,
                 selector: row => new Date(row.createdAt || "").toLocaleDateString(),
-                sortFunction: (a, b) => ThemeDataTable.dateSort(a, b)
+                sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
             },
             {
                 name: "",
@@ -414,7 +414,7 @@ export default class PagePostList extends Component<PageProps, PageState> {
         let item = this.state.items.findSingle("_id", this.state.selectedItemId);
         return this.props.getStateApp.isPageLoading ? null : (
             <div className="page-post">
-                <ThemeModalUpdateItemRank
+                <ComponentThemeModalUpdateItemRank
                     t={this.props.t}
                     isShow={this.state.isShowModalUpdateRank}
                     onHide={() => this.setState({isShowModalUpdateRank: false})}
@@ -489,7 +489,7 @@ export default class PagePostList extends Component<PageProps, PageState> {
                     <div className="card">
                         <div className="card-body">
                             <div className="table-post">
-                                <ThemeDataTable
+                                <ComponentDataTable
                                     columns={this.getTableColumns.filter(column => typeof column.name !== "undefined")}
                                     data={this.state.showingItems}
                                     onSelect={rows => this.onSelect(rows)}

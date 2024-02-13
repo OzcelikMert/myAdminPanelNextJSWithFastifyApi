@@ -8,15 +8,15 @@ export interface ThemeToggleMenuItemDocument {
     icon?: string
 }
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     items: ThemeToggleMenuItemDocument[]
     onChange: (value: any) => void
     label?: string | any
 };
 
-class ThemeTableToggleMenu extends Component<PageProps, PageState> {
+class ComponentTableToggleMenu extends Component<IPageProps, IPageState> {
     render() {
         return (
             <Dropdown align={"end"} className="theme-table-toggle">
@@ -47,4 +47,4 @@ class ThemeTableToggleMenu extends Component<PageProps, PageState> {
     }
 }
 
-export default ThemeTableToggleMenu;
+export default ComponentTableToggleMenu;

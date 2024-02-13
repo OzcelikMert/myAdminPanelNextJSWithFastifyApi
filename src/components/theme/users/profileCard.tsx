@@ -1,22 +1,22 @@
 import React, {Component} from "react";
 import {Modal} from "react-bootstrap";
-import {
-    LanguageId, PermissionGroups,
-    Permissions,
-    StatusId
-} from "constants/index";
 import {IUserModel} from "types/models/user.model";
 import {IPagePropCommon} from "types/pageProps";
-import imageSourceLib from "lib/imageSource.lib";
-import {ThemeFieldSet} from "../form";
-import {IPermission, IPermissionGroup} from "types/constants";
+import {ComponentFieldSet} from "../../elements/form";
 import Image from "next/image"
-import ThemeBadgeStatus from "components/theme/badge/status";
-import ThemeBadgeUserRole from "components/theme/badge/userRole";
+import ComponentThemeBadgeStatus from "components/theme/badge/status";
+import ComponentThemeBadgeUserRole from "components/theme/badge/userRole";
+import {LanguageId} from "constants/languages";
+import {StatusId} from "constants/status";
+import {IPermissionGroup} from "types/constants/permissionGroups";
+import {permissions} from "constants/permissions";
+import {permissionGroups} from "constants/permissionGroups";
+import {IPermission} from "types/constants/permissions";
+import {ImageSourceUtil} from "utils/imageSource.util";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     router: IPagePropCommon["router"];
     t: IPagePropCommon["t"];
     isShow: boolean
@@ -25,7 +25,7 @@ type PageProps = {
     langId: LanguageId
 };
 
-class ThemeUsersProfileCard extends Component<PageProps, PageState> {
+class ComponentThemeUsersProfileCard extends Component<IPageProps, IPageState> {
     SocialMedia = () => (
         <ul className="social-link list-unstyled">
             <li>
@@ -62,12 +62,12 @@ class ThemeUsersProfileCard extends Component<PageProps, PageState> {
                 </div>
                 <div className="col-sm-12">
                     <span className="mb-2 fw-bold">{this.props.t("role")}:
-                        <ThemeBadgeUserRole t={this.props.t} userRoleId={this.props.userInfo.roleId} />
+                        <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={this.props.userInfo.roleId} />
                     </span>
                 </div>
                 <div className="col-sm-12">
                     <span className="mb-2 fw-bold">{this.props.t("status")}:
-                        {<ThemeBadgeStatus t={this.props.t} statusId={this.props.userInfo.statusId} className="ms-1"/>}
+                        {<ComponentThemeBadgeStatus t={this.props.t} statusId={this.props.userInfo.statusId} className="ms-1"/>}
                     </span>
                 </div>
                 {
@@ -99,21 +99,21 @@ class ThemeUsersProfileCard extends Component<PageProps, PageState> {
     )
 
     Permissions = () => {
-        let permissions = Permissions.findMulti("id", this.props.userInfo.permissions);
-        let permissionGroups = PermissionGroups.findMulti("id", permissions.map(permission => permission.groupId));
-        permissionGroups = permissionGroups.filter((group, index) => permissionGroups.indexOfKey("id", group.id) === index);
+        let foundPermissions = permissions.findMulti("id", this.props.userInfo.permissions);
+        let foundPermissionGroups = permissionGroups.findMulti("id", foundPermissions.map(permission => permission.groupId));
+        foundPermissionGroups = foundPermissionGroups.filter((group, index) => foundPermissionGroups.indexOfKey("id", group.id) === index);
 
         const PermissionGroup = (props: IPermissionGroup) => (
             <div className="col-md-12 mt-3">
-                <ThemeFieldSet legend={this.props.t(props.langKey)}>
+                <ComponentFieldSet legend={this.props.t(props.langKey)}>
                     <div className="row">
                         {
-                            permissions.findMulti("groupId", props.id).map(permission =>
+                            foundPermissions.findMulti("groupId", props.id).map(permission =>
                                 <PermissionItem {...permission}/>
                             )
                         }
                     </div>
-                </ThemeFieldSet>
+                </ComponentFieldSet>
             </div>
         )
 
@@ -132,7 +132,7 @@ class ThemeUsersProfileCard extends Component<PageProps, PageState> {
                 <h6 className="pb-1 border-bottom fw-bold text-end">{this.props.t("permissions")}</h6>
                 <div className="row">
                     {
-                        permissionGroups.orderBy("rank", "asc").map(group =>
+                        foundPermissionGroups.orderBy("rank", "asc").map(group =>
                             <PermissionGroup {...group} />
                         )
                     }
@@ -160,7 +160,7 @@ class ThemeUsersProfileCard extends Component<PageProps, PageState> {
                                 <div className="card-block text-center text-light mt-5">
                                     <div className="mb-4">
                                         <Image
-                                            src={imageSourceLib.getUploadedImageSrc(this.props.userInfo.image)}
+                                            src={ImageSourceUtil.getUploadedImageSrc(this.props.userInfo.image)}
                                             className="user-img img-fluid"
                                             alt={this.props.userInfo.name}
                                             width={100}
@@ -185,4 +185,4 @@ class ThemeUsersProfileCard extends Component<PageProps, PageState> {
     }
 }
 
-export default ThemeUsersProfileCard;
+export default ComponentThemeUsersProfileCard;

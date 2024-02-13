@@ -1,11 +1,11 @@
 import React, {Component, FormEvent} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {ThemeForm, ThemeFormType} from "components/theme/form";
+import {ComponentForm, ComponentFormType} from "components/elements/form";
 import HandleForm from "library/react/handles/form";
 import profileService from "services/profile.service";
-import ThemeToast from "components/theme/toast";
+import ComponentToast from "components/elements/toast";
 
-type PageState = {
+type IPageState = {
     isSubmitting: boolean
     formData: {
         password: string,
@@ -14,10 +14,10 @@ type PageState = {
     }
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PageChangePassword extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PageChangePassword extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             isSubmitting: false,
@@ -43,7 +43,7 @@ export default class PageChangePassword extends Component<PageProps, PageState> 
     onSubmit(event: FormEvent) {
         event.preventDefault();
         if (this.state.formData.newPassword !== this.state.formData.confirmPassword) {
-            new ThemeToast({
+            new ComponentToast({
                 type: "error",
                 title: this.props.t("error"),
                 content: this.props.t("passwordsNotEqual")
@@ -56,13 +56,13 @@ export default class PageChangePassword extends Component<PageProps, PageState> 
         }, async () => {
             let resData = await profileService.changePassword(this.state.formData);
             if (resData.status) {
-                new ThemeToast({
+                new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),
                     content: this.props.t("passwordUpdated")
                 })
             } else {
-                new ThemeToast({
+                new ComponentToast({
                     type: "error",
                     title: this.props.t("error"),
                     content: this.props.t("wrongPassword")
@@ -80,7 +80,7 @@ export default class PageChangePassword extends Component<PageProps, PageState> 
             <div className="page-settings">
                 <div className="row">
                     <div className="col-md-12">
-                        <ThemeForm
+                        <ComponentForm
                             isActiveSaveButton={true}
                             saveButtonText={this.props.t("save")}
                             saveButtonLoadingText={this.props.t("loading")}
@@ -92,7 +92,7 @@ export default class PageChangePassword extends Component<PageProps, PageState> 
                                     <div className="card-body">
                                         <div className="row">
                                             <div className="col-md-7 mb-3">
-                                                <ThemeFormType
+                                                <ComponentFormType
                                                     title={`${this.props.t("password")}*`}
                                                     name="formData.password"
                                                     type="password"
@@ -103,7 +103,7 @@ export default class PageChangePassword extends Component<PageProps, PageState> 
                                                 />
                                             </div>
                                             <div className="col-md-7 mb-3">
-                                                <ThemeFormType
+                                                <ComponentFormType
                                                     title={`${this.props.t("newPassword")}*`}
                                                     name="formData.newPassword"
                                                     type="password"
@@ -114,7 +114,7 @@ export default class PageChangePassword extends Component<PageProps, PageState> 
                                                 />
                                             </div>
                                             <div className="col-md-7 mb-3">
-                                                <ThemeFormType
+                                                <ComponentFormType
                                                     title={`${this.props.t("confirmPassword")}*`}
                                                     name="formData.confirmPassword"
                                                     type="password"
@@ -128,7 +128,7 @@ export default class PageChangePassword extends Component<PageProps, PageState> 
                                     </div>
                                 </div>
                             </div>
-                        </ThemeForm>
+                        </ComponentForm>
                     </div>
                 </div>
             </div>

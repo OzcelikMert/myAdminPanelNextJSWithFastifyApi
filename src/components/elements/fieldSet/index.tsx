@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     legend?: string
     legendElement?: JSX.Element
     children: any
 };
 
-class ThemeFieldSet extends Component<PageProps, PageState> {
+class ComponentFieldSet extends Component<IPageProps, IPageState> {
     render() {
         return (
             <div className="theme-input static">
@@ -21,4 +21,4 @@ class ThemeFieldSet extends Component<PageProps, PageState> {
     }
 }
 
-export default ThemeFieldSet;
+export default ComponentFieldSet;

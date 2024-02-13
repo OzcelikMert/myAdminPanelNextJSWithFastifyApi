@@ -13,11 +13,11 @@ import {
 
 ChartJS.register(LineElement, BarElement, ArcElement, LinearScale, Title, CategoryScale, Tooltip);
 
-type PageState = {
+type IPageState = {
     options: any
 };
 
-type PageProps = {
+type IPageProps = {
     data: {
         labels: string[],
         datasets: {
@@ -30,8 +30,8 @@ type PageProps = {
     }
 };
 
-class ThemeChartDonut extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+class ComponentChartDonut extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             options: {
@@ -56,4 +56,4 @@ class ThemeChartDonut extends Component<PageProps, PageState> {
     }
 }
 
-export default ThemeChartDonut;
+export default ComponentChartDonut;

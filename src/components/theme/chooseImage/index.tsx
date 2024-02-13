@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import {IPagePropCommon} from "types/pageProps";
-import ThemeChooseImageGallery from "./gallery";
+import ComponentThemeChooseImageGallery from "./gallery";
 
 const emptyImage = require("images/empty.png");
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     isShow: boolean
     onSelected: (images: string[]) => void
     isMulti?: boolean
@@ -14,8 +14,8 @@ type PageProps = {
     selectedImages?: string[]
 } & IPagePropCommon;
 
-class ThemeChooseImage extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+class ComponentThemeChooseImage extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {}
     }
@@ -27,7 +27,7 @@ class ThemeChooseImage extends Component<PageProps, PageState> {
 
     render() {
         return (
-            <ThemeChooseImageGallery
+            <ComponentThemeChooseImageGallery
                 {...this.props}
                 isShow={this.props.isShow}
                 onSubmit={images => this.onSelected(images)}
@@ -37,7 +37,7 @@ class ThemeChooseImage extends Component<PageProps, PageState> {
     }
 }
 
-export default ThemeChooseImage;
+export default ComponentThemeChooseImage;
 export {
     emptyImage
 }

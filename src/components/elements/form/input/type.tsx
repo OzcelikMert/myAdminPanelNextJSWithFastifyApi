@@ -1,11 +1,11 @@
 import React from 'react'
 
-type PageProps = {
+type IPageProps = {
     title?: string,
     titleElement?: JSX.Element
 } & React.InputHTMLAttributes<HTMLInputElement> & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-const ThemeFormType = React.forwardRef((props: PageProps, ref: any ) => {
+const ComponentFormType = React.forwardRef((props: IPageProps, ref: any ) => {
     let input: JSX.Element;
     const elementProps = Object.assign({}, props);
     delete elementProps.titleElement;
@@ -32,4 +32,4 @@ const ThemeFormType = React.forwardRef((props: PageProps, ref: any ) => {
     );
 });
 
-export default ThemeFormType;
+export default ComponentFormType;

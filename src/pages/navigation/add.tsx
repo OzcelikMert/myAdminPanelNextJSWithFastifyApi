@@ -1,6 +1,6 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
-import {ThemeForm, ThemeFormSelect, ThemeFormType} from "components/theme/form"
+import {ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form"
 import {StatusId} from "constants/index";
 import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
@@ -10,9 +10,9 @@ import Swal from "sweetalert2";
 import {INavigationUpdateOneParamService} from "types/services/navigation.service";
 import navigationService from "services/navigation.service";
 import PagePaths from "constants/pagePaths";
-import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
+import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 
-type PageState = {
+type IPageState = {
     items: ThemeFormSelectValueDocument[]
     mainTabActiveKey: string
     status: ThemeFormSelectValueDocument[]
@@ -21,10 +21,10 @@ type PageState = {
     formData: INavigationUpdateOneParamService,
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PageNavigationAdd extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PageNavigationAdd extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             mainTabActiveKey: `general`,
@@ -82,7 +82,7 @@ export default class PageNavigationAdd extends Component<PageProps, PageState> {
     }
 
     getStatus() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.status = staticContentLib.getStatusForSelect([
                 StatusId.Active,
                 StatusId.InProgress,
@@ -99,7 +99,7 @@ export default class PageNavigationAdd extends Component<PageProps, PageState> {
             statusId: StatusId.Active,
         });
         if (resData.status) {
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 state.items = [{value: "", label: this.props.t("notSelected")}];
                 resData.data.forEach(item => {
                     if (!V.isEmpty(this.state.formData._id)) {
@@ -124,7 +124,7 @@ export default class PageNavigationAdd extends Component<PageProps, PageState> {
             if (resData.data) {
                 const item = resData.data;
 
-                this.setState((state: PageState) => {
+                this.setState((state: IPageState) => {
                     state.formData = {
                         ...state.formData,
                         ...item,
@@ -195,7 +195,7 @@ export default class PageNavigationAdd extends Component<PageProps, PageState> {
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFormSelect
+                    <ComponentFormSelect
                         title={this.props.t("status")}
                         name="formData.statusId"
                         options={this.state.status}
@@ -204,7 +204,7 @@ export default class PageNavigationAdd extends Component<PageProps, PageState> {
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={this.props.t("rank")}
                         name="formData.rank"
                         type="number"
@@ -221,7 +221,7 @@ export default class PageNavigationAdd extends Component<PageProps, PageState> {
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={`${this.props.t("title")}*`}
                         name="formData.contents.title"
                         type="text"
@@ -231,7 +231,7 @@ export default class PageNavigationAdd extends Component<PageProps, PageState> {
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={`${this.props.t("url")}*`}
                         name="formData.contents.url"
                         type="text"
@@ -241,7 +241,7 @@ export default class PageNavigationAdd extends Component<PageProps, PageState> {
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormSelect
+                    <ComponentFormSelect
                         title={this.props.t("main")}
                         name="formData.mainId"
                         placeholder={this.props.t("chooseMain")}
@@ -270,7 +270,7 @@ export default class PageNavigationAdd extends Component<PageProps, PageState> {
                     </div>
                 </div>
                 <div className="row">
-                    <ThemeForm
+                    <ComponentForm
                         isActiveSaveButton={true}
                         saveButtonText={this.props.t("save")}
                         saveButtonLoadingText={this.props.t("loading")}
@@ -297,7 +297,7 @@ export default class PageNavigationAdd extends Component<PageProps, PageState> {
                                 </div>
                             </div>
                         </div>
-                    </ThemeForm>
+                    </ComponentForm>
                 </div>
             </div>
         )

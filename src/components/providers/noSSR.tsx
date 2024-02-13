@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 
-type PageState = {
+type IPageState = {
     isDidMount: boolean
 }
 
-type PageProps = {
+type IPageProps = {
     children?: any
 }
 
-export default class ProviderNoSSR extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentProviderNoSSR extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             isDidMount: false

@@ -4,14 +4,14 @@ import Swal from "sweetalert2";
 import galleryService from "services/gallery.service";
 import {TableColumn} from "react-data-table-component";
 import imageSourceLib from "lib/imageSource.lib";
-import ThemeToast from "components/theme/toast";
+import ComponentToast from "components/elements/toast";
 import permissionLib from "lib/permission.lib";
 import {PermissionId} from "constants/index";
-import ThemeDataTable from "components/theme/table/dataTable";
+import ComponentDataTable from "components/elements/table/dataTable";
 import Image from "next/image"
 import IGalleryModel from "types/services/gallery.service";
 
-type PageState = {
+type IPageState = {
     items: IGalleryModel[]
     showingItems: IGalleryModel[]
     selectedItems: string[]
@@ -19,7 +19,7 @@ type PageState = {
     searchKey: string
 };
 
-type PageProps = {
+type IPageProps = {
     isModal?: boolean
     isMulti?: boolean
     onSubmit?: (images: string[]) => void
@@ -27,11 +27,11 @@ type PageProps = {
     selectedImages?: string[]
 } & IPagePropCommon;
 
-export default class PageGalleryList extends Component<PageProps, PageState> {
-    toast: null | ThemeToast = null;
+export default class PageGalleryList extends Component<IPageProps, IPageState> {
+    toast: null | ComponentToast = null;
     listPage: number = 0;
     listPagePerCount: number = 10;
-    constructor(props: PageProps) {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             items: [],
@@ -54,7 +54,7 @@ export default class PageGalleryList extends Component<PageProps, PageState> {
         this.toast?.hide();
     }
 
-    componentDidUpdate(prevProps: Readonly<PageProps>, prevState: Readonly<PageState>) {
+    componentDidUpdate(prevProps: Readonly<IPageProps>, prevState: Readonly<IPageState>) {
         if (
             this.props.uploadedImages &&
             JSON.stringify(this.props.uploadedImages) !== JSON.stringify(prevProps.uploadedImages)
@@ -81,7 +81,7 @@ export default class PageGalleryList extends Component<PageProps, PageState> {
 
     setListSort(items: IGalleryModel[]) {
         items = items.orderBy("createdAt", "desc");
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             if (this.props.selectedImages && this.props.selectedImages.length > 0) {
                 state.selectedItems = state.selectedItems.concat(this.props.selectedImages);
                 items.sort((a, b) => {
@@ -111,7 +111,7 @@ export default class PageGalleryList extends Component<PageProps, PageState> {
         }, () => {
             if (this.state.selectedItems.length > 0) {
                 if (!this.toast || !this.toast.isShow) {
-                    this.toast = new ThemeToast({
+                    this.toast = new ComponentToast({
                         content: (
                             (this.props.isModal)
                                 ? <button type="button" className="btn btn-gradient-success btn-icon-text w-100"
@@ -144,7 +144,7 @@ export default class PageGalleryList extends Component<PageProps, PageState> {
         });
         if (result.isConfirmed) {
             this.toast?.hide();
-            const loadingToast = new ThemeToast({
+            const loadingToast = new ComponentToast({
                 title: this.props.t("loading"),
                 content: this.props.t("deleting"),
                 type: "loading"
@@ -153,13 +153,13 @@ export default class PageGalleryList extends Component<PageProps, PageState> {
             let resData = await galleryService.delete({images: this.state.selectedItems});
             loadingToast.hide();
             if (resData.status) {
-                this.setState((state: PageState) => {
+                this.setState((state: IPageState) => {
                     state.items = state.items.filter(item => !state.selectedItems.includes(item.name));
                     state.selectedItems = [];
                     return state;
                 }, () => {
                     this.onSearch(this.state.searchKey);
-                    new ThemeToast({
+                    new ComponentToast({
                         title: this.props.t("itemDeleted"),
                         content: this.props.t("itemDeleted"),
                         type: "success",
@@ -184,7 +184,7 @@ export default class PageGalleryList extends Component<PageProps, PageState> {
         })
     }
 
-    get getTableColumns(): TableColumn<PageState["items"][0]>[] {
+    get getTableColumns(): TableColumn<IPageState["items"][0]>[] {
         return [
             {
                 name: this.props.t("image"),
@@ -210,7 +210,7 @@ export default class PageGalleryList extends Component<PageProps, PageState> {
                 name: this.props.t("createdDate"),
                 selector: row => (new Date(row.createdAt)).toLocaleDateString(),
                 sortable: true,
-                sortFunction: (a, b) => ThemeDataTable.dateSort(a, b)
+                sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
             },
             {
                 name: this.props.t("size"),
@@ -241,7 +241,7 @@ export default class PageGalleryList extends Component<PageProps, PageState> {
                 <div className="grid-margin stretch-card">
                     <div className="card">
                         <div className="card-body">
-                            <ThemeDataTable
+                            <ComponentDataTable
                                 columns={this.getTableColumns}
                                 data={this.state.showingItems}
                                 onSelect={rows => this.onSelect(rows.map(item => item.name))}

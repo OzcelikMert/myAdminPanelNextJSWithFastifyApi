@@ -3,16 +3,16 @@ import {Modal, Tab, Tabs} from "react-bootstrap";
 import PageGalleryList from "pages/gallery/list";
 import PageGalleryUpload from "pages/gallery/upload";
 import {IPagePropCommon} from "types/pageProps";
-import {PermissionId} from "constants/index";
-import permissionLib from "lib/permission.lib";
-import IGalleryModel from "types/services/gallery.service";
+import {IGalleryModel} from "types/models/gallery.model";
+import {PermissionUtil} from "utils/permission.util";
+import {PermissionId} from "constants/permissions";
 
-type PageState = {
+type IPageState = {
     formActiveKey: string
     uploadedImages: IGalleryModel[]
 };
 
-type PageProps = {
+type IPageProps = {
     onClose: () => void
     isShow: boolean
     onSubmit: (images: string[]) => void
@@ -20,8 +20,8 @@ type PageProps = {
     selectedImages?: string[]
 } & IPagePropCommon;
 
-class ThemeChooseImageGallery extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+class ComponentThemeChooseImageGallery extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             formActiveKey: "list",
@@ -59,9 +59,9 @@ class ThemeChooseImageGallery extends Component<PageProps, PageState> {
                                     className="mb-5"
                                     transition={false}>
                                     {
-                                        permissionLib.checkPermission(
-                                            this.props.getStateApp.sessionData.roleId,
-                                            this.props.getStateApp.sessionData.permissions,
+                                        PermissionUtil.checkPermission(
+                                            this.props.getStateApp.sessionAuth!.user.roleId,
+                                            this.props.getStateApp.sessionAuth!.user.permissions,
                                             PermissionId.GalleryEdit
                                         ) ? <Tab eventKey="upload" title={this.props.t("upload")}>
                                             <PageGalleryUpload
@@ -88,4 +88,4 @@ class ThemeChooseImageGallery extends Component<PageProps, PageState> {
     }
 }
 
-export default ThemeChooseImageGallery;
+export default ComponentThemeChooseImageGallery;

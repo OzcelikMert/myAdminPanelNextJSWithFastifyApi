@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import ThemeInputType from "components/theme/form/input/type";
+import ThemeInputType from "components/elements/form/input/type";
 import {IPagePropCommon} from "types/pageProps";
 import {LanguageId, StatusId} from "constants/index";
-import {ThemeForm, ThemeFormCheckBox} from "components/theme/form";
+import {ComponentForm, ComponentFormCheckBox} from "components/elements/form";
 import HandleForm from "library/react/handles/form";
 import authService from "services/auth.service";
 import {IUserGetResultService} from "types/services/user.service";
@@ -11,7 +11,7 @@ import Image from "next/image"
 
 import Logo from "assets/images/ozcelikLogo.png"
 
-type PageState = {
+type IPageState = {
     isSubmitting: boolean
     isWrong: boolean
     user?: IUserGetResultService
@@ -22,9 +22,9 @@ type PageState = {
     }
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-class PageLogin extends Component<PageProps, PageState> {
+class PageLogin extends Component<IPageProps, IPageState> {
     constructor(prop: any) {
         super(prop);
         this.state = {
@@ -97,7 +97,7 @@ class PageLogin extends Component<PageProps, PageState> {
                         <div className="col-lg-6 d-flex align-items-center justify-content-center login-half-form">
                             <div className="auth-form-transparent text-left p-3">
                                 <h4 className="text-center">{this.props.t("loginPanel")}</h4>
-                                <ThemeForm
+                                <ComponentForm
                                     isSubmitting={this.state.isSubmitting}
                                     formAttributes={{onSubmit: (event) => this.onSubmit(event)}}
                                     enterToSubmit={true}
@@ -124,7 +124,7 @@ class PageLogin extends Component<PageProps, PageState> {
                                             />
                                         </div>
                                         <div className="col-md-12 mb-3">
-                                            <ThemeFormCheckBox
+                                            <ComponentFormCheckBox
                                                 name="formData.keepMe"
                                                 title={this.props.t("keepMe")}
                                                 checked={Boolean(this.state.formData.keepMe)}
@@ -178,7 +178,7 @@ class PageLogin extends Component<PageProps, PageState> {
                                             </button>
                                         </div>
                                     </div>
-                                </ThemeForm>
+                                </ComponentForm>
                             </div>
                         </div>
                         <div className="col-lg-6 login-half-bg d-flex flex-row">

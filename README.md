@@ -2,6 +2,7 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
+- user icin sayfada islem yaparken status yada ban control yap
 - yeni end point sistemini yap
 - yeni permission sistemini yap apidekine benzer olsun
 - Diller icin export import yap

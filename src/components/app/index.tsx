@@ -1,18 +1,18 @@
 import React, {Component} from 'react';
 import {IPagePropCommon} from "types/pageProps";
-import Navbar from "components/tools/navbar";
-import Sidebar from "components/tools/sidebar";
-import Footer from "components/tools/footer";
-import {IAppGetState, IAppSetState} from "types/pages/_app";
-import ThemeBreadCrumb from "components/theme/breadCrumb";
-import ThemeContentLanguage from "components/theme/contentLanguage";
-import Spinner from "components/tools/spinner";
+import ComponentToolNavbar from "components/tools/navbar";
+import ComponentToolSidebar from "components/tools/sidebar";
+import ComponentToolFooter from "components/tools/footer";
+import {IGetStateApp, ISetStateApp} from "types/pages/_app";
+import ComponentThemeBreadCrumb from "components/theme/breadCrumb";
+import ComponentThemeContentLanguage from "components/theme/contentLanguage";
+import ComponentToolSpinner from "components/tools/spinner";
 import {AppProps} from "next/app";
 import ComponentHead from "components/head";
 import {useTranslation} from "react-i18next";
-import ProviderAuth from "components/providers/auth.provider";
-import ProviderPermission from "components/providers/permission.provider";
-import ProviderAppInit from "components/providers/app.init.provider";
+import ComponentProviderAuth from "components/providers/auth";
+import ComponentProviderPermission from "components/providers/permission";
+import ComponentProviderAppInit from "components/providers/appInit";
 import Variable from "library/variable";
 import {ToastContainer} from "react-toastify";
 import {CurrencyId} from "constants/currencyTypes";
@@ -20,18 +20,18 @@ import {LanguageId} from "constants/languages";
 import {multiLanguagePaths} from "constants/multiLanguagePaths";
 import {EndPoints} from "constants/endPoints";
 
-type PageState = {
+type IPageState = {
     breadCrumbTitle: string
-} & IAppGetState;
+} & IGetStateApp;
 
-type PageProps = {
+type IPageProps = {
     t: IPagePropCommon["t"]
 } & AppProps
 
-class ComponentApp extends Component<PageProps, PageState> {
+class ComponentApp extends Component<IPageProps, IPageState> {
     pathname: string;
 
-    constructor(props: PageProps) {
+    constructor(props: IPageProps) {
         super(props);
         this.pathname = this.props.router.asPath;
         this.state = {
@@ -49,7 +49,7 @@ class ComponentApp extends Component<PageProps, PageState> {
         }
     }
 
-    async componentDidUpdate(prevProps: Readonly<PageProps>, prevState: Readonly<PageState>) {
+    async componentDidUpdate(prevProps: Readonly<IPageProps>, prevState: Readonly<IPageState>) {
         if (this.pathname !== this.props.router.asPath) {
             this.pathname = this.props.router.asPath;
             await this.onRouteChanged()
@@ -74,7 +74,7 @@ class ComponentApp extends Component<PageProps, PageState> {
     }
 
     setBreadCrumb(titles: string[]) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.breadCrumbTitle = "";
             titles.forEach(title => {
                 state.breadCrumbTitle += `${title} - `;
@@ -84,8 +84,8 @@ class ComponentApp extends Component<PageProps, PageState> {
         })
     }
 
-    setStateApp(data: IAppSetState, callBack?: () => void) {
-        this.setState((state: PageState) => {
+    setStateApp(data: ISetStateApp, callBack?: () => void) {
+        this.setState((state: IPageState) => {
             state = Variable.nestedObjectAssign(Object.create(state), data);
             return state;
         }, () => {
@@ -102,16 +102,16 @@ class ComponentApp extends Component<PageProps, PageState> {
             <div className="page-header">
                 <div className="row w-100 m-0">
                     <div className="col-md-8 p-0">
-                        <ThemeBreadCrumb breadCrumbs={this.state.breadCrumbTitle.split(" - ")}/>
+                        <ComponentThemeBreadCrumb breadCrumbs={this.state.breadCrumbTitle.split(" - ")}/>
                     </div>
                     {
                         multiLanguagePaths.includes(path)
                             ? <div className="col-md-4 p-0 content-language">
-                                <ThemeContentLanguage
+                                <ComponentThemeContentLanguage
                                     t={props.t}
                                     options={this.state.appData.contentLanguages}
                                     value={this.state.appData.contentLanguages.findSingle("_id", this.state.pageData.langId)}
-                                    onChange={(item, e) => this.setState((state: PageState) => {
+                                    onChange={(item, e) => this.setState((state: IPageState) => {
                                         return {
                                             ...state,
                                             pageData: {
@@ -157,14 +157,14 @@ class ComponentApp extends Component<PageProps, PageState> {
                 <ComponentHead title={this.state.breadCrumbTitle}/>
                 <div className="container-scroller">
                     <ToastContainer/>
-                    {!isFullPageLayout ? <Navbar {...commonProps}/> : null}
+                    {!isFullPageLayout ? <ComponentToolNavbar {...commonProps}/> : null}
                     <div className={`container-fluid page-body-wrapper ${isFullPageLayout ? "full-page-wrapper" : ""}`}>
-                        {!isFullPageLayout ? <Sidebar {...commonProps}/> : null}
+                        {!isFullPageLayout ? <ComponentToolSidebar {...commonProps}/> : null}
                         {this.state.isPageLoading || this.state.isAppLoading ?
-                            <Spinner isFullPage={isFullPageLayout}/> : null}
-                        <ProviderAuth {...commonProps}>
-                            <ProviderPermission {...commonProps}>
-                                <ProviderAppInit  {...commonProps}>
+                            <ComponentToolSpinner isFullPage={isFullPageLayout}/> : null}
+                        <ComponentProviderAuth {...commonProps}>
+                            <ComponentProviderPermission {...commonProps}>
+                                <ComponentProviderAppInit  {...commonProps}>
                                     <div className="main-panel">
                                         <div className="content-wrapper">
                                             {
@@ -172,11 +172,11 @@ class ComponentApp extends Component<PageProps, PageState> {
                                             }
                                             <this.props.Component {...commonProps}/>
                                         </div>
-                                        {!isFullPageLayout ? <Footer/> : ''}
+                                        {!isFullPageLayout ? <ComponentToolFooter/> : ''}
                                     </div>
-                                </ProviderAppInit>
-                            </ProviderPermission>
-                        </ProviderAuth>
+                                </ComponentProviderAppInit>
+                            </ComponentProviderPermission>
+                        </ComponentProviderAuth>
                     </div>
                 </div>
             </div>

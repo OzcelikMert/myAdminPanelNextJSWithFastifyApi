@@ -10,12 +10,12 @@ import {
     INavigationUpdateOneRankParamService
 } from "types/services/navigation.service";
 import {NavigationApiEndPoint} from "constants/apiEndPoints/navigation.api.endPoint";
-import pathUtil from "utils/path.util";
+import {PathUtil} from "utils/path.util";
 import ApiRequest from "library/api/request";
 
 const getOne = (params: INavigationGetOneParamService) =>  {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.GET_WITH_ID(params._id)],
         data: params
     }).get<INavigationGetResultService>();
@@ -23,7 +23,7 @@ const getOne = (params: INavigationGetOneParamService) =>  {
 
 const getMany = (params: INavigationGetManyParamService) =>  {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.GET],
         data: params,
     }).get<INavigationGetResultService[]>();
@@ -31,7 +31,7 @@ const getMany = (params: INavigationGetManyParamService) =>  {
 
 const add = (params: INavigationAddParamService) =>  {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.ADD],
         data: params,
     }).post();
@@ -39,7 +39,7 @@ const add = (params: INavigationAddParamService) =>  {
 
 const updateOne = (params: INavigationUpdateOneParamService) =>  {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_WITH_ID(params._id)],
         data: params,
     }).put();
@@ -47,7 +47,7 @@ const updateOne = (params: INavigationUpdateOneParamService) =>  {
 
 const updateOneRank = (params: INavigationUpdateOneRankParamService) =>  {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
         data: params
     }).put();
@@ -55,7 +55,7 @@ const updateOneRank = (params: INavigationUpdateOneRankParamService) =>  {
 
 const updateManyStatus = (params: INavigationUpdateManyStatusIdParamService) =>  {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_STATUS],
         data: params
     }).put();
@@ -63,7 +63,7 @@ const updateManyStatus = (params: INavigationUpdateManyStatusIdParamService) => 
 
 const deleteMany = (params: INavigationDeleteManyParamService) =>  {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.DELETE],
         data: params,
     }).delete();

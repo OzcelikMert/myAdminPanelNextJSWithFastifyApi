@@ -1,24 +1,24 @@
 import React, {Component, FormEvent} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {ThemeFieldSet, ThemeForm, ThemeFormType} from "components/theme/form";
+import {ComponentFieldSet, ComponentForm, ComponentFormType} from "components/elements/form";
 import HandleForm from "library/react/handles/form";
 import {
     PermissionGroups,
     Permissions,
     userRoles
 } from "constants/index";
-import ThemeChooseImage from "components/theme/chooseImage";
+import ComponentThemeChooseImage from "components/theme/chooseImage";
 import userService from "services/user.service";
 import profileService from "services/profile.service";
 import imageSourceLib from "lib/imageSource.lib";
-import ThemeToast from "components/theme/toast";
+import ComponentToast from "components/elements/toast";
 import {IPermission, IPermissionGroup} from "types/constants";
 import {ProfileUpdateParamDocument} from "types/services/profile";
 import Image from "next/image"
-import ThemeBadgeStatus from "components/theme/badge/status";
-import ThemeBadgeUserRole from "components/theme/badge/userRole";
+import ComponentThemeBadgeStatus from "components/theme/badge/status";
+import ComponentThemeBadgeUserRole from "components/theme/badge/userRole";
 
-type PageState = {
+type IPageState = {
     isSubmitting: boolean
     isImageChanging: boolean
     isSelectionImage: boolean
@@ -31,10 +31,10 @@ type PageState = {
     formData: ProfileUpdateParamDocument
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PageSettingsProfile extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PageSettingsProfile extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             isSubmitting: false,
@@ -74,7 +74,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
         let resData = await userService.getOne({_id: this.props.getStateApp.sessionData.id});
         if (resData.status && resData.data) {
             const user = resData.data;
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 state.data = {
                     email: user.email,
                     roleId: user.roleId,
@@ -103,7 +103,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
             isImageChanging: true
         }, async () => {
             let resData = await profileService.update({image: image});
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 state.isSubmitting = false;
                 state.isImageChanging = false;
                 state.formData.image = image;
@@ -116,7 +116,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
                 })
             });
         })
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.formData.image = image;
             return state
         })
@@ -134,7 +134,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
                         name: this.state.formData.name
                     }
                 }, () => {
-                    new ThemeToast({
+                    new ComponentToast({
                         type: "success",
                         title: this.props.t("successful"),
                         content: this.props.t("profileUpdated")
@@ -161,12 +161,12 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
                         </div>
                         <div className="col-sm-12">
                             <span className="mb-2 fw-bold">{this.props.t("role")}:
-                                <ThemeBadgeUserRole t={this.props.t} userRoleId={this.state.data.roleId} />
+                                <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={this.state.data.roleId} />
                             </span>
                         </div>
                         <div className="col-sm-12">
                             <span className="mb-2 fw-bold">{this.props.t("status")}:
-                                <ThemeBadgeStatus t={this.props.t} statusId={this.state.data.statusId} className="ms-1" />
+                                <ComponentThemeBadgeStatus t={this.props.t} statusId={this.state.data.statusId} className="ms-1" />
                             </span>
                         </div>
                     </div>
@@ -182,7 +182,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
 
         const PermissionGroup = (props: IPermissionGroup) => (
             <div className="col-md-12 mt-3">
-                <ThemeFieldSet legend={this.props.t(props.langKey)}>
+                <ComponentFieldSet legend={this.props.t(props.langKey)}>
                     <div className="row">
                         {
                             permissions.findMulti("groupId", props.id).map(permission =>
@@ -190,7 +190,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
                             )
                         }
                     </div>
-                </ThemeFieldSet>
+                </ComponentFieldSet>
             </div>
         )
 
@@ -256,7 +256,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
                 <div className="card-body">
                     <div className="row">
                         <div className="col-md-12">
-                            <ThemeForm
+                            <ComponentForm
                                 isActiveSaveButton={true}
                                 saveButtonText={this.props.t("save")}
                                 saveButtonLoadingText={this.props.t("loading")}
@@ -265,7 +265,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
                             >
                                 <div className="row">
                                     <div className="col-md-12 mb-3">
-                                        <ThemeFormType
+                                        <ComponentFormType
                                             title={`${this.props.t("name")}*`}
                                             name="formData.name"
                                             type="text"
@@ -275,7 +275,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
-                                        <ThemeFormType
+                                        <ComponentFormType
                                             title={this.props.t("comment")}
                                             name="formData.comment"
                                             type="textarea"
@@ -284,7 +284,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
-                                        <ThemeFormType
+                                        <ComponentFormType
                                             title={`${this.props.t("phone")}`}
                                             name="formData.phone"
                                             type="text"
@@ -293,7 +293,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
-                                        <ThemeFormType
+                                        <ComponentFormType
                                             title="Facebook"
                                             name="formData.facebook"
                                             type="url"
@@ -302,7 +302,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
-                                        <ThemeFormType
+                                        <ComponentFormType
                                             title="Instagram"
                                             name="formData.instagram"
                                             type="url"
@@ -311,7 +311,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
-                                        <ThemeFormType
+                                        <ComponentFormType
                                             title="Twitter"
                                             name="formData.twitter"
                                             type="url"
@@ -320,7 +320,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
                                         />
                                     </div>
                                 </div>
-                            </ThemeForm>
+                            </ComponentForm>
                         </div>
                     </div>
                 </div>
@@ -331,7 +331,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
     render() {
         return this.props.getStateApp.isPageLoading ? null : (
             <div className="page-settings">
-                <ThemeChooseImage
+                <ComponentThemeChooseImage
                     {...this.props}
                     isShow={this.state.isSelectionImage}
                     onHide={() => this.setState({isSelectionImage: false})}

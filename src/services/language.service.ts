@@ -1,18 +1,18 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import  {
     ILanguageAddParamService,
+    ILanguageGetResultService,
     ILanguageGetOneParamService,
-    ILanguageGetResultService, ILanguageGetOneParamService,
     ILanguageUpdateOneParamService,
     ILanguageUpdateOneRankParamService
 } from "types/services/language.service";
 import {LanguageApiEndPoint} from "constants/apiEndPoints/language.api.endPoint";
 import ApiRequest from "library/api/request";
-import pathUtil from "utils/path.util";
+import {PathUtil} from "utils/path.util";
 
 const getOne = (params: ILanguageGetOneParamService) =>{
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.GET_WITH_ID(params._id)],
         data: params
     }).get<ILanguageGetResultService>();
@@ -20,7 +20,7 @@ const getOne = (params: ILanguageGetOneParamService) =>{
 
 const getMany = (params: ILanguageGetOneParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.GET],
         data: params
     }).get<ILanguageGetResultService[]>();
@@ -28,7 +28,7 @@ const getMany = (params: ILanguageGetOneParamService) => {
 
 const getFlags = (params: {}) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.GET_FLAGS],
         data: params
     }).get<string[]>();
@@ -36,7 +36,7 @@ const getFlags = (params: {}) => {
 
 const add = (params: ILanguageAddParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.ADD],
         data: params
     }).post();
@@ -44,7 +44,7 @@ const add = (params: ILanguageAddParamService) => {
 
 const updateOne = (params: ILanguageUpdateOneParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.UPDATE_WITH_ID(params._id)],
         data: params
     }).put();
@@ -52,7 +52,7 @@ const updateOne = (params: ILanguageUpdateOneParamService) => {
 
 const updateOneRank = (params: ILanguageUpdateOneRankParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.LANGUAGE, LanguageApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
         data: params
     }).put();

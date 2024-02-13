@@ -4,13 +4,13 @@ import {StateManagerProps} from "react-select/dist/declarations/src/useStateMana
 
 export interface ThemeFormSelectValueDocument {label: any, value: any}
 
-type PageState = {} & any;
+type IPageState = {} & any;
 
-type PageProps = {
+type IPageProps = {
     title?: string
 } & StateManagerProps;
 
-class ThemeFormSelect extends Component<PageProps, PageState> {
+class ComponentFormSelect extends Component<IPageProps, IPageState> {
     render () {
         return (
             <label className="theme-input static">
@@ -28,4 +28,4 @@ class ThemeFormSelect extends Component<PageProps, PageState> {
     }
 }
 
-export default ThemeFormSelect;
+export default ComponentFormSelect;

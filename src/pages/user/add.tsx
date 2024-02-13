@@ -4,7 +4,7 @@ import moment from "moment";
 import {IPagePropCommon} from "types/pageProps";
 import {PermissionGroups, Permissions, StatusId, UserRoleId, userRoles} from "constants/index";
 import HandleForm from "library/react/handles/form";
-import {ThemeFieldSet, ThemeForm, ThemeFormCheckBox, ThemeFormSelect, ThemeFormType} from "components/theme/form";
+import {ComponentFieldSet, ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import V, {DateMask} from "library/variable";
 import userService from "services/user.service";
 import staticContentLib from "lib/staticContent.lib";
@@ -13,9 +13,9 @@ import {IUserUpdateOneParamService} from "types/services/user.service";
 import Swal from "sweetalert2";
 import permissionLib from "lib/permission.lib";
 import {IPermission, IPermissionGroup} from "types/constants";
-import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
+import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 
-type PageState = {
+type IPageState = {
     mainTabActiveKey: string
     userRoles: ThemeFormSelectValueDocument[]
     status: ThemeFormSelectValueDocument[]
@@ -24,10 +24,10 @@ type PageState = {
     formData: IUserUpdateOneParamService
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PageUserAdd extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PageUserAdd extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             mainTabActiveKey: "general",
@@ -74,7 +74,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
     }
 
     getStatus() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.status = staticContentLib.getStatusForSelect([
                 StatusId.Active,
                 StatusId.Pending,
@@ -87,7 +87,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
     }
 
     getRoles() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             let findUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionData.roleId);
             state.userRoles = staticContentLib.getuserRolesForSelect(
                 userRoles.map(userRole => findUserRole && (findUserRole.rank > userRole.rank) ? userRole.id : 0).filter(roleId => roleId !== 0),
@@ -105,7 +105,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
         if (resData.status) {
             if (resData.data) {
                 const item = resData.data;
-                this.setState((state: PageState) => {
+                this.setState((state: IPageState) => {
                     state.formData = Object.assign(state.formData, {
                         image: item.image,
                         name: item.name,
@@ -150,7 +150,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
     }
 
     onPermissionSelected(isSelected: boolean, permId: number) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             if (isSelected) {
                 state.formData.permissions.push(permId);
             } else {
@@ -162,7 +162,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
     }
 
     onPermissionAllSelected(isSelected: boolean) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             if (isSelected) {
                 state.formData.permissions = Permissions.map(perm => perm.id);
             } else {
@@ -175,7 +175,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
     onChangeUserRole(roleId: number) {
         let role = userRoles.findSingle("id", roleId);
         let permsForRole = Permissions.filter(perm => role && (perm.defaultRoleRank <= role.rank));
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.formData.permissions = [];
             permsForRole.forEach(perm => {
                 state.formData.permissions.push(perm.id);
@@ -213,12 +213,12 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
 
             return permissions.every(permission => permission == null) ? null : (
                 <div className="col-md-6 mb-3">
-                    <ThemeFieldSet
+                    <ComponentFieldSet
                         key={index}
                         legend={self.props.t(props.langKey)}
                     >
                         {permissions}
-                    </ThemeFieldSet>
+                    </ComponentFieldSet>
                 </div>
             )
         }
@@ -226,7 +226,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
         function PermissionItem(props: IPermission, index: number) {
             return (
                 <div className="col-md-4" key={index}>
-                    <ThemeFormCheckBox
+                    <ComponentFormCheckBox
                         key={index}
                         title={self.props.t(props.langKey)}
                         name="formData.permissions"
@@ -241,7 +241,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
         return (
             <div className="row">
                 <div className="col-md-12 mb-3">
-                    <ThemeFormCheckBox
+                    <ComponentFormCheckBox
                         title={this.props.t("selectAll")}
                         name="formData.permAll"
                         checked={Permissions.length === this.state.formData.permissions.length}
@@ -259,7 +259,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFormSelect
+                    <ComponentFormSelect
                         title={this.props.t("role")}
                         name="formData.roleId"
                         placeholder={this.props.t("chooseRole")}
@@ -272,7 +272,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormSelect
+                    <ComponentFormSelect
                         title={this.props.t("status")}
                         name="formData.statusId"
                         options={this.state.status}
@@ -284,7 +284,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
                     this.state.formData.statusId == StatusId.Banned ?
                         <div className="col-md-7 mb-3">
                             <div className="mb-3">
-                                <ThemeFormType
+                                <ComponentFormType
                                     title={`${this.props.t("banDateEnd")}*`}
                                     type="date"
                                     name="formData.banDateEnd"
@@ -293,7 +293,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
                                 />
                             </div>
                             <div className="mb-3">
-                                <ThemeFormType
+                                <ComponentFormType
                                     title={this.props.t("banComment")}
                                     name="formData.banComment"
                                     type="textarea"
@@ -311,7 +311,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={`${this.props.t("name")}*`}
                         name="formData.name"
                         type="text"
@@ -321,7 +321,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={`${this.props.t("email")}*`}
                         name="formData.email"
                         type="email"
@@ -332,7 +332,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={`${this.props.t("password")}*`}
                         name="formData.password"
                         type="password"
@@ -363,7 +363,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <ThemeForm
+                        <ComponentForm
                             isActiveSaveButton={true}
                             saveButtonText={this.props.t("save")}
                             saveButtonLoadingText={this.props.t("loading")}
@@ -396,7 +396,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
                                     </div>
                                 </div>
                             </div>
-                        </ThemeForm>
+                        </ComponentForm>
                     </div>
                 </div>
             </div>

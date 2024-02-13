@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import ThemeInputType from "components/theme/form/input/type";
+import ThemeInputType from "components/elements/form/input/type";
 import {IPagePropCommon} from "types/pageProps";
-import {ThemeForm} from "components/theme/form";
+import {ComponentForm} from "components/elements/form";
 import HandleForm from "library/react/handles/form";
 import V from "library/variable";
 import authService from "services/auth.service";
@@ -9,7 +9,7 @@ import imageSourceLib from "lib/imageSource.lib";
 import PagePaths from "constants/pagePaths";
 import Image from "next/image"
 
-type PageState = {
+type IPageState = {
     isSubmitting: boolean
     isWrong: boolean
     formData: {
@@ -17,9 +17,9 @@ type PageState = {
     }
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-class PageLock extends Component<PageProps, PageState> {
+class PageLock extends Component<IPageProps, IPageState> {
     constructor(prop: any) {
         super(prop);
         this.state = {
@@ -87,7 +87,7 @@ class PageLock extends Component<PageProps, PageState> {
                                     height={75}
                                 />
                                 <h4 className="text-center text-light mb-3 mt-3">{this.props.getStateApp.sessionData.name}</h4>
-                                <ThemeForm
+                                <ComponentForm
                                     isSubmitting={this.state.isSubmitting}
                                     formAttributes={{onSubmit: (event) => this.onSubmit(event)}}
                                 >
@@ -120,7 +120,7 @@ class PageLock extends Component<PageProps, PageState> {
                                             }
                                         </div>
                                     </div>
-                                </ThemeForm>
+                                </ComponentForm>
                             </div>
                         </div>
                     </div>

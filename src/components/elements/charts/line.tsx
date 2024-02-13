@@ -11,7 +11,7 @@ import {
     Filler,
     Legend, ChartData,
 } from 'chart.js';
-import Spinner from "react-bootstrap/Spinner";
+import ComponentToolSpinner from "react-bootstrap/ComponentToolSpinner";
 
 ChartJS.register(
     CategoryScale,
@@ -24,20 +24,20 @@ ChartJS.register(
     Legend
 );
 
-type PageState = {
+type IPageState = {
     options: ChartProps<"line">["options"]
     data: ChartData<"line">
     isLoading: boolean
 };
 
-type PageProps = {
-    labels: string[],
+type IPageProps = {
+    labels?: string[],
     data: any[],
     toolTipLabel?: string
 };
 
-export default class ThemeChartArea extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentChartLine extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             isLoading: true,
@@ -52,11 +52,6 @@ export default class ThemeChartArea extends Component<PageProps, PageState> {
                       tension: 0.4
                   }
                 },
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
                 plugins: {
                     legend: {
                         display: false
@@ -70,22 +65,16 @@ export default class ThemeChartArea extends Component<PageProps, PageState> {
     }
 
     componentDidMount() {
-        let bgColor = 'rgba(28,57,189,0.71)';
         let borderColor = "#1863d3";
-        let pointBorderColor = "#6a0e98"
 
         this.setState({
             data: {
                 labels: this.props.labels,
                 datasets: [
                     {
-                        fill: true,
-                        pointBorderWidth: 7,
-                        pointBorderColor: pointBorderColor,
+                        pointBorderWidth: 0,
                         label: this.props.toolTipLabel,
                         borderColor: borderColor,
-                        backgroundColor: bgColor,
-                        hoverBackgroundColor: bgColor,
                         borderWidth: 5,
                         data: this.props.data
                     }
@@ -99,12 +88,13 @@ export default class ThemeChartArea extends Component<PageProps, PageState> {
     }
 
     render() {
-        return this.state.isLoading ? <Spinner animation="border" /> : (
+        return this.state.isLoading ? <ComponentToolSpinner animation="border" /> : (
             <Line
                 itemRef='chart'
                 className="chartLegendContainer"
                 data={this.state.data}
                 options={this.state.options}
+                redraw={true}
             />
         )
     }

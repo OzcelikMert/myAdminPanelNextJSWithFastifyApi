@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
-import {ThemeFormLoadingButton,  ThemeFormType} from "components/theme/form";
+import {ComponentFormLoadingButton,  ComponentFormType} from "components/elements/form";
 import HandleForm from "library/react/handles/form";
 import {Modal} from "react-bootstrap";
 import {IPagePropCommon} from "types/pageProps";
 
-type PageState = {
+type IPageState = {
     newRank: number
     isSubmitting: boolean
 };
 
-type PageProps = {
+type IPageProps = {
     t: IPagePropCommon["t"]
     isShow: boolean
     onHide: () => void
@@ -18,8 +18,8 @@ type PageProps = {
     title?: string
 };
 
-export default class ThemeModalUpdateItemRank extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentThemeModalUpdateItemRank extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             newRank: this.props.rank ?? 0,
@@ -27,7 +27,7 @@ export default class ThemeModalUpdateItemRank extends Component<PageProps, PageS
         }
     }
 
-    componentDidUpdate(prevProps: Readonly<PageProps>) {
+    componentDidUpdate(prevProps: Readonly<IPageProps>) {
         if(this.props.isShow && prevProps.isShow !== this.props.isShow){
             this.setState({
                 newRank: this.props.rank ?? 0
@@ -68,7 +68,7 @@ export default class ThemeModalUpdateItemRank extends Component<PageProps, PageS
                             <h4 className="text-center">{this.props.t("rank")} {this.props.title ? `(${this.props.title})` : ""}</h4>
                             <div className="row mt-4">
                                 <div className="col-md-12">
-                                    <ThemeFormType
+                                    <ComponentFormType
                                         title={`${this.props.t("rank")}`}
                                         name="newRank"
                                         type="number"
@@ -80,7 +80,7 @@ export default class ThemeModalUpdateItemRank extends Component<PageProps, PageS
                                 <div className="col-md-12 mt-4 text-end submit">
                                     {
                                         this.state.isSubmitting
-                                            ? <ThemeFormLoadingButton text={this.props.t("loading")} />
+                                            ? <ComponentFormLoadingButton text={this.props.t("loading")} />
                                             : <button type={"button"} className="btn btn-gradient-success" onClick={() => this.onSubmit()}>
                                                 {this.props.t("update")}
                                             </button>

@@ -1,21 +1,19 @@
 import React, {Component} from 'react';
 import {Collapse} from 'react-bootstrap';
 import {IPagePropCommon} from "types/pageProps";
-import SidebarNavs from "constants/sidebarNavs";
 import {ISidebarPath} from "types/constants/sidebarNavs";
-import PagePaths from "constants/pagePaths";
 import clone from "clone";
-import routeLib from "lib/route.lib";
-import permissionUtil from "utils/permission.util";
+import {sidebarNavs} from "constants/sidebarNavs";
+import {PermissionUtil} from "utils/permission.util";
 
-type PageState = {
+type IPageState = {
     isMenuOpen: { [key: string]: any }
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-class Sidebar extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+class ComponentToolSidebar extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             isMenuOpen: {}
@@ -30,7 +28,7 @@ class Sidebar extends Component<PageProps, PageState> {
         this.setState({
             isMenuOpen: {}
         }, () => {
-            this.setIsMenuOpen(SidebarNavs);
+            this.setIsMenuOpen(sidebarNavs);
         })
     }
 
@@ -46,7 +44,7 @@ class Sidebar extends Component<PageProps, PageState> {
 
     toggleMenuState(stateKey?: string) {
         if(stateKey){
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 let _state = clone(state);
                 _state.isMenuOpen[stateKey] = !_state.isMenuOpen[stateKey];
                 return _state;
@@ -62,7 +60,7 @@ class Sidebar extends Component<PageProps, PageState> {
         let self = this;
 
         function HasChild(_props: ISidebarPath) {
-            if (!permissionUtil.check(self.props.getStateApp.sessionAuth, _props.minRoleId, _props.minPermId)) return null;
+            if (!PermissionUtil.check(self.props.getStateApp.sessionAuth, _props.minRoleId, _props.minPermId)) return null;
             return (
                 <span className={`nav-link ${self.isPathActive(_props.path) ? 'active' : ''}`} onClick={() => routeLib.change(self.props.router, _props.path ?? PagePaths.dashboard())}>
                     <span className={`menu-title text-capitalize ${self.isPathActive(_props.path) ? 'active' : ''}`}>{self.props.t(_props.title)}</span>
@@ -72,7 +70,7 @@ class Sidebar extends Component<PageProps, PageState> {
         }
 
         function HasChildren(_props: ISidebarPath) {
-            if (!permissionUtil.check(self.props.getStateApp.sessionAuth, _props.minRoleId, _props.minPermId)) return null;
+            if (!PermissionUtil.check(self.props.getStateApp.sessionAuth, _props.minRoleId, _props.minPermId)) return null;
             let state = (_props.state) ? self.state.isMenuOpen[_props.state] : false;
             return (
                 <span>
@@ -114,7 +112,7 @@ class Sidebar extends Component<PageProps, PageState> {
             <nav className="sidebar sidebar-offcanvas" id="sidebar">
                 <ul className="nav pt-5">
                     {
-                        SidebarNavs.map((item, index) => {
+                        sidebarNavs.map((item, index) => {
                             return <this.Item
                                 key={index}
                                 {...item}
@@ -127,4 +125,4 @@ class Sidebar extends Component<PageProps, PageState> {
     }
 }
 
-export default Sidebar;
+export default ComponentToolSidebar;

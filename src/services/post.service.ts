@@ -8,15 +8,14 @@ import {
     IPostUpdateManyStatusIdParamService,
     IPostUpdateOneParamService,
     IPostUpdateOneRankParamService,
-    IPostUpdateOneViewParamService
 } from "types/services/post.service";
 import {PostApiEndPoint} from "constants/apiEndPoints/post.api.endPoint";
 import ApiRequest from "library/api/request";
-import pathUtil from "utils/path.util";
+import {PathUtil} from "utils/path.util";
 
 const getOne = (params: IPostGetOneParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.GET_WITH_ID(params._id)],
         data: params
     }).get<IPostGetOneResultService>();
@@ -24,7 +23,7 @@ const getOne = (params: IPostGetOneParamService) => {
 
 const getMany = (params: IPostGetManyParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.GET],
         data: params
     }).get<IPostGetManyResultService[]>();
@@ -32,7 +31,7 @@ const getMany = (params: IPostGetManyParamService) => {
 
 const getCount = (params: IPostGetCountParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.GET_COUNT],
         data: params
     }).get<number>();
@@ -40,7 +39,7 @@ const getCount = (params: IPostGetCountParamService) => {
 
 const add = (params: PostAddParamDocument) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.ADD],
         data: params
     }).post();
@@ -48,7 +47,7 @@ const add = (params: PostAddParamDocument) => {
 
 const updateOne = (params: IPostUpdateOneParamService) =>  {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.UPDATE_WITH_ID(params._id)],
         data: params
     }).put();
@@ -56,7 +55,7 @@ const updateOne = (params: IPostUpdateOneParamService) =>  {
 
 const updateOneRank = (params: IPostUpdateOneRankParamService) =>  {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
         data: params
     }).put();
@@ -64,7 +63,7 @@ const updateOneRank = (params: IPostUpdateOneRankParamService) =>  {
 
 const updateManyStatus = (params: IPostUpdateManyStatusIdParamService) =>  {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.UPDATE_STATUS],
         data: params
     }).put();
@@ -72,7 +71,7 @@ const updateManyStatus = (params: IPostUpdateManyStatusIdParamService) =>  {
 
 const deleteMany = (params: IPostDeleteManyParamService) =>  {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.DELETE],
         data: params
     }).delete();

@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import V from "library/variable";
 
-type PageState = {
+type IPageState = {
     tags: string[]
     currentTags: string
 };
 
-type PageProps = {
+type IPageProps = {
     value: string[]
     onChange: (value: string[], name?: string) => void
     name?: string
@@ -14,8 +14,8 @@ type PageProps = {
     placeHolder?: string
 };
 
-class ThemeFormTags extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+class ComponentFormTags extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             tags: this.props.value,
@@ -23,7 +23,7 @@ class ThemeFormTags extends Component<PageProps, PageState> {
         }
     }
 
-    componentDidUpdate(prevProps: Readonly<PageProps>, prevState: Readonly<PageState>, snapshot?: any) {
+    componentDidUpdate(prevProps: Readonly<IPageProps>, prevState: Readonly<IPageState>, snapshot?: any) {
         if(this.props.value != prevProps.value) {
             this.setState({
                 tags: this.props.value
@@ -39,7 +39,7 @@ class ThemeFormTags extends Component<PageProps, PageState> {
 
     onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
         if (event.key === "Enter" && !V.isEmpty(this.state.currentTags)) {
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 let newTag = state.currentTags.trim()
 
                 if (!state.tags.includes(newTag)) {
@@ -54,7 +54,7 @@ class ThemeFormTags extends Component<PageProps, PageState> {
     }
 
     onRemove(tag: string) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.tags = state.tags.filter(item => item != tag);
             this.props.onChange(this.state.tags, this.props.name);
             return state;
@@ -95,4 +95,4 @@ class ThemeFormTags extends Component<PageProps, PageState> {
     }
 }
 
-export default ThemeFormTags;
+export default ComponentFormTags;

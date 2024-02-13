@@ -2,25 +2,25 @@ import React, {Component, createRef, RefObject} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {IUploadingFiles} from "types/pages/gallery/upload";
 import galleryService from "services/gallery.service";
-import ThemeToast from "components/theme/toast";
+import ComponentToast from "components/elements/toast";
 import Image from "next/image"
 import {IGalleryModel} from "types/models/gallery.model";
 
-type PageState = {
+type IPageState = {
     isDragging: boolean,
     uploadingFiles: IUploadingFiles[]
 };
 
-type PageProps = {
+type IPageProps = {
     isModal?: boolean
     uploadedImages?: (images: IGalleryModel[]) => void
 } & IPagePropCommon;
 
-class PageGalleryUpload extends Component<PageProps, PageState> {
+class PageGalleryUpload extends Component<IPageProps, IPageState> {
     refInputFile: RefObject<HTMLInputElement> = createRef();
     maxFileSize: number;
 
-    constructor(props: PageProps) {
+    constructor(props: IPageProps) {
         super(props);
         this.maxFileSize = Number(process.env.UPLOAD_FILE_SIZE ?? 1524000);
         this.state = {
@@ -56,7 +56,7 @@ class PageGalleryUpload extends Component<PageProps, PageState> {
             formData.append("file", uploadingFile.file, uploadingFile.file.name);
 
             let resData = await galleryService.add(formData, (e, percent) => {
-                this.setState((state: PageState) => {
+                this.setState((state: IPageState) => {
                     let findIndex = state.uploadingFiles.indexOfKey("id", uploadingFile.id);
                     if(findIndex > -1){
                         state.uploadingFiles[findIndex].progressValue = percent ?? 100;
@@ -71,7 +71,7 @@ class PageGalleryUpload extends Component<PageProps, PageState> {
                 resData.data.length > 0
             ) {
                 uploadedImages.push(resData.data[0]);
-                new ThemeToast({
+                new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),
                     content: `${uploadingFile.file.name} ${this.props.t("imageUploadedWithName")}`,
@@ -86,7 +86,7 @@ class PageGalleryUpload extends Component<PageProps, PageState> {
     }
 
     setUploadingFiles(files: FileList | null) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             if (files != null && files.length > 0) {
                 for (let i = 0; i < files.length; i++) {
                     let file = files[i];
@@ -125,7 +125,7 @@ class PageGalleryUpload extends Component<PageProps, PageState> {
     }
 
     onClearUploadedImages() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.uploadingFiles = state.uploadingFiles.filter(uploadingFile => uploadingFile.progressValue < 100 && uploadingFile.status)
             return state;
         });

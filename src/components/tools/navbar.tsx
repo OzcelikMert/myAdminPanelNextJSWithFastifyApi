@@ -5,23 +5,25 @@ import {Trans} from 'react-i18next';
 import {IPagePropCommon} from "types/pageProps";
 import authService from "services/auth.service";
 import localStorageUtil from "utils/localStorage.util";
-import imageSourceLib from "lib/imageSource.lib";
-import PagePaths from "constants/pagePaths";
 import DarkModeToggle from "react-dark-mode-toggle";
 import themeUtil from "utils/theme.util";
 import Logo from "assets/images/ozcelikLogo.png"
 import LogoMini from "assets/images/ozcelikLogoMini.png"
 import Image from "next/image"
 import {IThemeKeys} from "types/themes";
+import {PathUtil} from "utils/path.util";
+import {EndPoints} from "constants/endPoints";
+import {SettingsEndPoint} from "constants/endPoints/settings.endPoint";
+import {ImageSourceUtil} from "utils/imageSource.util";
 
-type PageState = {
+type IPageState = {
     isDarkTheme: boolean
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class Navbar extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentToolNavbar extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             isDarkTheme: localStorageUtil.getTheme() == "dark"
@@ -43,37 +45,32 @@ export default class Navbar extends Component<PageProps, PageState> {
     }
 
     async profileEvents(event: "profile" | "lock" | "signOut" | "changePassword") {
-        let resData: any;
         switch(event) {
             case "profile":
-                await this.props.router.push(PagePaths.settings().profile())
+                await this.props.router.push(PathUtil.setPath(EndPoints.SETTINGS, SettingsEndPoint.PROFILE))
                 break;
             case "changePassword":
-                await this.props.router.push(PagePaths.settings().changePassword())
+                await this.props.router.push(PathUtil.setPath(EndPoints.SETTINGS, SettingsEndPoint.CHANGE_PASSWORD))
                 break;
             case "lock":
-                resData = await authService.logOut();
-                if(resData.status) {
+                let resultLock = await authService.logOut();
+                if(resultLock.status) {
                     this.props.setStateApp({
                         isPageLoading: true,
-                        sessionData: {
-                            id: ""
-                        }
-                    }, () => {
-                        this.props.router.push(PagePaths.lock())
+                        sessionAuth: undefined
+                    },async () => {
+                        await this.props.router.push(EndPoints.LOCK)
                     })
                 }
                 break;
             case "signOut":
-                resData = await authService.logOut();
-                if(resData.status) {
+                let resultSignOut = await authService.logOut();
+                if(resultSignOut.status) {
                     this.props.setStateApp({
                         isPageLoading: true,
-                        sessionData: {
-                            id: ""
-                        }
-                    }, () => {
-                        this.props.router.push(PagePaths.login())
+                        sessionAuth: undefined
+                    }, async () => {
+                        await this.props.router.push(EndPoints.LOGIN)
                     })
                 }
                 break;
@@ -184,7 +181,7 @@ export default class Navbar extends Component<PageProps, PageState> {
             <Dropdown.Toggle className="nav-link">
                 <div className="nav-profile-img">
                     <Image
-                        src={imageSourceLib.getUploadedImageSrc(this.props.getStateApp.sessionData.image)}
+                        src={ImageSourceUtil.getUploadedImageSrc(this.props.getStateApp.sessionData.image)}
                         alt={this.props.getStateApp.sessionData.name}
                         width={30}
                         height={30}
@@ -226,7 +223,7 @@ export default class Navbar extends Component<PageProps, PageState> {
         return (
             <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
                 <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                    <Link className="navbar-brand brand-logo" href={PagePaths.dashboard()}>
+                    <Link className="navbar-brand brand-logo" href={EndPoints.DASHBOARD}>
                         <Image
                             src={Logo.src}
                             alt="logo"
@@ -235,7 +232,7 @@ export default class Navbar extends Component<PageProps, PageState> {
                             className="img-fluid"
                         />
                     </Link>
-                    <Link className="navbar-brand brand-logo-mini" href={PagePaths.dashboard()}>
+                    <Link className="navbar-brand brand-logo-mini" href={EndPoints.DASHBOARD}>
                         <Image
                             src={LogoMini.src}
                             alt="logo"

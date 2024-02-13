@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 
-type PageState = {} & any;
+type IPageState = {} & any;
 
-type PageProps = {
+type IPageProps = {
     title?: string,
 } &  React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
-class ThemeFormCheckBox extends Component<PageProps, PageState> {
+class ComponentFormCheckBox extends Component<IPageProps, IPageState> {
     render () {
         return (
             <div className="form-check form-check-primary d-inline-block">
@@ -19,4 +19,4 @@ class ThemeFormCheckBox extends Component<PageProps, PageState> {
     }
 }
 
-export default ThemeFormCheckBox;
+export default ComponentFormCheckBox;

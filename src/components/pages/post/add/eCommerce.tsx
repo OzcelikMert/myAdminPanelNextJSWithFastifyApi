@@ -1,31 +1,34 @@
 import React, {Component} from 'react';
-import {ThemeFormCheckBox, ThemeFormSelect, ThemeFormType} from "components/theme/form";
+import {ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import HandleForm from "library/react/handles/form";
 import {IPostECommerceAttributeModel, IPostECommerceVariationModel} from "types/models/post.model";
 import {Accordion, Card, Tab, Tabs} from "react-bootstrap";
-import ThemeAccordionToggle from "components/theme/accordion/toggle";
-import ThemeChooseImage from "components/theme/chooseImage";
+import ComponentAccordionToggle from "components/elements/accordion/toggle";
+import ComponentThemeChooseImage from "components/theme/chooseImage";
 import Image from "next/image";
-import imageSourceLib from "lib/imageSource.lib";
 import {ProductTypeId} from "constants/productTypes";
-import PagePostAdd, {PageState as PostPageState} from "pages/post/[postTypeId]/add";
+import PagePostAdd, {IPageState as PostPageState} from "pages/post/[postTypeId]/add";
 import {AttributeTypeId} from "constants/attributeTypes";
 import dynamic from "next/dynamic";
-import ThemeToolTip from "components/theme/tooltip";
+import ComponentToolTip from "components/elements/tooltip";
 import Swal from "sweetalert2";
+import {ImageSourceUtil} from "utils/imageSource.util";
 
-const ThemeRichTextBox = dynamic(() => import("components/theme/richTextBox").then((module) => module.default), {ssr: false});
+const ComponentThemeRichTextBox = dynamic(() => import("components/theme/richTextBox"), {
+    ssr: false,
+    loading: () => <p>Loading...</p>
+});
 
-type PageState = {
+type IPageState = {
     mainTabActiveKey: string
 } & { [key: string]: any };
 
-type PageProps = {
+type IPageProps = {
     page: PagePostAdd
 };
 
-export default class ComponentPagePostAddECommerce extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentPagePostAddECommerce extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             mainTabActiveKey: "options"
@@ -33,7 +36,6 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
     }
 
     componentDidMount() {
-        console.log(this.props.page.state)
         this.findDefaultVariation();
         this.findSameVariation();
     }
@@ -216,7 +218,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                 <div className="col-md-7">
                     <div className="row">
                         <div className="col-md-6 mb-3">
-                            <ThemeFormType
+                            <ComponentFormType
                                 title={this.props.page.props.t("taxIncludedPrice")}
                                 name="formData.eCommerce.pricing.taxIncluded"
                                 type="number"
@@ -225,7 +227,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                             />
                         </div>
                         <div className="col-md-6 mb-3">
-                            <ThemeFormType
+                            <ComponentFormType
                                 title={this.props.page.props.t("taxExcludedPrice")}
                                 name="formData.eCommerce.pricing.taxExcluded"
                                 type="number"
@@ -234,7 +236,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                             />
                         </div>
                         <div className="col-md-6 mb-3">
-                            <ThemeFormType
+                            <ComponentFormType
                                 title={this.props.page.props.t("taxRate")}
                                 name="formData.eCommerce.pricing.taxRate"
                                 type="number"
@@ -243,7 +245,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                             />
                         </div>
                         <div className="col-md-6 mb-3">
-                            <ThemeFormType
+                            <ComponentFormType
                                 title={this.props.page.props.t("comparedPrice")}
                                 name="formData.eCommerce.pricing.compared"
                                 type="number"
@@ -261,7 +263,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeChooseImage
+                    <ComponentThemeChooseImage
                         {...this.props.page.props}
                         isShow={this.props.page.state.selectGalleryECommerce}
                         onHide={() => this.props.page.setState((state: PostPageState) => {
@@ -290,7 +292,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                             this.props.page.state.formData.eCommerce?.images?.map(image => (
                                 <div className="col-md-3 mb-3">
                                     <Image
-                                        src={imageSourceLib.getUploadedImageSrc(image)}
+                                        src={ImageSourceUtil.getUploadedImageSrc(image)}
                                         alt="Empty Image"
                                         className="post-image img-fluid"
                                         width={100}
@@ -311,7 +313,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                 <div className="col-md-7">
                     <div className="row">
                         <div className="col-md-6 mb-3">
-                            <ThemeFormType
+                            <ComponentFormType
                                 title={this.props.page.props.t("sku")}
                                 name="formData.eCommerce.inventory.sku"
                                 type="text"
@@ -320,7 +322,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                             />
                         </div>
                         <div className="col-md-6 mb-3">
-                            <ThemeFormType
+                            <ComponentFormType
                                 title={this.props.page.props.t("quantity")}
                                 name="formData.eCommerce.inventory.quantity"
                                 disabled={!this.props.page.state.formData.eCommerce?.inventory?.isManageStock || false}
@@ -330,7 +332,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                             />
                         </div>
                         <div className="col-md-7">
-                            <ThemeFormCheckBox
+                            <ComponentFormCheckBox
                                 title={this.props.page.props.t("isManageStock")}
                                 name="formData.eCommerce.inventory.isManageStock"
                                 checked={Boolean(this.props.page.state.formData.eCommerce?.inventory?.isManageStock)}
@@ -349,7 +351,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                 <div className="col-md-7">
                     <div className="row">
                         <div className="col-md-6 mb-3">
-                            <ThemeFormType
+                            <ComponentFormType
                                 title={this.props.page.props.t("width")}
                                 name="formData.eCommerce.shipping.width"
                                 type="text"
@@ -358,7 +360,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                             />
                         </div>
                         <div className="col-md-6 mb-3">
-                            <ThemeFormType
+                            <ComponentFormType
                                 title={this.props.page.props.t("height")}
                                 name="formData.eCommerce.shipping.height"
                                 type="text"
@@ -367,7 +369,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                             />
                         </div>
                         <div className="col-md-6 mb-3">
-                            <ThemeFormType
+                            <ComponentFormType
                                 title={this.props.page.props.t("depth")}
                                 name="formData.eCommerce.shipping.depth"
                                 type="text"
@@ -376,7 +378,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                             />
                         </div>
                         <div className="col-md-6 mb-3">
-                            <ThemeFormType
+                            <ComponentFormType
                                 title={this.props.page.props.t("weight")}
                                 name="formData.eCommerce.shipping.weight"
                                 type="text"
@@ -385,7 +387,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                             />
                         </div>
                         <div className="col-md-6 mb-3">
-                            <ThemeFormType
+                            <ComponentFormType
                                 title={this.props.page.props.t("shippingPrice")}
                                 name="formData.eCommerce.pricing.shipping"
                                 type="number"
@@ -408,7 +410,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                             <div className="col-9">
                                 <div className="row">
                                     <div className="col-md-6 mt-2 mt-md-0">
-                                        <ThemeFormSelect
+                                        <ComponentFormSelect
                                             title={this.props.page.props.t("attribute")}
                                             options={this.props.page.state.attributes}
                                             value={this.props.page.state.attributes.findSingle("value", attribute.attributeId)}
@@ -416,7 +418,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                         />
                                     </div>
                                     <div className="col-md-6 mt-2 mt-md-0">
-                                        <ThemeFormSelect
+                                        <ComponentFormSelect
                                             title={this.props.page.props.t("type")}
                                             options={this.props.page.state.attributeTypes}
                                             value={this.props.page.state.attributeTypes?.findSingle("value", attribute.typeId)}
@@ -433,10 +435,10 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                             <i className="mdi mdi-trash-can"></i></button>
                                     </div>
                                     <div className="col-md-6 text-center pt-1 mt-5 m-md-auto">
-                                        <ThemeAccordionToggle eventKey={attribute._id || ""}>
+                                        <ComponentAccordionToggle eventKey={attribute._id || ""}>
                                             <div className="fs-4 cursor-pointer"><i className="mdi mdi-menu"></i>
                                             </div>
-                                        </ThemeAccordionToggle>
+                                        </ComponentAccordionToggle>
                                     </div>
                                 </div>
                             </div>
@@ -446,7 +448,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                         <Card.Body>
                             <div className="row">
                                 <div className="col-md-12">
-                                    <ThemeFormSelect
+                                    <ComponentFormSelect
                                         title={this.props.page.props.t("variations")}
                                         isMulti
                                         closeMenuOnSelect={false}
@@ -493,7 +495,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                     {
                                         this.props.page.state.formData.eCommerce?.attributes?.map(attribute => (
                                             <div className="col-md-4 mt-3">
-                                                <ThemeFormSelect
+                                                <ComponentFormSelect
                                                     title={this.props.page.state.attributes.findSingle("value", attribute.attributeId)?.label}
                                                     options={this.props.page.state.variations.findMulti("value", attribute.variations)}
                                                     value={this.props.page.state.variations.findSingle("value", variation.selectedVariations.findSingle("attributeId", attribute.attributeId)?.variationId)}
@@ -509,11 +511,11 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                     <div className="col-md text-center text-md-end">
                                         {
                                             variation.isDefault
-                                                ? <ThemeToolTip message={this.props.page.props.t("default")}>
+                                                ? <ComponentToolTip message={this.props.page.props.t("default")}>
                                                     <label className="badge badge-gradient-success pt-2 pb-2 ps-4 pe-4">
                                                         <i className="mdi mdi-check"></i>
                                                     </label>
-                                                </ThemeToolTip>
+                                                </ComponentToolTip>
                                                 : <button type="button" className="btn btn-gradient-danger btn-lg"
                                                           onClick={() => this.onDeleteVariation(index)}>
                                                     <i className="mdi mdi-trash-can"></i>
@@ -523,18 +525,18 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                     {
                                         variation.isWarningForIsThereOther
                                             ? <div className="col-md text-center pt-1 mt-5 m-md-auto">
-                                                <ThemeToolTip
+                                                <ComponentToolTip
                                                     message={this.props.page.props.t("sameVariationErrorMessage")}>
                                                     <div className="fs-4 cursor-pointer text-warning"><i
                                                         className="mdi mdi-alert-circle"></i></div>
-                                                </ThemeToolTip>
+                                                </ComponentToolTip>
                                             </div> : null
                                     }
                                     <div className="col-md text-center pt-1 mt-5 m-md-auto">
-                                        <ThemeAccordionToggle eventKey={variation._id || ""}>
+                                        <ComponentAccordionToggle eventKey={variation._id || ""}>
                                             <div className="fs-4 cursor-pointer"><i
                                                 className="mdi mdi-menu"></i></div>
-                                        </ThemeAccordionToggle>
+                                        </ComponentAccordionToggle>
                                     </div>
                                 </div>
                             </div>
@@ -550,7 +552,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                 <Tab eventKey="general" title={this.props.page.props.t("general")}>
                                     <div className="row mb-4">
                                         <div className="col-md-7 mb-3">
-                                            <ThemeChooseImage
+                                            <ComponentThemeChooseImage
                                                 {...this.props.page.props}
                                                 isShow={this.props.page.state[`selectImage${variation._id}`]}
                                                 onHide={() => this.props.page.setState((state: PostPageState) => {
@@ -568,7 +570,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                                 selectedImages={(variation.contents && variation.contents.image) ? [variation.contents.image] : undefined}
                                             />
                                             <Image
-                                                src={imageSourceLib.getUploadedImageSrc(variation.contents?.image)}
+                                                src={ImageSourceUtil.getUploadedImageSrc(variation.contents?.image)}
                                                 alt="Empty Image"
                                                 className="post-image img-fluid"
                                                 width={100}
@@ -581,7 +583,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                             ><i className="fa fa-pencil-square-o"></i></button>
                                         </div>
                                         <div className="col-md-12 mb-3">
-                                            <ThemeFormType
+                                            <ComponentFormType
                                                 title={this.props.page.props.t("shortContent").toCapitalizeCase()}
                                                 type="textarea"
                                                 value={variation.contents?.shortContent}
@@ -595,7 +597,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                         <div className="col-md-12 mb-3">
                                             {
                                                 (this.props.page.state[`activeKey${variation._id}`] === "content")
-                                                    ? <ThemeRichTextBox
+                                                    ? <ComponentThemeRichTextBox
                                                         value={variation.contents?.content || ""}
                                                         onChange={newContent => this.onChange(variation.contents, "content", newContent)}
                                                         {...this.props.page.props}
@@ -608,7 +610,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                 <Tab eventKey="gallery" title={this.props.page.props.t("gallery")}>
                                     <div className="row mb-4">
                                         <div className="col-md-7 mb-3">
-                                            <ThemeChooseImage
+                                            <ComponentThemeChooseImage
                                                 {...this.props.page.props}
                                                 isShow={this.props.page.state[`selectGallery${variation._id}`]}
                                                 onHide={() => this.props.page.setState((state: PostPageState) => {
@@ -635,7 +637,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                                     variation.images.map(image => (
                                                         <div className="col-md-3 mb-3">
                                                             <Image
-                                                                src={imageSourceLib.getUploadedImageSrc(image)}
+                                                                src={ImageSourceUtil.getUploadedImageSrc(image)}
                                                                 alt="Empty Image"
                                                                 className="post-image img-fluid"
                                                                 width={100}
@@ -651,7 +653,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                 <Tab eventKey="pricing" title={this.props.page.props.t("pricing")}>
                                     <div className="row mb-4">
                                         <div className="col-md-6 mb-3">
-                                            <ThemeFormType
+                                            <ComponentFormType
                                                 title={this.props.page.props.t("taxIncludedPrice")}
                                                 type="number"
                                                 value={variation.pricing?.taxIncluded}
@@ -659,7 +661,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
-                                            <ThemeFormType
+                                            <ComponentFormType
                                                 title={this.props.page.props.t("taxExcludedPrice")}
                                                 type="number"
                                                 value={variation.pricing?.taxExcluded}
@@ -667,7 +669,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
-                                            <ThemeFormType
+                                            <ComponentFormType
                                                 title={this.props.page.props.t("taxRate")}
                                                 type="number"
                                                 value={variation.pricing?.taxRate}
@@ -675,7 +677,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
-                                            <ThemeFormType
+                                            <ComponentFormType
                                                 title={this.props.page.props.t("comparedPrice")}
                                                 type="number"
                                                 value={variation.pricing?.compared}
@@ -687,7 +689,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                 <Tab eventKey="inventory" title={this.props.page.props.t("inventory")}>
                                     <div className="row mb-4">
                                         <div className="col-md-6 mb-3">
-                                            <ThemeFormType
+                                            <ComponentFormType
                                                 title={this.props.page.props.t("sku")}
                                                 type="text"
                                                 value={variation.inventory?.sku}
@@ -695,7 +697,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
-                                            <ThemeFormType
+                                            <ComponentFormType
                                                 disabled={!variation.inventory?.isManageStock || false}
                                                 title={this.props.page.props.t("quantity")}
                                                 type="number"
@@ -704,7 +706,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                             />
                                         </div>
                                         <div className="col-md-7 mb-3">
-                                            <ThemeFormCheckBox
+                                            <ComponentFormCheckBox
                                                 title={this.props.page.props.t("isManageStock")}
                                                 checked={Boolean(variation.inventory?.isManageStock)}
                                                 onChange={e => this.onChange(variation.inventory, "isManageStock", e.target.checked)}
@@ -715,7 +717,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                 <Tab eventKey="shipping" title={this.props.page.props.t("shipping")}>
                                     <div className="row mb-4">
                                         <div className="col-md-6 mb-3">
-                                            <ThemeFormType
+                                            <ComponentFormType
                                                 title={this.props.page.props.t("width")}
                                                 type="text"
                                                 value={variation.shipping?.width}
@@ -723,7 +725,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
-                                            <ThemeFormType
+                                            <ComponentFormType
                                                 title={this.props.page.props.t("height")}
                                                 type="text"
                                                 value={variation.shipping?.height}
@@ -731,7 +733,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
-                                            <ThemeFormType
+                                            <ComponentFormType
                                                 title={this.props.page.props.t("depth")}
                                                 type="text"
                                                 value={variation.shipping?.depth}
@@ -739,7 +741,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
-                                            <ThemeFormType
+                                            <ComponentFormType
                                                 title={this.props.page.props.t("weight")}
                                                 type="text"
                                                 value={variation.shipping?.weight}
@@ -747,7 +749,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
-                                            <ThemeFormType
+                                            <ComponentFormType
                                                 title={this.props.page.props.t("shippingPrice")}
                                                 type="number"
                                                 value={variation.pricing?.shipping}
@@ -771,7 +773,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
                         {
                             this.props.page.state.formData.eCommerce?.attributes?.map(attribute => (
                                 <div className="col-md-4 mt-3">
-                                    <ThemeFormSelect
+                                    <ComponentFormSelect
                                         title={this.props.page.state.attributes.findSingle("value", attribute.attributeId)?.label}
                                         options={this.props.page.state.variations.findMulti("value", attribute.variations)}
                                         value={this.props.page.state.variations.findSingle("value", this.props.page.state.formData.eCommerce?.variationDefaults?.findSingle("attributeId", attribute.attributeId)?.variationId)}
@@ -802,7 +804,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFormSelect
+                    <ComponentFormSelect
                         title={this.props.page.props.t("productType")}
                         name="formData.eCommerce.typeId"
                         options={this.props.page.state.productTypes}

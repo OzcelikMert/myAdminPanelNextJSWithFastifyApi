@@ -1,23 +1,23 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {ThemeFieldSet, ThemeForm, ThemeFormSelect, ThemeFormType} from "components/theme/form";
+import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import HandleForm from "library/react/handles/form";
 import {Languages, StatusId, UserRoleId} from "constants/index";
 import settingService from "services/setting.service";
 import languageService from "services/language.service";
 import IServerInfoGetResultService from "types/services/serverInfo.service";
 import serverInfoService from "services/serverInfo.service";
-import ThemeToast from "components/theme/toast";
-import ThemeChooseImage from "components/theme/chooseImage";
+import ComponentToast from "components/elements/toast";
+import ComponentThemeChooseImage from "components/theme/chooseImage";
 import imageSourceLib from "lib/imageSource.lib";
 import {ISettingUpdateGeneralParamService} from "types/services/setting.service";
 import {Tab, Tabs} from "react-bootstrap";
 import localStorageUtil from "utils/localStorage.util";
-import Spinner from "react-bootstrap/Spinner";
+import ComponentToolSpinner from "react-bootstrap/ComponentToolSpinner";
 import Image from "next/image"
-import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
+import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 
-type PageState = {
+type IPageState = {
     languages: ThemeFormSelectValueDocument[]
     panelLanguages: ThemeFormSelectValueDocument[]
     isSubmitting: boolean
@@ -30,10 +30,10 @@ type PageState = {
     isIconSelection: boolean
 }
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PageSettingsGeneral extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PageSettingsGeneral extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             isIconSelection: false,
@@ -76,7 +76,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
         let resData = await settingService.get({projection: "general"})
         if (resData.status && resData.data) {
             let setting = resData.data;
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 state.formData = {
                     ...this.state.formData,
                     logo: setting.logo,
@@ -141,7 +141,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                         mainLangId: this.state.formData.defaultLangId
                     }
                 }, () => {
-                    new ThemeToast({
+                    new ComponentToast({
                         type: "success",
                         title: this.props.t("successful"),
                         content: this.props.t("settingsUpdated")
@@ -166,7 +166,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={this.props.t("head")}
                         name="formData.head"
                         type="textarea"
@@ -175,7 +175,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={this.props.t("script")}
                         name="formData.script"
                         type="textarea"
@@ -191,7 +191,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={this.props.t("email")}
                         name="formData.contact.email"
                         type="email"
@@ -200,7 +200,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={this.props.t("phone")}
                         name="formData.contact.phone"
                         type="tel"
@@ -209,7 +209,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={this.props.t("address")}
                         name="formData.contact.address"
                         type="text"
@@ -219,7 +219,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                 </div>
                 ,
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={this.props.t("addressMap")}
                         name="formData.contact.addressMap"
                         type="text"
@@ -235,7 +235,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFormSelect
+                    <ComponentFormSelect
                         title={this.props.t("websiteMainLanguage").toCapitalizeCase()}
                         name="formData.defaultLangId"
                         isMulti={false}
@@ -246,12 +246,12 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFieldSet legend={this.props.t("logo")}>
-                        <ThemeChooseImage
+                    <ComponentFieldSet legend={this.props.t("logo")}>
+                        <ComponentThemeChooseImage
                             {...this.props}
                             isShow={this.state.isLogoSelection}
                             onHide={() => this.setState({isLogoSelection: false})}
-                            onSelected={images => this.setState((state: PageState) => {
+                            onSelected={images => this.setState((state: IPageState) => {
                                 state.formData.logo = images[0];
                                 return state;
                             })}
@@ -271,15 +271,15 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                                 onClick={() => this.setState({isLogoSelection: true})}
                             ><i className="fa fa-pencil-square-o"></i></button>
                         </div>
-                    </ThemeFieldSet>
+                    </ComponentFieldSet>
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFieldSet legend={this.props.t("logo") + " - 2"}>
-                        <ThemeChooseImage
+                    <ComponentFieldSet legend={this.props.t("logo") + " - 2"}>
+                        <ComponentThemeChooseImage
                             {...this.props}
                             isShow={this.state.isLogoSecondSelection}
                             onHide={() => this.setState({isLogoSecondSelection: false})}
-                            onSelected={images => this.setState((state: PageState) => {
+                            onSelected={images => this.setState((state: IPageState) => {
                                 state.formData.logoTwo = images[0];
                                 return state;
                             })}
@@ -299,15 +299,15 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                                 onClick={() => this.setState({isLogoSecondSelection: true})}
                             ><i className="fa fa-pencil-square-o"></i></button>
                         </div>
-                    </ThemeFieldSet>
+                    </ComponentFieldSet>
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFieldSet legend={this.props.t("icon")}>
-                        <ThemeChooseImage
+                    <ComponentFieldSet legend={this.props.t("icon")}>
+                        <ComponentThemeChooseImage
                             {...this.props}
                             isShow={this.state.isIconSelection}
                             onHide={() => this.setState({isIconSelection: false})}
-                            onSelected={images => this.setState((state: PageState) => {
+                            onSelected={images => this.setState((state: IPageState) => {
                                 state.formData.icon = images[0];
                                 return state;
                             })}
@@ -327,10 +327,10 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                                 onClick={() => this.setState({isIconSelection: true})}
                             ><i className="fa fa-pencil-square-o"></i></button>
                         </div>
-                    </ThemeFieldSet>
+                    </ComponentFieldSet>
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormSelect
+                    <ComponentFormSelect
                         title={this.props.t("adminPanelLanguage").toCapitalizeCase()}
                         name="formData.panelLangId"
                         isMulti={false}
@@ -358,7 +358,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                                         <p className="card-text mb-0 text-dark">{this.props.t("storage")}</p>
                                         <div className="fluid-container">
                                             {
-                                                this.state.isServerInfoLoading ? <Spinner/> :
+                                                this.state.isServerInfoLoading ? <ComponentToolSpinner/> :
                                                     <h3 className="mb-0 font-weight-medium text-dark">{this.state.serverInfo.storage}%</h3>
                                             }
                                         </div>
@@ -375,7 +375,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                                         <p className="card-text mb-0 text-dark">{this.props.t("memory")}</p>
                                         <div className="fluid-container">
                                             {
-                                                this.state.isServerInfoLoading ? <Spinner/> :
+                                                this.state.isServerInfoLoading ? <ComponentToolSpinner/> :
                                                     <h3 className="mb-0 font-weight-medium text-dark">{this.state.serverInfo.memory}%</h3>
                                             }
                                         </div>
@@ -392,7 +392,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                                         <p className="card-text mb-0 text-dark">{this.props.t("processor")}</p>
                                         <div className="fluid-container">
                                             {
-                                                this.state.isServerInfoLoading ? <Spinner/> :
+                                                this.state.isServerInfoLoading ? <ComponentToolSpinner/> :
                                                     <h3 className="mb-0 font-weight-medium text-dark">{this.state.serverInfo.cpu}%</h3>
                                             }
                                         </div>
@@ -414,7 +414,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <ThemeForm
+                        <ComponentForm
                             isActiveSaveButton={true}
                             saveButtonText={this.props.t("save")}
                             saveButtonLoadingText={this.props.t("loading")}
@@ -447,7 +447,7 @@ export default class PageSettingsGeneral extends Component<PageProps, PageState>
                                     </div>
                                 </div>
                             </div>
-                        </ThemeForm>
+                        </ComponentForm>
                     </div>
                 </div>
 

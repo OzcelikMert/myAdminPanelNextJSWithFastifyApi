@@ -1,21 +1,21 @@
 import React, {Component} from 'react'
-import {ThemeFormSelect} from "components/theme/form";
+import {ComponentFormSelect} from "components/elements/form";
 import {IPagePropCommon} from "types/pageProps";
 import {ILanguageModel} from "types/models/language.model";
 import Image from "next/image"
-import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
+import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 import {PathUtil} from "utils/path.util";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     t: IPagePropCommon["t"]
     options: ILanguageModel[]
     value?: ILanguageModel
     onChange: (item: ThemeFormSelectValueDocument, e: any) => void
 };
 
-export default class ThemeContentLanguage extends Component<PageProps, PageState> {
+export default class ComponentThemeContentLanguage extends Component<IPageProps, IPageState> {
     Item = (props: ILanguageModel) => (
         <div className={`row p-0`}>
             <div className="col-6 text-end">
@@ -36,7 +36,7 @@ export default class ThemeContentLanguage extends Component<PageProps, PageState
 
     render() {
         return (
-            <ThemeFormSelect
+            <ComponentFormSelect
                 title={this.props.t("contentLanguage")}
                 isSearchable={false}
                 options={this.props.options.map(option => ({label: <this.Item {...option} />, value: option._id}))}

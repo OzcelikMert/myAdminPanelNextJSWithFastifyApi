@@ -1,14 +1,14 @@
 import React, {Component} from "react";
-import ThemeFormSelect from "./input/select";
-import ThemeFormTags from "./input/tags";
-import ThemeFormType from "./input/type";
-import ThemeFormCheckBox from "./input/checkbox";
-import ThemeFormLoadingButton from "./button/loadingButton";
-import ThemeFieldSet from "../fieldSet";
+import ComponentFormSelect from "./input/select";
+import ComponentFormTags from "./input/tags";
+import ComponentFormType from "./input/type";
+import ComponentFormCheckBox from "./input/checkbox";
+import ComponentFormLoadingButton from "./button/loadingButton";
+import ComponentFieldSet from "../fieldSet";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     isActiveSaveButton?: boolean
     saveButtonText?: string
     saveButtonLoadingText?: string
@@ -19,8 +19,8 @@ type PageProps = {
     enterToSubmit?: true
 };
 
-class ThemeForm extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+class ComponentForm extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
     }
 
@@ -42,7 +42,7 @@ class ThemeForm extends Component<PageProps, PageState> {
                                 >
                                     {this.props.saveButtonText}
                                 </button>
-                                : <ThemeFormLoadingButton text={this.props.saveButtonLoadingText}/>
+                                : <ComponentFormLoadingButton text={this.props.saveButtonLoadingText}/>
                             : null
                     }
                 </div>
@@ -52,11 +52,11 @@ class ThemeForm extends Component<PageProps, PageState> {
 }
 
 export {
-    ThemeForm,
-    ThemeFormSelect,
-    ThemeFormTags,
-    ThemeFormType,
-    ThemeFormCheckBox,
-    ThemeFormLoadingButton,
-    ThemeFieldSet
+    ComponentForm,
+    ComponentFormSelect,
+    ComponentFormTags,
+    ComponentFormType,
+    ComponentFormCheckBox,
+    ComponentFormLoadingButton,
+    ComponentFieldSet
 }

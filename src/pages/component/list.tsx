@@ -4,26 +4,26 @@ import {PermissionId, UserRoleId} from "constants/index";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import permissionLib from "lib/permission.lib";
-import ThemeToast from "components/theme/toast";
+import ComponentToast from "components/elements/toast";
 import {IComponentGetResultService} from "types/services/component.service";
 import componentService from "services/component.service";
 import PagePaths from "constants/pagePaths";
-import ThemeDataTable from "components/theme/table/dataTable";
-import ThemeTableUpdatedBy from "components/theme/table/updatedBy";
-import ThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
+import ComponentDataTable from "components/elements/table/dataTable";
+import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
+import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
 
-type PageState = {
+type IPageState = {
     searchKey: string
     items: IComponentGetResultService[]
-    showingItems: PageState["items"]
+    showingItems: IPageState["items"]
     selectedItemId: string
     isShowModalUpdateRank: boolean
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PageComponentList extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PageComponentList extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             searchKey: "",
@@ -51,7 +51,7 @@ export default class PageComponentList extends Component<PageProps, PageState> {
 
     async getItems() {
         let items = (await componentService.getMany({langId: this.props.getStateApp.pageData.langId})).data;
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.items = items;
             return state;
         }, () => this.onSearch(this.state.searchKey));
@@ -69,7 +69,7 @@ export default class PageComponentList extends Component<PageProps, PageState> {
                 showCancelButton: true
             });
             if (result.isConfirmed) {
-                const loadingToast = new ThemeToast({
+                const loadingToast = new ComponentToast({
                     content: this.props.t("deleting"),
                     type: "loading"
                 });
@@ -80,7 +80,7 @@ export default class PageComponentList extends Component<PageProps, PageState> {
                         items: this.state.items.findMulti("_id", _id, false)
                     }, () => {
                         this.onSearch(this.state.searchKey);
-                        new ThemeToast({
+                        new ComponentToast({
                             type: "success",
                             title: this.props.t("successful"),
                             content: this.props.t("itemDeleted")
@@ -103,7 +103,7 @@ export default class PageComponentList extends Component<PageProps, PageState> {
         this.props.router.push(path);
     }
 
-    get getTableColumns(): TableColumn<PageState["items"][0]>[] {
+    get getTableColumns(): TableColumn<IPageState["items"][0]>[] {
         return [
             {
                 name: this.props.t("title"),
@@ -113,13 +113,13 @@ export default class PageComponentList extends Component<PageProps, PageState> {
             {
                 name: this.props.t("updatedBy"),
                 sortable: true,
-                cell: row => <ThemeTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""} />
+                cell: row => <ComponentTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""} />
             },
             {
                 name: this.props.t("createdDate"),
                 sortable: true,
                 selector: row => new Date(row.createdAt || "").toLocaleDateString(),
-                sortFunction: (a, b) => ThemeDataTable.dateSort(a, b)
+                sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
             },
             {
                 name: "",
@@ -163,7 +163,7 @@ export default class PageComponentList extends Component<PageProps, PageState> {
                     <div className="card">
                         <div className="card-body">
                             <div className="table-post">
-                                <ThemeDataTable
+                                <ComponentDataTable
                                     columns={this.getTableColumns.filter(column => typeof column.name !== "undefined")}
                                     data={this.state.showingItems}
                                     t={this.props.t}

@@ -1,13 +1,13 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import moment from "moment";
-import {ThemeForm, ThemeFormCheckBox, ThemeFormSelect, ThemeFormType} from "components/theme/form"
+import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form"
 import {languageKeysArray, PageTypes, PostTermTypeId, PostTypeId, StatusId} from "constants/index";
 import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
 import Variable from "library/variable";
 import HandleForm from "library/react/handles/form";
-import ThemeChooseImage from "components/theme/chooseImage";
+import ComponentThemeChooseImage from "components/theme/chooseImage";
 import postTermService from "services/postTerm.service";
 import postService from "services/post.service";
 import staticContentLib from "lib/staticContent.lib";
@@ -16,7 +16,7 @@ import {
     IPostUpdateOneParamService
 } from "types/services/post.service";
 import componentService from "services/component.service";
-import ThemeToolTip from "components/theme/tooltip";
+import ComponentToolTip from "components/elements/tooltip";
 import Swal from "sweetalert2";
 import Image from "next/image"
 import dynamic from "next/dynamic";
@@ -24,7 +24,7 @@ import PostLib from "lib/post.lib";
 import {ProductTypeId, productTypes} from "constants/productTypes";
 import {AttributeTypes} from "constants/attributeTypes";
 import postLib from "lib/post.lib";
-import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
+import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 import ComponentPagePostAddECommerce from "components/pages/post/add/eCommerce";
 import ComponentPagePostAddComponent from "components/pages/post/add/component";
 import ComponentPagePostAddButton from "components/pages/post/add/button";
@@ -32,9 +32,9 @@ import ComponentPagePostAddBeforeAndAfter from "components/pages/post/add/before
 import ComponentPagePostAddChooseCategory from "components/pages/post/add/chooseCategory";
 import ComponentPagePostAddChooseTag from "components/pages/post/add/chooseTag";
 
-const ThemeRichTextBox = dynamic(() => import("components/theme/richTextBox").then((module) => module.default), {ssr: false});
+const ComponentThemeRichTextBox = dynamic(() => import("components/theme/richTextBox").then((module) => module.default), {ssr: false});
 
-export type PageState = {
+export type IPageState = {
     langKeys: ThemeFormSelectValueDocument[]
     pageTypes: ThemeFormSelectValueDocument[]
     attributeTypes: ThemeFormSelectValueDocument[]
@@ -53,10 +53,10 @@ export type PageState = {
     isIconActive: boolean
 } & { [key: string]: any };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PagePostAdd extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PagePostAdd extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             mainTabActiveKey: `general`,
@@ -160,14 +160,14 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
     }
 
     getLangKeys() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.langKeys = languageKeysArray.map(langKey => ({label: langKey, value: langKey}))
             return state;
         })
     }
 
     getAttributeTypes() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.attributeTypes = AttributeTypes.map(attribute => ({
                 label: this.props.t(attribute.langKey),
                 value: attribute.id
@@ -177,7 +177,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
     }
 
     getProductTypes() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.productTypes = productTypes.map(product => ({
                 label: this.props.t(product.langKey),
                 value: product.id
@@ -189,7 +189,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
     async getComponents() {
         let resData = await componentService.getMany({langId: this.props.getStateApp.appData.mainLangId});
         if (resData.status) {
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 state.components = resData.data.map(component => {
                     return {
                         value: component._id,
@@ -202,7 +202,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
     }
 
     getPageTypes() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.pageTypes = PageTypes.map(pageType => ({
                 label: this.props.t(pageType.langKey),
                 value: pageType.id
@@ -212,7 +212,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
     }
 
     getStatus() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.status = staticContentLib.getStatusForSelect([
                 StatusId.Active,
                 StatusId.InProgress,
@@ -230,7 +230,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
             statusId: StatusId.Active
         });
         if (resData.status) {
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 state.categories = [];
                 state.tags = [];
                 for (const term of resData.data) {
@@ -272,7 +272,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
             if (resData.data) {
                 const item = resData.data;
 
-                this.setState((state: PageState) => {
+                this.setState((state: IPageState) => {
                     state.formData = {
                         ...state.formData,
                         ...item as IPostUpdateOneParamService,
@@ -370,7 +370,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
     }
 
     onChangeContent(newContent: string) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.formData.contents.content = newContent;
             return state;
         })
@@ -397,7 +397,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={`${this.props.t("startDate").toCapitalizeCase()}*`}
                         type="date"
                         name="formData.dateStart"
@@ -406,7 +406,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormSelect
+                    <ComponentFormSelect
                         title={this.props.t("status")}
                         name="formData.statusId"
                         options={this.state.status}
@@ -415,7 +415,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={this.props.t("rank")}
                         name="formData.rank"
                         type="number"
@@ -427,7 +427,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
                 {
                     [PostTypeId.Page].includes(Number(this.state.formData.typeId))
                         ? <div className="col-md-7">
-                            <ThemeFormSelect
+                            <ComponentFormSelect
                                 title={this.props.t("pageType")}
                                 name="formData.pageTypeId"
                                 options={this.state.pageTypes}
@@ -437,7 +437,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
                         </div> : null
                 }
                 <div className="col-md-7">
-                    <ThemeFormCheckBox
+                    <ComponentFormCheckBox
                         title={this.props.t("isFixed")}
                         name="formData.isFixed"
                         checked={Boolean(this.state.formData.isFixed)}
@@ -452,7 +452,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeRichTextBox
+                    <ComponentThemeRichTextBox
                         value={this.state.formData.contents.content || ""}
                         onChange={newContent => this.onChangeContent(newContent)}
                         {...this.props}
@@ -484,7 +484,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
                 {
                     [PostTypeId.Service].includes(Number(this.state.formData.typeId)) && this.state.isIconActive
                         ? <div className="col-md-7 mb-3">
-                            <ThemeFormType
+                            <ComponentFormType
                                 title={`${this.props.t("icon")}`}
                                 name="formData.contents.icon"
                                 type="text"
@@ -494,11 +494,11 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
                         </div> : null
                 }
                 <div className="col-md-7 mb-3">
-                    <ThemeChooseImage
+                    <ComponentThemeChooseImage
                         {...this.props}
                         isShow={this.state.isSelectionImage}
                         onHide={() => this.setState({isSelectionImage: false})}
-                        onSelected={images => this.setState((state: PageState) => {
+                        onSelected={images => this.setState((state: IPageState) => {
                             state.formData.contents.image = images[0];
                             return state
                         })}
@@ -521,7 +521,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
                     ><i className="fa fa-pencil-square-o"></i></button>
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={`${this.props.t("title")}*`}
                         name="formData.contents.title"
                         type="text"
@@ -531,7 +531,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={this.props.t("shortContent").toCapitalizeCase()}
                         name="formData.contents.shortContent"
                         type="textarea"
@@ -570,11 +570,11 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
                             {
                                 this.state.formData._id && [PostTypeId.Page, PostTypeId.Blog, PostTypeId.Portfolio, PostTypeId.Service].includes(Number(this.state.formData.typeId))
                                     ? <div className="col-6">
-                                        <ThemeToolTip message={this.props.t("views")}>
+                                        <ComponentToolTip message={this.props.t("views")}>
                                             <label className="badge badge-gradient-primary w-100 p-2 fs-6 rounded-3">
                                                 <i className="mdi mdi-eye"></i> {this.state.formData.contents.views}
                                             </label>
-                                        </ThemeToolTip>
+                                        </ComponentToolTip>
                                     </div> : null
                             }
                         </div>
@@ -582,7 +582,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <ThemeForm
+                        <ComponentForm
                             isActiveSaveButton={true}
                             saveButtonText={this.props.t("save")}
                             saveButtonLoadingText={this.props.t("loading")}
@@ -639,7 +639,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
                                     ? <ComponentPagePostAddECommerce page={this} />
                                     : null
                             }
-                        </ThemeForm>
+                        </ComponentForm>
                     </div>
                 </div>
             </div>

@@ -1,21 +1,20 @@
 import React, {Component} from 'react';
 import {IPagePropCommon} from "types/pageProps";
-import {LanguageId} from "constants/index";
 import authService from "services/auth.service";
-import PagePaths from "constants/pagePaths";
-import {ErrorCodes} from "library/api/methods";
+import {ApiErrorCodes} from "library/api/errorCodes";
+import {EndPoints} from "constants/endPoints";
 
-type PageState = {
+type IPageState = {
     isAuth: boolean
     isLoading: boolean
 };
 
-type PageProps = {
+type IPageProps = {
     children?: JSX.Element
 } & IPagePropCommon;
 
-export default class ProviderAuth extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentProviderAuth extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             isAuth: false,
@@ -32,21 +31,12 @@ export default class ProviderAuth extends Component<PageProps, PageState> {
 
     async checkSession() {
         let isAuth = false;
-        let resData = await authService.getSession({});
-        if (resData.status && resData.errorCode == ErrorCodes.success) {
+        let resData = await authService.getSession();
+        if (resData.status && resData.errorCode == ApiErrorCodes.success) {
             if (resData.data) {
                 isAuth = true;
-                let user = resData.data;
                 this.props.setStateApp({
-                    sessionData: {
-                        id: user._id,
-                        langId: LanguageId.English,
-                        roleId: user.roleId,
-                        email: user.email,
-                        image: user.image,
-                        name: user.name,
-                        permissions: user.permissions
-                    }
+                    sessionAuth: resData.data
                 });
             }
         }
@@ -67,19 +57,17 @@ export default class ProviderAuth extends Component<PageProps, PageState> {
 
         if (
             !this.state.isAuth &&
-            this.props.router.pathname !== PagePaths.login() &&
-            this.props.router.pathname !== PagePaths.lock()
+            ![EndPoints.LOGIN, EndPoints.LOCK].includes(this.props.router.pathname)
         ) {
-            this.props.router.push(PagePaths.login())
+            this.props.router.push(EndPoints.LOGIN)
             return null;
         }
 
         if (
             this.state.isAuth &&
-            this.props.router.pathname === PagePaths.login() &&
-            this.props.router.pathname === PagePaths.lock()
+            [EndPoints.LOGIN, EndPoints.LOCK].includes(this.props.router.pathname)
         ) {
-            this.props.router.push(PagePaths.dashboard())
+            this.props.router.push(EndPoints.DASHBOARD)
             return null;
         }
 

@@ -1,25 +1,25 @@
 import React, {Component} from 'react';
 import PagePostAdd from "pages/post/[postTypeId]/add";
-import {ThemeFormLoadingButton, ThemeFormSelect, ThemeFormType} from "components/theme/form";
+import {ComponentFormLoadingButton, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import HandleForm from "library/react/handles/form";
 import {Modal} from "react-bootstrap";
 import postTermService from "services/postTerm.service";
 import {PostTermTypeId} from "constants/postTermTypes";
 import {StatusId} from "constants/status";
-import ThemeToast from "components/theme/toast";
+import ComponentToast from "components/elements/toast";
 
-type PageState = {
+type IPageState = {
     isShowModal: boolean
     newItemTitle: string
     isSubmitting: boolean
 };
 
-type PageProps = {
+type IPageProps = {
     page: PagePostAdd
 };
 
-export default class ComponentPagePostAddChooseTag extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentPagePostAddChooseTag extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             isShowModal: false,
@@ -54,7 +54,7 @@ export default class ComponentPagePostAddChooseTag extends Component<PageProps, 
                         this.setState({
                             newItemTitle: ""
                         })
-                        new ThemeToast({
+                        new ComponentToast({
                             type: "success",
                             title: this.props.page.props.t("successful"),
                             content: `'${this.state.newItemTitle}' ${this.props.page.props.t("itemAdded")}`,
@@ -88,7 +88,7 @@ export default class ComponentPagePostAddChooseTag extends Component<PageProps, 
                         <h4 className="text-center">{this.props.page.props.t("tag")}</h4>
                         <div className="row mt-4">
                             <div className="col-md-12">
-                                <ThemeFormType
+                                <ComponentFormType
                                     title={`${this.props.page.props.t("title")}*`}
                                     name="newItemTitle"
                                     type="text"
@@ -100,7 +100,7 @@ export default class ComponentPagePostAddChooseTag extends Component<PageProps, 
                             <div className="col-md-12 mt-4 text-end submit">
                                 {
                                     this.state.isSubmitting
-                                        ? <ThemeFormLoadingButton text={this.props.page.props.t("loading")} />
+                                        ? <ComponentFormLoadingButton text={this.props.page.props.t("loading")} />
                                         : <button type={"button"} className="btn btn-gradient-success"
                                                  onClick={() => this.onAddNew()}>
                                             <i className="mdi mdi-plus"></i> {this.props.page.props.t("add")}
@@ -120,7 +120,7 @@ export default class ComponentPagePostAddChooseTag extends Component<PageProps, 
                 <this.Modal />
                 <div className="row">
                     <div className="col-md-10">
-                        <ThemeFormSelect
+                        <ComponentFormSelect
                             title={this.props.page.props.t("tag")}
                             name="formData.tags"
                             placeholder={this.props.page.props.t("chooseTag").toCapitalizeCase()}

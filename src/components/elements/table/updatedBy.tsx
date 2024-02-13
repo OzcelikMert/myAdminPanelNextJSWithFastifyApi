@@ -1,13 +1,13 @@
 import React, {Component} from "react";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     name: string,
     updatedAt: string
 };
 
-export default class ThemeTableUpdatedBy extends Component<PageProps, PageState> {
+export default class ComponentTableUpdatedBy extends Component<IPageProps, IPageState> {
     render() {
         return (
             <div className="text-center">

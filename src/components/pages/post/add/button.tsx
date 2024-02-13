@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import PagePostAdd, {PageState as PostPageState} from "pages/post/[postTypeId]/add";
-import {ThemeFieldSet, ThemeFormType} from "components/theme/form";
+import PagePostAdd, {IPageState as PostPageState} from "pages/post/[postTypeId]/add";
+import {ComponentFieldSet, ComponentFormType} from "components/elements/form";
 import {IPostContentButtonModel} from "types/models/post.model";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     page: PagePostAdd
 };
 
-export default class ComponentPagePostAddButton extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentPagePostAddButton extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {}
     }
@@ -43,14 +43,14 @@ export default class ComponentPagePostAddButton extends Component<PageProps, Pag
     Button = (props: {propButton: IPostContentButtonModel, index: number}) => {
         return (
             <div className="col-md-12 mt-4">
-                <ThemeFieldSet
+                <ComponentFieldSet
                     legend={`${this.props.page.props.t("button")}#${props.index + 1}`}
                     legendElement={<i className="mdi mdi-trash-can text-danger fs-3 cursor-pointer"
                                       onClick={() => this.onDelete(props.index)}></i>}
                 >
                     <div className="row mt-2">
                         <div className="col-md-6">
-                            <ThemeFormType
+                            <ComponentFormType
                                 type={"text"}
                                 title={this.props.page.props.t("title")}
                                 value={props.propButton.title}
@@ -58,7 +58,7 @@ export default class ComponentPagePostAddButton extends Component<PageProps, Pag
                             />
                         </div>
                         <div className="col-md-6 mt-3 mt-lg-0">
-                            <ThemeFormType
+                            <ComponentFormType
                                 type={"text"}
                                 title={this.props.page.props.t("url")}
                                 value={props.propButton.url}
@@ -66,7 +66,7 @@ export default class ComponentPagePostAddButton extends Component<PageProps, Pag
                             />
                         </div>
                     </div>
-                </ThemeFieldSet>
+                </ComponentFieldSet>
             </div>
         )
     }

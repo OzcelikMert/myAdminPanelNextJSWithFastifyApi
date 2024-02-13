@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     isFullPage?: boolean
 };
 
-export default class Spinner extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentToolSpinner extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
     }
 

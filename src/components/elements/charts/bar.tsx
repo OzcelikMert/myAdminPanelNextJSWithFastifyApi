@@ -8,7 +8,7 @@ import {
     Title,
     Tooltip
 } from "chart.js";
-import Spinner from "react-bootstrap/Spinner";
+import ComponentToolSpinner from "react-bootstrap/ComponentToolSpinner";
 import {IPagePropCommon} from "types/pageProps";
 
 ChartJS.register(
@@ -19,20 +19,20 @@ ChartJS.register(
     Tooltip
 );
 
-type PageState = {
+type IPageState = {
     options: ChartProps<"bar">["options"]
     data: ChartData<"bar">
     isLoading: boolean
 };
 
-type PageProps = {
+type IPageProps = {
     labels: string[],
     data: any[],
     t: IPagePropCommon["t"]
 };
 
-class ThemeChartBar extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+class ComponentChartBar extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             isLoading: true,
@@ -80,7 +80,7 @@ class ThemeChartBar extends Component<PageProps, PageState> {
     }
 
     render() {
-        return this.state.isLoading ? <Spinner animation="border" /> : (
+        return this.state.isLoading ? <ComponentToolSpinner animation="border" /> : (
             <Bar
                 itemRef='chart'
                 className="chartLegendContainer"
@@ -91,4 +91,4 @@ class ThemeChartBar extends Component<PageProps, PageState> {
     }
 }
 
-export default ThemeChartBar;
+export default ComponentChartBar;

@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
-import ThemeDataTable from "components/theme/table/dataTable";
+import ComponentDataTable from "components/elements/table/dataTable";
 import PagePaths from "constants/pagePaths";
 import {ILanguageGetResultService} from "types/services/language.service";
 import languageService from "services/language.service";
 import Image from "next/image";
 import imageSourceLib from "lib/imageSource.lib";
-import ThemeBadgeStatus from "components/theme/badge/status";
-import ThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
-import ThemeToast from "components/theme/toast";
+import ComponentThemeBadgeStatus from "components/theme/badge/status";
+import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
+import ComponentToast from "components/elements/toast";
 
-type PageState = {
+type IPageState = {
     searchKey: string
     items: ILanguageGetResultService[],
     showingItems: ILanguageGetResultService[]
@@ -19,10 +19,10 @@ type PageState = {
     isShowModalUpdateRank: boolean
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PageSettingLanguageList extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PageSettingLanguageList extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             searchKey: "",
@@ -51,7 +51,7 @@ export default class PageSettingLanguageList extends Component<PageProps, PageSt
 
     async getItems() {
         let items = (await languageService.getMany({})).data;
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.items = items;
             state.showingItems = items;
             return state;
@@ -65,7 +65,7 @@ export default class PageSettingLanguageList extends Component<PageProps, PageSt
         });
 
         if(resData.status){
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 let item = this.state.items.findSingle("_id", this.state.selectedItemId);
                 if(item){
                     item.rank = rank;
@@ -74,7 +74,7 @@ export default class PageSettingLanguageList extends Component<PageProps, PageSt
             }, () => {
                 this.onSearch(this.state.searchKey)
                 let item = this.state.items.findSingle("_id", this.state.selectedItemId);
-                new ThemeToast({
+                new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),
                     content: `'${item?.title}' ${this.props.t("itemEdited")}`,
@@ -100,7 +100,7 @@ export default class PageSettingLanguageList extends Component<PageProps, PageSt
         this.props.router.push(path);
     }
 
-    get getTableColumns(): TableColumn<PageState["showingItems"][0]>[] {
+    get getTableColumns(): TableColumn<IPageState["showingItems"][0]>[] {
         return [
             {
                 name: this.props.t("image"),
@@ -131,7 +131,7 @@ export default class PageSettingLanguageList extends Component<PageProps, PageSt
             {
                 name: this.props.t("status"),
                 sortable: true,
-                cell: row => <ThemeBadgeStatus t={this.props.t} statusId={row.statusId} />
+                cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId} />
             },
             {
                 name: this.props.t("rank"),
@@ -149,7 +149,7 @@ export default class PageSettingLanguageList extends Component<PageProps, PageSt
                 name: this.props.t("createdDate"),
                 sortable: true,
                 selector: row => new Date(row.createdAt || "").toLocaleDateString(),
-                sortFunction: (a, b) => ThemeDataTable.dateSort(a, b)
+                sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
             },
             {
                 name: "",
@@ -169,7 +169,7 @@ export default class PageSettingLanguageList extends Component<PageProps, PageSt
         let item = this.state.items.findSingle("_id", this.state.selectedItemId);
         return this.props.getStateApp.isPageLoading ? null : (
             <div className="page-post">
-                <ThemeModalUpdateItemRank
+                <ComponentThemeModalUpdateItemRank
                     t={this.props.t}
                     isShow={this.state.isShowModalUpdateRank}
                     onHide={() => this.setState({isShowModalUpdateRank: false})}
@@ -181,7 +181,7 @@ export default class PageSettingLanguageList extends Component<PageProps, PageSt
                     <div className="card">
                         <div className="card-body">
                             <div className="table-post">
-                                <ThemeDataTable
+                                <ComponentDataTable
                                     columns={this.getTableColumns.filter(column => typeof column.name !== "undefined")}
                                     data={this.state.showingItems}
                                     onSearch={searchKey => this.onSearch(searchKey)}

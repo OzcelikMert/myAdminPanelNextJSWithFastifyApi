@@ -17,7 +17,7 @@ import ComponentApp from "components/app";
 
 import English from "languages/en.json"
 import Turkish from "languages/tr.json"
-import ProviderNoSSR from "components/providers/noSSR.provider";
+import ComponentProviderNoSSR from "components/providers/noSSR";
 import themeUtil from "utils/theme.util";
 
 if(typeof window !== "undefined") {
@@ -41,9 +41,9 @@ if(typeof window !== "undefined") {
 
 function App(props: AppProps) {
     return (
-        <ProviderNoSSR>
+        <ComponentProviderNoSSR>
             <ComponentApp {...props} />
-        </ProviderNoSSR>
+        </ComponentProviderNoSSR>
     )
 }
 

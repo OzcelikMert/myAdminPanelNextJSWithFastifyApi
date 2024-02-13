@@ -1,6 +1,6 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
-import {ThemeForm, ThemeFormSelect, ThemeFormType} from "components/theme/form"
+import {ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form"
 import {StatusId} from "constants/index";
 import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
@@ -12,9 +12,9 @@ import {ILanguageUpdateOneParamService} from "types/services/language.service";
 import languageService from "services/language.service";
 import imageSourceLib from "lib/imageSource.lib";
 import Image from "next/image";
-import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
+import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 
-type PageState = {
+type IPageState = {
     mainTabActiveKey: string
     status: ThemeFormSelectValueDocument[]
     flags: ThemeFormSelectValueDocument[]
@@ -23,10 +23,10 @@ type PageState = {
     formData: ILanguageUpdateOneParamService,
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PageSettingLanguageAdd extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PageSettingLanguageAdd extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             mainTabActiveKey: `general`,
@@ -71,7 +71,7 @@ export default class PageSettingLanguageAdd extends Component<PageProps, PageSta
     }
 
     getStatus() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.status = staticContentLib.getStatusForSelect([
                 StatusId.Active,
                 StatusId.Disabled
@@ -83,7 +83,7 @@ export default class PageSettingLanguageAdd extends Component<PageProps, PageSta
     async getFlags() {
         let resData = await languageService.getFlags({});
         if (resData.status) {
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 state.flags = [{value: "", label: this.props.t("notSelected")}];
                 state.flags = resData.data.map(item => ({
                     value: item,
@@ -100,7 +100,7 @@ export default class PageSettingLanguageAdd extends Component<PageProps, PageSta
             if (resData.data) {
                 const item = resData.data;
 
-                this.setState((state: PageState) => {
+                this.setState((state: IPageState) => {
                     state.formData = {
                         ...state.formData,
                         ...item,
@@ -162,7 +162,7 @@ export default class PageSettingLanguageAdd extends Component<PageProps, PageSta
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFormSelect
+                    <ComponentFormSelect
                         title={this.props.t("status")}
                         name="formData.statusId"
                         options={this.state.status}
@@ -171,7 +171,7 @@ export default class PageSettingLanguageAdd extends Component<PageProps, PageSta
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={`${this.props.t("rank")}*`}
                         name="formData.rank"
                         type="number"
@@ -199,7 +199,7 @@ export default class PageSettingLanguageAdd extends Component<PageProps, PageSta
                             />
                         </div>
                         <div className="col-11">
-                            <ThemeFormSelect
+                            <ComponentFormSelect
                                 title={this.props.t("image")}
                                 name="formData.image"
                                 options={this.state.flags}
@@ -210,7 +210,7 @@ export default class PageSettingLanguageAdd extends Component<PageProps, PageSta
                     </div>
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={`${this.props.t("title")}*`}
                         name="formData.title"
                         type="text"
@@ -220,7 +220,7 @@ export default class PageSettingLanguageAdd extends Component<PageProps, PageSta
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={`${this.props.t("shortKey")}*`}
                         name="formData.shortKey"
                         type="text"
@@ -230,7 +230,7 @@ export default class PageSettingLanguageAdd extends Component<PageProps, PageSta
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={`${this.props.t("locale")}*`}
                         name="formData.locale"
                         type="text"
@@ -259,7 +259,7 @@ export default class PageSettingLanguageAdd extends Component<PageProps, PageSta
                     </div>
                 </div>
                 <div className="row">
-                    <ThemeForm
+                    <ComponentForm
                         isActiveSaveButton={true}
                         saveButtonText={this.props.t("save")}
                         saveButtonLoadingText={this.props.t("loading")}
@@ -286,7 +286,7 @@ export default class PageSettingLanguageAdd extends Component<PageProps, PageSta
                                 </div>
                             </div>
                         </div>
-                    </ThemeForm>
+                    </ComponentForm>
                 </div>
             </div>
         )

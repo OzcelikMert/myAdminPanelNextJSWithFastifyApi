@@ -1,11 +1,11 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
-import {ThemeForm, ThemeFormSelect, ThemeFormType,} from "components/theme/form"
+import {ComponentForm, ComponentFormSelect, ComponentFormType,} from "components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
 import {PostTermTypeId, postTermTypes, PostTypeId, StatusId} from "constants/index";
 import V from "library/variable";
 import HandleForm from "library/react/handles/form";
-import ThemeChooseImage from "components/theme/chooseImage";
+import ComponentThemeChooseImage from "components/theme/chooseImage";
 import postTermService from "services/postTerm.service";
 import staticContentLib from "lib/staticContent.lib";
 import imageSourceLib from "lib/imageSource.lib";
@@ -14,9 +14,9 @@ import Swal from "sweetalert2";
 import Image from "next/image"
 import PostLib from "lib/post.lib";
 import postLib from "lib/post.lib";
-import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
+import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 
-type PageState = {
+type IPageState = {
     mainTabActiveKey: string
     items: ThemeFormSelectValueDocument[]
     status: ThemeFormSelectValueDocument[]
@@ -26,15 +26,15 @@ type PageState = {
     isSelectionImage: boolean
 };
 
-type PageProps = {
+type IPageProps = {
     isModal?: boolean
     _id?: string
     postTypeId?: PostTypeId
     typeId?: PostTermTypeId
 } & IPagePropCommon;
 
-export default class PagePostTermAdd extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         let _id = this.props._id ?? this.props.router.query._id as string ?? "";
         let typeId = this.props.typeId ?? this.props.router.query.termTypeId ?? 1;
@@ -77,7 +77,7 @@ export default class PagePostTermAdd extends Component<PageProps, PageState> {
         })
     }
 
-    async componentDidUpdate(prevProps: Readonly<PageProps>) {
+    async componentDidUpdate(prevProps: Readonly<IPageProps>) {
         if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
             this.props.setStateApp({
                 isPageLoading: true
@@ -108,7 +108,7 @@ export default class PagePostTermAdd extends Component<PageProps, PageState> {
     }
 
     getStatus() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.status = staticContentLib.getStatusForSelect([
                 StatusId.Active,
                 StatusId.InProgress,
@@ -130,7 +130,7 @@ export default class PagePostTermAdd extends Component<PageProps, PageState> {
             statusId: StatusId.Active
         });
         if (resData.status) {
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 state.items = [{value: "", label: this.props.t("notSelected")}];
                 resData.data.forEach(item => {
                     if (!V.isEmpty(this.state.formData._id)) {
@@ -156,7 +156,7 @@ export default class PagePostTermAdd extends Component<PageProps, PageState> {
         if (resData.status) {
             if (resData.data) {
                 const item = resData.data;
-                this.setState((state: PageState) => {
+                this.setState((state: IPageState) => {
                     state.formData = {
                         ...state.formData,
                         ...item,
@@ -202,7 +202,7 @@ export default class PagePostTermAdd extends Component<PageProps, PageState> {
                 await this.getItems();
             }
 
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 if (resData.status) {
                     state.formData = {
                         ...state.formData,
@@ -245,7 +245,7 @@ export default class PagePostTermAdd extends Component<PageProps, PageState> {
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFormSelect
+                    <ComponentFormSelect
                         title={this.props.t("status")}
                         name="formData.statusId"
                         options={this.state.status}
@@ -254,7 +254,7 @@ export default class PagePostTermAdd extends Component<PageProps, PageState> {
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={this.props.t("rank")}
                         name="formData.rank"
                         type="number"
@@ -287,7 +287,7 @@ export default class PagePostTermAdd extends Component<PageProps, PageState> {
                     ><i className="fa fa-pencil-square-o"></i></button>
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={`${this.props.t("title")}*`}
                         name="formData.contents.title"
                         type="text"
@@ -299,7 +299,7 @@ export default class PagePostTermAdd extends Component<PageProps, PageState> {
                 {
                     [PostTermTypeId.Category, PostTermTypeId.Variations, PostTermTypeId.Attributes].includes(Number(this.state.formData.typeId))
                         ? <div className="col-md-7 mb-3">
-                            <ThemeFormSelect
+                            <ComponentFormSelect
                                 title={`
                                     ${this.props.t("main")} 
                                     ${this.props.t((this.state.formData.typeId == PostTermTypeId.Category) ? "category" : "tag")}
@@ -320,11 +320,11 @@ export default class PagePostTermAdd extends Component<PageProps, PageState> {
     render() {
         return this.props.getStateApp.isPageLoading ? null : (
             <div className="page-post-term">
-                <ThemeChooseImage
+                <ComponentThemeChooseImage
                     {...this.props}
                     isShow={this.state.isSelectionImage}
                     onHide={() => this.setState({isSelectionImage: false})}
-                    onSelected={images => this.setState((state: PageState) => {
+                    onSelected={images => this.setState((state: IPageState) => {
                         state.formData.contents.image = images[0];
                         return state
                     })}
@@ -347,7 +347,7 @@ export default class PagePostTermAdd extends Component<PageProps, PageState> {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <ThemeForm
+                        <ComponentForm
                             isActiveSaveButton={true}
                             saveButtonText={this.props.t("save")}
                             saveButtonLoadingText={this.props.t("loading")}
@@ -374,7 +374,7 @@ export default class PagePostTermAdd extends Component<PageProps, PageState> {
                                     </div>
                                 </div>
                             </div>
-                        </ThemeForm>
+                        </ComponentForm>
                     </div>
                 </div>
             </div>

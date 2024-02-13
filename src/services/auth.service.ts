@@ -1,21 +1,21 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import {IUserGetResultService} from "types/services/user.service";
-import {IAuthLoginParamService, AuthGetSessionParamDocument} from "types/services/auth.service";
+import {IAuthLoginParamService} from "types/services/auth.service";
 import {AuthApiEndPoint} from "constants/apiEndPoints/auth.api.EndPoint";
 import ApiRequest from "library/api/request";
-import pathUtil from "utils/path.util";
+import {PathUtil} from "utils/path.util";
+import {ISessionAuthModel} from "types/models/sessionAuth.model";
 
-const getSession = (params: AuthGetSessionParamDocument) => {
+const getSession = () => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
-        endPoints: [ApiEndPoints.AUTH, AuthApiEndPoint.GET],
-        data: params,
-    }).get<IUserGetResultService>();
+        apiUrl: PathUtil.getApiURL(),
+        endPoints: [ApiEndPoints.AUTH, AuthApiEndPoint.GET]
+    }).get<ISessionAuthModel>();
 }
 
 const login = (params: IAuthLoginParamService) => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.AUTH, AuthApiEndPoint.LOGIN],
         data: params,
     }).post<IUserGetResultService>();
@@ -23,7 +23,7 @@ const login = (params: IAuthLoginParamService) => {
 
 const logOut = () => {
     return new ApiRequest({
-        apiUrl: pathUtil.api,
+        apiUrl: PathUtil.getApiURL(),
         endPoints: [ApiEndPoints.AUTH, AuthApiEndPoint.LOGOUT],
     }).delete();
 }

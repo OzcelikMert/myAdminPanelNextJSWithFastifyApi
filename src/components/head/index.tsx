@@ -3,15 +3,15 @@ import Head from 'next/head'
 
 import icon from "assets/images/ozcelikLogoMini.png";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     title: string
     icon?: string
 };
 
-export default class ComponentHead extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class ComponentHead extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
     }
 

@@ -1,25 +1,25 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {ThemeForm, ThemeFormSelect} from "components/theme/form";
+import {ComponentForm, ComponentFormSelect} from "components/elements/form";
 import HandleForm from "library/react/handles/form";
 import settingService from "services/setting.service";
-import ThemeToast from "components/theme/toast";
+import ComponentToast from "components/elements/toast";
 import {ISettingUpdateECommerceParamService} from "types/services/setting.service";
 import {Tab, Tabs} from "react-bootstrap";
 import {CurrencyId, currencyTypes} from "constants/currencyTypes";
-import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
+import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 
-type PageState = {
+type IPageState = {
     currencyTypes: ThemeFormSelectValueDocument[]
     isSubmitting: boolean
     formData: ISettingUpdateECommerceParamService,
     mainTabActiveKey: string
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PageECommerceSettings extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PageECommerceSettings extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             currencyTypes: [],
@@ -50,7 +50,7 @@ export default class PageECommerceSettings extends Component<PageProps, PageStat
         let resData = await settingService.get({projection: "eCommerce"})
         if (resData.status && resData.data) {
             let setting = resData.data;
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 state.formData = {
                     eCommerce: {
                         ...state.formData.eCommerce,
@@ -83,7 +83,7 @@ export default class PageECommerceSettings extends Component<PageProps, PageStat
                         currencyId: this.state.formData.eCommerce.currencyId
                     }
                 })
-                new ThemeToast({
+                new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),
                     content: this.props.t("settingsUpdated")
@@ -99,7 +99,7 @@ export default class PageECommerceSettings extends Component<PageProps, PageStat
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFormSelect
+                    <ComponentFormSelect
                         title={this.props.t("currencyType")}
                         name="formData.eCommerce.currencyId"
                         isMulti={false}
@@ -118,7 +118,7 @@ export default class PageECommerceSettings extends Component<PageProps, PageStat
             <div className="page-post">
                 <div className="row">
                     <div className="col-md-12">
-                        <ThemeForm
+                        <ComponentForm
                             isActiveSaveButton={true}
                             saveButtonText={this.props.t("save")}
                             saveButtonLoadingText={this.props.t("loading")}
@@ -142,7 +142,7 @@ export default class PageECommerceSettings extends Component<PageProps, PageStat
                                     </div>
                                 </div>
                             </div>
-                        </ThemeForm>
+                        </ComponentForm>
                     </div>
                 </div>
             </div>

@@ -9,16 +9,16 @@ import viewService from "services/view.service";
 import {IViewGetNumberResultService, IViewGetStatisticsResultService} from "types/services/view.service";
 import imageSourceLib from "lib/imageSource.lib";
 import permissionLib from "lib/permission.lib";
-import ThemeDataTable from "components/theme/table/dataTable";
+import ComponentDataTable from "components/elements/table/dataTable";
 import Image from "next/image"
-import ThemeChartArea from "components/theme/charts/area";
+import ComponentChartArea from "components/elements/charts/area";
 import PostLib from "lib/post.lib";
-import ThemeBadgeStatus from "components/theme/badge/status";
-import ThemeTableUpdatedBy from "components/theme/table/updatedBy";
+import ComponentThemeBadgeStatus from "components/theme/badge/status";
+import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
 
 const WorldMap = dynamic(() => import('react-svg-worldmap').then((module) => module.WorldMap), {ssr: false});
 
-type PageState = {
+type IPageState = {
     lastPosts: IPostGetManyResultService[]
     visitorData: {
         number: IViewGetNumberResultService,
@@ -27,11 +27,11 @@ type PageState = {
     worldMapSize: "lg" | "xl" | "xxl"
 };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-class PageDashboard extends Component<PageProps, PageState> {
+class PageDashboard extends Component<IPageProps, IPageState> {
     timer: any;
-    constructor(props: PageProps) {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             lastPosts: [],
@@ -84,7 +84,7 @@ class PageDashboard extends Component<PageProps, PageState> {
 
         if (resData.status) {
             if (JSON.stringify(this.state.visitorData.number) != JSON.stringify(resData.data)) {
-                this.setState((state: PageState) => {
+                this.setState((state: IPageState) => {
                     state.visitorData.number = resData.data;
                     return state;
                 })
@@ -96,7 +96,7 @@ class PageDashboard extends Component<PageProps, PageState> {
         let resData = await viewService.getStatistics();
 
         if (resData.status) {
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 state.visitorData.statistics = resData.data;
                 return state;
             })
@@ -116,7 +116,7 @@ class PageDashboard extends Component<PageProps, PageState> {
         }
     }
 
-    setWorldMapSize(size: PageState["worldMapSize"]) {
+    setWorldMapSize(size: IPageState["worldMapSize"]) {
         this.setState({
             worldMapSize: size
         });
@@ -139,7 +139,7 @@ class PageDashboard extends Component<PageProps, PageState> {
         await this.props.router.push(path);
     }
 
-    get getTableColumns(): TableColumn<PageState["lastPosts"][0]>[] {
+    get getTableColumns(): TableColumn<IPageState["lastPosts"][0]>[] {
         return [
             {
                 name: this.props.t("image"),
@@ -180,12 +180,12 @@ class PageDashboard extends Component<PageProps, PageState> {
                 name: this.props.t("status"),
                 selector: row => row.statusId,
                 sortable: true,
-                cell: row => <ThemeBadgeStatus t={this.props.t} statusId={row.statusId} />
+                cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId} />
             },
             {
                 name: this.props.t("updatedBy"),
                 sortable: true,
-                cell: row => <ThemeTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""} />
+                cell: row => <ComponentTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""} />
             },
             {
                 name: "",
@@ -285,7 +285,7 @@ class PageDashboard extends Component<PageProps, PageState> {
                                 <h4 className="card-title float-start">{this.props.t("weeklyVisitorsStatistics")}</h4>
                             </div>
                             <div className="chart-container">
-                                <ThemeChartArea
+                                <ComponentChartArea
                                     toolTipLabel={this.props.t("visitors")}
                                     data={this.state.visitorData.statistics.day.map(view => view.total)}
                                     labels={this.state.visitorData.statistics.day.map(view => view._id)}
@@ -338,7 +338,7 @@ class PageDashboard extends Component<PageProps, PageState> {
                         <div className="card-body">
                             <h4 className="card-title">{this.props.t("lastPosts")}</h4>
                             <div className="table-post">
-                                <ThemeDataTable
+                                <ComponentDataTable
                                     columns={this.getTableColumns}
                                     data={this.state.lastPosts}
                                     t={this.props.t}

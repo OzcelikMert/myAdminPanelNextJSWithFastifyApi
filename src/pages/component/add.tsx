@@ -3,19 +3,19 @@ import {Tab, Tabs} from "react-bootstrap";
 import {IPagePropCommon} from "types/pageProps";
 import {languageKeysArray, ComponentInputTypeId, ComponentInputTypes, UserRoleId, PostTypeId} from "constants/index";
 import HandleForm from "library/react/handles/form";
-import {ThemeFieldSet, ThemeForm, ThemeFormSelect, ThemeFormType} from "components/theme/form";
+import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import V from "library/variable";
 import {IComponentUpdateOneParamService} from "types/services/component.service";
 import componentService from "services/component.service";
-import ThemeChooseImage from "components/theme/chooseImage";
+import ComponentThemeChooseImage from "components/theme/chooseImage";
 import imageSourceLib from "lib/imageSource.lib";
 import Swal from "sweetalert2";
 import PagePaths from "constants/pagePaths";
 import Image from "next/image"
-import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
+import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 import {IComponentTypeModel} from "types/models/component.model";
 
-type PageState = {
+type IPageState = {
     langKeys: ThemeFormSelectValueDocument[]
     types: ThemeFormSelectValueDocument[]
     mainTabActiveKey: string
@@ -24,10 +24,10 @@ type PageState = {
     formData: IComponentUpdateOneParamService,
 } & { [key: string]: any };
 
-type PageProps = {} & IPagePropCommon;
+type IPageProps = {} & IPagePropCommon;
 
-export default class PageComponentAdd extends Component<PageProps, PageState> {
-    constructor(props: PageProps) {
+export default class PageComponentAdd extends Component<IPageProps, IPageState> {
+    constructor(props: IPageProps) {
         super(props);
         this.state = {
             mainTabActiveKey: "general",
@@ -81,14 +81,14 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
     }
 
     getLangKeys() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.langKeys = languageKeysArray.map(langKey => ({label: langKey, value: langKey}))
             return state;
         })
     }
 
     getTypes() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.types = ComponentInputTypes.map(type => ({
                 label: this.props.t(type.langKey),
                 value: type.id
@@ -105,7 +105,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
         if (resData.status) {
             if (resData.data) {
                 const item = resData.data;
-                this.setState((state: PageState) => {
+                this.setState((state: IPageState) => {
                     state.formData = {
                         ...state.formData,
                         ...item,
@@ -159,7 +159,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
     }
 
     onInputChange(data: any, key: string, value: any) {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             data[key] = value;
             return state;
         }, () => {
@@ -167,7 +167,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
     }
 
     onCreateType() {
-        this.setState((state: PageState) => {
+        this.setState((state: IPageState) => {
             state.formData.types = [{
                 _id: String.createId(),
                 elementId: "",
@@ -193,7 +193,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
             showCancelButton: true
         });
         if (result.isConfirmed) {
-            this.setState((state: PageState) => {
+            this.setState((state: IPageState) => {
                 componentTypes.splice(index, 1);
                 return state;
             })
@@ -216,7 +216,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
             let input = <div>{this.props.t("type")}</div>;
             switch (typeProps.typeId) {
                 case ComponentInputTypeId.TextArea:
-                    input = <ThemeFormType
+                    input = <ComponentFormType
                         type={"textarea"}
                         title={this.props.t(typeProps.langKey)}
                         value={typeProps.contents?.content}
@@ -224,17 +224,17 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
                     />
                     break;
                 case ComponentInputTypeId.Image:
-                    input = <ThemeFieldSet
+                    input = <ComponentFieldSet
                         legend={`${this.props.t(typeProps.langKey)} ${typeProps.contents?.comment ? `(${typeProps.contents.comment})` : ""}`}
                     >
-                        <ThemeChooseImage
+                        <ComponentThemeChooseImage
                             {...this.props}
                             isShow={this.state[typeProps._id]}
-                            onHide={() => this.setState((state: PageState) => {
+                            onHide={() => this.setState((state: IPageState) => {
                                 state[typeProps._id] = false;
                                 return state;
                             })}
-                            onSelected={images => this.setState((state: PageState) => {
+                            onSelected={images => this.setState((state: IPageState) => {
                                 if (typeProps.contents) {
                                     typeProps.contents.content = images[0];
                                 }
@@ -253,19 +253,19 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
                             <button
                                 type="button"
                                 className="btn btn-gradient-warning btn-xs ms-1"
-                                onClick={() => this.setState((state: PageState) => {
+                                onClick={() => this.setState((state: IPageState) => {
                                     state[typeProps._id] = true;
                                     return state;
                                 })}
                             ><i className="fa fa-pencil-square-o"></i> {this.props.t("select")}</button>
                         </div>
-                    </ThemeFieldSet>
+                    </ComponentFieldSet>
                     break;
                 case ComponentInputTypeId.Button:
                     input = (
                         <div className="row">
                             <div className="col-md-6">
-                                <ThemeFormType
+                                <ComponentFormType
                                     type={"text"}
                                     title={`${this.props.t(typeProps.langKey)} ${typeProps.contents?.comment ? `(${typeProps.contents.comment})` : ""}`}
                                     value={typeProps.contents?.content}
@@ -273,7 +273,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
                                 />
                             </div>
                             <div className="col-md-6 mt-3 mt-lg-0">
-                                <ThemeFormType
+                                <ComponentFormType
                                     type={"text"}
                                     title={this.props.t("url")}
                                     value={typeProps.contents?.url || ""}
@@ -284,7 +284,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
                     )
                     break;
                 case ComponentInputTypeId.Number:
-                    input = <ThemeFormType
+                    input = <ComponentFormType
                         type={"number"}
                         title={`${this.props.t(typeProps.langKey)} ${typeProps.contents?.comment ? `(${typeProps.contents.comment})` : ""}`}
                         value={typeProps.contents?.content}
@@ -292,7 +292,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
                     />
                     break;
                 default:
-                    input = <ThemeFormType
+                    input = <ComponentFormType
                         type={"text"}
                         title={`${this.props.t(typeProps.langKey)} ${typeProps.contents?.comment ? `(${typeProps.contents.comment})` : ""}`}
                         value={typeProps.contents?.content}
@@ -314,7 +314,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
                         {
                             this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
                                 ? <div className="col-md-12 mt-3">
-                                    <ThemeFormType
+                                    <ComponentFormType
                                         title={`${this.props.t("elementId")}*`}
                                         type="text"
                                         required={true}
@@ -326,7 +326,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
                         {
                             this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
                                 ? <div className="col-md-12 mt-3">
-                                    <ThemeFormSelect
+                                    <ComponentFormSelect
                                         title={this.props.t("langKey")}
                                         placeholder={this.props.t("langKey")}
                                         options={this.state.langKeys}
@@ -338,7 +338,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
                         {
                             this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
                                 ? <div className="col-md-12 mt-3">
-                                    <ThemeFormSelect
+                                    <ComponentFormSelect
                                         title={this.props.t("typeId")}
                                         placeholder={this.props.t("typeId")}
                                         options={this.state.types}
@@ -350,7 +350,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
                         {
                             this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
                                 ? <div className="col-md-12 mt-3">
-                                    <ThemeFormType
+                                    <ComponentFormType
                                         title={`${this.props.t("comment")}`}
                                         type="text"
                                         value={typeProps.contents?.comment}
@@ -361,7 +361,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
                         {
                             this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
                                 ? <div className="col-md-12 mt-3">
-                                    <ThemeFormType
+                                    <ComponentFormType
                                         title={`${this.props.t("rank")}*`}
                                         type="number"
                                         required={true}
@@ -407,7 +407,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ThemeFormType
+                    <ComponentFormType
                         title={`${this.props.t("elementId")}*`}
                         name="formData.elementId"
                         type="text"
@@ -417,7 +417,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
                     />
                 </div>
                 <div className="col-md-7 mb-3">
-                    <ThemeFormSelect
+                    <ComponentFormSelect
                         title={this.props.t("langKey")}
                         name="formData.langKey"
                         placeholder={this.props.t("langKey")}
@@ -446,7 +446,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <ThemeForm
+                        <ComponentForm
                             isActiveSaveButton={true}
                             saveButtonText={this.props.t("save")}
                             saveButtonLoadingText={this.props.t("loading")}
@@ -479,7 +479,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
                                     </div>
                                 </div>
                             </div>
-                        </ThemeForm>
+                        </ComponentForm>
                     </div>
                 </div>
             </div>

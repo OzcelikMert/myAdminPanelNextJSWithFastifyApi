@@ -1,18 +1,18 @@
 import React, {Component} from 'react'
 import Link from "next/link";
-import PagePaths from "constants/pagePaths";
+import {EndPoints} from "constants/endPoints";
 
-type PageState = {};
+type IPageState = {};
 
-type PageProps = {
+type IPageProps = {
     breadCrumbs: string[]
 };
 
-export default class ThemeBreadCrumb extends Component<PageProps, PageState> {
+export default class ComponentThemeBreadCrumb extends Component<IPageProps, IPageState> {
     render() {
         return (
             <h3 className="page-title">
-                <Link href={PagePaths.dashboard()}>
+                <Link href={EndPoints.DASHBOARD}>
                     <span className="page-title-icon bg-gradient-primary text-white me-2">
                         <i className="mdi mdi-home"></i>
                     </span>

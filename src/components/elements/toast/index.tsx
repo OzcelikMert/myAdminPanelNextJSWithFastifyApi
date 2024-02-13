@@ -2,23 +2,23 @@ import {ReactNode} from "react";
 import {toast, Id, ToastOptions, ToastContent} from "react-toastify";
 import React from "react";
 
-type PageProps = {
+type IPageProps = {
     type?: "warning" | "error" | "success" | "info" | "loading"
-    borderColor?: PageProps["type"]
+    borderColor?: IPageProps["type"]
     content: ReactNode | string
     title?: string
     position?: ToastOptions["position"]
     timeOut?: number
 };
 
-export default class ThemeToast {
+export default class ComponentToast {
     private toast: null | Id = null;
     private readonly options:  ToastOptions<{}>;
     private readonly content:  ToastContent<any>;
-    private props: PageProps;
+    private props: IPageProps;
     public isShow: boolean;
 
-    constructor(props: PageProps) {
+    constructor(props: IPageProps) {
         this.props = props;
         this.options = {
             position: props.position ?? "top-center",
