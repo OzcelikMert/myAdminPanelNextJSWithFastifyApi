@@ -5,11 +5,11 @@ import {
     Status,
     StatusId
 } from "constants/index";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import {ThemeToggleMenuItemDocument} from "components/theme/table/toggleMenu";
 import Swal from "sweetalert2";
-import {PostTermGetResultDocument} from "types/services/postTerm.service";
+import {IPostTermGetResultService} from "types/services/postTerm.service";
 import postTermService from "services/postTerm.service";
 import imageSourceLib from "lib/imageSource.lib";
 import permissionLib from "lib/permission.lib";
@@ -26,7 +26,7 @@ type PageState = {
     typeId: PostTermTypeId
     postTypeId: PostTypeId
     searchKey: string
-    items: PostTermGetResultDocument[],
+    items: IPostTermGetResultService[],
     showingItems: PageState["items"]
     selectedItems: PageState["items"]
     listMode: "list" | "deleted"
@@ -34,7 +34,7 @@ type PageState = {
     isShowModalUpdateRank: boolean
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PagePostTermList extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

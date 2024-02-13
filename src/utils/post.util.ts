@@ -1,5 +1,5 @@
 import {PostTypeId, postTypes} from "constants/postTypes";
-import {PostUtilGetPageTitleParamsDocument} from "types/utils/post.util";
+import {IPostGetPageTitleParamUtil} from "types/utils/post.util";
 import {postTermTypes} from "constants/postTermTypes";
 import {EndPoints} from "constants/endPoints";
 import {PathUtil} from "utils/path.util";
@@ -18,7 +18,7 @@ const getPagePath = (postTypeId: PostTypeId) => {
     return pagePath;
 }
 
-const getPageTitles = (params: PostUtilGetPageTitleParamsDocument) => {
+const getPageTitles = (params: IPostGetPageTitleParamUtil) => {
     let titles: string[] = [
         params.t(postTypes.findSingle("id", params.postTypeId)?.langKey ?? "[noLangAdd]"),
     ];

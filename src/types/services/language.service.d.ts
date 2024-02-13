@@ -1,26 +1,26 @@
-import {LanguageDocument} from "../models/language.model";
+import {ILanguageModel} from "../models/language.model";
 import {StatusId} from "constants/status";
 
-export type LanguageGetResultDocument = {} & LanguageDocument
+export type ILanguageGetResultService = {} & ILanguageModel
 
-export interface LanguageGetOneParamDocument {
+export interface ILanguageGetOneParamService {
     _id: string
     shortKey?: string
     locale?: string
 }
 
-export interface LanguageGetManyParamDocument {
+export interface ILanguageGetOneParamService {
     _id?: string[]
     statusId?: StatusId
 }
 
-export type LanguageAddParamDocument = {} & Omit<LanguageDocument, "_id">
+export type ILanguageAddParamService = {} & Omit<ILanguageModel, "_id">
 
-export type LanguageUpdateOneParamDocument = {
+export type ILanguageUpdateOneParamService = {
     _id: string
-} & LanguageAddParamDocument
+} & ILanguageAddParamService
 
-export type LanguageUpdateOneRankParamDocument = {
+export type ILanguageUpdateOneRankParamService = {
     _id: string
     rank: number
 }

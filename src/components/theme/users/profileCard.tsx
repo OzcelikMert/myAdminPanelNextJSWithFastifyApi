@@ -5,11 +5,11 @@ import {
     Permissions,
     StatusId
 } from "constants/index";
-import {UserDocument} from "types/models/user.model";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IUserModel} from "types/models/user.model";
+import {IPagePropCommon} from "types/pageProps";
 import imageSourceLib from "lib/imageSource.lib";
 import {ThemeFieldSet} from "../form";
-import {PermissionDocument, PermissionGroupDocument} from "types/constants";
+import {IPermission, IPermissionGroup} from "types/constants";
 import Image from "next/image"
 import ThemeBadgeStatus from "components/theme/badge/status";
 import ThemeBadgeUserRole from "components/theme/badge/userRole";
@@ -17,11 +17,11 @@ import ThemeBadgeUserRole from "components/theme/badge/userRole";
 type PageState = {};
 
 type PageProps = {
-    router: PagePropCommonDocument["router"];
-    t: PagePropCommonDocument["t"];
+    router: IPagePropCommon["router"];
+    t: IPagePropCommon["t"];
     isShow: boolean
     onClose: any
-    userInfo: UserDocument
+    userInfo: IUserModel
     langId: LanguageId
 };
 
@@ -103,7 +103,7 @@ class ThemeUsersProfileCard extends Component<PageProps, PageState> {
         let permissionGroups = PermissionGroups.findMulti("id", permissions.map(permission => permission.groupId));
         permissionGroups = permissionGroups.filter((group, index) => permissionGroups.indexOfKey("id", group.id) === index);
 
-        const PermissionGroup = (props: PermissionGroupDocument) => (
+        const PermissionGroup = (props: IPermissionGroup) => (
             <div className="col-md-12 mt-3">
                 <ThemeFieldSet legend={this.props.t(props.langKey)}>
                     <div className="row">
@@ -117,7 +117,7 @@ class ThemeUsersProfileCard extends Component<PageProps, PageState> {
             </div>
         )
 
-        const PermissionItem = (props: PermissionDocument) => (
+        const PermissionItem = (props: IPermission) => (
             <div className="col-3 mt-2">
                 <label className="badge badge-outline-info ms-1 mb-1">
                     {

@@ -1,24 +1,24 @@
-import {LanguageGetResultDocument} from "types/services/language.service";
+import {ILanguageGetResultService} from "types/services/language.service";
 import {CurrencyId} from "constants/currencyTypes";
-import {SessionAuthDocument} from "types/models/sessionAuth.model";
+import {ISessionAuthModel} from "types/models/sessionAuth.model";
 
-type AppAdminGetState = {
+type IAppGetState = {
     isAppLoading: boolean
     isPageLoading: boolean
     appData: {
         mainLangId: string
-        contentLanguages: LanguageGetResultDocument[]
+        contentLanguages: ILanguageGetResultService[]
         currencyId: CurrencyId
     }
     pageData: {
         langId: string
     },
-    sessionAuth: SessionAuthDocument
+    sessionAuth?: ISessionAuthModel
 }
 
-type AppAdminSetState = Partial<AppAdminGetState>
+type IAppSetState = Partial<IAppGetState>
 
 export {
-    AppAdminGetState,
-    AppAdminSetState
+    IAppGetState,
+    IAppSetState
 }

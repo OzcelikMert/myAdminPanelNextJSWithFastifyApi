@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import {PageTypeId, PageTypes, PostTermTypeId, PostTypeId, Status, StatusId} from "constants/index";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import {ThemeToggleMenuItemDocument} from "components/theme/table/toggleMenu";
 import Swal from "sweetalert2";
 import postService from "services/post.service";
-import {PostGetManyResultDocument} from "types/services/post.service";
+import {IPostGetManyResultService} from "types/services/post.service";
 import imageSourceLib from "lib/imageSource.lib";
 import permissionLib from "lib/permission.lib";
 import ThemeToast from "components/theme/toast";
@@ -25,7 +25,7 @@ import ThemeBadgePageType from "components/theme/badge/pageType";
 type PageState = {
     typeId: PostTypeId
     searchKey: string
-    items: PostGetManyResultDocument[],
+    items: IPostGetManyResultService[],
     showingItems: PageState["items"]
     selectedItems: PageState["items"]
     listMode: "list" | "deleted"
@@ -33,7 +33,7 @@ type PageState = {
     isShowModalUpdateRank: boolean
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PagePostList extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

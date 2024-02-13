@@ -1,20 +1,20 @@
-export type ViewGetTotalResultDocument = {
+export type IViewGetTotalResultService = {
     total: number
     _id: string
 }
 
-export type ViewGetNumberResultDocument = {
+export type IViewGetNumberResultService = {
     liveTotal: number
     averageTotal: number
     weeklyTotal: number
 }
 
-export type ViewGetStatisticsResultDocument = {
-    day: ViewGetTotalResultDocument[],
-    country: ViewGetTotalResultDocument[]
+export type IViewGetStatisticsResultService = {
+    day: IViewGetTotalResultService[],
+    country: IViewGetTotalResultService[]
 }
 
-export interface ViewAddParamDocument {
+export interface IViewAddParamService {
     url: string,
     langId: string
     ip?: string,

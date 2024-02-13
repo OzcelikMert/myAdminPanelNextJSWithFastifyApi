@@ -1,22 +1,22 @@
-import {SubscriberDocument} from "../models/subscriber.model";
+import {ISubscriberModel} from "../models/subscriber.model";
 
-export type SubscriberGetResultDocument = {} & SubscriberDocument
+export type ISubscriberGetResultService = {} & ISubscriberModel
 
-export interface SubscriberGetOneParamDocument {
+export interface ISubscriberGetOneParamService {
     _id: string
 }
 
-export interface SubscriberGetManyParamDocument {
+export interface ISubscriberGetManyParamService {
     _id?: string[]
     email?: string[]
 }
 
-export type SubscriberAddDocument = {} & Omit<SubscriberDocument, "_id">
+export type ISubscriberAddParamService = {} & Omit<ISubscriberModel, "_id">
 
-export interface SubscriberDeleteOneParamDocument {
+export interface ISubscriberDeleteOneParamService {
     _id: string
 }
 
-export interface SubscriberDeleteManyParamDocument {
+export interface ISubscriberDeleteManyParamService {
     _id: string[]
 }

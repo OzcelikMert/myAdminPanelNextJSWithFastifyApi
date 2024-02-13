@@ -1,7 +1,7 @@
-import {LanguageKeys} from "../languages";
+import {ILanguageKeys} from "../languages";
 import {ComponentInputTypeId} from "constants/componentInputTypes";
 
-export interface ThemeGroupTypeDocument {
+export interface IThemeGroupType {
     id: ComponentInputTypeId,
-    langKey: LanguageKeys
+    langKey: ILanguageKeys
 }

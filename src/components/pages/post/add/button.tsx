@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PagePostAdd, {PageState as PostPageState} from "pages/post/[postTypeId]/add";
 import {ThemeFieldSet, ThemeFormType} from "components/theme/form";
-import {PostContentButtonDocument} from "types/models/post.model";
+import {IPostContentButtonModel} from "types/models/post.model";
 
 type PageState = {};
 
@@ -15,7 +15,7 @@ export default class ComponentPagePostAddButton extends Component<PageProps, Pag
         this.state = {}
     }
 
-    onChange(key: keyof PostContentButtonDocument, value: string, index: number) {
+    onChange(key: keyof IPostContentButtonModel, value: string, index: number) {
         this.props.page.setState((state: PostPageState) => {
             if (state.formData.contents.buttons) state.formData.contents.buttons[index][key] = value;
             return state;
@@ -40,7 +40,7 @@ export default class ComponentPagePostAddButton extends Component<PageProps, Pag
         })
     }
 
-    Button = (props: {propButton: PostContentButtonDocument, index: number}) => {
+    Button = (props: {propButton: IPostContentButtonModel, index: number}) => {
         return (
             <div className="col-md-12 mt-4">
                 <ThemeFieldSet

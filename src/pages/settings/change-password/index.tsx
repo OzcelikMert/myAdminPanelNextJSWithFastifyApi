@@ -1,5 +1,5 @@
 import React, {Component, FormEvent} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {ThemeForm, ThemeFormType} from "components/theme/form";
 import HandleForm from "library/react/handles/form";
 import profileService from "services/profile.service";
@@ -14,7 +14,7 @@ type PageState = {
     }
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PageChangePassword extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

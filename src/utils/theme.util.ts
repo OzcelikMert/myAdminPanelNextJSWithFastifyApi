@@ -1,6 +1,6 @@
-import ThemeKeys from "types/themes";
+import {IThemeKeys} from "types/themes";
 
-const changeTheme = (theme: ThemeKeys) => {
+const changeTheme = (theme: IThemeKeys) => {
     document.documentElement.setAttribute("data-theme", theme);
 }
 

@@ -1,4 +1,4 @@
-export interface ViewDocument {
+export interface IViewModel {
     _id: string
     url: string,
     langId: string

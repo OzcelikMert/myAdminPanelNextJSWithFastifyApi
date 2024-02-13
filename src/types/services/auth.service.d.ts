@@ -1,8 +1,4 @@
-export interface AuthGetSessionParamDocument {
-
-}
-
-export interface AuthLoginParamDocument {
+export interface IAuthLoginParamService {
     email: string,
     password: string
 }

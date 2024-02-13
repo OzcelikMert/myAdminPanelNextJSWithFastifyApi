@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {PagePropCommonDocument} from "types/pageProps";
-import {LanguageId} from "constants/index";
+import {IPagePropCommon} from "types/pageProps";
 import Navbar from "components/tools/navbar";
 import Sidebar from "components/tools/sidebar";
 import Footer from "components/tools/footer";
-import {AppAdminGetState, AppAdminSetState} from "types/pages/_app";
-import PagePaths from "constants/pagePaths";
+import {IAppGetState, IAppSetState} from "types/pages/_app";
 import ThemeBreadCrumb from "components/theme/breadCrumb";
 import ThemeContentLanguage from "components/theme/contentLanguage";
 import Spinner from "components/tools/spinner";
@@ -17,15 +15,17 @@ import ProviderPermission from "components/providers/permission.provider";
 import ProviderAppInit from "components/providers/app.init.provider";
 import Variable from "library/variable";
 import {ToastContainer} from "react-toastify";
-import multiLanguagePaths from "constants/multiLanguagePaths";
 import {CurrencyId} from "constants/currencyTypes";
+import {LanguageId} from "constants/languages";
+import {multiLanguagePaths} from "constants/multiLanguagePaths";
+import {EndPoints} from "constants/endPoints";
 
 type PageState = {
     breadCrumbTitle: string
-} & AppAdminGetState;
+} & IAppGetState;
 
 type PageProps = {
-    t: PagePropCommonDocument["t"]
+    t: IPagePropCommon["t"]
 } & AppProps
 
 class ComponentApp extends Component<PageProps, PageState> {
@@ -45,15 +45,6 @@ class ComponentApp extends Component<PageProps, PageState> {
             },
             pageData: {
                 langId: ""
-            },
-            sessionData: {
-                id: "",
-                langId: LanguageId.English,
-                image: "",
-                name: "",
-                email: "",
-                roleId: 1,
-                permissions: []
             }
         }
     }
@@ -93,7 +84,7 @@ class ComponentApp extends Component<PageProps, PageState> {
         })
     }
 
-    setStateApp(data: AppAdminSetState, callBack?: () => void) {
+    setStateApp(data: IAppSetState, callBack?: () => void) {
         this.setState((state: PageState) => {
             state = Variable.nestedObjectAssign(Object.create(state), data);
             return state;
@@ -104,7 +95,7 @@ class ComponentApp extends Component<PageProps, PageState> {
         })
     }
 
-    PageHeader = (props: PagePropCommonDocument) => {
+    PageHeader = (props: IPagePropCommon) => {
         let path = props.router.pathname.replaceAll("[", ":").replaceAll("]", "");
 
         return (
@@ -143,17 +134,17 @@ class ComponentApp extends Component<PageProps, PageState> {
         }
 
         if (this.props.router.asPath === "/" || typeof this.props.pageProps.statusCode !== "undefined") {
-            this.props.router.push(PagePaths.dashboard());
+            this.props.router.push(EndPoints.DASHBOARD);
             return null;
         }
 
         const fullPageLayoutRoutes = [
-            PagePaths.login(),
-            PagePaths.lock()
+            EndPoints.LOGIN,
+            EndPoints.LOCK
         ];
-        let isFullPageLayout = fullPageLayoutRoutes.includes(this.props.router.pathname) || this.state.sessionData.id.length <= 0 || this.state.isAppLoading;
+        let isFullPageLayout = fullPageLayoutRoutes.includes(this.props.router.pathname) || !this.state.sessionAuth?.user.userId || this.state.isAppLoading;
 
-        const commonProps: PagePropCommonDocument = {
+        const commonProps: IPagePropCommon = {
             router: this.props.router,
             t: this.props.t,
             setBreadCrumb: titles => this.setBreadCrumb(titles),

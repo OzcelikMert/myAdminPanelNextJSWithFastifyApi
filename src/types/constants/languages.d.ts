@@ -1,6 +1,6 @@
 import {LanguageId} from "constants/languages";
 
-export interface LanguageDocument {
+export interface ILanguage {
     id: LanguageId,
     code: string,
     title: string,

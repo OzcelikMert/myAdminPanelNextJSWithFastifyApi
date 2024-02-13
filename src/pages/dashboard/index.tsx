@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import dynamic from "next/dynamic";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import {PostTypeId, postTypes} from "constants/index";
-import {PostGetManyResultDocument} from "types/services/post.service";
+import {IPostGetManyResultService} from "types/services/post.service";
 import postService from "services/post.service";
 import viewService from "services/view.service";
-import {ViewGetNumberResultDocument, ViewGetStatisticsResultDocument} from "types/services/view.service";
+import {IViewGetNumberResultService, IViewGetStatisticsResultService} from "types/services/view.service";
 import imageSourceLib from "lib/imageSource.lib";
 import permissionLib from "lib/permission.lib";
 import ThemeDataTable from "components/theme/table/dataTable";
@@ -19,15 +19,15 @@ import ThemeTableUpdatedBy from "components/theme/table/updatedBy";
 const WorldMap = dynamic(() => import('react-svg-worldmap').then((module) => module.WorldMap), {ssr: false});
 
 type PageState = {
-    lastPosts: PostGetManyResultDocument[]
+    lastPosts: IPostGetManyResultService[]
     visitorData: {
-        number: ViewGetNumberResultDocument,
-        statistics: ViewGetStatisticsResultDocument
+        number: IViewGetNumberResultService,
+        statistics: IViewGetStatisticsResultService
     }
     worldMapSize: "lg" | "xl" | "xxl"
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 class PageDashboard extends Component<PageProps, PageState> {
     timer: any;

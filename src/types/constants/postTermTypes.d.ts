@@ -1,8 +1,8 @@
-import {LanguageKeys} from "../languages";
+import {ILanguageKeys} from "../languages";
 import {PostTermTypeId} from "constants/postTermTypes";
 
-export interface PostTermTypeDocument {
+export interface IPostTermType {
     id: PostTermTypeId,
     rank: number,
-    langKey: LanguageKeys
+    langKey: ILanguageKeys
 }

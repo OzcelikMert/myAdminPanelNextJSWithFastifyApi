@@ -1,6 +1,6 @@
 import {CurrencyId} from "constants/currencyTypes";
 
-export interface CurrencyTypeDocument {
+export interface ICurrencyType {
     id: CurrencyId,
     title: string
     icon: string

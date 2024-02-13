@@ -1,4 +1,4 @@
-import {StatusDocument} from "types/constants/status";
+import {IStatus} from "types/constants/status";
 
 export enum StatusId {
     Active = 1,
@@ -9,7 +9,7 @@ export enum StatusId {
     Deleted
 }
 
-export const status: Array<StatusDocument> = [
+export const status: Array<IStatus> = [
     {id: StatusId.Active, rank: 1, langKey: "active"},
     {id: StatusId.InProgress, rank: 2, langKey: "inProgress"},
     {id: StatusId.Pending, rank: 3, langKey: "pending"},

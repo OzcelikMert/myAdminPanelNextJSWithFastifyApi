@@ -1,27 +1,27 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import {
-    SettingGetParamDocument,
-    SettingUpdateGeneralParamDocument,
-    SettingUpdateECommerceParamDocument,
-    SettingUpdateContactFormParamDocument,
-    SettingUpdateSEOParamDocument,
-    SettingUpdateSocialMediaParamDocument,
-    SettingUpdateStaticLanguageParamDocument,
-    SettingGetResultDocument
+    ISettingGetParamService,
+    ISettingUpdateGeneralParamService,
+    ISettingUpdateECommerceParamService,
+    ISettingUpdateContactFormParamService,
+    ISettingUpdateSEOParamService,
+    ISettingUpdateSocialMediaParamService,
+    ISettingUpdateStaticLanguageParamService,
+    ISettingGetResultService
 } from "types/services/setting.service";
 import {SettingApiEndPoint} from "constants/apiEndPoints/setting.api.endPoint";
 import pathUtil from "utils/path.util";
 import ApiRequest from "library/api/request";
 
-const get = (params: SettingGetParamDocument) => {
+const get = (params: ISettingGetParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.SETTING, SettingApiEndPoint.GET],
         data: params,
-    }).get<SettingGetResultDocument>();
+    }).get<ISettingGetResultService>();
 }
 
-const updateGeneral = (params: SettingUpdateGeneralParamDocument) => {
+const updateGeneral = (params: ISettingUpdateGeneralParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.SETTING, SettingApiEndPoint.UPDATE_GENERAL],
@@ -29,7 +29,7 @@ const updateGeneral = (params: SettingUpdateGeneralParamDocument) => {
     }).put();
 }
 
-const updateSeo = (params: SettingUpdateSEOParamDocument) => {
+const updateSeo = (params: ISettingUpdateSEOParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.SETTING, SettingApiEndPoint.UPDATE_SEO],
@@ -37,7 +37,7 @@ const updateSeo = (params: SettingUpdateSEOParamDocument) => {
     }).put();
 }
 
-const updateContactForm = (params: SettingUpdateContactFormParamDocument) => {
+const updateContactForm = (params: ISettingUpdateContactFormParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.SETTING, SettingApiEndPoint.UPDATE_CONTACT_FORM],
@@ -45,7 +45,7 @@ const updateContactForm = (params: SettingUpdateContactFormParamDocument) => {
     }).put();
 }
 
-const updateStaticLanguage = (params: SettingUpdateStaticLanguageParamDocument) => {
+const updateStaticLanguage = (params: ISettingUpdateStaticLanguageParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.SETTING, SettingApiEndPoint.UPDATE_STATIC_LANGUAGE],
@@ -53,7 +53,7 @@ const updateStaticLanguage = (params: SettingUpdateStaticLanguageParamDocument) 
     }).put();
 }
 
-const updateSocialMedia = (params: SettingUpdateSocialMediaParamDocument) => {
+const updateSocialMedia = (params: ISettingUpdateSocialMediaParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.SETTING, SettingApiEndPoint.UPDATE_SOCIAL_MEDIA],
@@ -61,7 +61,7 @@ const updateSocialMedia = (params: SettingUpdateSocialMediaParamDocument) => {
     }).put();
 }
 
-const updateECommerce = (params: SettingUpdateECommerceParamDocument) => {
+const updateECommerce = (params: ISettingUpdateECommerceParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.SETTING, SettingApiEndPoint.UPDATE_ECOMMERCE],

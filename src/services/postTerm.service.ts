@@ -1,35 +1,35 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import  {
-    PostTermGetResultDocument,
-    PostTermUpdateManyStatusIdParamDocument,
-    PostTermUpdateOneRankParamDocument,
-    PostTermAddParamDocument,
-    PostTermGetManyParamDocument,
-    PostTermUpdateOneParamDocument,
-    PostTermGetOneParamDocument,
-    PostTermDeleteManyParamDocument
+    IPostTermGetResultService,
+    IPostTermUpdateManyStatusIdParamService,
+    IPostTermUpdateOneRankParamService,
+    IPostTermAddParamService,
+    IPostTermGetManyParamService,
+    IPostTermUpdateOneParamService,
+    IPostTermGetOneParamService,
+    IPostTermDeleteManyParamService
 } from "types/services/postTerm.service";
 import {PostTermApiEndPoint} from "constants/apiEndPoints/postTerm.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";
 
-const getOne = (params: PostTermGetOneParamDocument) => {
+const getOne = (params: IPostTermGetOneParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.GET_WITH_ID(params._id)],
         data: params
-    }).get<PostTermGetResultDocument>();
+    }).get<IPostTermGetResultService>();
 }
 
-const getMany = (params: PostTermGetManyParamDocument) => {
+const getMany = (params: IPostTermGetManyParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.GET],
         data: params
-    }).get<PostTermGetResultDocument[]>();
+    }).get<IPostTermGetResultService[]>();
 }
 
-const add = (params: PostTermAddParamDocument) => {
+const add = (params: IPostTermAddParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.ADD],
@@ -37,7 +37,7 @@ const add = (params: PostTermAddParamDocument) => {
     }).post<{_id: string}>();
 }
 
-const updateOne = (params: PostTermUpdateOneParamDocument) => {
+const updateOne = (params: IPostTermUpdateOneParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.UPDATE_WITH_ID(params._id)],
@@ -45,7 +45,7 @@ const updateOne = (params: PostTermUpdateOneParamDocument) => {
     }).put();
 }
 
-const updateOneRank = (params: PostTermUpdateOneRankParamDocument) => {
+const updateOneRank = (params: IPostTermUpdateOneRankParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
@@ -53,7 +53,7 @@ const updateOneRank = (params: PostTermUpdateOneRankParamDocument) => {
     }).put();
 }
 
-const updateManyStatus = (params: PostTermUpdateManyStatusIdParamDocument) => {
+const updateManyStatus = (params: IPostTermUpdateManyStatusIdParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.UPDATE_STATUS],
@@ -61,7 +61,7 @@ const updateManyStatus = (params: PostTermUpdateManyStatusIdParamDocument) => {
     }).put();
 }
 
-const deleteMany = (params: PostTermDeleteManyParamDocument) => {
+const deleteMany = (params: IPostTermDeleteManyParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST_TERM, PostTermApiEndPoint.DELETE],

@@ -1,4 +1,4 @@
-import ThemeKeys from "types/themes";
+import {IThemeKeys} from "types/themes";
 
 const getLanguage = () => {
     return Number((window.localStorage.getItem("adminLanguage") ?? 1));
@@ -9,10 +9,10 @@ const setLanguage = (langId: number) => {
 }
 
 const getTheme = () => {
-    return (window.localStorage.getItem("adminTheme") ?? "default") as ThemeKeys;
+    return (window.localStorage.getItem("adminTheme") ?? "default") as IThemeKeys;
 }
 
-const setTheme = (theme: ThemeKeys) => {
+const setTheme = (theme: IThemeKeys) => {
     window.localStorage.setItem("adminTheme", theme);
 }
 

@@ -1,6 +1,6 @@
 import {GalleryTypeId} from "constants/galleryTypeId";
 
-export interface GalleryDocument {
+export interface IGalleryModel {
     _id: string
     name: string
     oldName: string

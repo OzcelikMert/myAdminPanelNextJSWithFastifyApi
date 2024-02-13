@@ -1,7 +1,7 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import {ThemeForm, ThemeFormSelect, ThemeFormType,} from "components/theme/form"
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {PostTermTypeId, postTermTypes, PostTypeId, StatusId} from "constants/index";
 import V from "library/variable";
 import HandleForm from "library/react/handles/form";
@@ -9,7 +9,7 @@ import ThemeChooseImage from "components/theme/chooseImage";
 import postTermService from "services/postTerm.service";
 import staticContentLib from "lib/staticContent.lib";
 import imageSourceLib from "lib/imageSource.lib";
-import {PostTermUpdateOneParamDocument} from "types/services/postTerm.service";
+import {IPostTermUpdateOneParamService} from "types/services/postTerm.service";
 import Swal from "sweetalert2";
 import Image from "next/image"
 import PostLib from "lib/post.lib";
@@ -22,7 +22,7 @@ type PageState = {
     status: ThemeFormSelectValueDocument[]
     isSubmitting: boolean
     mainTitle: string
-    formData: PostTermUpdateOneParamDocument,
+    formData: IPostTermUpdateOneParamService,
     isSelectionImage: boolean
 };
 
@@ -31,7 +31,7 @@ type PageProps = {
     _id?: string
     postTypeId?: PostTypeId
     typeId?: PostTermTypeId
-} & PagePropCommonDocument;
+} & IPagePropCommon;
 
 export default class PagePostTermAdd extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

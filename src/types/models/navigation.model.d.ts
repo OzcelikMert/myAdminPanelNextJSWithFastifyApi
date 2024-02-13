@@ -1,18 +1,18 @@
 import {StatusId} from "constants/status";
 
-export interface NavigationDocument {
+export interface INavigationModel {
     _id: string
     statusId: StatusId,
     mainId?: string
     authorId: string
     lastAuthorId: string
     rank: number,
-    contents: NavigationContentDocument
+    contents: INavigationContentModel
     createdAt?: string
     updatedAt?: string
 }
 
-export interface NavigationContentDocument {
+export interface INavigationContentModel {
     _id?: string
     langId: string
     title?: string,

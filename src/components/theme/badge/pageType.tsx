@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {PageTypeId, PageTypes} from "constants/pageTypes";
 
 type PageState = {};
 
 type PageProps = {
-    t: PagePropCommonDocument["t"]
+    t: IPagePropCommon["t"]
     pageTypeId: PageTypeId
     className?: string
 };

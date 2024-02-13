@@ -1,33 +1,32 @@
 import {CurrencyId} from "constants/currencyTypes";
-import {LanguageKeys} from "types/languages";
 
-export interface SettingDocument {
+export interface ISettingModel {
     defaultLangId: string
     icon?: string
     logo?: string
     logoTwo?: string
     head?: string
     script?: string
-    seoContents: SettingSeoContentDocument,
-    contact?: SettingContactDocument
-    contactForms: SettingContactFormDocument[],
-    staticLanguages: SettingStaticLanguageDocument[]
-    socialMedia: SettingSocialMediaDocument[]
-    eCommerce?: SettingECommerceDocument
+    seoContents: ISettingSeoContentModel,
+    contact?: ISettingContactModel
+    contactForms: ISettingContactFormModel[],
+    staticLanguages: ISettingStaticLanguageModel[]
+    socialMedia: ISettingSocialMediaModel[]
+    eCommerce?: ISettingECommerceModel
 }
 
-export interface SettingECommerceDocument {
+export interface ISettingECommerceModel {
     currencyId: CurrencyId
 }
 
-export interface SettingContactDocument {
+export interface ISettingContactModel {
     email?: string,
     phone?: string,
     address?: string,
     addressMap?: string
 }
 
-export interface SettingSocialMediaDocument {
+export interface ISettingSocialMediaModel {
     _id?: string
     elementId: string
     title: string
@@ -35,7 +34,7 @@ export interface SettingSocialMediaDocument {
     isEditing?: boolean
 }
 
-export interface SettingContactFormDocument {
+export interface ISettingContactFormModel {
     _id?: string
     name: string
     key: string
@@ -48,7 +47,7 @@ export interface SettingContactFormDocument {
     isEditing?: boolean
 }
 
-export interface SettingSeoContentDocument {
+export interface ISettingSeoContentModel {
     _id?: string
     langId: string
     title?: string,
@@ -56,15 +55,15 @@ export interface SettingSeoContentDocument {
     tags?: string[]
 }
 
-export interface SettingStaticLanguageDocument {
+export interface ISettingStaticLanguageModel {
     _id?: string
     langKey: string,
     title: string
-    contents: SettingStaticLanguageContentDocument
+    contents: ISettingStaticLanguageContentModel
     isEditing?: boolean
 }
 
-export interface SettingStaticLanguageContentDocument {
+export interface ISettingStaticLanguageContentModel {
     _id?: string
     langId: string
     content?: string,

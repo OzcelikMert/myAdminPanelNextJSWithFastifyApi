@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ThemeFormCheckBox, ThemeFormSelect, ThemeFormType} from "components/theme/form";
 import HandleForm from "library/react/handles/form";
-import {PostECommerceAttributeDocument, PostECommerceVariationDocument} from "types/models/post.model";
+import {IPostECommerceAttributeModel, IPostECommerceVariationModel} from "types/models/post.model";
 import {Accordion, Card, Tab, Tabs} from "react-bootstrap";
 import ThemeAccordionToggle from "components/theme/accordion/toggle";
 import ThemeChooseImage from "components/theme/chooseImage";
@@ -99,7 +99,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
         })
     }
 
-    onChangeAttributeVariations(attribute: PostECommerceAttributeDocument<string>, values: PostPageState["variations"]) {
+    onChangeAttributeVariations(attribute: IPostECommerceAttributeModel<string>, values: PostPageState["variations"]) {
         this.props.page.setState((state: PostPageState) => {
             attribute.variations = values.map(value => value.value)
             return state;
@@ -171,7 +171,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
         }
     }
 
-    onChangeVariationAttributeChild(data: PostECommerceVariationDocument<string>, attributeId: string, value: string) {
+    onChangeVariationAttributeChild(data: IPostECommerceVariationModel<string>, attributeId: string, value: string) {
         this.props.page.setState((state: PostPageState) => {
             if (typeof state.formData.eCommerce !== "undefined") {
                 let findIndex = data.selectedVariations.indexOfKey("attributeId", attributeId);
@@ -400,7 +400,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
     }
 
     TabAttributes = () => {
-        const Attribute = (attribute: PostECommerceAttributeDocument<string>, index: number) => {
+        const Attribute = (attribute: IPostECommerceAttributeModel<string>, index: number) => {
             return (
                 <Card>
                     <Card.Header>
@@ -483,7 +483,7 @@ export default class ComponentPagePostAddECommerce extends Component<PageProps, 
     }
 
     TabVariations = () => {
-        const Variation = (variation: PostECommerceVariationDocument<string>, index: number) => {
+        const Variation = (variation: IPostECommerceVariationModel<string>, index: number) => {
             return (
                 <Card>
                     <Card.Header>

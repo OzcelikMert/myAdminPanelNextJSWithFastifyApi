@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {Collapse} from 'react-bootstrap';
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import SidebarNavs from "constants/sidebarNavs";
-import {SideBarPath} from "types/constants/sidebarNavs";
+import {ISidebarPath} from "types/constants/sidebarNavs";
 import PagePaths from "constants/pagePaths";
 import clone from "clone";
 import routeLib from "lib/route.lib";
@@ -12,7 +12,7 @@ type PageState = {
     isMenuOpen: { [key: string]: any }
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 class Sidebar extends Component<PageProps, PageState> {
     constructor(props: PageProps) {
@@ -34,7 +34,7 @@ class Sidebar extends Component<PageProps, PageState> {
         })
     }
 
-    setIsMenuOpen(sidebarSubPaths: SideBarPath[], stateKey?: string) {
+    setIsMenuOpen(sidebarSubPaths: ISidebarPath[], stateKey?: string) {
         for(const sidebarNav of sidebarSubPaths) {
             if(this.props.router.asPath.startsWith(sidebarNav.path)) {
                 this.toggleMenuState(sidebarNav.state);
@@ -58,10 +58,10 @@ class Sidebar extends Component<PageProps, PageState> {
         return this.props.router.asPath.startsWith(path);
     }
 
-    Item = (props: SideBarPath) => {
+    Item = (props: ISidebarPath) => {
         let self = this;
 
-        function HasChild(_props: SideBarPath) {
+        function HasChild(_props: ISidebarPath) {
             if (!permissionUtil.check(self.props.getStateApp.sessionAuth, _props.minRoleId, _props.minPermId)) return null;
             return (
                 <span className={`nav-link ${self.isPathActive(_props.path) ? 'active' : ''}`} onClick={() => routeLib.change(self.props.router, _props.path ?? PagePaths.dashboard())}>
@@ -71,7 +71,7 @@ class Sidebar extends Component<PageProps, PageState> {
             );
         }
 
-        function HasChildren(_props: SideBarPath) {
+        function HasChildren(_props: ISidebarPath) {
             if (!permissionUtil.check(self.props.getStateApp.sessionAuth, _props.minRoleId, _props.minPermId)) return null;
             let state = (_props.state) ? self.state.isMenuOpen[_props.state] : false;
             return (

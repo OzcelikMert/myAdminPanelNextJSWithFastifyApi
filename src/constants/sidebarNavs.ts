@@ -1,5 +1,5 @@
 import {PostTypeId} from "./postTypes";
-import {SideBarPath} from "types/constants/sidebarNavs";
+import {ISidebarPath} from "types/constants/sidebarNavs";
 import {EndPoints} from "constants/endPoints";
 import {GalleryEndPoint} from "constants/endPoints/gallery.endPoint";
 import {NavigationEndPoint} from "constants/endPoints/navigation.endPoint";
@@ -19,7 +19,7 @@ import {SubscriberEndPointPermission} from "constants/endPointPermissions/subscr
 import {LanguageEndPointPermission} from "constants/endPointPermissions/language.endPoint.permission";
 import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
 
-export const sidebarNav: SideBarPath[] = [
+export const sidebarNav: ISidebarPath[] = [
     {path: EndPoints.DASHBOARD, icon: `home`, title: "dashboard"},
     {
         path: EndPoints.GALLERY,

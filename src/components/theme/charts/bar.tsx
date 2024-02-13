@@ -9,7 +9,7 @@ import {
     Tooltip
 } from "chart.js";
 import Spinner from "react-bootstrap/Spinner";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 
 ChartJS.register(
     CategoryScale,
@@ -28,7 +28,7 @@ type PageState = {
 type PageProps = {
     labels: string[],
     data: any[],
-    t: PagePropCommonDocument["t"]
+    t: IPagePropCommon["t"]
 };
 
 class ThemeChartBar extends Component<PageProps, PageState> {

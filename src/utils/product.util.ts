@@ -1,14 +1,14 @@
-import {PostECommercePricingDocument} from "types/models/post.model";
+import {IPostECommercePricingModel} from "types/models/post.model";
 import {ProductTypeId} from "constants/productTypes";
 import {CurrencyId, currencyTypes} from "constants/currencyTypes";
-import {PostGetManyResultDocument} from "types/services/post.service";
+import {IPostGetManyResultService} from "types/services/post.service";
 
 const getCurrencyType = (currencyId: CurrencyId = CurrencyId.TurkishLira) => {
     return currencyTypes.findSingle("id", currencyId);
 }
 
-const getPricingDefault = (item: PostGetManyResultDocument) => {
-    let data: PostECommercePricingDocument = {
+const getPricingDefault = (item: IPostGetManyResultService) => {
+    let data: IPostECommercePricingModel = {
         taxRate: 0,
         taxExcluded: 0,
         shipping: 0,

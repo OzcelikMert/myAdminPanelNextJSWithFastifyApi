@@ -1,8 +1,8 @@
-import {EndPointPermissionDocument} from "types/constants/endPoint.permissions";
+import {IEndPointPermission} from "types/constants/endPoint.permissions";
 import {UserRoleId} from "constants/userRoles";
 import {PostEndPointPermission} from "constants/endPointPermissions/post.endPoint.permission";
 
-const sidebarNav: EndPointPermissionDocument = {
+const sidebarNav: IEndPointPermission = {
     permissionId: [
         ...PostEndPointPermission.SIDEBAR_NAV_BLOG.permissionId,
         ...PostEndPointPermission.SIDEBAR_NAV_PORTFOLIO.permissionId,

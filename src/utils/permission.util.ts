@@ -1,9 +1,9 @@
 import {UserRoleId, userRoles} from "constants/userRoles";
 import {PermissionId} from "constants/permissions";
-import {SessionAuthDocument} from "types/models/sessionAuth.model";
+import {ISessionAuthModel} from "types/models/sessionAuth.model";
 import {PostTypeId} from "constants/postTypes";
 
-const check = (sessionAuth: SessionAuthDocument, minRoleId?: UserRoleId, minPermissionId?: PermissionId | PermissionId[]) => {
+const check = (sessionAuth: ISessionAuthModel, minRoleId?: UserRoleId, minPermissionId?: PermissionId | PermissionId[]) => {
     let status = true;
 
     if(status && minRoleId){

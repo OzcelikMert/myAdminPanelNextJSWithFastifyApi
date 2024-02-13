@@ -1,11 +1,11 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {languageKeysArray, ComponentInputTypeId, ComponentInputTypes, UserRoleId, PostTypeId} from "constants/index";
 import HandleForm from "library/react/handles/form";
 import {ThemeFieldSet, ThemeForm, ThemeFormSelect, ThemeFormType} from "components/theme/form";
 import V from "library/variable";
-import {ComponentUpdateOneParamDocument} from "types/services/component.service";
+import {IComponentUpdateOneParamService} from "types/services/component.service";
 import componentService from "services/component.service";
 import ThemeChooseImage from "components/theme/chooseImage";
 import imageSourceLib from "lib/imageSource.lib";
@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 import PagePaths from "constants/pagePaths";
 import Image from "next/image"
 import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
-import {ComponentTypeDocument} from "types/models/component.model";
+import {IComponentTypeModel} from "types/models/component.model";
 
 type PageState = {
     langKeys: ThemeFormSelectValueDocument[]
@@ -21,10 +21,10 @@ type PageState = {
     mainTabActiveKey: string
     isSubmitting: boolean
     mainTitle: string,
-    formData: ComponentUpdateOneParamDocument,
+    formData: IComponentUpdateOneParamService,
 } & { [key: string]: any };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PageComponentAdd extends Component<PageProps, PageState> {
     constructor(props: PageProps) {
@@ -56,7 +56,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
         })
     }
 
-    async componentDidUpdate(prevProps: PagePropCommonDocument) {
+    async componentDidUpdate(prevProps: IPagePropCommon) {
         if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
             this.props.setStateApp({
                 isPageLoading: true
@@ -183,7 +183,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
         })
     }
 
-    async onDelete(componentTypes: ComponentTypeDocument[], index: number) {
+    async onDelete(componentTypes: IComponentTypeModel[], index: number) {
         let result = await Swal.fire({
             title: this.props.t("deleteAction"),
             html: `<b>'${this.props.t(componentTypes[index].langKey)}'</b> ${this.props.t("deleteItemQuestionWithItemName")}`,
@@ -212,7 +212,7 @@ export default class PageComponentAdd extends Component<PageProps, PageState> {
     }
 
     TabTypes = () => {
-        const Type = (typeProps: ComponentTypeDocument, typeIndex: number) => {
+        const Type = (typeProps: IComponentTypeModel, typeIndex: number) => {
             let input = <div>{this.props.t("type")}</div>;
             switch (typeProps.typeId) {
                 case ComponentInputTypeId.TextArea:

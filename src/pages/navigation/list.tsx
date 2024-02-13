@@ -1,12 +1,12 @@
 import React, {Component} from 'react'
 import {PermissionId, Status, StatusId} from "constants/index";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import permissionLib from "lib/permission.lib";
 import ThemeToast from "components/theme/toast";
 import ThemeDataTable from "components/theme/table/dataTable";
-import {NavigationGetResultDocument} from "types/services/navigation.service";
+import {INavigationGetResultService} from "types/services/navigation.service";
 import navigationService from "services/navigation.service";
 import PagePaths from "constants/pagePaths";
 import {ThemeToggleMenuItemDocument} from "components/theme/table/toggleMenu";
@@ -16,15 +16,15 @@ import ThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
 
 type PageState = {
     searchKey: string
-    items: NavigationGetResultDocument[],
-    showingItems: NavigationGetResultDocument[]
-    selectedItems: NavigationGetResultDocument[]
+    items: INavigationGetResultService[],
+    showingItems: INavigationGetResultService[]
+    selectedItems: INavigationGetResultService[]
     listMode: "list" | "deleted"
     selectedItemId: string
     isShowModalUpdateRank: boolean
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PageNavigationList extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

@@ -1,4 +1,4 @@
-import {ThemeGroupTypeDocument} from "types/constants/themeGroupTypes";
+import {IThemeGroupType} from "types/constants/themeGroupTypes";
 
 export enum ComponentInputTypeId {
     Text = 1,
@@ -8,7 +8,7 @@ export enum ComponentInputTypeId {
     Number
 }
 
-export const componentInputTypes: Array<ThemeGroupTypeDocument> = [
+export const componentInputTypes: Array<IThemeGroupType> = [
     {id: ComponentInputTypeId.Text, langKey: "text"},
     {id: ComponentInputTypeId.TextArea, langKey: "textArea"},
     {id: ComponentInputTypeId.Image, langKey: "image"},

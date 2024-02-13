@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import Swal from "sweetalert2";
 import galleryService from "services/gallery.service";
 import {TableColumn} from "react-data-table-component";
@@ -9,11 +9,11 @@ import permissionLib from "lib/permission.lib";
 import {PermissionId} from "constants/index";
 import ThemeDataTable from "components/theme/table/dataTable";
 import Image from "next/image"
-import GalleryDocument from "types/services/gallery.service";
+import IGalleryModel from "types/services/gallery.service";
 
 type PageState = {
-    items: GalleryDocument[]
-    showingItems: GalleryDocument[]
+    items: IGalleryModel[]
+    showingItems: IGalleryModel[]
     selectedItems: string[]
     selectedItemIndex: number
     searchKey: string
@@ -23,9 +23,9 @@ type PageProps = {
     isModal?: boolean
     isMulti?: boolean
     onSubmit?: (images: string[]) => void
-    uploadedImages?: GalleryDocument[]
+    uploadedImages?: IGalleryModel[]
     selectedImages?: string[]
-} & PagePropCommonDocument;
+} & IPagePropCommon;
 
 export default class PageGalleryList extends Component<PageProps, PageState> {
     toast: null | ThemeToast = null;
@@ -79,7 +79,7 @@ export default class PageGalleryList extends Component<PageProps, PageState> {
         }
     }
 
-    setListSort(items: GalleryDocument[]) {
+    setListSort(items: IGalleryModel[]) {
         items = items.orderBy("createdAt", "desc");
         this.setState((state: PageState) => {
             if (this.props.selectedImages && this.props.selectedImages.length > 0) {

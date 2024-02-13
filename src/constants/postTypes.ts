@@ -1,4 +1,4 @@
-import {PostTypeDocument} from "types/constants/postTypes";
+import {IPostType} from "types/constants/postTypes";
 
 export enum PostTypeId {
     Blog = 1,
@@ -12,7 +12,7 @@ export enum PostTypeId {
     BeforeAndAfter
 }
 
-export const postTypes: Array<PostTypeDocument> = [
+export const postTypes: Array<IPostType> = [
     {id: PostTypeId.Blog, rank: 1, langKey: "blogs"},
     {id: PostTypeId.Portfolio, rank: 2, langKey: "portfolios"},
     {id: PostTypeId.Page, rank: 3, langKey: "pages"},

@@ -1,8 +1,8 @@
-import {LanguageKeys} from "../languages";
+import {ILanguageKeys} from "../languages";
 import {StatusId} from "constants/status";
 
-export interface StatusDocument {
+export interface IStatus {
     id: StatusId,
     rank: number,
-    langKey: LanguageKeys
+    langKey: ILanguageKeys
 }

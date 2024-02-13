@@ -1,8 +1,8 @@
-import {UserPopulateDocument} from "./user.service";
-import {NavigationContentDocument, NavigationDocument} from "../models/navigation.model";
+import {IUserPopulateService} from "./user.service";
+import {INavigationContentModel, INavigationModel} from "../models/navigation.model";
 import {StatusId} from "constants/status";
 
-export interface NavigatePopulateDocument {
+export interface INavigatePopulateService {
     _id:  string
     contents: {
         langId: string
@@ -11,42 +11,42 @@ export interface NavigatePopulateDocument {
     }
 }
 
-export type NavigationGetResultDocument = {
-    authorId: UserPopulateDocument,
-    lastAuthorId: UserPopulateDocument,
-    mainId?: NavigatePopulateDocument,
-    contents?: NavigationContentDocument
-} & Omit<NavigationDocument, "contents"|"mainId"|"authorId"|"lastAuthorId">
+export type INavigationGetResultService = {
+    authorId: IUserPopulateService,
+    lastAuthorId: IUserPopulateService,
+    mainId?: INavigatePopulateService,
+    contents?: INavigationContentModel
+} & Omit<INavigationModel, "contents"|"mainId"|"authorId"|"lastAuthorId">
 
-export interface NavigationGetOneParamDocument {
+export interface INavigationGetOneParamService {
     _id: string
     langId?: string
     statusId?: StatusId
 }
 
-export interface NavigationGetManyParamDocument {
+export interface INavigationGetManyParamService {
     _id?: string[]
     langId?: string
     statusId?: StatusId
     ignoreDefaultLanguage?: boolean
 }
 
-export type NavigationAddParamDocument = {} & Omit<NavigationDocument, "_id"|"authorId"|"lastAuthorId">
+export type INavigationAddParamService = {} & Omit<INavigationModel, "_id"|"authorId"|"lastAuthorId">
 
-export type NavigationUpdateOneParamDocument = {
+export type INavigationUpdateOneParamService = {
     _id: string
-} & Omit<NavigationAddParamDocument, "authorId">
+} & Omit<INavigationAddParamService, "authorId">
 
-export type NavigationUpdateOneRankParamDocument = {
+export type INavigationUpdateOneRankParamService = {
     _id: string
     rank: number
 }
 
-export type NavigationUpdateManyStatusIdParamDocument = {
+export type INavigationUpdateManyStatusIdParamService = {
     _id: string[],
     statusId: StatusId
 }
 
-export interface NavigationDeleteManyParamDocument {
+export interface INavigationDeleteManyParamService {
     _id: string[]
 }

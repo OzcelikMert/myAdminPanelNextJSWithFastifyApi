@@ -2,13 +2,13 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import {ThemeForm, ThemeFormSelect, ThemeFormType} from "components/theme/form"
 import {StatusId} from "constants/index";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
 import HandleForm from "library/react/handles/form";
 import staticContentLib from "lib/staticContent.lib";
 import Swal from "sweetalert2";
 import PagePaths from "constants/pagePaths";
-import {LanguageUpdateOneParamDocument} from "types/services/language.service";
+import {ILanguageUpdateOneParamService} from "types/services/language.service";
 import languageService from "services/language.service";
 import imageSourceLib from "lib/imageSource.lib";
 import Image from "next/image";
@@ -20,10 +20,10 @@ type PageState = {
     flags: ThemeFormSelectValueDocument[]
     isSubmitting: boolean
     mainTitle: string
-    formData: LanguageUpdateOneParamDocument,
+    formData: ILanguageUpdateOneParamService,
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PageSettingLanguageAdd extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

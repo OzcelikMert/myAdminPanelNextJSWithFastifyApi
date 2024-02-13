@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {ProductTypeId, productTypes} from "constants/productTypes";
 
 type PageState = {};
 
 type PageProps = {
-    t: PagePropCommonDocument["t"]
+    t: IPagePropCommon["t"]
     productTypeId: ProductTypeId
     className?: string
 };

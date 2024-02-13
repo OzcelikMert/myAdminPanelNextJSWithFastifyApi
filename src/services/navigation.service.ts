@@ -1,35 +1,35 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import {
-    NavigationAddParamDocument,
-    NavigationGetOneParamDocument,
-    NavigationDeleteManyParamDocument,
-    NavigationGetManyParamDocument,
-    NavigationUpdateManyStatusIdParamDocument,
-    NavigationGetResultDocument,
-    NavigationUpdateOneParamDocument,
-    NavigationUpdateOneRankParamDocument
+    INavigationAddParamService,
+    INavigationGetOneParamService,
+    INavigationDeleteManyParamService,
+    INavigationGetManyParamService,
+    INavigationUpdateManyStatusIdParamService,
+    INavigationGetResultService,
+    INavigationUpdateOneParamService,
+    INavigationUpdateOneRankParamService
 } from "types/services/navigation.service";
 import {NavigationApiEndPoint} from "constants/apiEndPoints/navigation.api.endPoint";
 import pathUtil from "utils/path.util";
 import ApiRequest from "library/api/request";
 
-const getOne = (params: NavigationGetOneParamDocument) =>  {
+const getOne = (params: INavigationGetOneParamService) =>  {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.GET_WITH_ID(params._id)],
         data: params
-    }).get<NavigationGetResultDocument>();
+    }).get<INavigationGetResultService>();
 }
 
-const getMany = (params: NavigationGetManyParamDocument) =>  {
+const getMany = (params: INavigationGetManyParamService) =>  {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.GET],
         data: params,
-    }).get<NavigationGetResultDocument[]>();
+    }).get<INavigationGetResultService[]>();
 }
 
-const add = (params: NavigationAddParamDocument) =>  {
+const add = (params: INavigationAddParamService) =>  {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.ADD],
@@ -37,7 +37,7 @@ const add = (params: NavigationAddParamDocument) =>  {
     }).post();
 }
 
-const updateOne = (params: NavigationUpdateOneParamDocument) =>  {
+const updateOne = (params: INavigationUpdateOneParamService) =>  {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_WITH_ID(params._id)],
@@ -45,7 +45,7 @@ const updateOne = (params: NavigationUpdateOneParamDocument) =>  {
     }).put();
 }
 
-const updateOneRank = (params: NavigationUpdateOneRankParamDocument) =>  {
+const updateOneRank = (params: INavigationUpdateOneRankParamService) =>  {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
@@ -53,7 +53,7 @@ const updateOneRank = (params: NavigationUpdateOneRankParamDocument) =>  {
     }).put();
 }
 
-const updateManyStatus = (params: NavigationUpdateManyStatusIdParamDocument) =>  {
+const updateManyStatus = (params: INavigationUpdateManyStatusIdParamService) =>  {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.UPDATE_STATUS],
@@ -61,7 +61,7 @@ const updateManyStatus = (params: NavigationUpdateManyStatusIdParamDocument) => 
     }).put();
 }
 
-const deleteMany = (params: NavigationDeleteManyParamDocument) =>  {
+const deleteMany = (params: INavigationDeleteManyParamService) =>  {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.NAVIGATION, NavigationApiEndPoint.DELETE],

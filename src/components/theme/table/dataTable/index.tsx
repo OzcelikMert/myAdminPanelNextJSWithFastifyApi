@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import DataTable, {TableProps} from "react-data-table-component";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {ThemeFormCheckBox, ThemeFormType} from "../../form";
 import ThemeTableToggleMenu, {ThemeToggleMenuItemDocument} from "components/theme/table/toggleMenu";
 
@@ -11,7 +11,7 @@ type PageState = {
 };
 
 type PageProps<T> = {
-    t: PagePropCommonDocument["t"],
+    t: IPagePropCommon["t"],
     onSelect?: (rows: T[]) => void
     onSearch?: (searchKey: string) => void
     isSearchable?: boolean

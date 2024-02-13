@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import ThemeDataTable from "components/theme/table/dataTable";
 import PagePaths from "constants/pagePaths";
-import {LanguageGetResultDocument} from "types/services/language.service";
+import {ILanguageGetResultService} from "types/services/language.service";
 import languageService from "services/language.service";
 import Image from "next/image";
 import imageSourceLib from "lib/imageSource.lib";
@@ -13,13 +13,13 @@ import ThemeToast from "components/theme/toast";
 
 type PageState = {
     searchKey: string
-    items: LanguageGetResultDocument[],
-    showingItems: LanguageGetResultDocument[]
+    items: ILanguageGetResultService[],
+    showingItems: ILanguageGetResultService[]
     selectedItemId: string
     isShowModalUpdateRank: boolean
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PageSettingLanguageList extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

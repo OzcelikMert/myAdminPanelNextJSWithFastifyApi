@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ThemeFormLoadingButton,  ThemeFormType} from "components/theme/form";
 import HandleForm from "library/react/handles/form";
 import {Modal} from "react-bootstrap";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 
 type PageState = {
     newRank: number
@@ -10,7 +10,7 @@ type PageState = {
 };
 
 type PageProps = {
-    t: PagePropCommonDocument["t"]
+    t: IPagePropCommon["t"]
     isShow: boolean
     onHide: () => void
     onSubmit: (rank: number) => Promise<void>

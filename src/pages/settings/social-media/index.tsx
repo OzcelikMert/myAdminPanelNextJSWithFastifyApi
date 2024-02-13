@@ -1,20 +1,20 @@
 import React, {Component} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {ThemeFieldSet, ThemeForm, ThemeFormSelect, ThemeFormType} from "components/theme/form";
 import {UserRoleId} from "constants/index";
 import settingService from "services/setting.service";
 import ThemeToast from "components/theme/toast";
 import {
-    SettingUpdateSocialMediaParamDocument,
+    ISettingUpdateSocialMediaParamService,
 } from "types/services/setting.service";
-import { SettingSocialMediaDocument } from 'types/models/setting.model';
+import { ISettingSocialMediaModel } from 'types/models/setting.model';
 
 type PageState = {
     isSubmitting: boolean
-    formData: SettingUpdateSocialMediaParamDocument,
+    formData: ISettingUpdateSocialMediaParamService,
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PageSettingsSocialMedia extends Component<PageProps, PageState> {
     constructor(props: PageProps) {
@@ -91,21 +91,21 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
         })
     }
 
-    onAccept(data: SettingSocialMediaDocument) {
+    onAccept(data: ISettingSocialMediaModel) {
         this.setState((state: PageState) => {
             data.isEditing = false;
             return state;
         })
     }
 
-    onDelete(data: SettingSocialMediaDocument[], index: number) {
+    onDelete(data: ISettingSocialMediaModel[], index: number) {
         this.setState((state: PageState) => {
             data.remove(index);
             return state;
         })
     }
 
-    onEdit(data: SettingSocialMediaDocument) {
+    onEdit(data: ISettingSocialMediaModel) {
         this.setState((state: PageState) => {
             data.isEditing = true;
             return state;
@@ -113,7 +113,7 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
     }
 
     SocialMediaPlatforms = () => {
-        const SocialMedia = (props: SettingSocialMediaDocument, index: number) => {
+        const SocialMedia = (props: ISettingSocialMediaModel, index: number) => {
             return (
                 <div className="col-md-12 mt-3">
                     <ThemeFieldSet
@@ -140,7 +140,7 @@ export default class PageSettingsSocialMedia extends Component<PageProps, PageSt
             )
         }
 
-        const EditSocialMedia = (props: SettingSocialMediaDocument, index: number) => {
+        const EditSocialMedia = (props: ISettingSocialMediaModel, index: number) => {
             return (
                 <div className="col-md-12 mt-3">
                     <ThemeFieldSet legend={this.props.t("newSocialMedia")}>

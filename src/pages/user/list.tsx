@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {PermissionId, Status, UserRoleId, userRoles} from "constants/index";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
-import {UserGetResultDocument} from "types/services/user.service";
+import {IUserGetResultService} from "types/services/user.service";
 import ThemeUsersProfileCard from "components/theme/users/profileCard";
 import userService from "services/user.service";
 import imageSourceLib from "lib/imageSource.lib";
@@ -17,13 +17,13 @@ import ThemeBadgeUserRole from "components/theme/badge/userRole";
 
 type PageState = {
     searchKey: string
-    items: UserGetResultDocument[]
+    items: IUserGetResultService[]
     showingItems: PageState["items"]
     isViewItemInfo: boolean
     selectedItemId: string
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PageUserList extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

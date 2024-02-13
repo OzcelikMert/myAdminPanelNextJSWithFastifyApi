@@ -1,4 +1,4 @@
-export interface LogDocument {
+export interface ILogModel {
     _id: string
     url: string,
     method: string

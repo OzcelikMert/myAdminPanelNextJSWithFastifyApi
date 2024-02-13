@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import ThemeInputType from "components/theme/form/input/type";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {ThemeForm} from "components/theme/form";
 import HandleForm from "library/react/handles/form";
 import V from "library/variable";
@@ -17,7 +17,7 @@ type PageState = {
     }
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 class PageLock extends Component<PageProps, PageState> {
     constructor(prop: any) {

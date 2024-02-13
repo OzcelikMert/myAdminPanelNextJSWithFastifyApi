@@ -1,4 +1,4 @@
-import {ProductTypeDocument} from "types/constants/productTypes";
+import {IProductType} from "types/constants/productTypes";
 
 export enum ProductTypeId {
     SimpleProduct = 1,
@@ -6,7 +6,7 @@ export enum ProductTypeId {
     ExternalProduct
 }
 
-export const productTypes: Array<ProductTypeDocument> = [
+export const productTypes: Array<IProductType> = [
     {id: ProductTypeId.SimpleProduct, rank: 1, langKey: "simpleProduct"},
     {id: ProductTypeId.VariableProduct, rank: 2, langKey: "variableProduct"}
 ]

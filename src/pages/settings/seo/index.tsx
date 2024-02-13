@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
 import {ThemeForm, ThemeFormTags, ThemeFormType} from "components/theme/form";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import HandleForm from "library/react/handles/form";
 import settingService from "services/setting.service";
 import ThemeToast from "components/theme/toast";
-import {SettingUpdateSEOParamDocument} from "types/services/setting.service";
+import {ISettingUpdateSEOParamService} from "types/services/setting.service";
 
 type PageState = {
     isSubmitting: boolean
-    formData: SettingUpdateSEOParamDocument
+    formData: ISettingUpdateSEOParamService
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 class PageSettingsSEO extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

@@ -1,6 +1,6 @@
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 
-const change = (route: PagePropCommonDocument["router"], path: string, as?: string) => {
+const change = (route: IPagePropCommon["router"], path: string, as?: string) => {
     return route.push(path, as ?? path, {shallow: true})
 }
 

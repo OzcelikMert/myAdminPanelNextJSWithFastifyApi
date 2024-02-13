@@ -1,33 +1,33 @@
 import {PermissionId} from "../permissions";
 import {UserRoleId} from "../userRoles";
-import {EndPointPermissionDocument} from "types/constants/endPoint.permissions";
+import {IEndPointPermission} from "types/constants/endPoint.permissions";
 
-const updateGeneral: EndPointPermissionDocument = {
+const updateGeneral: IEndPointPermission = {
     permissionId: [PermissionId.SettingEdit],
     minUserRoleId: UserRoleId.Admin
 }
 
-const updateSEO: EndPointPermissionDocument = {
+const updateSEO: IEndPointPermission = {
     permissionId: [PermissionId.SEOEdit],
     minUserRoleId: UserRoleId.Admin
 }
 
-const updateContactForm: EndPointPermissionDocument = {
+const updateContactForm: IEndPointPermission = {
     permissionId: [],
     minUserRoleId: UserRoleId.Admin
 }
 
-const updateStaticLanguage: EndPointPermissionDocument = {
+const updateStaticLanguage: IEndPointPermission = {
     permissionId: [PermissionId.StaticLanguage],
     minUserRoleId: UserRoleId.Admin
 }
 
-const updateSocialMedia: EndPointPermissionDocument = {
+const updateSocialMedia: IEndPointPermission = {
     permissionId: [PermissionId.SettingEdit],
     minUserRoleId: UserRoleId.Admin
 }
 
-const sidebarNav: EndPointPermissionDocument = {
+const sidebarNav: IEndPointPermission = {
     permissionId: [
         ...updateGeneral.permissionId,
         ...updateSEO.permissionId,

@@ -1,8 +1,8 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import {
-    ViewGetStatisticsResultDocument,
-    ViewGetNumberResultDocument,
-    ViewAddParamDocument,
+    IViewGetStatisticsResultService,
+    IViewGetNumberResultService,
+    IViewAddParamService,
 } from "types/services/view.service";
 import {ViewApiEndPoint} from "constants/apiEndPoints/view.api.endPoint";
 import ApiRequest from "library/api/request";
@@ -12,17 +12,17 @@ const getNumber = () => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.VIEW, ViewApiEndPoint.GET_NUMBER]
-    }).get<ViewGetNumberResultDocument>();
+    }).get<IViewGetNumberResultService>();
 }
 
 const getStatistics = () => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.VIEW, ViewApiEndPoint.GET_STATISTICS]
-    }).get<ViewGetStatisticsResultDocument>();
+    }).get<IViewGetStatisticsResultService>();
 }
 
-const add = (params: ViewAddParamDocument) => {
+const add = (params: IViewAddParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.VIEW, ViewApiEndPoint.ADD],

@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {ThemeFieldSet, ThemeForm, ThemeFormSelect, ThemeFormType} from "components/theme/form";
 import HandleForm from "library/react/handles/form";
 import {Languages, StatusId, UserRoleId} from "constants/index";
 import settingService from "services/setting.service";
 import languageService from "services/language.service";
-import ServerInfoDocument from "types/services/serverInfo.service";
+import IServerInfoGetResultService from "types/services/serverInfo.service";
 import serverInfoService from "services/serverInfo.service";
 import ThemeToast from "components/theme/toast";
 import ThemeChooseImage from "components/theme/chooseImage";
 import imageSourceLib from "lib/imageSource.lib";
-import {SettingUpdateGeneralParamDocument} from "types/services/setting.service";
+import {ISettingUpdateGeneralParamService} from "types/services/setting.service";
 import {Tab, Tabs} from "react-bootstrap";
 import localStorageUtil from "utils/localStorage.util";
 import Spinner from "react-bootstrap/Spinner";
@@ -21,8 +21,8 @@ type PageState = {
     languages: ThemeFormSelectValueDocument[]
     panelLanguages: ThemeFormSelectValueDocument[]
     isSubmitting: boolean
-    serverInfo: ServerInfoDocument
-    formData: SettingUpdateGeneralParamDocument & { panelLangId: string },
+    serverInfo: IServerInfoGetResultService
+    formData: ISettingUpdateGeneralParamService & { panelLangId: string },
     mainTabActiveKey: string
     isServerInfoLoading: boolean
     isLogoSelection: boolean
@@ -30,7 +30,7 @@ type PageState = {
     isIconSelection: boolean
 }
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PageSettingsGeneral extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

@@ -1,18 +1,18 @@
 import React, {Component} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {ThemeFieldSet, ThemeForm, ThemeFormType} from "components/theme/form";
 import {UserRoleId} from "constants/index";
 import settingService from "services/setting.service";
 import ThemeToast from "components/theme/toast";
-import {SettingUpdateContactFormParamDocument} from "types/services/setting.service";
-import {SettingContactFormDocument} from 'types/models/setting.model';
+import {ISettingUpdateContactFormParamService} from "types/services/setting.service";
+import {ISettingContactFormModel} from 'types/models/setting.model';
 
 type PageState = {
     isSubmitting: boolean
-    formData: SettingUpdateContactFormParamDocument
+    formData: ISettingUpdateContactFormParamService
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 class PageSettingsContactForms extends Component<PageProps, PageState> {
     constructor(props: PageProps) {
@@ -92,21 +92,21 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
         })
     }
 
-    onAccept(data: SettingContactFormDocument) {
+    onAccept(data: ISettingContactFormModel) {
         this.setState((state: PageState) => {
             data.isEditing = false;
             return state;
         })
     }
 
-    onDelete(data: SettingContactFormDocument[], index: number) {
+    onDelete(data: ISettingContactFormModel[], index: number) {
         this.setState((state: PageState) => {
             data.splice(index, 1);
             return state;
         })
     }
 
-    onEdit(data: SettingContactFormDocument) {
+    onEdit(data: ISettingContactFormModel) {
         this.setState((state: PageState) => {
             data.isEditing = true;
             return state;
@@ -114,7 +114,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
     }
 
     ContactForms = () => {
-        const ContactForm = (contactFormProps: SettingContactFormDocument, contactFormIndex: number) => {
+        const ContactForm = (contactFormProps: ISettingContactFormModel, contactFormIndex: number) => {
             return (
                 <div className="col-md-12 mt-4">
                     <ThemeFieldSet
@@ -189,7 +189,7 @@ class PageSettingsContactForms extends Component<PageProps, PageState> {
             )
         }
 
-        const EditContactForm = (contactFormProps: SettingContactFormDocument, contactFormIndex: number) => {
+        const EditContactForm = (contactFormProps: ISettingContactFormModel, contactFormIndex: number) => {
             return (
                 <div className="col-md-12 mt-3">
                     <ThemeFieldSet legend={this.props.t("newContactForm")}>

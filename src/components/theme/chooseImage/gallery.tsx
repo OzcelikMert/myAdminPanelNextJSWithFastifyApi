@@ -2,14 +2,14 @@ import React, {Component} from "react";
 import {Modal, Tab, Tabs} from "react-bootstrap";
 import PageGalleryList from "pages/gallery/list";
 import PageGalleryUpload from "pages/gallery/upload";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {PermissionId} from "constants/index";
 import permissionLib from "lib/permission.lib";
-import GalleryDocument from "types/services/gallery.service";
+import IGalleryModel from "types/services/gallery.service";
 
 type PageState = {
     formActiveKey: string
-    uploadedImages: GalleryDocument[]
+    uploadedImages: IGalleryModel[]
 };
 
 type PageProps = {
@@ -18,7 +18,7 @@ type PageProps = {
     onSubmit: (images: string[]) => void
     isMulti?: boolean
     selectedImages?: string[]
-} & PagePropCommonDocument;
+} & IPagePropCommon;
 
 class ThemeChooseImageGallery extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

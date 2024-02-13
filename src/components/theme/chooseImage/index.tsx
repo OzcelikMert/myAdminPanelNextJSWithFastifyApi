@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import ThemeChooseImageGallery from "./gallery";
 
 const emptyImage = require("images/empty.png");
@@ -12,7 +12,7 @@ type PageProps = {
     isMulti?: boolean
     onHide: () => void
     selectedImages?: string[]
-} & PagePropCommonDocument;
+} & IPagePropCommon;
 
 class ThemeChooseImage extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

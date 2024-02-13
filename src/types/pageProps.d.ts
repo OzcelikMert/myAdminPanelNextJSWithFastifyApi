@@ -1,11 +1,11 @@
-import {LanguageKeys} from "./languages";
-import {AppAdminGetState, AppAdminSetState} from "./pages/_app";
+import {ILanguageKeys} from "./languages";
+import {IAppGetState, IAppSetState} from "./pages/_app";
 import {AppProps} from "next/app";
 
-export interface PagePropCommonDocument {
+export interface IPagePropCommon {
     router: AppProps["router"],
-    t: (key: LanguageKeys) => string
+    t: (key: ILanguageKeys) => string
     setBreadCrumb: (titles: string[]) => void
-    setStateApp: (data: AppAdminSetState, callBack?: () => void) => void
-    getStateApp: AppAdminGetState
+    setStateApp: (data: IAppSetState, callBack?: () => void) => void
+    getStateApp: IAppGetState
 }

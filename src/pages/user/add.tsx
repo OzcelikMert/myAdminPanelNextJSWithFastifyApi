@@ -1,7 +1,7 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import moment from "moment";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {PermissionGroups, Permissions, StatusId, UserRoleId, userRoles} from "constants/index";
 import HandleForm from "library/react/handles/form";
 import {ThemeFieldSet, ThemeForm, ThemeFormCheckBox, ThemeFormSelect, ThemeFormType} from "components/theme/form";
@@ -9,10 +9,10 @@ import V, {DateMask} from "library/variable";
 import userService from "services/user.service";
 import staticContentLib from "lib/staticContent.lib";
 import PagePaths from "constants/pagePaths";
-import {UserUpdateOneParamDocument} from "types/services/user.service";
+import {IUserUpdateOneParamService} from "types/services/user.service";
 import Swal from "sweetalert2";
 import permissionLib from "lib/permission.lib";
-import {PermissionDocument, PermissionGroupDocument} from "types/constants";
+import {IPermission, IPermissionGroup} from "types/constants";
 import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
 
 type PageState = {
@@ -21,10 +21,10 @@ type PageState = {
     status: ThemeFormSelectValueDocument[]
     mainTitle: string,
     isSubmitting: boolean
-    formData: UserUpdateOneParamDocument
+    formData: IUserUpdateOneParamService
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PageUserAdd extends Component<PageProps, PageState> {
     constructor(props: PageProps) {
@@ -202,7 +202,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
     TabPermissions = (props: any) => {
         let self = this;
 
-        function PermissionGroup(props: PermissionGroupDocument, index: number) {
+        function PermissionGroup(props: IPermissionGroup, index: number) {
             let permissions = Permissions.findMulti("groupId", props.id).map((perm, index) =>
                 permissionLib.checkPermission(
                     self.props.getStateApp.sessionData.roleId,
@@ -223,7 +223,7 @@ export default class PageUserAdd extends Component<PageProps, PageState> {
             )
         }
 
-        function PermissionItem(props: PermissionDocument, index: number) {
+        function PermissionItem(props: IPermission, index: number) {
             return (
                 <div className="col-md-4" key={index}>
                     <ThemeFormCheckBox

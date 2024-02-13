@@ -1,29 +1,29 @@
 import React, {Component} from 'react'
 import {ThemeFormSelect} from "components/theme/form";
-import {PagePropCommonDocument} from "types/pageProps";
-import {LanguageDocument} from "types/models/language.model";
-import pathUtil from "utils/path.util";
+import {IPagePropCommon} from "types/pageProps";
+import {ILanguageModel} from "types/models/language.model";
 import Image from "next/image"
 import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
+import {PathUtil} from "utils/path.util";
 
 type PageState = {};
 
 type PageProps = {
-    t: PagePropCommonDocument["t"]
-    options: LanguageDocument[]
-    value?: LanguageDocument
+    t: IPagePropCommon["t"]
+    options: ILanguageModel[]
+    value?: ILanguageModel
     onChange: (item: ThemeFormSelectValueDocument, e: any) => void
 };
 
 export default class ThemeContentLanguage extends Component<PageProps, PageState> {
-    Item = (props: LanguageDocument) => (
+    Item = (props: ILanguageModel) => (
         <div className={`row p-0`}>
             <div className="col-6 text-end">
                 <Image
                     className="img-fluid"
                     width={35}
                     height={45}
-                    src={pathUtil.uploads.flags + props.image}
+                    src={PathUtil.getFlagURL() + props.image}
                     alt={props.shortKey}
                 />
             </div>

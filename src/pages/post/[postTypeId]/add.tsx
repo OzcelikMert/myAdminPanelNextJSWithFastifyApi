@@ -3,7 +3,7 @@ import {Tab, Tabs} from "react-bootstrap";
 import moment from "moment";
 import {ThemeForm, ThemeFormCheckBox, ThemeFormSelect, ThemeFormType} from "components/theme/form"
 import {languageKeysArray, PageTypes, PostTermTypeId, PostTypeId, StatusId} from "constants/index";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
 import Variable from "library/variable";
 import HandleForm from "library/react/handles/form";
@@ -13,7 +13,7 @@ import postService from "services/post.service";
 import staticContentLib from "lib/staticContent.lib";
 import imageSourceLib from "lib/imageSource.lib";
 import {
-    PostUpdateOneParamDocument
+    IPostUpdateOneParamService
 } from "types/services/post.service";
 import componentService from "services/component.service";
 import ThemeToolTip from "components/theme/tooltip";
@@ -48,12 +48,12 @@ export type PageState = {
     status: ThemeFormSelectValueDocument[]
     isSubmitting: boolean
     mainTitle: string
-    formData: PostUpdateOneParamDocument,
+    formData: IPostUpdateOneParamService,
     isSelectionImage: boolean
     isIconActive: boolean
 } & { [key: string]: any };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PagePostAdd extends Component<PageProps, PageState> {
     constructor(props: PageProps) {
@@ -133,7 +133,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
         })
     }
 
-    async componentDidUpdate(prevProps: PagePropCommonDocument) {
+    async componentDidUpdate(prevProps: IPagePropCommon) {
         if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
             this.props.setStateApp({
                 isPageLoading: true
@@ -275,7 +275,7 @@ export default class PagePostAdd extends Component<PageProps, PageState> {
                 this.setState((state: PageState) => {
                     state.formData = {
                         ...state.formData,
-                        ...item as PostUpdateOneParamDocument,
+                        ...item as IPostUpdateOneParamService,
                         dateStart: new Date(item.dateStart),
                         contents: {
                             ...state.formData.contents,

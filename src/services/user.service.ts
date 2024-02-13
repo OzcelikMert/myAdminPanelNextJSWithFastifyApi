@@ -1,33 +1,33 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import {
-    UserGetOneParamDocument,
-    UserGetManyParamDocument,
-    UserUpdateOneParamDocument,
-    UserGetResultDocument,
-    UserAddParamDocument,
-    UserDeleteOneParamDocument, UserUpdateProfileParamDocument, UserUpdatePasswordParamDocument
+    IUserGetOneParamService,
+    IUserGetManyParamService,
+    IUserUpdateOneParamService,
+    IUserGetResultService,
+    IUserAddParamService,
+    IUserDeleteOneParamService, IUserUpdateProfileParamService, IUserUpdatePasswordParamService
 } from "types/services/user.service";
 import {UserApiEndPoint} from "constants/apiEndPoints/user.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";
 
-const getOne = (params: UserGetOneParamDocument) => {
+const getOne = (params: IUserGetOneParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.GET_WITH_ID(params._id)],
         data: params,
-    }).get<UserGetResultDocument>();
+    }).get<IUserGetResultService>();
 }
 
-const getMany = (params: UserGetManyParamDocument) => {
+const getMany = (params: IUserGetManyParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.GET],
         data: params,
-    }).get<UserGetResultDocument[]>();
+    }).get<IUserGetResultService[]>();
 }
 
-const add = (params: UserAddParamDocument) => {
+const add = (params: IUserAddParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.ADD],
@@ -35,7 +35,7 @@ const add = (params: UserAddParamDocument) => {
     }).post();
 }
 
-const updateOne = (params: UserUpdateOneParamDocument) => {
+const updateOne = (params: IUserUpdateOneParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.UPDATE_WITH_ID(params._id)],
@@ -43,7 +43,7 @@ const updateOne = (params: UserUpdateOneParamDocument) => {
     }).put();
 }
 
-const updateProfile = (params: UserUpdateProfileParamDocument) => {
+const updateProfile = (params: IUserUpdateProfileParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.UPDATE_PROFILE],
@@ -51,7 +51,7 @@ const updateProfile = (params: UserUpdateProfileParamDocument) => {
     }).put();
 }
 
-const updatePassword = (params: UserUpdatePasswordParamDocument) => {
+const updatePassword = (params: IUserUpdatePasswordParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.UPDATE_PASSWORD],
@@ -59,7 +59,7 @@ const updatePassword = (params: UserUpdatePasswordParamDocument) => {
     }).put();
 }
 
-const deleteOne = (params: UserDeleteOneParamDocument) => {
+const deleteOne = (params: IUserDeleteOneParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.USER, UserApiEndPoint.DELETE_WITH_ID(params._id)],

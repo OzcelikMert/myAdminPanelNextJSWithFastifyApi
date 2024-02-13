@@ -1,36 +1,36 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import {
     PostAddParamDocument,
-    PostDeleteManyParamDocument,
-    PostGetCountParamDocument,
-    PostGetManyParamDocument, PostGetManyResultDocument,
-    PostGetOneParamDocument, PostGetOneResultDocument,
-    PostUpdateManyStatusIdParamDocument,
-    PostUpdateOneParamDocument,
-    PostUpdateOneRankParamDocument,
-    PostUpdateOneViewParamDocument
+    IPostDeleteManyParamService,
+    IPostGetCountParamService,
+    IPostGetManyParamService, IPostGetManyResultService,
+    IPostGetOneParamService, IPostGetOneResultService,
+    IPostUpdateManyStatusIdParamService,
+    IPostUpdateOneParamService,
+    IPostUpdateOneRankParamService,
+    IPostUpdateOneViewParamService
 } from "types/services/post.service";
 import {PostApiEndPoint} from "constants/apiEndPoints/post.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";
 
-const getOne = (params: PostGetOneParamDocument) => {
+const getOne = (params: IPostGetOneParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.GET_WITH_ID(params._id)],
         data: params
-    }).get<PostGetOneResultDocument>();
+    }).get<IPostGetOneResultService>();
 }
 
-const getMany = (params: PostGetManyParamDocument) => {
+const getMany = (params: IPostGetManyParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.GET],
         data: params
-    }).get<PostGetManyResultDocument[]>();
+    }).get<IPostGetManyResultService[]>();
 }
 
-const getCount = (params: PostGetCountParamDocument) => {
+const getCount = (params: IPostGetCountParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.GET_COUNT],
@@ -46,7 +46,7 @@ const add = (params: PostAddParamDocument) => {
     }).post();
 }
 
-const updateOne = (params: PostUpdateOneParamDocument) =>  {
+const updateOne = (params: IPostUpdateOneParamService) =>  {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.UPDATE_WITH_ID(params._id)],
@@ -54,7 +54,7 @@ const updateOne = (params: PostUpdateOneParamDocument) =>  {
     }).put();
 }
 
-const updateOneRank = (params: PostUpdateOneRankParamDocument) =>  {
+const updateOneRank = (params: IPostUpdateOneRankParamService) =>  {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.UPDATE_RANK_WITH_ID(params._id)],
@@ -62,7 +62,7 @@ const updateOneRank = (params: PostUpdateOneRankParamDocument) =>  {
     }).put();
 }
 
-const updateManyStatus = (params: PostUpdateManyStatusIdParamDocument) =>  {
+const updateManyStatus = (params: IPostUpdateManyStatusIdParamService) =>  {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.UPDATE_STATUS],
@@ -70,7 +70,7 @@ const updateManyStatus = (params: PostUpdateManyStatusIdParamDocument) =>  {
     }).put();
 }
 
-const deleteMany = (params: PostDeleteManyParamDocument) =>  {
+const deleteMany = (params: IPostDeleteManyParamService) =>  {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.POST, PostApiEndPoint.DELETE],

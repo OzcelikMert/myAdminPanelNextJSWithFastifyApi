@@ -1,4 +1,4 @@
-export default interface ServerInfoDocument {
+export interface IServerInfoGetResultService {
     cpu: string,
     memory: string,
     storage: string

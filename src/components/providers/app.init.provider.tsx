@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import languageService from "services/language.service";
 import settingService from "services/setting.service";
 import {StatusId} from "constants/status";
@@ -9,7 +9,7 @@ type PageState = {};
 
 type PageProps = {
     children?: any
-} & PagePropCommonDocument;
+} & IPagePropCommon;
 
 export default class ProviderAppInit extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

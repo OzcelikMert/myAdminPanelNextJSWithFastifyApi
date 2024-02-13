@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
 import ThemeInputType from "components/theme/form/input/type";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {LanguageId, StatusId} from "constants/index";
 import {ThemeForm, ThemeFormCheckBox} from "components/theme/form";
 import HandleForm from "library/react/handles/form";
 import authService from "services/auth.service";
-import {UserGetResultDocument} from "types/services/user.service";
+import {IUserGetResultService} from "types/services/user.service";
 import PagePaths from "constants/pagePaths";
 import Image from "next/image"
 
@@ -14,7 +14,7 @@ import Logo from "assets/images/ozcelikLogo.png"
 type PageState = {
     isSubmitting: boolean
     isWrong: boolean
-    user?: UserGetResultDocument
+    user?: IUserGetResultService
     formData: {
         email: string,
         password: string,
@@ -22,7 +22,7 @@ type PageState = {
     }
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 class PageLogin extends Component<PageProps, PageState> {
     constructor(prop: any) {

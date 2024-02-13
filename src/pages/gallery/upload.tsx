@@ -1,20 +1,20 @@
 import React, {Component, createRef, RefObject} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
-import UploadingFilesDocument from "types/pages/gallery/upload";
+import {IPagePropCommon} from "types/pageProps";
+import {IUploadingFiles} from "types/pages/gallery/upload";
 import galleryService from "services/gallery.service";
 import ThemeToast from "components/theme/toast";
 import Image from "next/image"
-import GalleryDocument from "types/services/gallery.service";
+import {IGalleryModel} from "types/models/gallery.model";
 
 type PageState = {
     isDragging: boolean,
-    uploadingFiles: UploadingFilesDocument[]
+    uploadingFiles: IUploadingFiles[]
 };
 
 type PageProps = {
     isModal?: boolean
-    uploadedImages?: (images: GalleryDocument[]) => void
-} & PagePropCommonDocument;
+    uploadedImages?: (images: IGalleryModel[]) => void
+} & IPagePropCommon;
 
 class PageGalleryUpload extends Component<PageProps, PageState> {
     refInputFile: RefObject<HTMLInputElement> = createRef();
@@ -44,7 +44,7 @@ class PageGalleryUpload extends Component<PageProps, PageState> {
     }
 
     async uploadFiles() {
-        let uploadedImages: GalleryDocument[] = [];
+        let uploadedImages: IGalleryModel[] = [];
         for (const uploadingFile of this.state.uploadingFiles) {
             if (
                 uploadingFile.progressValue === 100 ||
@@ -131,7 +131,7 @@ class PageGalleryUpload extends Component<PageProps, PageState> {
         });
     }
 
-    UploadingItem = (props: UploadingFilesDocument) => {
+    UploadingItem = (props: IUploadingFiles) => {
         return (
             <div className="col-md-3 mt-1 mt-lg-2">
                 <div className="row">

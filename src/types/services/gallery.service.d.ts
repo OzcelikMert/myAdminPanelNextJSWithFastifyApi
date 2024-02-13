@@ -1,14 +1,14 @@
 import {GalleryTypeId} from "constants/galleryTypeId";
 
-export type GalleryAddParamDocument = {} & FormData
+export type IGalleryAddParamService = {} & FormData
 
-export interface GalleryGetManyParamDocument {
+export interface IGalleryGetManyParamService {
     name?: string[]
     _id?: string[]
     typeId?: GalleryTypeId
 }
 
-export interface GalleryDeleteManyParamDocument {
+export interface IGalleryDeleteManyParamService {
     _id: string[]
 }
 

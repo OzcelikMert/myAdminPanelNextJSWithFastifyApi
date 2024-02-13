@@ -1,6 +1,6 @@
 import {StatusId} from "constants/status";
 
-export interface LanguageDocument {
+export interface ILanguageModel {
     _id: string
     title: string
     image: string

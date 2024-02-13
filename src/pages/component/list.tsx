@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {PermissionId, UserRoleId} from "constants/index";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import permissionLib from "lib/permission.lib";
 import ThemeToast from "components/theme/toast";
-import {ComponentGetResultDocument} from "types/services/component.service";
+import {IComponentGetResultService} from "types/services/component.service";
 import componentService from "services/component.service";
 import PagePaths from "constants/pagePaths";
 import ThemeDataTable from "components/theme/table/dataTable";
@@ -14,13 +14,13 @@ import ThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
 
 type PageState = {
     searchKey: string
-    items: ComponentGetResultDocument[]
+    items: IComponentGetResultService[]
     showingItems: PageState["items"]
     selectedItemId: string
     isShowModalUpdateRank: boolean
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PageComponentList extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

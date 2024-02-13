@@ -1,7 +1,3 @@
-interface PageStateCommonDocument {
+export interface IPageStateCommon {
 
-}
-
-export {
-    PageStateCommonDocument
 }

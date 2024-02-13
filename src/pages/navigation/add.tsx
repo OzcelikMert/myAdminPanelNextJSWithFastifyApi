@@ -2,12 +2,12 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import {ThemeForm, ThemeFormSelect, ThemeFormType} from "components/theme/form"
 import {StatusId} from "constants/index";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
 import HandleForm from "library/react/handles/form";
 import staticContentLib from "lib/staticContent.lib";
 import Swal from "sweetalert2";
-import {NavigationUpdateOneParamDocument} from "types/services/navigation.service";
+import {INavigationUpdateOneParamService} from "types/services/navigation.service";
 import navigationService from "services/navigation.service";
 import PagePaths from "constants/pagePaths";
 import {ThemeFormSelectValueDocument} from "components/theme/form/input/select";
@@ -18,10 +18,10 @@ type PageState = {
     status: ThemeFormSelectValueDocument[]
     isSubmitting: boolean
     mainTitle: string
-    formData: NavigationUpdateOneParamDocument,
+    formData: INavigationUpdateOneParamService,
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PageNavigationAdd extends Component<PageProps, PageState> {
     constructor(props: PageProps) {
@@ -57,7 +57,7 @@ export default class PageNavigationAdd extends Component<PageProps, PageState> {
         })
     }
 
-    async componentDidUpdate(prevProps: PagePropCommonDocument) {
+    async componentDidUpdate(prevProps: IPagePropCommon) {
         if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
             this.props.setStateApp({
                 isPageLoading: true

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import PagePaths from "constants/pagePaths";
 import permissionLib from "lib/permission.lib";
 import ThemeToast from "components/theme/toast";
@@ -11,7 +11,7 @@ type PageState = {
 
 type PageProps = {
     children?: any
-} & PagePropCommonDocument;
+} & IPagePropCommon;
 
 export default class ProviderPermission extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

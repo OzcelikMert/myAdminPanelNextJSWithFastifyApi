@@ -1,27 +1,27 @@
-import {LanguageKeys} from "../languages";
+import {ILanguageKeys} from "../languages";
 import {ComponentInputTypeId} from "constants/componentInputTypes";
 
-export interface ComponentDocument {
+export interface IComponentModel {
     _id: string,
     authorId: string
     lastAuthorId: string
     elementId: string
-    langKey: LanguageKeys,
-    types: ComponentTypeDocument[]
+    langKey: ILanguageKeys,
+    types: IComponentTypeModel[]
     updatedAt?: string,
     createdAt?: string
 }
 
-export interface ComponentTypeDocument {
+export interface IComponentTypeModel {
     _id: string,
     elementId: string
     typeId: ComponentInputTypeId,
-    langKey: LanguageKeys,
+    langKey: ILanguageKeys,
     rank: number,
-    contents: ComponentTypeContentDocument
+    contents: IComponentTypeContentModel
 }
 
-export interface ComponentTypeContentDocument {
+export interface IComponentTypeContentModel {
     _id?: string,
     langId:  string
     content?: string

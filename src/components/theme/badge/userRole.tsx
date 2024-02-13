@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {UserRoleId, userRoles} from "constants/userRoles";
 
 type PageState = {};
 
 type PageProps = {
-    t: PagePropCommonDocument["t"]
+    t: IPagePropCommon["t"]
     userRoleId: UserRoleId
     className?: string
 };

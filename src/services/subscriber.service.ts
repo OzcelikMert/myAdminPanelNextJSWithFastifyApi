@@ -1,33 +1,33 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import {
-    SubscriberAddDocument,
-    SubscriberGetOneParamDocument,
-    SubscriberDeleteOneParamDocument,
-    SubscriberDeleteManyParamDocument,
-    SubscriberGetResultDocument,
-    SubscriberGetManyParamDocument
+    ISubscriberAddParamService,
+    ISubscriberGetOneParamService,
+    ISubscriberDeleteOneParamService,
+    ISubscriberDeleteManyParamService,
+    ISubscriberGetResultService,
+    ISubscriberGetManyParamService
 } from "types/services/subscriber.service";
 import {SubscriberApiEndPoint} from "constants/apiEndPoints/subscriber.api.endPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";
 
-const getOne = (params: SubscriberGetOneParamDocument) => {
+const getOne = (params: ISubscriberGetOneParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.GET_WITH_ID(params._id)],
         data: params
-    }).get<SubscriberGetResultDocument>();
+    }).get<ISubscriberGetResultService>();
 }
 
-const getMany = (params: SubscriberGetManyParamDocument) => {
+const getMany = (params: ISubscriberGetManyParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.GET],
         data: params
-    }).get<SubscriberGetResultDocument[]>();
+    }).get<ISubscriberGetResultService[]>();
 }
 
-const add = (params: SubscriberAddDocument) => {
+const add = (params: ISubscriberAddParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.ADD],
@@ -35,7 +35,7 @@ const add = (params: SubscriberAddDocument) => {
     }).post();
 }
 
-const deleteOne = (params: SubscriberDeleteOneParamDocument) => {
+const deleteOne = (params: ISubscriberDeleteOneParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.DELETE_WITH_ID(params._id)],
@@ -43,7 +43,7 @@ const deleteOne = (params: SubscriberDeleteOneParamDocument) => {
     }).delete();
 }
 
-const deleteMany = (params: SubscriberDeleteManyParamDocument) => {
+const deleteMany = (params: ISubscriberDeleteManyParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.DELETE],

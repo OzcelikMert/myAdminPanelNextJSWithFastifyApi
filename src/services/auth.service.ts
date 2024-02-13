@@ -1,6 +1,6 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
-import {UserGetResultDocument} from "types/services/user.service";
-import {AuthLoginParamDocument, AuthGetSessionParamDocument} from "types/services/auth.service";
+import {IUserGetResultService} from "types/services/user.service";
+import {IAuthLoginParamService, AuthGetSessionParamDocument} from "types/services/auth.service";
 import {AuthApiEndPoint} from "constants/apiEndPoints/auth.api.EndPoint";
 import ApiRequest from "library/api/request";
 import pathUtil from "utils/path.util";
@@ -10,15 +10,15 @@ const getSession = (params: AuthGetSessionParamDocument) => {
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.AUTH, AuthApiEndPoint.GET],
         data: params,
-    }).get<UserGetResultDocument>();
+    }).get<IUserGetResultService>();
 }
 
-const login = (params: AuthLoginParamDocument) => {
+const login = (params: IAuthLoginParamService) => {
     return new ApiRequest({
         apiUrl: pathUtil.api,
         endPoints: [ApiEndPoints.AUTH, AuthApiEndPoint.LOGIN],
         data: params,
-    }).post<UserGetResultDocument>();
+    }).post<IUserGetResultService>();
 }
 
 const logOut = () => {

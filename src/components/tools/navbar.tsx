@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Dropdown} from 'react-bootstrap';
 import Link from 'next/link';
 import {Trans} from 'react-i18next';
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import authService from "services/auth.service";
 import localStorageUtil from "utils/localStorage.util";
 import imageSourceLib from "lib/imageSource.lib";
@@ -12,13 +12,13 @@ import themeUtil from "utils/theme.util";
 import Logo from "assets/images/ozcelikLogo.png"
 import LogoMini from "assets/images/ozcelikLogoMini.png"
 import Image from "next/image"
-import ThemeKeys from "types/themes";
+import {IThemeKeys} from "types/themes";
 
 type PageState = {
     isDarkTheme: boolean
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class Navbar extends Component<PageProps, PageState> {
     constructor(props: PageProps) {
@@ -36,7 +36,7 @@ export default class Navbar extends Component<PageProps, PageState> {
         this.setState({
             isDarkTheme: !this.state.isDarkTheme
         }, () => {
-            let theme: ThemeKeys = this.state.isDarkTheme ? "dark" : "default";
+            let theme: IThemeKeys = this.state.isDarkTheme ? "dark" : "default";
             localStorageUtil.setTheme(theme);
             themeUtil.changeTheme(theme)
         })

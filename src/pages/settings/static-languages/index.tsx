@@ -1,20 +1,20 @@
 import React, {Component} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {ThemeFieldSet, ThemeForm, ThemeFormType} from "components/theme/form";
 import {UserRoleId} from "constants/index";
 import settingService from "services/setting.service";
 import ThemeToast from "components/theme/toast";
 import {
-    SettingUpdateStaticLanguageParamDocument
+    ISettingUpdateStaticLanguageParamService
 } from "types/services/setting.service";
-import {SettingStaticLanguageDocument} from "types/models/setting.model";
+import {ISettingStaticLanguageModel} from "types/models/setting.model";
 
 type PageState = {
     isSubmitting: boolean
-    formData: SettingUpdateStaticLanguageParamDocument,
+    formData: ISettingUpdateStaticLanguageParamService,
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 class PageSettingsStaticLanguages extends Component<PageProps, PageState> {
     constructor(props: PageProps) {
@@ -35,7 +35,7 @@ class PageSettingsStaticLanguages extends Component<PageProps, PageState> {
         })
     }
 
-    async componentDidUpdate(prevProps: PagePropCommonDocument) {
+    async componentDidUpdate(prevProps: IPagePropCommon) {
         if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
             this.props.setStateApp({
                 isPageLoading: true
@@ -114,21 +114,21 @@ class PageSettingsStaticLanguages extends Component<PageProps, PageState> {
         })
     }
 
-    onAccept(data: SettingStaticLanguageDocument) {
+    onAccept(data: ISettingStaticLanguageModel) {
         this.setState((state: PageState) => {
             data.isEditing = false;
             return state;
         })
     }
 
-    onDelete(data: SettingStaticLanguageDocument[], index: number) {
+    onDelete(data: ISettingStaticLanguageModel[], index: number) {
         this.setState((state: PageState) => {
             data.remove(index);
             return state;
         })
     }
 
-    onEdit(data: SettingStaticLanguageDocument, index: number) {
+    onEdit(data: ISettingStaticLanguageModel, index: number) {
         this.setState((state: PageState) => {
             data.isEditing = true;
             return state;
@@ -136,7 +136,7 @@ class PageSettingsStaticLanguages extends Component<PageProps, PageState> {
     }
 
     StaticLanguages = () => {
-        const StaticLanguage = (staticLanguageProps: SettingStaticLanguageDocument, staticLanguageIndex: number) => {
+        const StaticLanguage = (staticLanguageProps: ISettingStaticLanguageModel, staticLanguageIndex: number) => {
             return (
                 <div className="col-md-12 mt-4">
                     <ThemeFieldSet
@@ -163,7 +163,7 @@ class PageSettingsStaticLanguages extends Component<PageProps, PageState> {
             )
         }
 
-        const EditStaticLanguage = (staticLanguageProps: SettingStaticLanguageDocument, staticLanguageIndex: number) => {
+        const EditStaticLanguage = (staticLanguageProps: ISettingStaticLanguageModel, staticLanguageIndex: number) => {
             return (
                 <div className="col-md-12 mt-3">
                     <ThemeFieldSet legend={this.props.t("newStaticLanguage")}>

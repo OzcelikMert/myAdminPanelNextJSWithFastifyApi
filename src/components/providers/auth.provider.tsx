@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {LanguageId} from "constants/index";
 import authService from "services/auth.service";
 import PagePaths from "constants/pagePaths";
@@ -12,7 +12,7 @@ type PageState = {
 
 type PageProps = {
     children?: JSX.Element
-} & PagePropCommonDocument;
+} & IPagePropCommon;
 
 export default class ProviderAuth extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

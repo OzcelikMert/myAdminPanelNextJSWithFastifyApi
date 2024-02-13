@@ -1,8 +1,8 @@
-import {LanguageKeys} from "../languages";
+import {ILanguageKeys} from "../languages";
 import {ProductTypeId} from "constants/productTypes";
 
-export interface ProductTypeDocument {
+export interface IProductType {
     id: ProductTypeId,
     rank: number,
-    langKey: LanguageKeys
+    langKey: ILanguageKeys
 }

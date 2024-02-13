@@ -1,13 +1,13 @@
-import {EndPointPermissionDocument} from "types/constants/endPoint.permissions";
+import {IEndPointPermission} from "types/constants/endPoint.permissions";
 import {UserRoleId} from "constants/userRoles";
 import {PermissionId} from "constants/permissions";
 
-const settings: EndPointPermissionDocument = {
+const settings: IEndPointPermission = {
     permissionId: [PermissionId.ECommerce],
     minUserRoleId: UserRoleId.Admin
 }
 
-const sidebarNav: EndPointPermissionDocument = {
+const sidebarNav: IEndPointPermission = {
     permissionId: [PermissionId.ECommerce],
     minUserRoleId: UserRoleId.Author
 }

@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 
 type PageState = {};
 
 type PageProps = {
 
-} & PagePropCommonDocument;
+} & IPagePropCommon;
 
 export default class ComponentError404 extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

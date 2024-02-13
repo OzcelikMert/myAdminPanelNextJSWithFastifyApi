@@ -1,5 +1,5 @@
 import React, {Component, FormEvent} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {ThemeFieldSet, ThemeForm, ThemeFormType} from "components/theme/form";
 import HandleForm from "library/react/handles/form";
 import {
@@ -12,7 +12,7 @@ import userService from "services/user.service";
 import profileService from "services/profile.service";
 import imageSourceLib from "lib/imageSource.lib";
 import ThemeToast from "components/theme/toast";
-import {PermissionDocument, PermissionGroupDocument} from "types/constants";
+import {IPermission, IPermissionGroup} from "types/constants";
 import {ProfileUpdateParamDocument} from "types/services/profile";
 import Image from "next/image"
 import ThemeBadgeStatus from "components/theme/badge/status";
@@ -31,7 +31,7 @@ type PageState = {
     formData: ProfileUpdateParamDocument
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PageSettingsProfile extends Component<PageProps, PageState> {
     constructor(props: PageProps) {
@@ -180,7 +180,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
         let permissionGroups = PermissionGroups.findMulti("id", permissions.map(permission => permission.groupId));
         permissionGroups = permissionGroups.filter((group, index) => permissionGroups.indexOfKey("id", group.id) === index);
 
-        const PermissionGroup = (props: PermissionGroupDocument) => (
+        const PermissionGroup = (props: IPermissionGroup) => (
             <div className="col-md-12 mt-3">
                 <ThemeFieldSet legend={this.props.t(props.langKey)}>
                     <div className="row">
@@ -194,7 +194,7 @@ export default class PageSettingsProfile extends Component<PageProps, PageState>
             </div>
         )
 
-        const PermissionItem = (props: PermissionDocument) => (
+        const PermissionItem = (props: IPermission) => (
             <div className="col-3 mt-2">
                 <label className="badge badge-outline-info ms-1 mb-1">
                     {

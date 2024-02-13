@@ -1,6 +1,6 @@
 import {UserRoleId} from "constants/userRoles";
 
-export interface SessionAuthUserDocument{
+export interface ISessionAuthUserModel{
     userId: string
     roleId: UserRoleId,
     email: string,
@@ -12,7 +12,7 @@ export interface SessionAuthUserDocument{
     refreshedAt?: string
 }
 
-export interface SessionAuthDocument {
+export interface ISessionAuthModel {
     _id?: string
-    user: SessionAuthUserDocument
+    user: ISessionAuthUserModel
 }

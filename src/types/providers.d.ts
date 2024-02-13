@@ -1,10 +1,9 @@
-import {PostTermTypeId, PostTypeId} from "constants/index";
+import {PostTypeId} from "constants/postTypes";
+import {PostTermTypeId} from "constants/postTermTypes";
 
-type SearchParamDocument = {
+
+export type ISearchParam = {
     postTypeId: PostTypeId,
     termTypeId: PostTermTypeId,
     _id: string
 }
-
-
-export default SearchParamDocument

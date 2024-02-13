@@ -1,8 +1,8 @@
-import {LanguageKeys} from "../languages";
+import {ILanguageKeys} from "../languages";
 import {PermissionGroupId} from "constants/permissionGroups";
 
-export interface PermissionGroupDocument {
+export interface IPermissionGroup {
     id: PermissionGroupId,
     rank: number,
-    langKey: LanguageKeys
+    langKey: ILanguageKeys
 }

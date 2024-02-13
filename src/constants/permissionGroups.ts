@@ -1,4 +1,4 @@
-import {PermissionGroupDocument} from "types/constants/permissionGroups";
+import {IPermissionGroup} from "types/constants/permissionGroups";
 
 export enum PermissionGroupId {
     Blog = 1,
@@ -20,7 +20,7 @@ export enum PermissionGroupId {
     BeforeAndAfter
 }
 
-export const permissionGroups: Array<PermissionGroupDocument> = [
+export const permissionGroups: Array<IPermissionGroup> = [
     {id: PermissionGroupId.Blog, rank: 1, langKey: "blogs"},
     {id: PermissionGroupId.Portfolio, rank: 2, langKey: "portfolios"},
     {id: PermissionGroupId.Slider, rank: 3, langKey: "sliders"},

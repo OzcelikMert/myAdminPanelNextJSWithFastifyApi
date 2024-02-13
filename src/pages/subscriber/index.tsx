@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {PermissionId, Status, StatusId} from "constants/index";
 import  {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import permissionLib from "lib/permission.lib";
 import ThemeToast from "components/theme/toast";
-import {SubscriberGetResultDocument} from "types/services/subscriber.service";
+import {ISubscriberGetResultService} from "types/services/subscriber.service";
 import subscriberService from "services/subscriber.service";
 import {ThemeToggleMenuItemDocument} from "components/theme/table/toggleMenu";
 import ThemeDataTable from "components/theme/table/dataTable";
@@ -13,12 +13,12 @@ import {getStatusIcon} from "components/theme/badge/status";
 
 type PageState = {
     searchKey: string
-    items: SubscriberGetResultDocument[]
+    items: ISubscriberGetResultService[]
     showingItems: PageState["items"]
     selectedItems: PageState["items"]
 };
 
-type PageProps = {} & PagePropCommonDocument;
+type PageProps = {} & IPagePropCommon;
 
 export default class PageSubscribers extends Component<PageProps, PageState> {
     constructor(props: PageProps) {

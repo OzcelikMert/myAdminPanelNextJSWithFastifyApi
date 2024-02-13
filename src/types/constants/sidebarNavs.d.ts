@@ -1,12 +1,12 @@
-import {LanguageKeys} from "types/languages";
-import {EndPointPermissionDocument} from "types/constants/endPoint.permissions";
+import {ILanguageKeys} from "types/languages";
+import {IEndPointPermission} from "types/constants/endPoint.permissions";
 
-export interface SideBarPath {
+export interface ISidebarPath {
     path: string,
     maskPath?: string
-    title: LanguageKeys,
+    title: ILanguageKeys,
     icon?: string,
     state?: string,
-    subPaths?: SideBarPath[]
-    permission?: EndPointPermissionDocument
+    subPaths?: ISidebarPath[]
+    permission?: IEndPointPermission
 }

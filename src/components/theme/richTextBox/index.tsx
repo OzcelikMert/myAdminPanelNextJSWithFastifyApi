@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import JoditEditor, {Jodit} from "jodit-react";
 import {IJodit} from "jodit/index";
 import ThemeChooseImage from "components/theme/chooseImage";
-import {PagePropCommonDocument} from "types/pageProps";
+import {IPagePropCommon} from "types/pageProps";
 import {Config} from "jodit/types/config";
 import Spinner from "react-bootstrap/Spinner";
 import imageSourceLib from "lib/imageSource.lib";
@@ -17,7 +17,7 @@ type PageState = {
 type PageProps = {
     value: string,
     onChange: (newContent: string) => void
-} & PagePropCommonDocument;
+} & IPagePropCommon;
 
 export default class ThemeRichTextBox extends Component<PageProps, PageState> {
     editor: IJodit | null;
