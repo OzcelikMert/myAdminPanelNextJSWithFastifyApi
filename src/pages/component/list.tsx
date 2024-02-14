@@ -7,9 +7,7 @@ import {IComponentGetResultService} from "types/services/component.service";
 import componentService from "services/component.service";
 import ComponentDataTable from "components/elements/table/dataTable";
 import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
-import {PathUtil} from "utils/path.util";
 import {EndPoints} from "constants/endPoints";
-import {ComponentEndPoint} from "constants/endPoints/component.endPoint";
 import {PermissionUtil} from "utils/permission.util";
 import {PermissionId} from "constants/permissions";
 import {UserRoleId} from "constants/userRoles";
@@ -101,7 +99,7 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
     }
 
     navigatePage(type: "edit", itemId = "") {
-        let path = PathUtil.createPath(EndPoints.COMPONENT, ComponentEndPoint.EDIT(itemId));
+        let path = EndPoints.COMPONENT_WITH.EDIT(itemId);
         this.props.router.push(path);
     }
 

@@ -13,9 +13,7 @@ import {ThemeFormSelectValueDocument} from "components/elements/form/input/selec
 import {IComponentTypeModel} from "types/models/component.model";
 import {languageKeys} from "constants/languageKeys";
 import {componentInputTypes} from "constants/componentInputTypes";
-import {PathUtil} from "utils/path.util";
 import {EndPoints} from "constants/endPoints";
-import {ComponentEndPoint} from "constants/endPoints/component.endPoint";
 
 type IPageState = {
     langKeys: ThemeFormSelectValueDocument[]
@@ -135,7 +133,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
     }
 
     navigatePage() {
-        let path = PathUtil.createPath(EndPoints.COMPONENT, ComponentEndPoint.LIST)
+        let path = EndPoints.COMPONENT_WITH.LIST;
         this.props.router.push(path);
     }
 
