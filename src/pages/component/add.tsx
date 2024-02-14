@@ -1,19 +1,21 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import {IPagePropCommon} from "types/pageProps";
-import {languageKeysArray, ComponentInputTypeId, ComponentInputTypes, UserRoleId, PostTypeId} from "constants/index";
 import HandleForm from "library/react/handles/form";
 import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import V from "library/variable";
 import {IComponentUpdateOneParamService} from "types/services/component.service";
 import componentService from "services/component.service";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
-import imageSourceLib from "lib/imageSource.lib";
 import Swal from "sweetalert2";
-import PagePaths from "constants/pagePaths";
 import Image from "next/image"
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 import {IComponentTypeModel} from "types/models/component.model";
+import {languageKeys} from "constants/languageKeys";
+import {componentInputTypes} from "constants/componentInputTypes";
+import {PathUtil} from "utils/path.util";
+import {EndPoints} from "constants/endPoints";
+import {ComponentEndPoint} from "constants/endPoints/component.endPoint";
 
 type IPageState = {
     langKeys: ThemeFormSelectValueDocument[]
@@ -82,14 +84,14 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
 
     getLangKeys() {
         this.setState((state: IPageState) => {
-            state.langKeys = languageKeysArray.map(langKey => ({label: langKey, value: langKey}))
+            state.langKeys = languageKeys.map(langKey => ({label: langKey, value: langKey}))
             return state;
         })
     }
 
     getTypes() {
         this.setState((state: IPageState) => {
-            state.types = ComponentInputTypes.map(type => ({
+            state.types = componentInputTypes.map(type => ({
                 label: this.props.t(type.langKey),
                 value: type.id
             }))
@@ -133,7 +135,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
     }
 
     navigatePage() {
-        let path = PagePaths.component().list();
+        let path = PathUtil.createPath(EndPoints.COMPONENT, ComponentEndPoint.LIST)
         this.props.router.push(path);
     }
 

@@ -2,7 +2,7 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import moment from "moment";
 import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form"
-import {languageKeysArray, PageTypes, PostTermTypeId, PostTypeId, StatusId} from "constants/index";
+import {languageKeys, PageTypes, PostTermTypeId, PostTypeId, StatusId} from "constants/index";
 import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
 import Variable from "library/variable";
@@ -161,7 +161,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
 
     getLangKeys() {
         this.setState((state: IPageState) => {
-            state.langKeys = languageKeysArray.map(langKey => ({label: langKey, value: langKey}))
+            state.langKeys = languageKeys.map(langKey => ({label: langKey, value: langKey}))
             return state;
         })
     }

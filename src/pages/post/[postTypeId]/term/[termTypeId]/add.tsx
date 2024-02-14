@@ -2,18 +2,13 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import {ComponentForm, ComponentFormSelect, ComponentFormType,} from "components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
-import {PostTermTypeId, postTermTypes, PostTypeId, StatusId} from "constants/index";
 import V from "library/variable";
 import HandleForm from "library/react/handles/form";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
 import postTermService from "services/postTerm.service";
-import staticContentLib from "lib/staticContent.lib";
-import imageSourceLib from "lib/imageSource.lib";
 import {IPostTermUpdateOneParamService} from "types/services/postTerm.service";
 import Swal from "sweetalert2";
 import Image from "next/image"
-import PostLib from "lib/post.lib";
-import postLib from "lib/post.lib";
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 
 type IPageState = {

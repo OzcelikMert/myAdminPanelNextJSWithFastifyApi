@@ -1,4 +1,4 @@
-export const languageKeysArray = [
+export const languageKeys = [
     "price",
     "shippingPrice",
     "update",

@@ -10,9 +10,9 @@ const getPagePath = (postTypeId: PostTypeId) => {
     if([PostTypeId.Page].includes(postTypeId)){
         pagePath = EndPoints.POST(postTypeId);
     }else if ([PostTypeId.Product].includes(postTypeId)){
-        pagePath = PathUtil.setPath(EndPoints.ECOMMERCE, EndPoints.POST(postTypeId))
+        pagePath = PathUtil.createPath(EndPoints.ECOMMERCE, EndPoints.POST(postTypeId))
     }else{
-        pagePath = PathUtil.setPath(EndPoints.THEME_CONTENT, EndPoints.POST(postTypeId));
+        pagePath = PathUtil.createPath(EndPoints.THEME_CONTENT, EndPoints.POST(postTypeId));
     }
 
     return pagePath;

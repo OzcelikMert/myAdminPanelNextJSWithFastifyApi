@@ -1,6 +1,6 @@
 import type {AppProps} from 'next/app'
 import React from "react";
-import {LanguageId, Languages} from "constants/languages";
+import {LanguageId, languages} from "constants/languages";
 import localStorageUtil from "utils/localStorage.util";
 import i18n from "i18next";
 import {initReactI18next} from "react-i18next";
@@ -29,8 +29,8 @@ if(typeof window !== "undefined") {
             tr: {translation: Turkish}
         },
         keySeparator: false,
-        lng: Languages.findSingle("id", localStorageUtil.getLanguage())?.code || window.navigator.language.slice(0, 2) || Languages[0].code,
-        fallbackLng: Languages.findSingle("id", LanguageId.English)?.code || Languages[0].code,
+        lng: languages.findSingle("id", localStorageUtil.getLanguage())?.code || window.navigator.language.slice(0, 2) || languages[0].code,
+        fallbackLng: languages.findSingle("id", LanguageId.English)?.code || languages[0].code,
         interpolation: {
             escapeValue: false
         }

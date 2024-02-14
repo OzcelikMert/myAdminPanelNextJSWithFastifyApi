@@ -15,7 +15,7 @@ type IPageState = {
 };
 
 type IPageProps<T> = {
-    i18: IPagePropI18,
+    i18?: IPagePropI18,
     onSelect?: (rows: T[]) => void
     onSearch?: (searchKey: string) => void
     isSearchable?: boolean
@@ -148,7 +148,7 @@ export default class ComponentDataTable<T> extends Component<IPageProps<T>, IPag
                         <div className="col-md-8"></div>
                         <div className="col-md-4">
                             <ComponentFormType
-                                title={`${this.props.i18.search ?? "Search"}`}
+                                title={`${this.props.i18?.search ?? "Search"}`}
                                 type="text"
                                 value={this.state.searchKey}
                                 onChange={(e: any) => this.onSearch(e)}
@@ -173,7 +173,7 @@ export default class ComponentDataTable<T> extends Component<IPageProps<T>, IPag
                         clearSelectedRows={this.state.clearSelectedRows}
                         noDataComponent={
                             <h5>
-                                {this.props.i18.noRecords ?? "There are no records to display"}<i className="mdi mdi-emoticon-sad-outline"></i>
+                                {this.props.i18?.noRecords ?? "There are no records to display"}<i className="mdi mdi-emoticon-sad-outline"></i>
                             </h5>
                         }
                         paginationComponentOptions={{

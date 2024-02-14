@@ -1,16 +1,18 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {PermissionId, UserRoleId} from "constants/index";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
-import permissionLib from "lib/permission.lib";
 import ComponentToast from "components/elements/toast";
 import {IComponentGetResultService} from "types/services/component.service";
 import componentService from "services/component.service";
-import PagePaths from "constants/pagePaths";
 import ComponentDataTable from "components/elements/table/dataTable";
 import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
-import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
+import {PathUtil} from "utils/path.util";
+import {EndPoints} from "constants/endPoints";
+import {ComponentEndPoint} from "constants/endPoints/component.endPoint";
+import {PermissionUtil} from "utils/permission.util";
+import {PermissionId} from "constants/permissions";
+import {UserRoleId} from "constants/userRoles";
 
 type IPageState = {
     searchKey: string
@@ -50,9 +52,9 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
     }
 
     async getItems() {
-        let items = (await componentService.getMany({langId: this.props.getStateApp.pageData.langId})).data;
+        let result = (await componentService.getMany({langId: this.props.getStateApp.pageData.langId}));
         this.setState((state: IPageState) => {
-            state.items = items;
+            state.items = result.data ?? [];
             return state;
         }, () => this.onSearch(this.state.searchKey));
     }
@@ -73,7 +75,7 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
                     content: this.props.t("deleting"),
                     type: "loading"
                 });
-                let resData = await componentService.delete({_id: [_id]});
+                let resData = await componentService.deleteMany({_id: [_id]});
                 loadingToast.hide();
                 if (resData.status) {
                     this.setState({
@@ -99,7 +101,7 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
     }
 
     navigatePage(type: "edit", itemId = "") {
-        let path = PagePaths.component().edit(itemId)
+        let path = PathUtil.createPath(EndPoints.COMPONENT, ComponentEndPoint.EDIT(itemId));
         this.props.router.push(path);
     }
 
@@ -113,7 +115,7 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
             {
                 name: this.props.t("updatedBy"),
                 sortable: true,
-                cell: row => <ComponentTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""} />
+                cell: row => <ComponentTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""}/>
             },
             {
                 name: this.props.t("createdDate"),
@@ -125,9 +127,9 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
                 name: "",
                 button: true,
                 width: "70px",
-                cell: row => permissionLib.checkPermission(
-                    this.props.getStateApp.sessionData.roleId,
-                    this.props.getStateApp.sessionData.permissions,
+                cell: row => PermissionUtil.checkPermission(
+                    this.props.getStateApp.sessionAuth!.user.roleId,
+                    this.props.getStateApp.sessionAuth!.user.permissions,
                     PermissionId.ComponentEdit
                 ) ? (
                     <button
@@ -138,7 +140,7 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
                 ) : null
             },
             (
-                this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                this.props.getStateApp.sessionAuth!.user.roleId == UserRoleId.SuperAdmin
                     ? {
                         name: "",
                         button: true,
@@ -166,7 +168,10 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
                                 <ComponentDataTable
                                     columns={this.getTableColumns.filter(column => typeof column.name !== "undefined")}
                                     data={this.state.showingItems}
-                                    t={this.props.t}
+                                    i18={{
+                                        search: this.props.t("search"),
+                                        noRecords: this.props.t("noRecords")
+                                    }}
                                     onSearch={searchKey => this.onSearch(searchKey)}
                                     isSearchable={true}
                                 />

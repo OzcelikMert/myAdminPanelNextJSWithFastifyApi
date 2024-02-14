@@ -1,12 +1,21 @@
-export const PostApiEndPoint = {
-    GET: "/get",
-    GET_COUNT: "/get/count",
-    GET_WITH_ID: (_id: string)  => `/get/${_id}`,
-    GET_WITH_URL: (url: string)  => `/get/url/${url}`,
-    ADD: "/add",
-    UPDATE_VIEW_WITH_ID: (_id: string)  => `/update/view/${_id}`,
-    UPDATE_RANK_WITH_ID: (_id: string)  => `/update/rank/${_id}`,
-    UPDATE_STATUS: "/update/status",
-    UPDATE_WITH_ID: (_id: string)  => `/update/${_id}`,
-    DELETE: "/delete"
+import {ApiEndPoints} from "constants/apiEndPoints/index";
+import {PathUtil} from "utils/path.util";
+
+export class PostApiEndPoint {
+    private mainPath: string;
+
+    constructor(mainPath = ApiEndPoints.POST) {
+        this.mainPath = mainPath;
+    }
+
+    get GET() { return PathUtil.createPath(this.mainPath, "/get"); }
+    GET_WITH_ID(_id: string) { return PathUtil.createPath(this.mainPath, `/get/${_id}`); }
+    GET_WITH_URL(url: string) { return PathUtil.createPath(this.mainPath, `/get/url/${url}`); }
+    get GET_COUNT() { return PathUtil.createPath(this.mainPath, "/get/count"); }
+    get ADD() { return PathUtil.createPath(this.mainPath, "/add"); }
+    UPDATE_WITH_ID(_id: string) { return PathUtil.createPath(this.mainPath, `/update/${_id}`); }
+    UPDATE_VIEW_WITH_ID(_id: string) { return PathUtil.createPath(this.mainPath, `/update/view/${_id}`); }
+    UPDATE_RANK_WITH_ID(_id: string) { return PathUtil.createPath(this.mainPath, `/update/rank/${_id}`); }
+    get UPDATE_STATUS() { return PathUtil.createPath(this.mainPath, "/update/status"); }
+    get DELETE() { return PathUtil.createPath(this.mainPath, "/delete"); }
 }

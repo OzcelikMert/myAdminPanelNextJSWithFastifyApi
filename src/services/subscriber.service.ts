@@ -7,14 +7,13 @@ import {
     ISubscriberGetResultService,
     ISubscriberGetManyParamService
 } from "types/services/subscriber.service";
-import {SubscriberApiEndPoint} from "constants/apiEndPoints/subscriber.api.endPoint";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 
 const getOne = (params: ISubscriberGetOneParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.GET_WITH_ID(params._id)],
+        endPoint: ApiEndPoints.SUBSCRIBER_WITH.GET_WITH_ID(params._id),
         data: params
     }).get<ISubscriberGetResultService>();
 }
@@ -22,7 +21,7 @@ const getOne = (params: ISubscriberGetOneParamService) => {
 const getMany = (params: ISubscriberGetManyParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.GET],
+        endPoint: ApiEndPoints.SUBSCRIBER_WITH.GET,
         data: params
     }).get<ISubscriberGetResultService[]>();
 }
@@ -30,7 +29,7 @@ const getMany = (params: ISubscriberGetManyParamService) => {
 const add = (params: ISubscriberAddParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.ADD],
+        endPoint: ApiEndPoints.SUBSCRIBER_WITH.ADD,
         data: params
     }).post();
 }
@@ -38,7 +37,7 @@ const add = (params: ISubscriberAddParamService) => {
 const deleteOne = (params: ISubscriberDeleteOneParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.DELETE_WITH_ID(params._id)],
+        endPoint: ApiEndPoints.SUBSCRIBER_WITH.DELETE_WITH_ID(params._id),
         data: params
     }).delete();
 }
@@ -46,7 +45,7 @@ const deleteOne = (params: ISubscriberDeleteOneParamService) => {
 const deleteMany = (params: ISubscriberDeleteManyParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.SUBSCRIBER, SubscriberApiEndPoint.DELETE],
+        endPoint: ApiEndPoints.SUBSCRIBER_WITH.DELETE,
         data: params
     }).delete();
 }

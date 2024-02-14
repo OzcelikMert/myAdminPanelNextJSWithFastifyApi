@@ -6,7 +6,7 @@ const getImageURL = () => { return `${getApiURL()}uploads/images/`; }
 
 const getFlagURL = () => { return `${getApiURL()}uploads/flags/`; }
 
-const setPath = (...paths: (number | string | undefined)[]) => {
+const createPath = (...paths: (number | string | undefined)[]) => {
     let returnPath = "";
     for (let path of paths) {
         if (path) {
@@ -18,7 +18,7 @@ const setPath = (...paths: (number | string | undefined)[]) => {
                 path = path.slice(1);
             }
 
-            returnPath += `/${path}`;
+            returnPath += `/${path.toString()}`;
         }
     }
     return returnPath;
@@ -28,5 +28,5 @@ export const PathUtil = {
     getApiURL: getApiURL,
     getImageURL: getImageURL,
     getFlagURL: getFlagURL,
-    setPath: setPath
+    createPath: createPath
 }

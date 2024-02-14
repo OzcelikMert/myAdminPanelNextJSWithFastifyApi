@@ -12,12 +12,10 @@ class ApiRequest {
 
     private getApiUrl(): string {
         let apiUrl = this.params.apiUrl;
-        if(this.params.endPoints){
-            this.params.endPoints.forEach(endPoint => {
-                apiUrl += endPoint + "/";
-            });
+        if(this.params.endPoint){
+            apiUrl += this.params.endPoint;
         }
-        return apiUrl.removeLastChar();
+        return apiUrl;
     }
 
     private async request<Data = any, CustomData = any>(method: ApiRequestParamMethodDocument) {

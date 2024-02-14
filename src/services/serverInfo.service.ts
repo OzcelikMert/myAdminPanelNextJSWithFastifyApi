@@ -1,13 +1,12 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import {IServerInfoGetResultService} from "types/services/serverInfo.service";
-import {ServerInfoApiEndPoint} from "constants/apiEndPoints/serverInfo.api.endPoint";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 
 const get = () => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.SERVER_INFO, ServerInfoApiEndPoint.GET]
+        endPoint: ApiEndPoints.SERVER_INFO_WITH.GET
     }).get<IServerInfoGetResultService>();
 }
 

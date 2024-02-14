@@ -1,7 +1,7 @@
 import {AxiosProgressEvent} from "axios";
 
 export interface ApiRequestParamDocument {
-    endPoints?: string[],
+    endPoint?: string,
     apiUrl: string
     data?: object,
     processData?: boolean,

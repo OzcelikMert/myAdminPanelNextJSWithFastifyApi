@@ -4,7 +4,6 @@ import {
     IComponentGetManyParamService,
     IComponentGetOneParamService, IComponentUpdateOneParamService,
 } from "types/services/component.service";
-import {ComponentApiEndPoint} from "constants/apiEndPoints/component.api.endPoint";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 import {ApiEndPoints} from "constants/apiEndPoints";
@@ -12,7 +11,7 @@ import {ApiEndPoints} from "constants/apiEndPoints";
 const getOne = (params: IComponentGetOneParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.GET_WITH_ID(params._id)],
+        endPoint: ApiEndPoints.COMPONENT_WITH.GET_WITH_ID(params._id),
         data: params,
     }).get<IComponentGetResultService>();
 }
@@ -20,7 +19,7 @@ const getOne = (params: IComponentGetOneParamService) => {
 const getMany = (params: IComponentGetManyParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.GET],
+        endPoint: ApiEndPoints.COMPONENT_WITH.GET,
         data: params,
     }).get<IComponentGetResultService[]>();
 }
@@ -28,7 +27,7 @@ const getMany = (params: IComponentGetManyParamService) => {
 const add = (params: IComponentAddParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.ADD],
+        endPoint: ApiEndPoints.COMPONENT_WITH.ADD,
         data: params,
     }).post();
 }
@@ -36,7 +35,7 @@ const add = (params: IComponentAddParamService) => {
 const updateOne = (params: IComponentUpdateOneParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.UPDATE_WITH_ID(params._id)],
+        endPoint: ApiEndPoints.COMPONENT_WITH.UPDATE_WITH_ID(params._id),
         data: params,
     }).put();
 }
@@ -44,7 +43,7 @@ const updateOne = (params: IComponentUpdateOneParamService) => {
 const deleteMany = (params: IComponentDeleteManyParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.COMPONENT, ComponentApiEndPoint.DELETE],
+        endPoint: ApiEndPoints.COMPONENT_WITH.DELETE,
         data: params,
     }).delete();
 }

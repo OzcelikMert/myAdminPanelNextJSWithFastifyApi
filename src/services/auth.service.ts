@@ -1,7 +1,6 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import {IUserGetResultService} from "types/services/user.service";
 import {IAuthLoginParamService} from "types/services/auth.service";
-import {AuthApiEndPoint} from "constants/apiEndPoints/auth.api.EndPoint";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 import {ISessionAuthModel} from "types/models/sessionAuth.model";
@@ -9,14 +8,14 @@ import {ISessionAuthModel} from "types/models/sessionAuth.model";
 const getSession = () => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.AUTH, AuthApiEndPoint.GET]
+        endPoint: ApiEndPoints.AUTH_WITH.GET
     }).get<ISessionAuthModel>();
 }
 
 const login = (params: IAuthLoginParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.AUTH, AuthApiEndPoint.LOGIN],
+        endPoint: ApiEndPoints.AUTH_WITH.LOGIN,
         data: params,
     }).post<IUserGetResultService>();
 }
@@ -24,7 +23,7 @@ const login = (params: IAuthLoginParamService) => {
 const logOut = () => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoints: [ApiEndPoints.AUTH, AuthApiEndPoint.LOGOUT],
+        endPoint: ApiEndPoints.AUTH_WITH.LOGOUT,
     }).delete();
 }
 

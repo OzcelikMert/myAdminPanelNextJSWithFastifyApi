@@ -47,10 +47,10 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
     async profileEvents(event: "profile" | "lock" | "signOut" | "changePassword") {
         switch(event) {
             case "profile":
-                await this.props.router.push(PathUtil.setPath(EndPoints.SETTINGS, SettingsEndPoint.PROFILE))
+                await this.props.router.push(PathUtil.createPath(EndPoints.SETTINGS, SettingsEndPoint.PROFILE))
                 break;
             case "changePassword":
-                await this.props.router.push(PathUtil.setPath(EndPoints.SETTINGS, SettingsEndPoint.CHANGE_PASSWORD))
+                await this.props.router.push(PathUtil.createPath(EndPoints.SETTINGS, SettingsEndPoint.CHANGE_PASSWORD))
                 break;
             case "lock":
                 let resultLock = await authService.logOut();
