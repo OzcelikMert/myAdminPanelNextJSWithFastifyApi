@@ -4,15 +4,15 @@ import {PermissionId} from "constants/permissions";
 
 const settings: IEndPointPermission = {
     permissionId: [PermissionId.ECommerce],
-    minUserRoleId: UserRoleId.Admin
+    userRoleId: UserRoleId.Admin
 }
 
-const sidebarNav: IEndPointPermission = {
+const get: IEndPointPermission = {
     permissionId: [PermissionId.ECommerce],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 export const ECommerceEndPointPermission = {
     SETTINGS: settings,
-    SIDEBAR_NAV: sidebarNav,
+    GET: get,
 }

@@ -4,7 +4,7 @@ import {IEndPointPermission} from "types/constants/endPoint.permissions";
 
 const get: IEndPointPermission = {
     permissionId: [PermissionId.SettingEdit],
-    minUserRoleId: UserRoleId.Admin
+    userRoleId: UserRoleId.Admin
 }
 
 export const ServerInfoEndPointPermission = {

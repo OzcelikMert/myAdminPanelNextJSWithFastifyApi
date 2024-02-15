@@ -32,7 +32,7 @@ export const sidebarNavs: ISidebarPath[] = [
         icon: `navigation-variant`,
         title: "navigations",
         state: `navigates`,
-        permission: NavigationEndPointPermission.SIDEBAR_NAV,
+        permission: NavigationEndPointPermission.GET,
         subPaths: [
             {
                 path: EndPoints.NAVIGATION_WITH.ADD,
@@ -47,7 +47,7 @@ export const sidebarNavs: ISidebarPath[] = [
         icon: `note-multiple`,
         title: "pages",
         state: `pages`,
-        permission: PostEndPointPermission.SIDEBAR_NAV_PAGE,
+        permission: PostEndPointPermission.GET_PAGE,
         subPaths: [
             {
                 path:  EndPoints.POST_WITH(PostTypeId.Page).ADD,
@@ -62,13 +62,13 @@ export const sidebarNavs: ISidebarPath[] = [
         icon: `collage`,
         title: "themeContents",
         state: `themeContents`,
-        permission: ThemeContentEndPointPermission.SIDEBAR_NAV,
+        permission: ThemeContentEndPointPermission.GET,
         subPaths: [
             {
                 path: EndPoints.THEME_CONTENT_WITH.BLOG,
                 title: "blogs",
                 state: `blogs`,
-                permission: PostEndPointPermission.SIDEBAR_NAV_BLOG,
+                permission: PostEndPointPermission.GET_BLOG,
                 subPaths: [
                     {
                         path: EndPoints.THEME_CONTENT_WITH.BLOG_WITH.ADD,
@@ -82,7 +82,7 @@ export const sidebarNavs: ISidebarPath[] = [
                 path: EndPoints.THEME_CONTENT_WITH.PORTFOLIO,
                 title: "portfolios",
                 state: `portfolios`,
-                permission: PostEndPointPermission.SIDEBAR_NAV_PORTFOLIO,
+                permission: PostEndPointPermission.GET_PORTFOLIO,
                 subPaths: [
                     {
                         path: EndPoints.THEME_CONTENT_WITH.PORTFOLIO_WITH.ADD,
@@ -96,7 +96,7 @@ export const sidebarNavs: ISidebarPath[] = [
                 path: EndPoints.THEME_CONTENT_WITH.SLIDER,
                 title: "sliders",
                 state: `sliders`,
-                permission: PostEndPointPermission.SIDEBAR_NAV_SLIDER,
+                permission: PostEndPointPermission.GET_SLIDER,
                 subPaths: [
                     {
                         path: EndPoints.THEME_CONTENT_WITH.SLIDER_WITH.ADD,
@@ -110,7 +110,7 @@ export const sidebarNavs: ISidebarPath[] = [
                 path: EndPoints.THEME_CONTENT_WITH.REFERENCE,
                 title: "references",
                 state: `references`,
-                permission: PostEndPointPermission.SIDEBAR_NAV_REFERENCE,
+                permission: PostEndPointPermission.GET_REFERENCE,
                 subPaths: [
                     {
                         path: EndPoints.THEME_CONTENT_WITH.REFERENCE_WITH.ADD,
@@ -124,7 +124,7 @@ export const sidebarNavs: ISidebarPath[] = [
                 path: EndPoints.THEME_CONTENT_WITH.SERVICE,
                 title: "services",
                 state: `services`,
-                permission: PostEndPointPermission.SIDEBAR_NAV_SERVICE,
+                permission: PostEndPointPermission.GET_SERVICE,
                 subPaths: [
                     {
                         path:  EndPoints.THEME_CONTENT_WITH.SERVICE_WITH.ADD,
@@ -138,7 +138,7 @@ export const sidebarNavs: ISidebarPath[] = [
                 path: EndPoints.THEME_CONTENT_WITH.TESTIMONIAL,
                 title: "testimonials",
                 state: `testimonials`,
-                permission: PostEndPointPermission.SIDEBAR_NAV_TESTIMONIAL,
+                permission: PostEndPointPermission.GET_TESTIMONIAL,
                 subPaths: [
                     {
                         path: EndPoints.THEME_CONTENT_WITH.TESTIMONIAL_WITH.ADD,
@@ -152,7 +152,7 @@ export const sidebarNavs: ISidebarPath[] = [
                 path: EndPoints.THEME_CONTENT_WITH.BEFORE_AND_AFTER,
                 title: "beforeAndAfter",
                 state: `beforeAndAfter`,
-                permission: PostEndPointPermission.SIDEBAR_NAV_BEFORE_AND_AFTER,
+                permission: PostEndPointPermission.GET_BEFORE_AND_AFTER,
                 subPaths: [
                     {
                         path: EndPoints.THEME_CONTENT_WITH.BEFORE_AND_AFTER_WITH.ADD,
@@ -169,7 +169,7 @@ export const sidebarNavs: ISidebarPath[] = [
         icon: `shape`,
         title: "components",
         state: `components`,
-        permission: ComponentEndPointPermission.SIDEBAR_NAV,
+        permission: ComponentEndPointPermission.GET,
         subPaths: [
             {
                 path: EndPoints.COMPONENT_WITH.ADD,
@@ -184,13 +184,13 @@ export const sidebarNavs: ISidebarPath[] = [
         icon: `market`,
         title: "eCommerce",
         state: `eCommerce`,
-        permission: ECommerceEndPointPermission.SIDEBAR_NAV,
+        permission: ECommerceEndPointPermission.GET,
         subPaths: [
             {
                 path: EndPoints.ECOMMERCE_WITH.PRODUCT,
                 title: "product",
                 state: `eCommerceProduct`,
-                permission: PostEndPointPermission.SIDEBAR_NAV_PRODUCT,
+                permission: PostEndPointPermission.GET_PRODUCT,
                 subPaths: [
                     {
                         path: EndPoints.ECOMMERCE_WITH.PRODUCT_WITH.ADD,
@@ -212,7 +212,7 @@ export const sidebarNavs: ISidebarPath[] = [
         icon: `account-multiple`,
         title: "users",
         state: `users`,
-        permission: UserEndPointPermission.SIDEBAR_NAV,
+        permission: UserEndPointPermission.GET,
         subPaths: [
             {
                 path: EndPoints.USER_WITH.ADD,
@@ -225,24 +225,24 @@ export const sidebarNavs: ISidebarPath[] = [
     {
         path: EndPoints.SUBSCRIBER,
         title: "subscribers",
-        permission: SubscriberEndPointPermission.SIDEBAR_NAV
+        permission: SubscriberEndPointPermission.GET
     },
     {
         path: EndPoints.LANGUAGE,
         icon: `languages`,
         title: "languages",
         state: `languages`,
-        permission: LanguageEndPointPermission.SIDEBAR_NAV,
+        permission: LanguageEndPointPermission.GET,
         subPaths: [
             {
                 path: EndPoints.LANGUAGE_WITH.ADD,
                 title: "add",
-                permission: LanguageEndPointPermission.SIDEBAR_NAV
+                permission: LanguageEndPointPermission.GET
             },
             {
                 path: EndPoints.LANGUAGE_WITH.LIST,
                 title: "list",
-                permission: LanguageEndPointPermission.SIDEBAR_NAV
+                permission: LanguageEndPointPermission.GET
             }
         ]
     },
@@ -251,7 +251,7 @@ export const sidebarNavs: ISidebarPath[] = [
         icon: `cog`,
         title: "settings",
         state: `settings`,
-        permission: SettingsEndPointPermission.SIDEBAR_NAV,
+        permission: SettingsEndPointPermission.GET,
         subPaths: [
             {
                 path: EndPoints.SETTINGS_WITH.GENERAL,

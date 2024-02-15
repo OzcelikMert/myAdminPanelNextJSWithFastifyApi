@@ -4,30 +4,30 @@ import {IEndPointPermission} from "types/constants/endPoint.permissions";
 
 const updateGeneral: IEndPointPermission = {
     permissionId: [PermissionId.SettingEdit],
-    minUserRoleId: UserRoleId.Admin
+    userRoleId: UserRoleId.Admin
 }
 
 const updateSEO: IEndPointPermission = {
     permissionId: [PermissionId.SEOEdit],
-    minUserRoleId: UserRoleId.Admin
+    userRoleId: UserRoleId.Admin
 }
 
 const updateContactForm: IEndPointPermission = {
     permissionId: [],
-    minUserRoleId: UserRoleId.Admin
+    userRoleId: UserRoleId.Admin
 }
 
 const updateStaticLanguage: IEndPointPermission = {
     permissionId: [PermissionId.StaticLanguage],
-    minUserRoleId: UserRoleId.Admin
+    userRoleId: UserRoleId.Admin
 }
 
 const updateSocialMedia: IEndPointPermission = {
     permissionId: [PermissionId.SettingEdit],
-    minUserRoleId: UserRoleId.Admin
+    userRoleId: UserRoleId.Admin
 }
 
-const sidebarNav: IEndPointPermission = {
+const get: IEndPointPermission = {
     permissionId: [
         ...updateGeneral.permissionId,
         ...updateSEO.permissionId,
@@ -35,7 +35,7 @@ const sidebarNav: IEndPointPermission = {
         ...updateStaticLanguage.permissionId,
         ...updateSocialMedia.permissionId
     ],
-    minUserRoleId: UserRoleId.Admin
+    userRoleId: UserRoleId.Admin
 }
 
 export const SettingsEndPointPermission = {
@@ -44,5 +44,5 @@ export const SettingsEndPointPermission = {
     UPDATE_CONTACT_FORM: updateContactForm,
     UPDATE_STATIC_LANGUAGE: updateStaticLanguage,
     UPDATE_SOCIAL_MEDIA: updateSocialMedia,
-    SIDEBAR_NAV: sidebarNav,
+    GET: get,
 }

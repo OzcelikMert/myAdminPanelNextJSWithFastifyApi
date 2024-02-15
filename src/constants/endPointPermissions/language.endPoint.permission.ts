@@ -4,27 +4,27 @@ import {PermissionId} from "constants/permissions";
 
 const getFlags: IEndPointPermission = {
     permissionId: [],
-    minUserRoleId: UserRoleId.SuperAdmin
+    userRoleId: UserRoleId.SuperAdmin
 }
 
 const add: IEndPointPermission = {
     permissionId: [],
-    minUserRoleId: UserRoleId.SuperAdmin
+    userRoleId: UserRoleId.SuperAdmin
 }
 
 const update: IEndPointPermission = {
     permissionId: [],
-    minUserRoleId: UserRoleId.SuperAdmin
+    userRoleId: UserRoleId.SuperAdmin
 }
 
 const remove: IEndPointPermission = {
     permissionId: [],
-    minUserRoleId: UserRoleId.SuperAdmin
+    userRoleId: UserRoleId.SuperAdmin
 }
 
-const sidebarNav: IEndPointPermission = {
+const get: IEndPointPermission = {
     permissionId: [],
-    minUserRoleId: UserRoleId.SuperAdmin
+    userRoleId: UserRoleId.SuperAdmin
 }
 
 export const LanguageEndPointPermission = {
@@ -32,5 +32,5 @@ export const LanguageEndPointPermission = {
     ADD: add,
     UPDATE: update,
     DELETE: remove,
-    SIDEBAR_NAV: sidebarNav,
+    GET: get,
 }

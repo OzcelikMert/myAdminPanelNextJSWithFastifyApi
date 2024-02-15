@@ -130,8 +130,11 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
             let resData = await profileService.update(this.state.formData);
             if (resData.status) {
                 this.props.setStateApp({
-                    sessionData: {
-                        name: this.state.formData.name
+                    sessionAuth: {
+                        user: {
+                            ...(this.props.getStateApp.sessionAuth!.user),
+                            name: this.state.formData.name
+                        }
                     }
                 }, () => {
                     new ComponentToast({

@@ -4,21 +4,15 @@ import {IEndPointPermission} from "types/constants/endPoint.permissions";
 
 const get: IEndPointPermission = {
     permissionId: [ PermissionId.SubscriberEdit],
-    minUserRoleId: UserRoleId.Admin
+    userRoleId: UserRoleId.Admin
 }
 
 const remove: IEndPointPermission = {
     permissionId: [PermissionId.SubscriberEdit],
-    minUserRoleId: UserRoleId.Admin
-}
-
-const sidebarNav: IEndPointPermission = {
-    permissionId: [PermissionId.SubscriberEdit],
-    minUserRoleId: UserRoleId.Admin
+    userRoleId: UserRoleId.Admin
 }
 
 export const SubscriberEndPointPermission = {
     GET: get,
     DELETE: remove,
-    SIDEBAR_NAV: sidebarNav
 }

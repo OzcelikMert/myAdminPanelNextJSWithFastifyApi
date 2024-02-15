@@ -4,27 +4,27 @@ import {UserRoleId} from "../userRoles";
 
 const add: IEndPointPermission = {
     permissionId: [PermissionId.NavigationAdd],
-    minUserRoleId: UserRoleId.Editor
+    userRoleId: UserRoleId.Editor
 }
 
 const update: IEndPointPermission = {
     permissionId: [PermissionId.NavigationEdit],
-    minUserRoleId: UserRoleId.Editor
+    userRoleId: UserRoleId.Editor
 }
 
 const remove: IEndPointPermission = {
     permissionId: [PermissionId.NavigationDelete],
-    minUserRoleId: UserRoleId.Editor
+    userRoleId: UserRoleId.Editor
 }
 
-const sidebarNav: IEndPointPermission = {
+const get: IEndPointPermission = {
     permissionId: [PermissionId.NavigationAdd, PermissionId.NavigationEdit, PermissionId.NavigationDelete],
-    minUserRoleId: UserRoleId.Editor
+    userRoleId: UserRoleId.Editor
 }
 
 export const NavigationEndPointPermission = {
     ADD: add,
     UPDATE: update,
     DELETE: remove,
-    SIDEBAR_NAV: sidebarNav
+    GET: get
 }

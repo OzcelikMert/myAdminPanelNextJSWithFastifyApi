@@ -4,219 +4,219 @@ import {IEndPointPermission} from "types/constants/endPoint.permissions";
 
 const addSlider: IEndPointPermission = {
     permissionId: [PermissionId.SliderAdd],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const updateSlider: IEndPointPermission = {
     permissionId: [PermissionId.SliderEdit],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const removeSlider: IEndPointPermission = {
     permissionId: [PermissionId.SliderDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
-const sidebarNavSlider: IEndPointPermission = {
+const getSlider: IEndPointPermission = {
     permissionId: [PermissionId.SliderAdd, PermissionId.SliderEdit, PermissionId.SliderDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const addPage: IEndPointPermission = {
     permissionId: [PermissionId.PageAdd],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const updatePage: IEndPointPermission = {
     permissionId: [PermissionId.PageEdit],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const removePage: IEndPointPermission = {
     permissionId: [PermissionId.PageDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
-const sidebarNavPage: IEndPointPermission = {
+const getPage: IEndPointPermission = {
     permissionId: [PermissionId.PageAdd, PermissionId.PageEdit, PermissionId.PageDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const addBlog: IEndPointPermission = {
     permissionId: [PermissionId.BlogAdd],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const updateBlog: IEndPointPermission = {
     permissionId: [PermissionId.BlogEdit],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const removeBlog: IEndPointPermission = {
     permissionId: [PermissionId.BlogDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
-const sidebarNavBlog: IEndPointPermission = {
+const getBlog: IEndPointPermission = {
     permissionId: [PermissionId.BlogAdd, PermissionId.BlogEdit, PermissionId.BlogDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const addReference: IEndPointPermission = {
     permissionId: [PermissionId.ReferenceAdd],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const updateReference: IEndPointPermission = {
     permissionId: [PermissionId.ReferenceEdit],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const removeReference: IEndPointPermission = {
     permissionId: [PermissionId.ReferenceDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
-const sidebarNavReference: IEndPointPermission = {
+const getReference: IEndPointPermission = {
     permissionId: [PermissionId.ReferenceAdd, PermissionId.ReferenceEdit, PermissionId.ReferenceDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const addPortfolio: IEndPointPermission = {
     permissionId: [PermissionId.PortfolioAdd],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const updatePortfolio: IEndPointPermission = {
     permissionId: [PermissionId.PortfolioEdit],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const removePortfolio: IEndPointPermission = {
     permissionId: [PermissionId.PortfolioDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
-const sidebarNavPortfolio: IEndPointPermission = {
+const getPortfolio: IEndPointPermission = {
     permissionId: [PermissionId.PortfolioAdd, PermissionId.PortfolioEdit, PermissionId.PortfolioDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const addTestimonial: IEndPointPermission = {
     permissionId: [PermissionId.TestimonialAdd],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const updateTestimonial: IEndPointPermission = {
     permissionId: [PermissionId.TestimonialEdit],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const removeTestimonial: IEndPointPermission = {
     permissionId: [PermissionId.TestimonialDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
-const sidebarNavTestimonial: IEndPointPermission = {
+const getTestimonial: IEndPointPermission = {
     permissionId: [PermissionId.TestimonialAdd, PermissionId.TestimonialEdit, PermissionId.TestimonialDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const addService: IEndPointPermission = {
     permissionId: [PermissionId.ServiceAdd],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const updateService: IEndPointPermission = {
     permissionId: [PermissionId.ServiceEdit],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const removeService: IEndPointPermission = {
     permissionId: [PermissionId.ServiceDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
-const sidebarNavService: IEndPointPermission = {
+const getService: IEndPointPermission = {
     permissionId: [PermissionId.ServiceAdd, PermissionId.ServiceEdit, PermissionId.ServiceDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const addProduct: IEndPointPermission = {
     permissionId: [PermissionId.ProductAdd],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const updateProduct: IEndPointPermission = {
     permissionId: [PermissionId.ProductEdit],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const removeProduct: IEndPointPermission = {
     permissionId: [PermissionId.ProductDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
-const sidebarNavProduct: IEndPointPermission = {
+const getProduct: IEndPointPermission = {
     permissionId: [PermissionId.ProductAdd, PermissionId.ProductEdit, PermissionId.ProductDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const addBeforeAndAfter: IEndPointPermission = {
     permissionId: [PermissionId.BeforeAndAfterAdd],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const updateBeforeAndAfter: IEndPointPermission = {
     permissionId: [PermissionId.BeforeAndAfterEdit],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 const removeBeforeAndAfter: IEndPointPermission = {
     permissionId: [PermissionId.BeforeAndAfterDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
-const sidebarNavBeforeAndAfter: IEndPointPermission = {
+const getBeforeAndAfter: IEndPointPermission = {
     permissionId: [PermissionId.BeforeAndAfterAdd, PermissionId.BeforeAndAfterEdit, PermissionId.BeforeAndAfterDelete],
-    minUserRoleId: UserRoleId.Author
+    userRoleId: UserRoleId.Author
 }
 
 export const PostEndPointPermission = {
     ADD_SLIDER: addSlider,
     UPDATE_SLIDER: updateSlider,
     DELETE_SLIDER: removeSlider,
-    SIDEBAR_NAV_SLIDER: sidebarNavSlider,
+    GET_SLIDER: getSlider,
     ADD_PAGE: addPage,
     UPDATE_PAGE: updatePage,
     DELETE_PAGE: removePage,
-    SIDEBAR_NAV_PAGE: sidebarNavPage,
+    GET_PAGE: getPage,
     ADD_BLOG: addBlog,
     UPDATE_BLOG: updateBlog,
     DELETE_BLOG: removeBlog,
-    SIDEBAR_NAV_BLOG: sidebarNavBlog,
+    GET_BLOG: getBlog,
     ADD_REFERENCE: addReference,
     UPDATE_REFERENCE: updateReference,
     DELETE_REFERENCE: removeReference,
-    SIDEBAR_NAV_REFERENCE: sidebarNavReference,
+    GET_REFERENCE: getReference,
     ADD_PORTFOLIO: addPortfolio,
     UPDATE_PORTFOLIO: updatePortfolio,
     DELETE_PORTFOLIO: removePortfolio,
-    SIDEBAR_NAV_PORTFOLIO: sidebarNavPortfolio,
+    GET_PORTFOLIO: getPortfolio,
     ADD_TESTIMONIAL: addTestimonial,
     UPDATE_TESTIMONIAL: updateTestimonial,
     DELETE_TESTIMONIAL: removeTestimonial,
-    SIDEBAR_NAV_TESTIMONIAL: sidebarNavTestimonial,
+    GET_TESTIMONIAL: getTestimonial,
     ADD_SERVICE: addService,
     UPDATE_SERVICE: updateService,
     DELETE_SERVICE: removeService,
-    SIDEBAR_NAV_SERVICE: sidebarNavService,
+    GET_SERVICE: getService,
     ADD_PRODUCT: addProduct,
     UPDATE_PRODUCT: updateProduct,
     DELETE_PRODUCT: removeProduct,
-    SIDEBAR_NAV_PRODUCT: sidebarNavProduct,
+    GET_PRODUCT: getProduct,
     ADD_BEFORE_AND_AFTER: addBeforeAndAfter,
     UPDATE_BEFORE_AND_AFTER: updateBeforeAndAfter,
     DELETE_BEFORE_AND_AFTER: removeBeforeAndAfter,
-    SIDEBAR_NAV_BEFORE_AND_AFTER: sidebarNavBeforeAndAfter
+    GET_BEFORE_AND_AFTER: getBeforeAndAfter
 }
