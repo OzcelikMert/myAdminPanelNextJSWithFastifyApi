@@ -3,7 +3,7 @@ import {Tab, Tabs} from "react-bootstrap";
 import moment from "moment";
 import {IPagePropCommon} from "types/pageProps";
 import {PermissionGroups, Permissions, StatusId, UserRoleId, userRoles} from "constants/index";
-import HandleForm from "library/react/handles/form";
+import ReactHandleFormLibrary from "library/react/handles/form";
 import {ComponentFieldSet, ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import V, {DateMask} from "library/variable";
 import userService from "services/user.service";
@@ -266,7 +266,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                         options={this.state.userRoles}
                         value={this.state.userRoles?.findSingle("value", this.state.formData.roleId)}
                         onChange={(item: any, e) => {
-                            HandleForm.onChangeSelect(e.name, item.value, this);
+                            ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this);
                             this.onChangeUserRole(item.value);
                         }}
                     />
@@ -277,7 +277,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                         name="formData.statusId"
                         options={this.state.status}
                         value={this.state.status?.findSingle("value", this.state.formData.statusId)}
-                        onChange={(item: any, e) => HandleForm.onChangeSelect(e.name, item.value, this)}
+                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
                 {
@@ -289,7 +289,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                                     type="date"
                                     name="formData.banDateEnd"
                                     value={moment(this.state.formData.banDateEnd).format("YYYY-MM-DD")}
-                                    onChange={(event) => HandleForm.onChangeInput(event, this)}
+                                    onChange={(event) => ReactHandleFormLibrary.onChangeInput(event, this)}
                                 />
                             </div>
                             <div className="mb-3">
@@ -298,7 +298,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                                     name="formData.banComment"
                                     type="textarea"
                                     value={this.state.formData.banComment}
-                                    onChange={e => HandleForm.onChangeInput(e, this)}
+                                    onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                                 />
                             </div>
                         </div> : null
@@ -317,7 +317,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                         type="text"
                         required={true}
                         value={this.state.formData.name}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -328,7 +328,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                         required={true}
                         autoComplete={"new-password"}
                         value={this.state.formData.email}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -339,7 +339,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                         autoComplete={"new-password"}
                         required={V.isEmpty(this.state.formData._id)}
                         value={this.state.formData.password}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
             </div>

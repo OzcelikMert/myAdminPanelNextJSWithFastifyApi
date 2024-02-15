@@ -1,7 +1,7 @@
 import React, {Component, FormEvent} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormType} from "components/elements/form";
-import HandleForm from "library/react/handles/form";
+import ReactHandleFormLibrary from "library/react/handles/form";
 import {
     PermissionGroups,
     Permissions,
@@ -271,7 +271,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                             type="text"
                                             required={true}
                                             value={this.state.formData.name}
-                                            onChange={e => HandleForm.onChangeInput(e, this)}
+                                            onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
@@ -280,7 +280,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                             name="formData.comment"
                                             type="textarea"
                                             value={this.state.formData.comment}
-                                            onChange={e => HandleForm.onChangeInput(e, this)}
+                                            onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
@@ -289,7 +289,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                             name="formData.phone"
                                             type="text"
                                             value={this.state.formData.phone}
-                                            onChange={e => HandleForm.onChangeInput(e, this)}
+                                            onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
@@ -298,7 +298,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                             name="formData.facebook"
                                             type="url"
                                             value={this.state.formData.facebook}
-                                            onChange={e => HandleForm.onChangeInput(e, this)}
+                                            onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
@@ -307,7 +307,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                             name="formData.instagram"
                                             type="url"
                                             value={this.state.formData.instagram}
-                                            onChange={e => HandleForm.onChangeInput(e, this)}
+                                            onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
@@ -316,7 +316,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                             name="formData.twitter"
                                             type="url"
                                             value={this.state.formData.twitter}
-                                            onChange={e => HandleForm.onChangeInput(e, this)}
+                                            onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                                         />
                                     </div>
                                 </div>

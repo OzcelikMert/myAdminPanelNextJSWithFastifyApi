@@ -3,7 +3,7 @@ import ThemeInputType from "components/elements/form/input/type";
 import {IPagePropCommon} from "types/pageProps";
 import {LanguageId, StatusId} from "constants/index";
 import {ComponentForm, ComponentFormCheckBox} from "components/elements/form";
-import HandleForm from "library/react/handles/form";
+import ReactHandleFormLibrary from "library/react/handles/form";
 import authService from "services/auth.service";
 import {IUserGetResultService} from "types/services/user.service";
 import PagePaths from "constants/pagePaths";
@@ -110,7 +110,7 @@ class PageLogin extends Component<IPageProps, IPageState> {
                                                 name="formData.email"
                                                 required={true}
                                                 value={this.state.formData.email}
-                                                onChange={e => HandleForm.onChangeInput(e, this)}
+                                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                                             />
                                         </div>
                                         <div className="col-md-12 mb-3">
@@ -120,7 +120,7 @@ class PageLogin extends Component<IPageProps, IPageState> {
                                                 name="formData.password"
                                                 required={true}
                                                 value={this.state.formData.password}
-                                                onChange={e => HandleForm.onChangeInput(e, this)}
+                                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                                             />
                                         </div>
                                         <div className="col-md-12 mb-3">
@@ -128,7 +128,7 @@ class PageLogin extends Component<IPageProps, IPageState> {
                                                 name="formData.keepMe"
                                                 title={this.props.t("keepMe")}
                                                 checked={Boolean(this.state.formData.keepMe)}
-                                                onChange={e => HandleForm.onChangeInput(e, this)}
+                                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                                             />
                                         </div>
                                         <div className="col-md-12">

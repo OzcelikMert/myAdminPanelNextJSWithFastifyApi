@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PagePostAdd from "pages/post/[postTypeId]/add";
 import {ComponentFormLoadingButton, ComponentFormSelect, ComponentFormType} from "components/elements/form";
-import HandleForm from "library/react/handles/form";
+import ReactHandleFormLibrary from "library/react/handles/form";
 import {Modal} from "react-bootstrap";
 import postTermService from "services/postTerm.service";
 import {PostTermTypeId} from "constants/postTermTypes";
@@ -94,7 +94,7 @@ export default class ComponentPagePostAddChooseCategory extends Component<IPageP
                                     type="text"
                                     required={true}
                                     value={this.state.newItemTitle}
-                                    onChange={e => HandleForm.onChangeInput(e, this)}
+                                    onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                                 />
                             </div>
                             <div className="col-md-12 mt-4 text-end submit">
@@ -128,7 +128,7 @@ export default class ComponentPagePostAddChooseCategory extends Component<IPageP
                             closeMenuOnSelect={false}
                             options={this.props.page.state.categories}
                             value={this.props.page.state.categories?.filter(item => this.props.page.state.formData.categories?.includes(item.value))}
-                            onChange={(item: any, e) => HandleForm.onChangeSelect(e.name, item, this.props.page)}
+                            onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item, this.props.page)}
                         />
                     </div>
                     <div className="col-md-2 mt-2 m-md-auto text-end text-md-center">

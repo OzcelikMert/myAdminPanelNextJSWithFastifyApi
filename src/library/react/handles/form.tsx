@@ -23,7 +23,7 @@ function setDataWithKeys(data: any, keys: string[], value: any, isArrayPush: boo
     return data;
 }
 
-class HandleForm {
+class ReactHandleFormLibrary {
     static onChangeInput(event: React.ChangeEvent<any>, component: Component) {
         component.setState((state: any) => {
             let value: any = null;
@@ -54,4 +54,4 @@ class HandleForm {
     }
 }
 
-export default HandleForm;
+export default ReactHandleFormLibrary;

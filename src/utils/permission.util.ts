@@ -2,89 +2,46 @@ import {UserRoleId, userRoles} from "constants/userRoles";
 import {PermissionId} from "constants/permissions";
 import {ISessionAuthModel} from "types/models/sessionAuth.model";
 import {PostTypeId} from "constants/postTypes";
+import {PostEndPointPermission} from "constants/endPointPermissions/post.endPoint.permission";
+import {EndPoints} from "constants/endPoints";
+import {IEndPointPermission} from "types/constants/endPoint.permissions";
 
-const check = (sessionAuth: ISessionAuthModel, minRoleId?: UserRoleId, minPermissionId?: PermissionId | PermissionId[]) => {
-    let status = true;
+const getPermissionKeyPrefix = (method: string) => {
+    let prefix = "";
 
-    if(status && minRoleId){
-        let sessionUserRole = userRoles.findSingle("id", sessionAuth.user.roleId);
-        let role = userRoles.findSingle("id", minRoleId);
-
-        status = (sessionUserRole?.rank ?? 0) >= (role?.rank?? 0);
+    switch (method) {
+        case "GET": prefix = "GET_"; break;
+        case "POST": prefix = "ADD_"; break;
+        case "PUT": prefix = "UPDATE_"; break;
+        case "DELETE": prefix = "DELETE_"; break;
     }
 
-    if(status && minPermissionId){
-        status = false;
-
-        if(Array.isArray(minPermissionId)){
-            for(const permId of minPermissionId) {
-                if(!status){
-                    status = sessionAuth.user.permissions.includes(permId);
-                }
-            }
-        }else {
-            status = sessionAuth.user.permissions.includes(minPermissionId);
-        }
-    }
-
-    return status || sessionAuth.user.roleId == UserRoleId.SuperAdmin;
+    return prefix;
 }
 
-const checkPermissionPath = (path: string, userRoleId: UserRoleId, userPermissions: number[]) => {
-    for(const permissionPath of PermissionPaths) {
-        if(path.startsWith(permissionPath.path)){
-            if(
-                userRoleId != UserRoleId.SuperAdmin &&
-                permissionPath.permissionId &&
-                !userPermissions.includes(permissionPath.permissionId)
-            ){
-                return false;
-            }
+const getPostPermission = (typeId: PostTypeId) : IEndPointPermission => {
+    let reqData = req as any;
+    let path = req.originalUrl.replace(`/api`, "");
+    let method = req.method.toUpperCase();
+    let permissionKeyPrefix = getPermissionKeyPrefix(method);
+    const postTypeIdKey = Object.keys(PostTypeId).find(key => PostTypeId[key as keyof typeof PostTypeId] === typeId) ?? "";
 
-            if(permissionPath.userRoleId){
-                let permPathUserRole = userRoles.findSingle("id", permissionPath.userRoleId);
-                let userRole = userRoles.findSingle("id", userRoleId);
-                if(
-                    (typeof permPathUserRole === "undefined" || typeof userRole === "undefined") ||
-                    (userRole.rank < permPathUserRole.rank)
-                ){
-                    return false;
-                }
-            }
-        }
-    }
-    return true;
+    return (PostEndPointPermission as any)[`${permissionKeyPrefix}${postTypeIdKey.toUpperCase()}`] ?? {permissionId: [], minUserRoleId: 0};
 }
 
-const checkPermission = (userRoleId: number, userPermissions: number[], permissionId: number | number[]) => {
-    if(typeof userPermissions === "undefined") return false;
-    if(Array.isArray(permissionId)) {
-        for (const permId of permissionId) {
-            if(!checkPermission(userRoleId, userPermissions, permId)){
-                return false;
-            }
-        }
-    }else {
-        return userRoleId == UserRoleId.SuperAdmin || userPermissions.includes(permissionId);
-    }
+const checkPermissionRoleRank = (minRoleId: UserRoleId, targetRoleId: UserRoleId) => {
+    let userRole = userRoles.findSingle("id", targetRoleId);
+    let minRole = userRoles.findSingle("id", UserRoleId.Editor);
+
+    return (userRole && minRole) && (userRole.rank >= minRole.rank);
 }
 
-const getPermissionIdForPostType = (typeId: number, query: "Edit" | "Delete" | "Add"): PermissionId => {
-    let permissionId = 0;
-    Object.keys(PostTypeId).forEach((postType) => {
-        let postTypeId: any = PostTypeId[postType as any];
-        if (typeId == postTypeId) {
-            try {
-                permissionId = Number(PermissionId[`${postType.toCapitalizeCase()}${query.toCapitalizeCase()}` as any] ?? 0);
-            } catch (e) {}
-        }
-    })
-    return permissionId;
+const checkPermissionId = (minPermissionId: PermissionId[], targetPermissionId: PermissionId[]) => {
+    return (minPermissionId.every(permissionId => targetPermissionId.some(userPermissionId => permissionId == userPermissionId)));
 }
 
 export const PermissionUtil = {
-    check: check,
-    checkPermissionPath: checkPermissionPath,
-    checkPermission: checkPermission,
-    getPermissionIdForPostType: getPermissionIdForPostType
+    getPostPermission: getPostPermission,
+    checkPermissionRoleRank: checkPermissionRoleRank,
+    checkPermissionId: checkPermissionId
 }

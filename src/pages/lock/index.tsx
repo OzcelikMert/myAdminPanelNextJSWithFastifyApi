@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import ThemeInputType from "components/elements/form/input/type";
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentForm} from "components/elements/form";
-import HandleForm from "library/react/handles/form";
+import ReactHandleFormLibrary from "library/react/handles/form";
 import V from "library/variable";
 import authService from "services/auth.service";
 import imageSourceLib from "lib/imageSource.lib";
@@ -99,7 +99,7 @@ class PageLock extends Component<IPageProps, IPageState> {
                                                 name="formData.password"
                                                 required={true}
                                                 value={this.state.formData.password}
-                                                onChange={e => HandleForm.onChangeInput(e, this)}
+                                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                                             />
                                         </div>
                                         <div className="col-md-12">

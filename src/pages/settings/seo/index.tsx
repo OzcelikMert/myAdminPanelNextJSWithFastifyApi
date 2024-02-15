@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {ComponentForm, ComponentFormTags, ComponentFormType} from "components/elements/form";
 import {IPagePropCommon} from "types/pageProps";
-import HandleForm from "library/react/handles/form";
+import ReactHandleFormLibrary from "library/react/handles/form";
 import settingService from "services/setting.service";
 import ComponentToast from "components/elements/toast";
 import {ISettingUpdateSEOParamService} from "types/services/setting.service";
@@ -116,7 +116,7 @@ class PageSettingsSEO extends Component<IPageProps, IPageState> {
                                                     required={true}
                                                     maxLength={50}
                                                     value={this.state.formData.seoContents.title}
-                                                    onChange={(event) => HandleForm.onChangeInput(event, this)}
+                                                    onChange={(event) => ReactHandleFormLibrary.onChangeInput(event, this)}
                                                 />
                                             </div>
                                             <div className="col-md-7 mb-3">
@@ -127,7 +127,7 @@ class PageSettingsSEO extends Component<IPageProps, IPageState> {
                                                     required={true}
                                                     maxLength={120}
                                                     value={this.state.formData.seoContents.content}
-                                                    onChange={(event) => HandleForm.onChangeInput(event, this)}
+                                                    onChange={(event) => ReactHandleFormLibrary.onChangeInput(event, this)}
                                                 />
                                             </div>
                                             <div className="col-md-7">
@@ -136,7 +136,7 @@ class PageSettingsSEO extends Component<IPageProps, IPageState> {
                                                     placeHolder={this.props.t("writeAndPressEnter")}
                                                     name="formData.seoContents.tags"
                                                     value={this.state.formData.seoContents.tags ?? []}
-                                                    onChange={(value, name) => HandleForm.onChangeSelect(name, value, this)}
+                                                    onChange={(value, name) => ReactHandleFormLibrary.onChangeSelect(name, value, this)}
                                                 />
                                             </div>
                                         </div>

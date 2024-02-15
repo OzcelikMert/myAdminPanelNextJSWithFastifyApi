@@ -3,7 +3,7 @@ import {Tab, Tabs} from "react-bootstrap";
 import {ComponentForm, ComponentFormSelect, ComponentFormType,} from "components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
-import HandleForm from "library/react/handles/form";
+import ReactHandleFormLibrary from "library/react/handles/form";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
 import postTermService from "services/postTerm.service";
 import {IPostTermUpdateOneParamService} from "types/services/postTerm.service";
@@ -245,7 +245,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                         name="formData.statusId"
                         options={this.state.status}
                         value={this.state.status?.findSingle("value", this.state.formData.statusId)}
-                        onChange={(item: any, e) => HandleForm.onChangeSelect(e.name, item.value, this)}
+                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -255,7 +255,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                         type="number"
                         required={true}
                         value={this.state.formData.rank}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
             </div>
@@ -288,7 +288,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                         type="text"
                         required={true}
                         value={this.state.formData.contents.title}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 {
@@ -303,7 +303,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                                 placeholder={this.props.t("chooseMainCategory")}
                                 options={this.state.items}
                                 value={this.state.items.findSingle("value", this.state.formData.mainId || "")}
-                                onChange={(item: any, e) => HandleForm.onChangeSelect(e.name, item.value, this)}
+                                onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                             />
                         </div> : null
                 }

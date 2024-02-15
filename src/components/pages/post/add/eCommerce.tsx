@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form";
-import HandleForm from "library/react/handles/form";
+import ReactHandleFormLibrary from "library/react/handles/form";
 import {IPostECommerceAttributeModel, IPostECommerceVariationModel} from "types/models/post.model";
 import {Accordion, Card, Tab, Tabs} from "react-bootstrap";
 import ComponentAccordionToggle from "components/elements/accordion/toggle";
@@ -223,7 +223,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                 name="formData.eCommerce.pricing.taxIncluded"
                                 type="number"
                                 value={this.props.page.state.formData.eCommerce?.pricing?.taxIncluded}
-                                onChange={e => HandleForm.onChangeInput(e, this.props.page)}
+                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this.props.page)}
                             />
                         </div>
                         <div className="col-md-6 mb-3">
@@ -232,7 +232,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                 name="formData.eCommerce.pricing.taxExcluded"
                                 type="number"
                                 value={this.props.page.state.formData.eCommerce?.pricing?.taxExcluded}
-                                onChange={e => HandleForm.onChangeInput(e, this.props.page)}
+                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this.props.page)}
                             />
                         </div>
                         <div className="col-md-6 mb-3">
@@ -241,7 +241,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                 name="formData.eCommerce.pricing.taxRate"
                                 type="number"
                                 value={this.props.page.state.formData.eCommerce?.pricing?.taxRate}
-                                onChange={e => HandleForm.onChangeInput(e, this.props.page)}
+                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this.props.page)}
                             />
                         </div>
                         <div className="col-md-6 mb-3">
@@ -250,7 +250,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                 name="formData.eCommerce.pricing.compared"
                                 type="number"
                                 value={this.props.page.state.formData.eCommerce?.pricing?.compared}
-                                onChange={e => HandleForm.onChangeInput(e, this.props.page)}
+                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this.props.page)}
                             />
                         </div>
                     </div>
@@ -318,7 +318,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                 name="formData.eCommerce.inventory.sku"
                                 type="text"
                                 value={this.props.page.state.formData.eCommerce?.inventory?.sku}
-                                onChange={e => HandleForm.onChangeInput(e, this.props.page)}
+                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this.props.page)}
                             />
                         </div>
                         <div className="col-md-6 mb-3">
@@ -328,7 +328,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                 disabled={!this.props.page.state.formData.eCommerce?.inventory?.isManageStock || false}
                                 type="number"
                                 value={this.props.page.state.formData.eCommerce?.inventory?.quantity}
-                                onChange={e => HandleForm.onChangeInput(e, this.props.page)}
+                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this.props.page)}
                             />
                         </div>
                         <div className="col-md-7">
@@ -336,7 +336,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                 title={this.props.page.props.t("isManageStock")}
                                 name="formData.eCommerce.inventory.isManageStock"
                                 checked={Boolean(this.props.page.state.formData.eCommerce?.inventory?.isManageStock)}
-                                onChange={e => HandleForm.onChangeInput(e, this.props.page)}
+                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this.props.page)}
                             />
                         </div>
                     </div>
@@ -356,7 +356,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                 name="formData.eCommerce.shipping.width"
                                 type="text"
                                 value={this.props.page.state.formData.eCommerce?.shipping?.width}
-                                onChange={e => HandleForm.onChangeInput(e, this.props.page)}
+                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this.props.page)}
                             />
                         </div>
                         <div className="col-md-6 mb-3">
@@ -365,7 +365,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                 name="formData.eCommerce.shipping.height"
                                 type="text"
                                 value={this.props.page.state.formData.eCommerce?.shipping?.height}
-                                onChange={e => HandleForm.onChangeInput(e, this.props.page)}
+                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this.props.page)}
                             />
                         </div>
                         <div className="col-md-6 mb-3">
@@ -374,7 +374,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                 name="formData.eCommerce.shipping.depth"
                                 type="text"
                                 value={this.props.page.state.formData.eCommerce?.shipping?.depth}
-                                onChange={e => HandleForm.onChangeInput(e, this.props.page)}
+                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this.props.page)}
                             />
                         </div>
                         <div className="col-md-6 mb-3">
@@ -383,7 +383,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                 name="formData.eCommerce.shipping.weight"
                                 type="text"
                                 value={this.props.page.state.formData.eCommerce?.shipping?.weight}
-                                onChange={e => HandleForm.onChangeInput(e, this.props.page)}
+                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this.props.page)}
                             />
                         </div>
                         <div className="col-md-6 mb-3">
@@ -392,7 +392,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                 name="formData.eCommerce.pricing.shipping"
                                 type="number"
                                 value={this.props.page.state.formData.eCommerce?.pricing?.shipping}
-                                onChange={e => HandleForm.onChangeInput(e, this.props.page)}
+                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this.props.page)}
                             />
                         </div>
                     </div>
@@ -809,7 +809,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                         name="formData.eCommerce.typeId"
                         options={this.props.page.state.productTypes}
                         value={this.props.page.state.productTypes?.findSingle("value", this.props.page.state.formData.eCommerce?.typeId || "")}
-                        onChange={(item: any, e) => HandleForm.onChangeSelect(e.name, item.value, this.props.page)}
+                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this.props.page)}
                     />
                 </div>
             </div>

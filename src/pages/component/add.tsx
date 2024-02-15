@@ -1,7 +1,7 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import {IPagePropCommon} from "types/pageProps";
-import HandleForm from "library/react/handles/form";
+import ReactHandleFormLibrary from "library/react/handles/form";
 import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import V from "library/variable";
 import {IComponentUpdateOneParamService} from "types/services/component.service";
@@ -413,7 +413,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                         type="text"
                         required={true}
                         value={this.state.formData.elementId}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -423,7 +423,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                         placeholder={this.props.t("langKey")}
                         options={this.state.langKeys}
                         value={this.state.langKeys?.findSingle("value", this.state.formData.langKey)}
-                        onChange={(item: any, e) => HandleForm.onChangeSelect(e.name, item.value, this)}
+                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
             </div>

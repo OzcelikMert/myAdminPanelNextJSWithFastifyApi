@@ -1,4 +1,4 @@
-class Thread {
+class ThreadLibrary {
     static start(func: () => void, ms: number = 100): void {
         setTimeout(() => func(), ms);
     }
@@ -7,4 +7,4 @@ class Thread {
     }
 }
 
-export default Thread;
+export default ThreadLibrary;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
-import HandleForm from "library/react/handles/form";
+import ReactHandleFormLibrary from "library/react/handles/form";
 import {Languages, StatusId, UserRoleId} from "constants/index";
 import settingService from "services/setting.service";
 import languageService from "services/language.service";
@@ -171,7 +171,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         name="formData.head"
                         type="textarea"
                         value={this.state.formData.head}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -180,7 +180,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         name="formData.script"
                         type="textarea"
                         value={this.state.formData.script}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
             </div>
@@ -196,7 +196,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         name="formData.contact.email"
                         type="email"
                         value={this.state.formData.contact?.email}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -205,7 +205,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         name="formData.contact.phone"
                         type="tel"
                         value={this.state.formData.contact?.phone}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -214,7 +214,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         name="formData.contact.address"
                         type="text"
                         value={this.state.formData.contact?.address}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 ,
@@ -224,7 +224,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         name="formData.contact.addressMap"
                         type="text"
                         value={this.state.formData.contact?.addressMap}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
             </div>
@@ -242,7 +242,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         isSearchable={false}
                         options={this.state.languages}
                         value={this.state.languages.findSingle("value", this.state.formData.defaultLangId || "")}
-                        onChange={(item: any, e) => HandleForm.onChangeSelect(e.name, item.value, this)}
+                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -337,7 +337,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         isSearchable={false}
                         options={this.state.panelLanguages}
                         value={this.state.panelLanguages.findSingle("value", this.state.formData.panelLangId)}
-                        onChange={(item: any, e) => HandleForm.onChangeSelect(e.name, item.value, this)}
+                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
             </div>
