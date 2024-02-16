@@ -21,7 +21,7 @@ export default class ComponentToast {
     constructor(props: IPageProps) {
         this.props = props;
         this.options = {
-            position: props.position ?? "top-center",
+            position: props.position ?? "top-right",
             autoClose: props.timeOut ? (Number(props.timeOut) * 1000) : props.type === "loading" || typeof props.type === "undefined" ? false : 4000,
             draggable: !!props.timeOut || (typeof props.type !== "undefined" && props.type !== "loading"),
             hideProgressBar: false,

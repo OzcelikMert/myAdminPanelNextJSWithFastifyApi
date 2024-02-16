@@ -10,6 +10,13 @@ import {IPostTermUpdateOneParamService} from "types/services/postTerm.service";
 import Swal from "sweetalert2";
 import Image from "next/image"
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {PostTypeId} from "constants/postTypes";
+import {PostTermTypeId} from "constants/postTermTypes";
+import {PermissionUtil, PostPermissionMethod} from "utils/permission.util";
+import {PostUtil} from "utils/post.util";
+import {StatusId} from "constants/status";
+import {ComponentUtil} from "utils/component.util";
+import {ImageSourceUtil} from "utils/imageSource.util";
 
 type IPageState = {
     mainTabActiveKey: string
@@ -48,7 +55,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                 statusId: 0,
                 rank: 0,
                 contents: {
-                    langId: this.props.getStateApp.pageData.langId,
+                    langId: this.props.getStateApp.appData.currentLangId,
                     image: "",
                     title: "",
                     url: "",
@@ -59,21 +66,24 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        if([PostTermTypeId.Category, PostTermTypeId.Variations].includes(this.state.formData.typeId)){
-            await this.getItems();
+        let methodType = this.state.formData._id ? PostPermissionMethod.UPDATE : PostPermissionMethod.ADD;
+        if(PermissionUtil.checkAndRedirect(this.props, PermissionUtil.getPostPermission(this.state.formData.postTypeId, methodType))) {
+            this.setPageTitle();
+            if([PostTermTypeId.Category, PostTermTypeId.Variations].includes(this.state.formData.typeId)){
+                await this.getItems();
+            }
+            this.getStatus();
+            if (this.state.formData._id) {
+                await this.getItem();
+            }
+            this.props.setStateApp({
+                isPageLoading: false
+            })
         }
-        this.getStatus();
-        if (this.state.formData._id) {
-            await this.getItem();
-        }
-        this.props.setStateApp({
-            isPageLoading: false
-        })
     }
 
     async componentDidUpdate(prevProps: Readonly<IPageProps>) {
-        if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
+        if (prevProps.getStateApp.appData.currentLangId != this.props.getStateApp.appData.currentLangId) {
             this.props.setStateApp({
                 isPageLoading: true
             }, async () => {
@@ -87,7 +97,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
 
     setPageTitle() {
         let titles: string[] = [
-            ...postLib.getPageTitles({
+            ...PostUtil.getPageTitles({
                 t: this.props.t,
                 postTypeId: this.state.formData.postTypeId,
                 termTypeId: this.state.formData.typeId
@@ -104,7 +114,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
 
     getStatus() {
         this.setState((state: IPageState) => {
-            state.status = staticContentLib.getStatusForSelect([
+            state.status = ComponentUtil.getStatusForSelect([
                 StatusId.Active,
                 StatusId.InProgress,
                 StatusId.Pending
@@ -124,10 +134,10 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
             langId: this.props.getStateApp.appData.mainLangId,
             statusId: StatusId.Active
         });
-        if (resData.status) {
+        if (resData.status && resData.data) {
             this.setState((state: IPageState) => {
                 state.items = [{value: "", label: this.props.t("notSelected")}];
-                resData.data.forEach(item => {
+                resData.data!.forEach(item => {
                     if (!V.isEmpty(this.state.formData._id)) {
                         if (this.state.formData._id == item._id) return;
                     }
@@ -146,7 +156,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
             _id: this.state.formData._id,
             typeId: this.state.formData.typeId,
             postTypeId: this.state.formData.postTypeId,
-            langId: this.props.getStateApp.pageData.langId
+            langId: this.props.getStateApp.appData.currentLangId
         });
         if (resData.status) {
             if (resData.data) {
@@ -159,11 +169,11 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                         contents: {
                             ...state.formData.contents,
                             ...item.contents,
-                            langId: this.props.getStateApp.pageData.langId
+                            langId: this.props.getStateApp.appData.currentLangId
                         }
                     }
 
-                    if (this.props.getStateApp.pageData.langId == this.props.getStateApp.appData.mainLangId) {
+                    if (this.props.getStateApp.appData.currentLangId == this.props.getStateApp.appData.mainLangId) {
                         state.mainTitle = state.formData.contents.title || "";
                     }
                     return state;
@@ -179,8 +189,8 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
     navigatePage() {
         let postTypeId = this.state.formData.postTypeId;
         let postTermTypeId = this.state.formData.typeId;
-        let pagePath = PostLib.getPagePath(postTypeId);
-        let path = pagePath.term(postTermTypeId).list()
+        let pagePath = PostUtil.getPagePath(postTypeId);
+        let path = pagePath.TERM_WITH(postTermTypeId).LIST
         this.props.router.push(path);
     }
 
@@ -267,7 +277,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
             <div className="row">
                 <div className="col-md-7 mb-3">
                     <Image
-                        src={imageSourceLib.getUploadedImageSrc(this.state.formData.contents.image)}
+                        src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.contents.image)}
                         alt="Empty Image"
                         className="post-image img-fluid"
                         width={100}

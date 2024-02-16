@@ -2,14 +2,16 @@ import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import ComponentDataTable from "components/elements/table/dataTable";
-import PagePaths from "constants/pagePaths";
 import {ILanguageGetResultService} from "types/services/language.service";
 import languageService from "services/language.service";
 import Image from "next/image";
-import imageSourceLib from "lib/imageSource.lib";
 import ComponentThemeBadgeStatus from "components/theme/badge/status";
 import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
 import ComponentToast from "components/elements/toast";
+import {PermissionUtil} from "utils/permission.util";
+import {LanguageEndPointPermission} from "constants/endPointPermissions/language.endPoint.permission";
+import {EndPoints} from "constants/endPoints";
+import {ImageSourceUtil} from "utils/imageSource.util";
 
 type IPageState = {
     searchKey: string
@@ -34,11 +36,13 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        await this.getItems();
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if(PermissionUtil.checkAndRedirect(this.props, LanguageEndPointPermission.GET)){
+            this.setPageTitle();
+            await this.getItems();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     setPageTitle() {
@@ -50,12 +54,15 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
     }
 
     async getItems() {
-        let items = (await languageService.getMany({})).data;
-        this.setState((state: IPageState) => {
-            state.items = items;
-            state.showingItems = items;
-            return state;
-        });
+        let result = (await languageService.getMany({}));
+
+        if(result.status && result.data){
+            this.setState((state: IPageState) => {
+                state.items = result.data!;
+                state.showingItems = result.data!;
+                return state;
+            });
+        }
     }
 
     async onChangeRank(rank: number) {
@@ -92,12 +99,10 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
     }
 
     navigatePage(type: "edit", itemId = "") {
-        let pagePath = PagePaths.settings().language();
-        let path = "";
+        let pagePath = EndPoints.LANGUAGE_WITH;
         switch(type){
-            case "edit": path = pagePath.edit(itemId); break;
+            case "edit": this.props.router.push(pagePath.EDIT(itemId)); break;
         }
-        this.props.router.push(path);
     }
 
     get getTableColumns(): TableColumn<IPageState["showingItems"][0]>[] {
@@ -108,7 +113,7 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
                 cell: row => (
                     <div className="image mt-2 mb-2">
                         <Image
-                            src={imageSourceLib.getUploadedFlagSrc(row.image)}
+                            src={ImageSourceUtil.getUploadedFlagSrc(row.image)}
                             alt={row.title}
                             width={75}
                             height={75}
@@ -151,17 +156,23 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
                 selector: row => new Date(row.createdAt || "").toLocaleDateString(),
                 sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
             },
-            {
-                name: "",
-                width: "70px",
-                button: true,
-                cell: row => (
-                    <button
-                        onClick={() => this.navigatePage("edit", row._id)}
-                        className="btn btn-gradient-warning"
-                    ><i className="fa fa-pencil-square-o"></i></button>
-                )
-            }
+            (
+                PermissionUtil.check(
+                    this.props.getStateApp.sessionAuth!,
+                    LanguageEndPointPermission.UPDATE
+                ) ? {
+                    name: "",
+                    width: "70px",
+                    button: true,
+                    cell: row => (
+                        <button
+                            onClick={() => this.navigatePage("edit", row._id)}
+                            className="btn btn-gradient-warning"
+                        ><i className="fa fa-pencil-square-o"></i></button>
+                    )
+                } : {}
+            )
+
         ];
     }
 
@@ -185,7 +196,10 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
                                     columns={this.getTableColumns.filter(column => typeof column.name !== "undefined")}
                                     data={this.state.showingItems}
                                     onSearch={searchKey => this.onSearch(searchKey)}
-                                    t={this.props.t}
+                                    i18={{
+                                        search: this.props.t("search"),
+                                        noRecords: this.props.t("noRecords")
+                                    }}
                                     isSearchable={true}
                                 />
                             </div>

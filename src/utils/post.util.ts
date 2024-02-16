@@ -3,6 +3,7 @@ import {IPostGetPageTitleParamUtil} from "types/utils/post.util";
 import {postTermTypes} from "constants/postTermTypes";
 import {EndPoints} from "constants/endPoints";
 import {PathUtil} from "utils/path.util";
+import {PostEndPoint} from "constants/endPoints/post.endPoint";
 
 const getPagePath = (postTypeId: PostTypeId) => {
     let pagePath = "";
@@ -15,7 +16,7 @@ const getPagePath = (postTypeId: PostTypeId) => {
         pagePath = PathUtil.createPath(EndPoints.THEME_CONTENT, EndPoints.POST(postTypeId));
     }
 
-    return pagePath;
+    return new PostEndPoint(pagePath);
 }
 
 const getPageTitles = (params: IPostGetPageTitleParamUtil) => {

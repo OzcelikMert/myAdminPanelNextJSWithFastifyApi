@@ -4,6 +4,6 @@ const changeTheme = (theme: IThemeKeys) => {
     document.documentElement.setAttribute("data-theme", theme);
 }
 
-export default {
+export const ThemeUtil = {
     changeTheme: changeTheme
 }

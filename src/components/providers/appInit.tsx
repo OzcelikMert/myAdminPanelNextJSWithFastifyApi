@@ -46,10 +46,8 @@ export default class ComponentProviderAppInit extends Component<IPageProps, IPag
             let data = resData.data;
             this.props.setStateApp({
                 appData: {
-                  mainLangId: data.defaultLangId
-                },
-                pageData: {
-                    langId: data.defaultLangId
+                  mainLangId: data.defaultLangId,
+                  currentLangId: data.defaultLangId
                 }
             })
         }

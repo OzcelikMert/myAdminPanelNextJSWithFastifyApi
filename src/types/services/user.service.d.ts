@@ -1,6 +1,7 @@
 import {IUserModel} from "../models/user.model";
 import {StatusId} from "constants/status";
 import {UserRoleId} from "constants/userRoles";
+import {PermissionId} from "constants/permissions";
 
 export interface IUserPopulateService {
     _id: string
@@ -28,8 +29,15 @@ export interface IUserGetManyParamService {
 }
 
 export type IUserAddParamService = {
-    password: string
-} & Omit<IUserModel, "_id"|"password">
+    roleId: UserRoleId,
+    statusId: StatusId,
+    name: string,
+    email: string,
+    password: string,
+    permissions: PermissionId[],
+    banDateEnd?: string,
+    banComment?: string,
+}
 
 export type IUserUpdateOneParamService = {
     _id: string

@@ -2,7 +2,7 @@ declare global {
     interface Array<T> {
         indexOfKey(key: string, value: any): number
         findSingle(key: string, value: any): T | undefined
-        findMulti(key: string, value: any | any[], isLike?: boolean): this
+        findMulti(key: string, value: any | any[], isEquals?: boolean): this
         orderBy(key: string | "", sort_type: `asc` | `desc`): this
         serializeObject(): object,
         remove(index: number, deleteCount?: number): void;
@@ -57,7 +57,7 @@ Array.prototype.findSingle = function (key, value) {
         return query;
     });
 }
-Array.prototype.findMulti = function (key, value, isLike = true) {
+Array.prototype.findMulti = function (key, value, isEquals = true) {
     let founds = Array();
     this.find(function (data) {
         let query: boolean = false;
@@ -78,7 +78,7 @@ Array.prototype.findMulti = function (key, value, isLike = true) {
                 query = convertQueryData(_data) == convertQueryData(value);
             }
         }
-        if (query === isLike) founds.push(Object.assign(data));
+        if (query === isEquals) founds.push(Object.assign(data));
     });
     return founds;
 }

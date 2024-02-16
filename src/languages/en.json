@@ -1,4 +1,5 @@
 {
+  "sessionRequired": "Session required!",
   "price": "Price",
   "shippingPrice": "Shipping Price",
   "update": "Update",

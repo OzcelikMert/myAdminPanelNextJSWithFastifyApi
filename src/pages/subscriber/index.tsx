@@ -1,15 +1,16 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {PermissionId, Status, StatusId} from "constants/index";
 import  {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
-import permissionLib from "lib/permission.lib";
 import ComponentToast from "components/elements/toast";
 import {ISubscriberGetResultService} from "types/services/subscriber.service";
 import subscriberService from "services/subscriber.service";
 import {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
 import ComponentDataTable from "components/elements/table/dataTable";
 import {getStatusIcon} from "components/theme/badge/status";
+import {status, StatusId} from "constants/status";
+import {PermissionUtil} from "utils/permission.util";
+import {SubscriberEndPointPermission} from "constants/endPointPermissions/subscriber.endPoint.permission";
 
 type IPageState = {
     searchKey: string
@@ -32,11 +33,13 @@ export default class PageSubscribers extends Component<IPageProps, IPageState> {
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        await this.getItems();
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if(PermissionUtil.checkAndRedirect(this.props, SubscriberEndPointPermission.GET)){
+            this.setPageTitle();
+            await this.getItems();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     setPageTitle() {
@@ -47,10 +50,13 @@ export default class PageSubscribers extends Component<IPageProps, IPageState> {
     }
 
     async getItems() {
-        let items = (await subscriberService.getMany({})).data;
-        this.setState({
-            items: items
-        }, () => this.onSearch(this.state.searchKey));
+        let result = (await subscriberService.getMany({}));
+
+        if(result.status && result.data){
+            this.setState({
+                items: result.data
+            }, () => this.onSearch(this.state.searchKey));
+        }
     }
 
     async onChangeStatus(statusId: number) {
@@ -105,7 +111,7 @@ export default class PageSubscribers extends Component<IPageProps, IPageState> {
     }
 
     get getToggleMenuItems(): ThemeToggleMenuItemDocument[] {
-        return Status.findMulti("id", [
+        return status.findMulti("id", [
                 StatusId.Deleted
             ]
         ).map(item => ({label: this.props.t(item.langKey), value: item.id, icon: getStatusIcon(item.id)}))
@@ -138,15 +144,14 @@ export default class PageSubscribers extends Component<IPageProps, IPageState> {
                                     columns={this.getTableColumns}
                                     data={this.state.showingItems}
                                     selectedRows={this.state.selectedItems}
-                                    t={this.props.t}
+                                    i18={{
+                                        search: this.props.t("search"),
+                                        noRecords: this.props.t("noRecords")
+                                    }}
                                     onSelect={rows => this.onSelect(rows)}
                                     onSearch={searchKey => this.onSearch(searchKey)}
                                     isSelectable={(
-                                        permissionLib.checkPermission(
-                                            this.props.getStateApp.sessionData.roleId,
-                                            this.props.getStateApp.sessionData.permissions,
-                                            PermissionId.SubscriberEdit
-                                        )
+                                        PermissionUtil.check(this.props.getStateApp.sessionAuth!, SubscriberEndPointPermission.DELETE)
                                     )}
                                     isAllSelectable={true}
                                     isSearchable={true}

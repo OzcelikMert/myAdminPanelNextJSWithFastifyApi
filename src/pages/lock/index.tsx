@@ -5,9 +5,9 @@ import {ComponentForm} from "components/elements/form";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import V from "library/variable";
 import authService from "services/auth.service";
-import imageSourceLib from "lib/imageSource.lib";
-import PagePaths from "constants/pagePaths";
 import Image from "next/image"
+import {EndPoints} from "constants/endPoints";
+import {ImageSourceUtil} from "utils/imageSource.util";
 
 type IPageState = {
     isSubmitting: boolean
@@ -33,8 +33,8 @@ class PageLock extends Component<IPageProps, IPageState> {
 
     componentDidMount() {
         this.setPageTitle();
-        if (V.isEmpty(this.props.getStateApp.sessionData.email)) {
-            return this.props.router.push(PagePaths.login());
+        if (V.isEmpty(this.props.getStateApp.sessionAuth?.user.email)) {
+            return this.props.router.push(EndPoints.LOGIN);
         }
         this.props.setStateApp({
             isPageLoading: false
@@ -54,21 +54,24 @@ class PageLock extends Component<IPageProps, IPageState> {
         }, async () => {
             let resData = await authService.login({
                 password: this.state.formData.password,
-                email: this.props.getStateApp.sessionData.email
+                email: this.props.getStateApp.sessionAuth?.user.email ?? ""
             });
             if (resData.status && resData.data) {
-                let user = resData.data;
-                this.props.setStateApp({
-                    sessionData: {id: user._id}
-                }, () => {
-                    this.props.router.push(PagePaths.dashboard());
-                });
-            } else {
-                this.setState({
-                    isSubmitting: false,
-                    isWrong: true
-                })
+                let resultSession = await authService.getSession();
+                if(resultSession.status && resultSession.data){
+                    this.props.setStateApp({
+                        sessionAuth: resultSession.data
+                    }, () => {
+                        this.props.router.push(EndPoints.DASHBOARD);
+                    });
+                    return;
+                }
             }
+
+            this.setState({
+                isSubmitting: false,
+                isWrong: true
+            });
         })
     }
 
@@ -81,12 +84,12 @@ class PageLock extends Component<IPageProps, IPageState> {
                             <div className="auth-form-transparent text-left p-5 text-center">
                                 <Image
                                     className="lock-profile-img img-fluid"
-                                    src={imageSourceLib.getUploadedImageSrc(this.props.getStateApp.sessionData.image)}
-                                    alt={this.props.getStateApp.sessionData.name}
+                                    src={ImageSourceUtil.getUploadedImageSrc(this.props.getStateApp.sessionAuth?.user.image)}
+                                    alt={this.props.getStateApp.sessionAuth?.user.name ?? ""}
                                     width={75}
                                     height={75}
                                 />
-                                <h4 className="text-center text-light mb-3 mt-3">{this.props.getStateApp.sessionData.name}</h4>
+                                <h4 className="text-center text-light mb-3 mt-3">{this.props.getStateApp.sessionAuth?.user.name}</h4>
                                 <ComponentForm
                                     isSubmitting={this.state.isSubmitting}
                                     formAttributes={{onSubmit: (event) => this.onSubmit(event)}}

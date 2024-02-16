@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormType} from "components/elements/form";
-import {UserRoleId} from "constants/index";
 import settingService from "services/setting.service";
 import ComponentToast from "components/elements/toast";
-import {
-    ISettingUpdateStaticLanguageParamService
-} from "types/services/setting.service";
+import {ISettingUpdateStaticLanguageParamService} from "types/services/setting.service";
 import {ISettingStaticLanguageModel} from "types/models/setting.model";
+import {PermissionUtil} from "utils/permission.util";
+import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
+import {SettingProjectionKeys} from "constants/settingProjections";
+import {UserRoleId} from "constants/userRoles";
 
 type IPageState = {
     isSubmitting: boolean
@@ -28,15 +29,17 @@ class PageSettingsStaticLanguages extends Component<IPageProps, IPageState> {
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        await this.getSettings();
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if(PermissionUtil.checkAndRedirect(this.props, SettingsEndPointPermission.UPDATE_STATIC_LANGUAGE)){
+            this.setPageTitle();
+            await this.getSettings();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     async componentDidUpdate(prevProps: IPagePropCommon) {
-        if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
+        if (prevProps.getStateApp.appData.currentLangId != this.props.getStateApp.appData.currentLangId) {
             this.props.setStateApp({
                 isPageLoading: true
             }, async () => {
@@ -53,7 +56,7 @@ class PageSettingsStaticLanguages extends Component<IPageProps, IPageState> {
     }
 
     async getSettings() {
-        let resData = await settingService.get({langId: this.props.getStateApp.pageData.langId, projection: "staticLanguage"})
+        let resData = await settingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.StaticLanguage})
         if (resData.status && resData.data) {
             let setting = resData.data;
             this.setState((state: IPageState) => {
@@ -62,7 +65,7 @@ class PageSettingsStaticLanguages extends Component<IPageProps, IPageState> {
                         ...staticLanguage,
                         contents: {
                             ...staticLanguage.contents,
-                            langId: this.props.getStateApp.pageData.langId
+                            langId: this.props.getStateApp.appData.currentLangId
                         }
                     })) ?? []
                 }
@@ -106,7 +109,7 @@ class PageSettingsStaticLanguages extends Component<IPageProps, IPageState> {
                 langKey: "",
                 title: "",
                 contents: {
-                    langId: this.props.getStateApp.pageData.langId,
+                    langId: this.props.getStateApp.appData.currentLangId,
                     content: ""
                 }
             }, ...state.formData.staticLanguages]
@@ -142,7 +145,7 @@ class PageSettingsStaticLanguages extends Component<IPageProps, IPageState> {
                     <ComponentFieldSet
                         legend={`${this.props.t("staticLanguages")} (#${staticLanguageProps.langKey})`}
                         legendElement={
-                            this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                            this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                                 ? <i className="mdi mdi-pencil-box text-warning fs-3 cursor-pointer"
                                      onClick={() => this.onEdit(staticLanguageProps, staticLanguageIndex)}></i>
                                 : undefined
@@ -201,7 +204,7 @@ class PageSettingsStaticLanguages extends Component<IPageProps, IPageState> {
         return (
             <div className="row">
                 {
-                    this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                    this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                         ? <div className="col-md-7">
                             <button type={"button"} className="btn btn-gradient-success btn-lg"
                                     onClick={() => this.onCreate()}>+ {this.props.t("newStaticLanguage")}

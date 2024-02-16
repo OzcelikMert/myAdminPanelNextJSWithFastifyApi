@@ -5,22 +5,17 @@ import {ISessionAuthModel} from "types/models/sessionAuth.model";
 export type IGetStateApp = {
     isAppLoading: boolean
     isPageLoading: boolean
-    appData: IGetStateAppAppData
-    pageData: IGetStateAppPageData,
+    appData: IGetStateAppData
     sessionAuth?: ISessionAuthModel
 }
 
-export type IGetStateAppAppData = {
+export type IGetStateAppData = {
     mainLangId: string
+    currentLangId: string
     contentLanguages: ILanguageGetResultService[]
     currencyId: CurrencyId
 }
 
-export type IGetStateAppPageData = {
-    langId: string
-}
-
 export type ISetStateApp = {
-    appData?: Partial<IGetStateAppAppData>
-    pageData?: Partial<IGetStateAppPageData>
-} & Partial<Omit<IGetStateApp, "appData"|"pageData">>
+    appData?: Partial<IGetStateAppData>
+} & Partial<Omit<IGetStateApp, "appData">>

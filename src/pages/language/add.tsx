@@ -1,18 +1,20 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import {ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form"
-import {StatusId} from "constants/index";
 import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
-import staticContentLib from "lib/staticContent.lib";
 import Swal from "sweetalert2";
-import PagePaths from "constants/pagePaths";
 import {ILanguageUpdateOneParamService} from "types/services/language.service";
 import languageService from "services/language.service";
-import imageSourceLib from "lib/imageSource.lib";
 import Image from "next/image";
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {PermissionUtil} from "utils/permission.util";
+import {LanguageEndPointPermission} from "constants/endPointPermissions/language.endPoint.permission";
+import {StatusId} from "constants/status";
+import {ComponentUtil} from "utils/component.util";
+import {EndPoints} from "constants/endPoints";
+import {ImageSourceUtil} from "utils/imageSource.util";
 
 type IPageState = {
     mainTabActiveKey: string
@@ -47,15 +49,18 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        await this.getFlags();
-        this.getStatus();
-        if (this.state.formData._id) {
-            await this.getItem();
+        let permission = this.state.formData._id ? LanguageEndPointPermission.UPDATE : LanguageEndPointPermission.ADD;
+        if(PermissionUtil.checkAndRedirect(this.props, permission)){
+            this.setPageTitle();
+            await this.getFlags();
+            this.getStatus();
+            if (this.state.formData._id) {
+                await this.getItem();
+            }
+            this.props.setStateApp({
+                isPageLoading: false
+            })
         }
-        this.props.setStateApp({
-            isPageLoading: false
-        })
     }
 
     setPageTitle() {
@@ -72,7 +77,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
 
     getStatus() {
         this.setState((state: IPageState) => {
-            state.status = staticContentLib.getStatusForSelect([
+            state.status = ComponentUtil.getStatusForSelect([
                 StatusId.Active,
                 StatusId.Disabled
             ], this.props.t);
@@ -82,10 +87,10 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
 
     async getFlags() {
         let resData = await languageService.getFlags({});
-        if (resData.status) {
+        if (resData.status && resData.data) {
             this.setState((state: IPageState) => {
                 state.flags = [{value: "", label: this.props.t("notSelected")}];
-                state.flags = resData.data.map(item => ({
+                state.flags = resData.data!.map(item => ({
                     value: item,
                     label: item.split(".")[0].toUpperCase()
                 }))
@@ -117,11 +122,10 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
     }
 
     async navigatePage(isReload?: boolean) {
-        let pagePath = PagePaths.settings().language();
-        let path = pagePath.list();
-        await this.props.router.push(path);
+        let pagePath = EndPoints.LANGUAGE_WITH.LIST;
+        await this.props.router.push(pagePath);
         if(isReload){
-            window.location.reload()
+            window.location.reload();
         }
     }
 
@@ -191,7 +195,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
                     <div className="row">
                         <div className="col-1 m-auto">
                             <Image
-                                src={imageSourceLib.getUploadedFlagSrc(this.state.formData.image)}
+                                src={ImageSourceUtil.getUploadedFlagSrc(this.state.formData.image)}
                                 alt={this.state.formData.image}
                                 className="img-fluid img-sm"
                                 width={100}

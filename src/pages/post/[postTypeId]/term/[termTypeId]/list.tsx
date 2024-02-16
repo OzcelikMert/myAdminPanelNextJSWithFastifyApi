@@ -1,26 +1,22 @@
 import React, {Component} from 'react'
-import {
-    PostTermTypeId,
-    PostTypeId,
-    Status,
-    StatusId
-} from "constants/index";
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
 import Swal from "sweetalert2";
 import {IPostTermGetResultService} from "types/services/postTerm.service";
 import postTermService from "services/postTerm.service";
-import imageSourceLib from "lib/imageSource.lib";
-import permissionLib from "lib/permission.lib";
 import ComponentToast from "components/elements/toast";
 import ComponentDataTable from "components/elements/table/dataTable";
 import Image from "next/image"
-import PostLib from "lib/post.lib";
-import postLib from "lib/post.lib";
 import ComponentThemeBadgeStatus, {getStatusIcon} from "components/theme/badge/status";
 import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
 import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
+import {PostTermTypeId} from "constants/postTermTypes";
+import {PostTypeId} from "constants/postTypes";
+import {PermissionUtil, PostPermissionMethod} from "utils/permission.util";
+import {PostUtil} from "utils/post.util";
+import {status, StatusId} from "constants/status";
+import {ImageSourceUtil} from "utils/imageSource.util";
 
 type IPageState = {
     typeId: PostTermTypeId
@@ -53,15 +49,17 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        await this.getItems();
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if (PermissionUtil.checkAndRedirect(this.props, PermissionUtil.getPostPermission(this.state.postTypeId, PostPermissionMethod.GET))) {
+            this.setPageTitle();
+            await this.getItems();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     async componentDidUpdate(prevProps: Readonly<IPageProps>) {
-        if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
+        if (prevProps.getStateApp.appData.currentLangId != this.props.getStateApp.appData.currentLangId) {
             this.props.setStateApp({
                 isPageLoading: true
             }, async () => {
@@ -75,7 +73,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
 
     setPageTitle() {
         let titles: string[] = [
-            ...postLib.getPageTitles({
+            ...PostUtil.getPageTitles({
                 t: this.props.t,
                 postTypeId: this.state.postTypeId,
                 termTypeId: this.state.typeId
@@ -87,17 +85,20 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
     }
 
     async getItems() {
-        let items = (await postTermService.getMany({
+        let result = (await postTermService.getMany({
             typeId: [this.state.typeId],
             postTypeId: this.state.postTypeId,
-            langId: this.props.getStateApp.pageData.langId,
+            langId: this.props.getStateApp.appData.currentLangId,
             withPostCount: [PostTermTypeId.Category].includes(this.state.typeId),
             ignoreDefaultLanguage: true
-        })).data;
-        this.setState({
-            items: items,
-            showingItems: items.filter(item => item.statusId !== StatusId.Deleted)
-        })
+        }));
+
+        if (result.status && result.data) {
+            this.setState({
+                items: result.data!,
+                showingItems: result.data!.filter(item => item.statusId !== StatusId.Deleted)
+            })
+        }
     }
 
     async onChangeStatus(statusId: number) {
@@ -181,10 +182,10 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
             typeId: this.state.typeId
         });
 
-        if(resData.status){
+        if (resData.status) {
             this.setState((state: IPageState) => {
                 let item = this.state.items.findSingle("_id", this.state.selectedItemId);
-                if(item){
+                if (item) {
                     item.rank = rank;
                 }
                 return state;
@@ -232,32 +233,35 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
     navigatePage(type: "add" | "back" | "edit", postTermId = "") {
         let postTypeId = this.state.postTypeId;
         let postTermTypeId = this.state.typeId;
-        let pagePath = PostLib.getPagePath(postTypeId);
+        let pagePath = PostUtil.getPagePath(postTypeId);
         let path = "";
         switch (type) {
             case "add":
-                path = pagePath.term(postTermTypeId).add();
+                path = pagePath.TERM_WITH(postTermTypeId).ADD;
                 break;
             case "edit":
-                path = pagePath.term(postTermTypeId).edit(postTermId);
+                path = pagePath.TERM_WITH(postTermTypeId).EDIT(postTermId);
                 break;
             case "back":
-                path = pagePath.list();
+                path = pagePath.LIST;
                 break;
         }
         this.props.router.push(path);
     }
 
+    onClickUpdateRank(itemId: string) {
+        this.setState({selectedItemId: itemId, isShowModalUpdateRank: true});
+    }
+
     get getToggleMenuItems(): ThemeToggleMenuItemDocument[] {
-        return Status.findMulti("id", [
+        return status.findMulti("id", [
                 StatusId.Active,
                 StatusId.Pending,
                 StatusId.InProgress
             ].concat(
-                permissionLib.checkPermission(
-                    this.props.getStateApp.sessionData.roleId,
-                    this.props.getStateApp.sessionData.permissions,
-                    permissionLib.getPermissionIdForPostType(this.state.postTypeId, "Delete")
+                PermissionUtil.check(
+                    this.props.getStateApp.sessionAuth!,
+                    PermissionUtil.getPostPermission(this.state.postTypeId, PostPermissionMethod.DELETE)
                 ) ? [StatusId.Deleted] : []
             )
         ).map(item => ({label: this.props.t(item.langKey), value: item.id, icon: getStatusIcon(item.id)}))
@@ -271,7 +275,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                 cell: row => (
                     <div className="image pt-2 pb-2">
                         <Image
-                            src={imageSourceLib.getUploadedImageSrc(row.contents?.image)}
+                            src={ImageSourceUtil.getUploadedImageSrc(row.contents?.image)}
                             alt={row.contents?.title ?? ""}
                             width={75}
                             height={75}
@@ -306,18 +310,21 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
             {
                 name: this.props.t("updatedBy"),
                 sortable: true,
-                cell: row => <ComponentTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""} />
+                cell: row => <ComponentTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""}/>
             },
             {
                 name: this.props.t("rank"),
                 sortable: true,
                 selector: row => row.rank ?? 0,
                 cell: row => {
-                    return  (
-                        <span className="cursor-pointer" onClick={() => this.setState({selectedItemId: row._id, isShowModalUpdateRank: true})}>
+                    return PermissionUtil.check(
+                        this.props.getStateApp.sessionAuth!,
+                        PermissionUtil.getPostPermission(this.state.postTypeId, PostPermissionMethod.UPDATE)
+                    ) ? (
+                        <span className="cursor-pointer" onClick={() => this.onClickUpdateRank(row._id)}>
                             {row.rank ?? 0} <i className="fa fa-pencil-square-o"></i>
                         </span>
-                    )
+                    ) : (<span>{row.rank ?? 0}</span>)
                 }
             },
             {
@@ -326,21 +333,22 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                 selector: row => new Date(row.createdAt || "").toLocaleDateString(),
                 sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
             },
-            {
-                name: "",
-                width: "70px",
-                button: true,
-                cell: row => permissionLib.checkPermission(
-                    this.props.getStateApp.sessionData.roleId,
-                    this.props.getStateApp.sessionData.permissions,
-                    permissionLib.getPermissionIdForPostType(row.postTypeId, "Edit")
-                ) ? (
-                    <button
-                        className="btn btn-gradient-warning"
-                        onClick={() => this.navigatePage("edit", row._id)}
-                    ><i className="fa fa-pencil-square-o"></i></button>
-                ) : null
-            }
+            (
+                PermissionUtil.check(
+                    this.props.getStateApp.sessionAuth!,
+                    PermissionUtil.getPostPermission(this.state.postTypeId, PostPermissionMethod.UPDATE)
+                ) ?  {
+                    name: "",
+                    width: "70px",
+                    button: true,
+                    cell: row => (
+                        <button
+                            onClick={() => this.navigatePage("edit", row._id)}
+                            className="btn btn-gradient-warning"
+                        ><i className="fa fa-pencil-square-o"></i></button>
+                    )
+                } : {}
+            )
         ];
     }
 
@@ -367,10 +375,9 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                             </div>
                             <div className="col-6 text-end">
                                 {
-                                    permissionLib.checkPermission(
-                                        this.props.getStateApp.sessionData.roleId,
-                                        this.props.getStateApp.sessionData.permissions,
-                                        permissionLib.getPermissionIdForPostType(this.state.postTypeId, "Add")
+                                    PermissionUtil.check(
+                                        this.props.getStateApp.sessionAuth!,
+                                        PermissionUtil.getPostPermission(this.state.postTypeId, PostPermissionMethod.ADD)
                                     ) ? <button className="btn btn-gradient-info btn-lg w-100"
                                                 onClick={() => this.navigatePage("add")}>
                                         + {this.props.t("addNew")}
@@ -403,17 +410,18 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                                     onSelect={rows => this.onSelect(rows)}
                                     onSearch={searchKey => this.onSearch(searchKey)}
                                     selectedRows={this.state.selectedItems}
-                                    t={this.props.t}
+                                    i18={{
+                                        search: this.props.t("search"),
+                                        noRecords: this.props.t("noRecords")
+                                    }}
                                     isSelectable={(
-                                        permissionLib.checkPermission(
-                                            this.props.getStateApp.sessionData.roleId,
-                                            this.props.getStateApp.sessionData.permissions,
-                                            permissionLib.getPermissionIdForPostType(this.state.postTypeId, "Edit")
+                                        PermissionUtil.check(
+                                            this.props.getStateApp.sessionAuth!,
+                                            PermissionUtil.getPostPermission(this.state.postTypeId, PostPermissionMethod.UPDATE)
                                         ) ||
-                                        permissionLib.checkPermission(
-                                            this.props.getStateApp.sessionData.roleId,
-                                            this.props.getStateApp.sessionData.permissions,
-                                            permissionLib.getPermissionIdForPostType(this.state.postTypeId, "Delete")
+                                        PermissionUtil.check(
+                                            this.props.getStateApp.sessionAuth!,
+                                            PermissionUtil.getPostPermission(this.state.postTypeId, PostPermissionMethod.DELETE)
                                         )
                                     )}
                                     isAllSelectable={true}

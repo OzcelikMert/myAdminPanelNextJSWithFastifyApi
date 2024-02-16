@@ -22,7 +22,6 @@ type IPageProps = {
     isShow: boolean
     onClose: any
     userInfo: IUserModel
-    langId: LanguageId
 };
 
 class ComponentThemeUsersProfileCard extends Component<IPageProps, IPageState> {

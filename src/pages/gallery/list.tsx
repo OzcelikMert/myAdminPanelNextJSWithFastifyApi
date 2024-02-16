@@ -3,17 +3,16 @@ import {IPagePropCommon} from "types/pageProps";
 import Swal from "sweetalert2";
 import galleryService from "services/gallery.service";
 import {TableColumn} from "react-data-table-component";
-import imageSourceLib from "lib/imageSource.lib";
 import ComponentToast from "components/elements/toast";
-import permissionLib from "lib/permission.lib";
-import {PermissionId} from "constants/index";
 import ComponentDataTable from "components/elements/table/dataTable";
 import Image from "next/image"
-import IGalleryModel from "types/services/gallery.service";
+import {GalleryTypeId} from "constants/galleryTypeId";
+import {ImageSourceUtil} from "utils/imageSource.util";
+import {IGalleryGetResultService} from "types/services/gallery.service";
 
 type IPageState = {
-    items: IGalleryModel[]
-    showingItems: IGalleryModel[]
+    items: IGalleryGetResultService[]
+    showingItems: IGalleryGetResultService[]
     selectedItems: string[]
     selectedItemIndex: number
     searchKey: string
@@ -23,7 +22,7 @@ type IPageProps = {
     isModal?: boolean
     isMulti?: boolean
     onSubmit?: (images: string[]) => void
-    uploadedImages?: IGalleryModel[]
+    uploadedImages?: IGalleryGetResultService[]
     selectedImages?: string[]
 } & IPagePropCommon;
 
@@ -71,15 +70,15 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
     }
 
     async getItems() {
-        let resData = await galleryService.get();
+        let resData = await galleryService.get({typeId: GalleryTypeId.Image});
         if (resData.status) {
-            if (Array.isArray(resData.data)) {
+            if (resData.data) {
                 this.setListSort(resData.data);
             }
         }
     }
 
-    setListSort(items: IGalleryModel[]) {
+    setListSort(items: IGalleryGetResultService[]) {
         items = items.orderBy("createdAt", "desc");
         this.setState((state: IPageState) => {
             if (this.props.selectedImages && this.props.selectedImages.length > 0) {
@@ -100,11 +99,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
     }
 
     onSelect(images: string[]) {
-        if(!this.props.isModal && !permissionLib.checkPermission(
-            this.props.getStateApp.sessionData.roleId,
-            this.props.getStateApp.sessionData.permissions,
-            PermissionId.GalleryEdit
-        )) return;
+        if(!this.props.isModal) return;
 
         this.setState({
             selectedItems: images
@@ -150,7 +145,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
                 type: "loading"
             });
 
-            let resData = await galleryService.delete({images: this.state.selectedItems});
+            let resData = await galleryService.deleteMany({_id: this.state.selectedItems});
             loadingToast.hide();
             if (resData.status) {
                 this.setState((state: IPageState) => {
@@ -194,7 +189,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
                         <Image
                             className="img-fluid"
                             alt={row.name}
-                            src={imageSourceLib.getUploadedImageSrc(row.name)}
+                            src={ImageSourceUtil.getUploadedImageSrc(row.name)}
                             width={100}
                             height={100}
                         />
@@ -205,6 +200,11 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
                 name: this.props.t("title"),
                 selector: row => row.name,
                 sortable: true
+            },
+            {
+                name: this.props.t("author"),
+                selector: row => row.authorId.name,
+                sortable: true,
             },
             {
                 name: this.props.t("createdDate"),
@@ -227,7 +227,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
                 cell: row => (
                     <a
                         className="btn btn-gradient-info btn-icon-text"
-                        href={imageSourceLib.getUploadedImageSrc(row.name)}
+                        href={ImageSourceUtil.getUploadedImageSrc(row.name)}
                         target="_blank"
                     ><i className="mdi mdi-eye"></i></a>
                 )
@@ -247,7 +247,10 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
                                 onSelect={rows => this.onSelect(rows.map(item => item.name))}
                                 onSearch={searchKey => this.onSearch(searchKey)}
                                 selectedRows={this.state.items.filter(item => this.state.selectedItems.includes(item.name))}
-                                t={this.props.t}
+                                i18={{
+                                    search: this.props.t("search"),
+                                    noRecords: this.props.t("noRecords")
+                                }}
                                 isSelectable={true}
                                 isAllSelectable={!(this.props.isModal && !this.props.isMulti)}
                                 isMultiSelectable={!(this.props.isModal && !this.props.isMulti)}

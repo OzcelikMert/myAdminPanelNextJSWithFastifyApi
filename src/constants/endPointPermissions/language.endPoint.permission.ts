@@ -1,6 +1,5 @@
 import {UserRoleId} from "../userRoles";
 import {IEndPointPermission} from "types/constants/endPoint.permissions";
-import {PermissionId} from "constants/permissions";
 
 const getFlags: IEndPointPermission = {
     permissionId: [],
@@ -24,7 +23,7 @@ const remove: IEndPointPermission = {
 
 const get: IEndPointPermission = {
     permissionId: [],
-    userRoleId: UserRoleId.SuperAdmin
+    userRoleId: UserRoleId.Admin
 }
 
 export const LanguageEndPointPermission = {

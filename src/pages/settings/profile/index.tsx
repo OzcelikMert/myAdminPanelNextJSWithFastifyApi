@@ -2,21 +2,18 @@ import React, {Component, FormEvent} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormType} from "components/elements/form";
 import ReactHandleFormLibrary from "library/react/handles/form";
-import {
-    PermissionGroups,
-    Permissions,
-    userRoles
-} from "constants/index";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
 import userService from "services/user.service";
-import profileService from "services/profile.service";
-import imageSourceLib from "lib/imageSource.lib";
 import ComponentToast from "components/elements/toast";
-import {IPermission, IPermissionGroup} from "types/constants";
-import {ProfileUpdateParamDocument} from "types/services/profile";
 import Image from "next/image"
 import ComponentThemeBadgeStatus from "components/theme/badge/status";
 import ComponentThemeBadgeUserRole from "components/theme/badge/userRole";
+import {IUserUpdateProfileParamService} from "types/services/user.service";
+import {permissions} from "constants/permissions";
+import {permissionGroups} from "constants/permissionGroups";
+import {IPermissionGroup} from "types/constants/permissionGroups";
+import {IPermission} from "types/constants/permissions";
+import {ImageSourceUtil} from "utils/imageSource.util";
 
 type IPageState = {
     isSubmitting: boolean
@@ -28,7 +25,7 @@ type IPageState = {
         statusId: number
         permissions: number[]
     }
-    formData: ProfileUpdateParamDocument
+    formData: IUserUpdateProfileParamService
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -71,7 +68,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
     }
 
     async getUser() {
-        let resData = await userService.getOne({_id: this.props.getStateApp.sessionData.id});
+        let resData = await userService.getOne({_id: this.props.getStateApp.sessionAuth!.user.userId});
         if (resData.status && resData.data) {
             const user = resData.data;
             this.setState((state: IPageState) => {
@@ -102,19 +99,25 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
             isSubmitting: true,
             isImageChanging: true
         }, async () => {
-            let resData = await profileService.update({image: image});
-            this.setState((state: IPageState) => {
-                state.isSubmitting = false;
-                state.isImageChanging = false;
-                state.formData.image = image;
-                return state;
-            }, () => {
-                this.props.setStateApp({
-                    sessionData: {
-                        image: image
-                    }
-                })
-            });
+            let resData = await userService.updateProfile({image: image});
+            if(resData.status){
+                this.setState((state: IPageState) => {
+                    state.isSubmitting = false;
+                    state.isImageChanging = false;
+                    state.formData.image = image;
+                    return state;
+                }, () => {
+                    this.props.setStateApp({
+                        sessionAuth: {
+                            ...this.props.getStateApp.sessionAuth,
+                            user: {
+                                ...this.props.getStateApp.sessionAuth!.user,
+                                image: image
+                            }
+                        }
+                    })
+                });
+            }
         })
         this.setState((state: IPageState) => {
             state.formData.image = image;
@@ -127,13 +130,14 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await profileService.update(this.state.formData);
+            let resData = await userService.updateProfile(this.state.formData);
             if (resData.status) {
                 this.props.setStateApp({
                     sessionAuth: {
+                        ...this.props.getStateApp.sessionAuth,
                         user: {
-                            ...(this.props.getStateApp.sessionAuth!.user),
-                            name: this.state.formData.name
+                            ...this.props.getStateApp.sessionAuth!.user,
+                            name: this.state.formData.name ?? ""
                         }
                     }
                 }, () => {
@@ -179,9 +183,9 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
     )
 
     Permissions = () => {
-        let permissions = Permissions.findMulti("id", this.state.data.permissions);
-        let permissionGroups = PermissionGroups.findMulti("id", permissions.map(permission => permission.groupId));
-        permissionGroups = permissionGroups.filter((group, index) => permissionGroups.indexOfKey("id", group.id) === index);
+        let foundPermissions = permissions.findMulti("id", this.state.data.permissions);
+        let foundPermissionGroups = permissionGroups.findMulti("id", foundPermissions.map(permission => permission.groupId));
+        foundPermissionGroups = foundPermissionGroups.filter((group, index) => foundPermissionGroups.indexOfKey("id", group.id) === index);
 
         const PermissionGroup = (props: IPermissionGroup) => (
             <div className="col-md-12 mt-3">
@@ -237,8 +241,8 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                     className="rounded-circle img-fluid"
                                     width={200}
                                     height={200}
-                                    src={imageSourceLib.getUploadedImageSrc(this.state.formData.image)}
-                                    alt={this.props.getStateApp.sessionData.name}
+                                    src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.image)}
+                                    alt={this.props.getStateApp.sessionAuth!.user.name}
                                 />
                                 <button
                                     className="btn btn-gradient-dark w-25 mt-2"

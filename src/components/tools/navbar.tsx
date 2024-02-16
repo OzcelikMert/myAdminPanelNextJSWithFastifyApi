@@ -4,9 +4,9 @@ import Link from 'next/link';
 import {Trans} from 'react-i18next';
 import {IPagePropCommon} from "types/pageProps";
 import authService from "services/auth.service";
-import localStorageUtil from "utils/localStorage.util";
+import {LocalStorageUtil} from "utils/localStorage.util";
 import DarkModeToggle from "react-dark-mode-toggle";
-import themeUtil from "utils/theme.util";
+import {ThemeUtil} from "utils/theme.util";
 import Logo from "assets/images/ozcelikLogo.png"
 import LogoMini from "assets/images/ozcelikLogoMini.png"
 import Image from "next/image"
@@ -24,7 +24,7 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
     constructor(props: IPageProps) {
         super(props);
         this.state = {
-            isDarkTheme: localStorageUtil.getTheme() == "dark"
+            isDarkTheme: LocalStorageUtil.getTheme() == "dark"
         }
     }
 
@@ -37,8 +37,8 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
             isDarkTheme: !this.state.isDarkTheme
         }, () => {
             let theme: IThemeKeys = this.state.isDarkTheme ? "dark" : "default";
-            localStorageUtil.setTheme(theme);
-            themeUtil.changeTheme(theme)
+            LocalStorageUtil.setTheme(theme);
+            ThemeUtil.changeTheme(theme)
         })
     }
 
@@ -179,8 +179,8 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
             <Dropdown.Toggle className="nav-link">
                 <div className="nav-profile-img">
                     <Image
-                        src={ImageSourceUtil.getUploadedImageSrc(this.props.getStateApp.sessionData.image)}
-                        alt={this.props.getStateApp.sessionData.name}
+                        src={ImageSourceUtil.getUploadedImageSrc(this.props.getStateApp.sessionAuth?.user.image)}
+                        alt={this.props.getStateApp.sessionAuth?.user.name ?? ""}
                         width={30}
                         height={30}
                         className="img-fluid"
@@ -190,7 +190,7 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
                 <div className="nav-profile-text">
                     <p className="mb-1">
                         {
-                            this.props.getStateApp.sessionData.name
+                            this.props.getStateApp.sessionAuth?.user.name
                         }
                     </p>
                 </div>

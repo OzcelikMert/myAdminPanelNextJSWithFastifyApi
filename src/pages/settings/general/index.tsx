@@ -2,20 +2,26 @@ import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import ReactHandleFormLibrary from "library/react/handles/form";
-import {Languages, StatusId, UserRoleId} from "constants/index";
 import settingService from "services/setting.service";
 import languageService from "services/language.service";
-import IServerInfoGetResultService from "types/services/serverInfo.service";
 import serverInfoService from "services/serverInfo.service";
 import ComponentToast from "components/elements/toast";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
-import imageSourceLib from "lib/imageSource.lib";
 import {ISettingUpdateGeneralParamService} from "types/services/setting.service";
 import {Tab, Tabs} from "react-bootstrap";
-import localStorageUtil from "utils/localStorage.util";
-import ComponentToolSpinner from "react-bootstrap/ComponentToolSpinner";
 import Image from "next/image"
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {IServerInfoGetResultService} from "types/services/serverInfo.service";
+import {LocalStorageUtil} from "utils/localStorage.util";
+import {PermissionUtil} from "utils/permission.util";
+import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
+import {SettingProjectionKeys} from "constants/settingProjections";
+import {languages} from "constants/languages";
+import {StatusId} from "constants/status";
+import {ComponentUtil} from "utils/component.util";
+import {ImageSourceUtil} from "utils/imageSource.util";
+import ComponentToolSpinner from "components/tools/spinner";
+import {UserRoleId} from "constants/userRoles";
 
 type IPageState = {
     languages: ThemeFormSelectValueDocument[]
@@ -52,20 +58,22 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
             formData: {
                 defaultLangId: "",
                 contact: {},
-                panelLangId: localStorageUtil.adminLanguage.get.toString()
+                panelLangId: LocalStorageUtil.getLanguage().toString()
             }
         }
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        this.getServerDetails();
-        this.getPanelLanguages();
-        await this.getLanguages();
-        await this.getSettings();
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if(PermissionUtil.checkAndRedirect(this.props, SettingsEndPointPermission.UPDATE_GENERAL)) {
+            this.setPageTitle();
+            this.getServerDetails();
+            this.getPanelLanguages();
+            await this.getLanguages();
+            await this.getSettings();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     setPageTitle() {
@@ -73,7 +81,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
     }
 
     async getSettings() {
-        let resData = await settingService.get({projection: "general"})
+        let resData = await settingService.get({projection: SettingProjectionKeys.General})
         if (resData.status && resData.data) {
             let setting = resData.data;
             this.setState((state: IPageState) => {
@@ -96,16 +104,13 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
 
     getPanelLanguages() {
         this.setState({
-            panelLanguages: Languages.map(language => ({
-                label: language.title,
-                value: language.id.toString()
-            }))
+            panelLanguages: ComponentUtil.getPanelLanguageForSelect(languages)
         })
     }
 
     async getLanguages() {
         let resData = await languageService.getMany({statusId: StatusId.Active})
-        if (resData.status) {
+        if (resData.status && resData.data) {
             this.setState({
                 languages: resData.data.map(lang => ({
                     label: lang.title,
@@ -117,7 +122,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
 
     async getServerDetails() {
         let resData = await serverInfoService.get();
-        if (resData.status) {
+        if (resData.status && resData.data) {
             this.setState({
                 serverInfo: resData.data,
                 isServerInfoLoading: false
@@ -137,7 +142,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
             });
             if (resData.status) {
                 this.props.setStateApp({
-                    pageData: {
+                    appData: {
                         mainLangId: this.state.formData.defaultLangId
                     }
                 }, () => {
@@ -151,10 +156,10 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
             this.setState({
                 isSubmitting: false
             }, () => {
-                if (this.state.formData.panelLangId != localStorageUtil.adminLanguage.get.toString()) {
-                    let language = Languages.findSingle("id", Number(this.state.formData.panelLangId));
+                if (this.state.formData.panelLangId != LocalStorageUtil.getLanguage().toString()) {
+                    let language = languages.findSingle("id", Number(this.state.formData.panelLangId));
                     if (language) {
-                        localStorageUtil.adminLanguage.set(Number(this.state.formData.panelLangId));
+                        LocalStorageUtil.setLanguage((Number(this.state.formData.panelLangId)));
                         window.location.reload();
                     }
                 }
@@ -259,7 +264,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         />
                         <div>
                             <Image
-                                src={imageSourceLib.getUploadedImageSrc(this.state.formData.logo)}
+                                src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.logo)}
                                 alt="Empty Image"
                                 className="post-image img-fluid"
                                 width={100}
@@ -287,7 +292,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         />
                         <div>
                             <Image
-                                src={imageSourceLib.getUploadedImageSrc(this.state.formData.logoTwo)}
+                                src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.logoTwo)}
                                 alt="Empty Image"
                                 className="post-image img-fluid"
                                 width={100}
@@ -315,7 +320,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         />
                         <div>
                             <Image
-                                src={imageSourceLib.getUploadedImageSrc(this.state.formData.icon)}
+                                src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.icon)}
                                 alt="Empty Image"
                                 className="post-image img-fluid"
                                 width={100}
@@ -437,7 +442,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                                                     <this.TabContact/>
                                                 </Tab>
                                                 {
-                                                    this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                                                    this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                                                         ? <Tab eventKey="tools" title={this.props.t("tools")}>
                                                             <this.TabTools/>
                                                         </Tab> : null

@@ -1,4 +1,11 @@
 import {GalleryTypeId} from "constants/galleryTypeId";
+import {IUserPopulateService} from "types/services/user.service";
+import {IGalleryModel} from "types/models/gallery.model";
+
+export type IGalleryGetResultService = {
+    authorId: IUserPopulateService
+} & Omit<IGalleryModel, "authorId">
+
 
 export type IGalleryAddParamService = {} & FormData
 

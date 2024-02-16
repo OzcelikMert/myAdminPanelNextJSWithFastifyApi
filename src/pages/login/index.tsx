@@ -1,15 +1,15 @@
 import React, {Component} from 'react'
 import ThemeInputType from "components/elements/form/input/type";
 import {IPagePropCommon} from "types/pageProps";
-import {LanguageId, StatusId} from "constants/index";
 import {ComponentForm, ComponentFormCheckBox} from "components/elements/form";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import authService from "services/auth.service";
 import {IUserGetResultService} from "types/services/user.service";
-import PagePaths from "constants/pagePaths";
 import Image from "next/image"
 
 import Logo from "assets/images/ozcelikLogo.png"
+import {EndPoints} from "constants/endPoints";
+import {StatusId} from "constants/status";
 
 type IPageState = {
     isSubmitting: boolean
@@ -59,26 +59,20 @@ class PageLogin extends Component<IPageProps, IPageState> {
         }, async () => {
             let resData = await authService.login(this.state.formData);
             if (resData.data) {
-                let user = resData.data;
-                if(resData.status){
-                    this.props.setStateApp({
-                        sessionData: {
-                            id: user._id,
-                            langId: LanguageId.English,
-                            roleId: user.roleId,
-                            email: user.email,
-                            image: user.image,
-                            name: user.name,
-                            permissions: user.permissions
-                        }
-                    });
-                    return this.props.router.push(PagePaths.dashboard());
-                }else {
+                if (resData.status) {
+                    let resultSession = await authService.getSession();
+                    if (resultSession.status && resultSession.data) {
+                        this.props.setStateApp({
+                            sessionAuth: resultSession.data!
+                        });
+                    }
+                    return this.props.router.push(EndPoints.DASHBOARD);
+                } else {
                     this.setState({
-                        user: user
+                        user: resData.data
                     })
                 }
-            }else {
+            } else {
                 this.setState({
                     isWrong: true
                 })
@@ -134,7 +128,8 @@ class PageLogin extends Component<IPageProps, IPageState> {
                                         <div className="col-md-12">
                                             {
                                                 this.state.isWrong
-                                                    ? <p className="fw-bold text-danger">{this.props.t("wrongEmailOrPassword")}</p>
+                                                    ?
+                                                    <p className="fw-bold text-danger">{this.props.t("wrongEmailOrPassword")}</p>
                                                     : null
                                             }
                                             {

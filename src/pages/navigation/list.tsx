@@ -1,18 +1,19 @@
 import React, {Component} from 'react'
-import {PermissionId, Status, StatusId} from "constants/index";
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
-import permissionLib from "lib/permission.lib";
 import ComponentToast from "components/elements/toast";
 import ComponentDataTable from "components/elements/table/dataTable";
 import {INavigationGetResultService} from "types/services/navigation.service";
 import navigationService from "services/navigation.service";
-import PagePaths from "constants/pagePaths";
 import {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
 import ComponentThemeBadgeStatus, {getStatusIcon} from "components/theme/badge/status";
 import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
 import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
+import {PermissionUtil} from "utils/permission.util";
+import {NavigationEndPointPermission} from "constants/endPointPermissions/navigation.endPoint.permission";
+import {status, StatusId} from "constants/status";
+import {EndPoints} from "constants/endPoints";
 
 type IPageState = {
     searchKey: string
@@ -41,15 +42,17 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        await this.getItems();
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if (PermissionUtil.checkAndRedirect(this.props, NavigationEndPointPermission.GET)) {
+            this.setPageTitle();
+            await this.getItems();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     async componentDidUpdate(prevProps: Readonly<IPageProps>) {
-        if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
+        if (prevProps.getStateApp.appData.currentLangId != this.props.getStateApp.appData.currentLangId) {
             this.props.setStateApp({
                 isPageLoading: true
             }, async () => {
@@ -69,15 +72,18 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
     }
 
     async getItems() {
-        let items = (await navigationService.getMany({
-            langId: this.props.getStateApp.pageData.langId,
+        let result = (await navigationService.getMany({
+            langId: this.props.getStateApp.appData.currentLangId,
             ignoreDefaultLanguage: true
-        })).data;
-        this.setState((state: IPageState) => {
-            state.items = items;
-            state.showingItems = items.filter(item => item.statusId !== StatusId.Deleted);
-            return state;
-        });
+        }));
+
+        if (result.status && result.data) {
+            this.setState((state: IPageState) => {
+                state.items = result.data!;
+                state.showingItems = result.data!.filter(item => item.statusId !== StatusId.Deleted);
+                return state;
+            });
+        }
     }
 
     onChangeStatus = async (statusId: number) => {
@@ -146,10 +152,10 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
             rank: rank
         });
 
-        if(resData.status){
+        if (resData.status) {
             this.setState((state: IPageState) => {
                 let item = this.state.items.findSingle("_id", this.state.selectedItemId);
-                if(item){
+                if (item) {
                     item.rank = rank;
                 }
                 return state;
@@ -195,26 +201,27 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
     }
 
     navigatePage(type: "edit", itemId = "") {
-        let pagePath = PagePaths.navigation();
-        let path = "";
+        let pagePath = EndPoints.NAVIGATION_WITH;
         switch (type) {
             case "edit":
-                path = pagePath.edit(itemId);
+                this.props.router.push(pagePath.EDIT(itemId));
                 break;
         }
-        this.props.router.push(path);
+    }
+
+    onClickUpdateRank(itemId: string) {
+        this.setState({selectedItemId: itemId, isShowModalUpdateRank: true});
     }
 
     get getToggleMenuItems(): ThemeToggleMenuItemDocument[] {
-        return Status.findMulti("id", [
+        return status.findMulti("id", [
                 StatusId.Active,
                 StatusId.Pending,
                 StatusId.InProgress
             ].concat(
-                permissionLib.checkPermission(
-                    this.props.getStateApp.sessionData.roleId,
-                    this.props.getStateApp.sessionData.permissions,
-                    PermissionId.NavigationDelete
+                PermissionUtil.check(
+                    this.props.getStateApp.sessionAuth!,
+                    NavigationEndPointPermission.DELETE
                 ) ? [StatusId.Deleted] : []
             )
         ).map(item => ({label: this.props.t(item.langKey), value: item.id, icon: getStatusIcon(item.id)}))
@@ -253,11 +260,14 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                 sortable: true,
                 selector: row => row.rank ?? 0,
                 cell: row => {
-                    return  (
-                        <span className="cursor-pointer" onClick={() => this.setState({selectedItemId: row._id, isShowModalUpdateRank: true})}>
+                    return PermissionUtil.check(
+                        this.props.getStateApp.sessionAuth!,
+                        NavigationEndPointPermission.UPDATE
+                    ) ? (
+                        <span className="cursor-pointer" onClick={() => this.onClickUpdateRank(row._id)}>
                             {row.rank ?? 0} <i className="fa fa-pencil-square-o"></i>
                         </span>
-                    )
+                    ) : (<span>{row.rank ?? 0}</span>)
                 }
             },
             {
@@ -266,21 +276,22 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                 selector: row => new Date(row.createdAt || "").toLocaleDateString(),
                 sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
             },
-            {
-                name: "",
-                width: "70px",
-                button: true,
-                cell: row => permissionLib.checkPermission(
-                    this.props.getStateApp.sessionData.roleId,
-                    this.props.getStateApp.sessionData.permissions,
-                    PermissionId.NavigationEdit
-                ) ? (
-                    <button
-                        onClick={() => this.navigatePage("edit", row._id)}
-                        className="btn btn-gradient-warning"
-                    ><i className="fa fa-pencil-square-o"></i></button>
-                ) : null
-            }
+            (
+                PermissionUtil.check(
+                    this.props.getStateApp.sessionAuth!,
+                    NavigationEndPointPermission.UPDATE
+                ) ? {
+                    name: "",
+                    width: "70px",
+                    button: true,
+                    cell: row => (
+                        <button
+                            onClick={() => this.navigatePage("edit", row._id)}
+                            className="btn btn-gradient-warning"
+                        ><i className="fa fa-pencil-square-o"></i></button>
+                    )
+                } : {}
+            )
         ];
     }
 
@@ -322,17 +333,18 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                                     onSelect={rows => this.onSelect(rows)}
                                     onSearch={searchKey => this.onSearch(searchKey)}
                                     selectedRows={this.state.selectedItems}
-                                    t={this.props.t}
+                                    i18={{
+                                        search: this.props.t("search"),
+                                        noRecords: this.props.t("noRecords")
+                                    }}
                                     isSelectable={(
-                                        permissionLib.checkPermission(
-                                            this.props.getStateApp.sessionData.roleId,
-                                            this.props.getStateApp.sessionData.permissions,
-                                            PermissionId.NavigationEdit
+                                        PermissionUtil.check(
+                                            this.props.getStateApp.sessionAuth!,
+                                            NavigationEndPointPermission.UPDATE
                                         ) ||
-                                        permissionLib.checkPermission(
-                                            this.props.getStateApp.sessionData.roleId,
-                                            this.props.getStateApp.sessionData.permissions,
-                                            PermissionId.NavigationDelete
+                                        PermissionUtil.check(
+                                            this.props.getStateApp.sessionAuth!,
+                                            NavigationEndPointPermission.DELETE
                                         )
                                     )}
                                     isAllSelectable={true}

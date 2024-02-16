@@ -11,6 +11,7 @@ import {EndPoints} from "constants/endPoints";
 import {PermissionUtil} from "utils/permission.util";
 import {PermissionId} from "constants/permissions";
 import {UserRoleId} from "constants/userRoles";
+import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
 
 type IPageState = {
     searchKey: string
@@ -35,11 +36,13 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        await this.getItems();
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if(PermissionUtil.checkAndRedirect(this.props, ComponentEndPointPermission.GET)){
+            this.setPageTitle();
+            await this.getItems();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     setPageTitle() {
@@ -50,7 +53,7 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
     }
 
     async getItems() {
-        let result = (await componentService.getMany({langId: this.props.getStateApp.pageData.langId}));
+        let result = (await componentService.getMany({langId: this.props.getStateApp.appData.currentLangId}));
         this.setState((state: IPageState) => {
             state.items = result.data ?? [];
             return state;
@@ -121,25 +124,28 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
                 selector: row => new Date(row.createdAt || "").toLocaleDateString(),
                 sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
             },
-            {
-                name: "",
-                button: true,
-                width: "70px",
-                cell: row => PermissionUtil.checkPermission(
-                    this.props.getStateApp.sessionAuth!.user.roleId,
-                    this.props.getStateApp.sessionAuth!.user.permissions,
-                    PermissionId.ComponentEdit
-                ) ? (
-                    <button
-                        onClick={() => this.navigatePage("edit", row._id)}
-                        className="btn btn-gradient-warning"
-                    ><i className="fa fa-pencil-square-o"></i>
-                    </button>
-                ) : null
-            },
             (
-                this.props.getStateApp.sessionAuth!.user.roleId == UserRoleId.SuperAdmin
-                    ? {
+                PermissionUtil.check(
+                    this.props.getStateApp.sessionAuth!,
+                    ComponentEndPointPermission.UPDATE
+                ) ? {
+                    name: "",
+                    button: true,
+                    width: "70px",
+                    cell: row => (
+                        <button
+                            onClick={() => this.navigatePage("edit", row._id)}
+                            className="btn btn-gradient-warning"
+                        ><i className="fa fa-pencil-square-o"></i>
+                        </button>
+                    )
+                } : {}
+            ),
+            (
+                PermissionUtil.check(
+                    this.props.getStateApp.sessionAuth!,
+                    ComponentEndPointPermission.DELETE
+                ) ? {
                         name: "",
                         button: true,
                         width: "70px",
@@ -156,7 +162,6 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
     }
 
     render() {
-        let item = this.state.items.findSingle("_id", this.state.selectedItemId);
         return this.props.getStateApp.isPageLoading ? null : (
             <div className="page-post">
                 <div className="grid-margin stretch-card">

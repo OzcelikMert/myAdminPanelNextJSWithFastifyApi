@@ -1,16 +1,18 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import {ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form"
-import {StatusId} from "constants/index";
 import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
-import staticContentLib from "lib/staticContent.lib";
 import Swal from "sweetalert2";
 import {INavigationUpdateOneParamService} from "types/services/navigation.service";
 import navigationService from "services/navigation.service";
-import PagePaths from "constants/pagePaths";
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {PermissionUtil} from "utils/permission.util";
+import {NavigationEndPointPermission} from "constants/endPointPermissions/navigation.endPoint.permission";
+import {ComponentUtil} from "utils/component.util";
+import {StatusId} from "constants/status";
+import {EndPoints} from "constants/endPoints";
 
 type IPageState = {
     items: ThemeFormSelectValueDocument[]
@@ -37,7 +39,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                 statusId: 0,
                 rank: 0,
                 contents: {
-                    langId: this.props.getStateApp.pageData.langId,
+                    langId: this.props.getStateApp.appData.currentLangId,
                     title: "",
                     url: "",
                 },
@@ -46,19 +48,22 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        await this.getItems();
-        this.getStatus();
-        if (this.state.formData._id) {
-            await this.getItem();
+        let permission = this.state.formData._id ? NavigationEndPointPermission.UPDATE : NavigationEndPointPermission.ADD;
+        if(PermissionUtil.checkAndRedirect(this.props, permission)){
+            this.setPageTitle();
+            await this.getItems();
+            this.getStatus();
+            if (this.state.formData._id) {
+                await this.getItem();
+            }
+            this.props.setStateApp({
+                isPageLoading: false
+            })
         }
-        this.props.setStateApp({
-            isPageLoading: false
-        })
     }
 
     async componentDidUpdate(prevProps: IPagePropCommon) {
-        if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
+        if (prevProps.getStateApp.appData.currentLangId != this.props.getStateApp.appData.currentLangId) {
             this.props.setStateApp({
                 isPageLoading: true
             }, async () => {
@@ -83,7 +88,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
 
     getStatus() {
         this.setState((state: IPageState) => {
-            state.status = staticContentLib.getStatusForSelect([
+            state.status = ComponentUtil.getStatusForSelect([
                 StatusId.Active,
                 StatusId.InProgress,
                 StatusId.Pending
@@ -98,10 +103,10 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
             langId: this.props.getStateApp.appData.mainLangId,
             statusId: StatusId.Active,
         });
-        if (resData.status) {
+        if (resData.status && resData.data) {
             this.setState((state: IPageState) => {
                 state.items = [{value: "", label: this.props.t("notSelected")}];
-                resData.data.forEach(item => {
+                resData.data?.forEach(item => {
                     if (!V.isEmpty(this.state.formData._id)) {
                         if (this.state.formData._id == item._id) return;
                     }
@@ -118,7 +123,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
     async getItem() {
         let resData = await navigationService.getOne({
             _id: this.state.formData._id,
-            langId: this.props.getStateApp.pageData.langId
+            langId: this.props.getStateApp.appData.currentLangId
         });
         if (resData.status) {
             if (resData.data) {
@@ -132,11 +137,11 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                         contents: {
                             ...state.formData.contents,
                             ...item.contents,
-                            langId: this.props.getStateApp.pageData.langId,
+                            langId: this.props.getStateApp.appData.currentLangId,
                         }
                     };
 
-                    if (this.props.getStateApp.pageData.langId == this.props.getStateApp.appData.mainLangId) {
+                    if (this.props.getStateApp.appData.currentLangId == this.props.getStateApp.appData.mainLangId) {
                         state.mainTitle = state.formData.contents.title || "";
                     }
 
@@ -151,9 +156,8 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
     }
 
     navigatePage() {
-        let pagePath = PagePaths.navigation();
-        let path = pagePath.list();
-        this.props.router.push(path);
+        let pagePath = EndPoints.NAVIGATION_WITH.LIST;
+        this.props.router.push(pagePath);
     }
 
     onSubmit(event: FormEvent) {

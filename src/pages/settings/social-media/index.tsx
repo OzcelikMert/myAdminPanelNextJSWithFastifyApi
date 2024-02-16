@@ -1,13 +1,14 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
-import {UserRoleId} from "constants/index";
+import {ComponentFieldSet, ComponentForm, ComponentFormType} from "components/elements/form";
 import settingService from "services/setting.service";
 import ComponentToast from "components/elements/toast";
-import {
-    ISettingUpdateSocialMediaParamService,
-} from "types/services/setting.service";
-import { ISettingSocialMediaModel } from 'types/models/setting.model';
+import {ISettingUpdateSocialMediaParamService,} from "types/services/setting.service";
+import {ISettingSocialMediaModel} from 'types/models/setting.model';
+import {PermissionUtil} from "utils/permission.util";
+import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
+import {SettingProjectionKeys} from "constants/settingProjections";
+import {UserRoleId} from "constants/userRoles";
 
 type IPageState = {
     isSubmitting: boolean
@@ -28,11 +29,13 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        await this.getSettings();
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if(PermissionUtil.checkAndRedirect(this.props, SettingsEndPointPermission.UPDATE_SOCIAL_MEDIA)){
+            this.setPageTitle();
+            await this.getSettings();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     setPageTitle() {
@@ -40,7 +43,7 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
     }
 
     async getSettings() {
-        let resData = await settingService.get({projection: "socialMedia"})
+        let resData = await settingService.get({projection: SettingProjectionKeys.SocialMedia})
         if (resData.status && resData.data) {
             let setting = resData.data;
             this.setState((state: IPageState) => {
@@ -119,7 +122,7 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
                     <ComponentFieldSet
                         legend={`${this.props.t("socialMedia")} (#${props.elementId})`}
                         legendElement={
-                            this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                            this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                                 ? <i className="mdi mdi-pencil-box text-warning fs-3 cursor-pointer"
                                      onClick={() => this.onEdit(props)}></i>
                                 : undefined
@@ -176,7 +179,7 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
         return (
             <div className="row">
                 {
-                    this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                    this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                         ? <div className="col-md-7">
                             <button type={"button"} className="btn btn-gradient-success btn-lg"
                                     onClick={() => this.onCreate()}>+ {this.props.t("newSocialMedia")}

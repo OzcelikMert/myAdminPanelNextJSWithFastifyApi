@@ -1,5 +1,6 @@
 import {UserRoleId} from "constants/userRoles";
 import {StatusId} from "constants/status";
+import {PermissionId} from "constants/permissions";
 
 export interface IUserModel {
     _id: string
@@ -7,12 +8,12 @@ export interface IUserModel {
     statusId: StatusId,
     name: string,
     email: string,
-    image?: string,
+    image: string,
     url?: string,
     comment?: string,
     phone?: string,
     password?: string,
-    permissions: number[],
+    permissions: PermissionId[],
     banDateEnd?: string,
     banComment?: string,
     facebook?: string,

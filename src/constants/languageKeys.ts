@@ -1,4 +1,5 @@
 export const languageKeys = [
+    "sessionRequired",
     "price",
     "shippingPrice",
     "update",

@@ -1,26 +1,28 @@
 import React, {Component} from 'react'
-import {PageTypeId, PageTypes, PostTermTypeId, PostTypeId, Status, StatusId} from "constants/index";
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
 import Swal from "sweetalert2";
 import postService from "services/post.service";
 import {IPostGetManyResultService} from "types/services/post.service";
-import imageSourceLib from "lib/imageSource.lib";
-import permissionLib from "lib/permission.lib";
 import ComponentToast from "components/elements/toast";
 import ComponentDataTable from "components/elements/table/dataTable";
 import Image from "next/image"
-import PostLib from "lib/post.lib";
-import postLib from "lib/post.lib";
 import ComponentThemeBadgeStatus, {getStatusIcon} from "components/theme/badge/status";
 import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
 import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
 import {ProductTypeId} from "constants/productTypes";
-import productLib from "lib/product.lib";
-import {CurrencyId} from "constants/currencyTypes";
 import ComponentThemeBadgeProductType from "components/theme/badge/productType";
 import ComponentThemeBadgePageType from "components/theme/badge/pageType";
+import {PostTypeId} from "constants/postTypes";
+import {PostUtil} from "utils/post.util";
+import {PermissionUtil, PostPermissionMethod} from "utils/permission.util";
+import {status, StatusId} from "constants/status";
+import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
+import {ImageSourceUtil} from "utils/imageSource.util";
+import {ProductUtil} from "utils/product.util";
+import {PageTypeId, pageTypes} from "constants/pageTypes";
+import {PostTermTypeId} from "constants/postTermTypes";
 
 type IPageState = {
     typeId: PostTypeId
@@ -51,11 +53,13 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        await this.getItems();
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if(PermissionUtil.checkAndRedirect(this.props, PermissionUtil.getPostPermission(this.state.typeId, PostPermissionMethod.GET))){
+            this.setPageTitle();
+            await this.getItems();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     async componentDidUpdate(prevProps: Readonly<IPageProps>) {
@@ -72,7 +76,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
 
         }
 
-        if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
+        if (prevProps.getStateApp.appData.currentLangId != this.props.getStateApp.appData.currentLangId) {
             this.props.setStateApp({
                 isPageLoading: true
             }, async () => {
@@ -86,23 +90,26 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
 
     setPageTitle() {
         let titles: string[] = [
-            ...postLib.getPageTitles({t: this.props.t, postTypeId: this.state.typeId}),
+            ...PostUtil.getPageTitles({t: this.props.t, postTypeId: this.state.typeId}),
             this.props.t("list")
         ];
         this.props.setBreadCrumb(titles);
     }
 
     async getItems() {
-        let items = (await postService.getMany({
+        let result = (await postService.getMany({
             typeId: [this.state.typeId],
-            langId: this.props.getStateApp.pageData.langId,
+            langId: this.props.getStateApp.appData.currentLangId,
             ignoreDefaultLanguage: true
-        })).data;
-        this.setState((state: IPageState) => {
-            state.items = items;
-            state.showingItems = items.filter(item => item.statusId !== StatusId.Deleted);
-            return state;
-        });
+        }));
+
+        if(result.status && result.data){
+            this.setState((state: IPageState) => {
+                state.items = result.data!;
+                state.showingItems = result.data!.filter(item => item.statusId !== StatusId.Deleted);
+                return state;
+            });
+        }
     }
 
     onChangeStatus = async (statusId: number) => {
@@ -227,32 +234,35 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
 
     navigatePage(type: "termEdit" | "edit" | "termList", itemId = "", termTypeId = 0) {
         let postTypeId = this.state.typeId;
-        let pagePath = PostLib.getPagePath(postTypeId);
+        let pagePath = PostUtil.getPagePath(postTypeId);
         let path = "";
         switch (type) {
             case "edit":
-                path = pagePath.edit(itemId);
+                path = pagePath.EDIT(itemId);
                 break;
             case "termEdit":
-                path = pagePath.term(termTypeId).edit(itemId);
+                path = pagePath.TERM_WITH(termTypeId).EDIT(itemId);
                 break;
             case "termList":
-                path = pagePath.term(termTypeId).list();
+                path = pagePath.TERM_WITH(termTypeId).LIST;
                 break;
         }
         this.props.router.push(path);
     }
 
+    onClickUpdateRank(itemId: string) {
+        this.setState({selectedItemId: itemId, isShowModalUpdateRank: true});
+    }
+
     get getToggleMenuItems(): ThemeToggleMenuItemDocument[] {
-        return Status.findMulti("id", [
+        return status.findMulti("id", [
                 StatusId.Active,
                 StatusId.Pending,
                 StatusId.InProgress
             ].concat(
-                permissionLib.checkPermission(
-                    this.props.getStateApp.sessionData.roleId,
-                    this.props.getStateApp.sessionData.permissions,
-                    permissionLib.getPermissionIdForPostType(this.state.typeId, "Delete")
+                PermissionUtil.check(
+                    this.props.getStateApp.sessionAuth!,
+                    PermissionUtil.getPostPermission(this.state.typeId, PostPermissionMethod.DELETE)
                 ) ? [StatusId.Deleted] : []
             )
         ).map(item => ({label: this.props.t(item.langKey), value: item.id, icon: getStatusIcon(item.id)}))
@@ -268,7 +278,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                         ? <small>{row.contents?.icon}</small>
                         : <div className="image pt-2 pb-2">
                             <Image
-                                src={imageSourceLib.getUploadedImageSrc(row.contents?.image)}
+                                src={ImageSourceUtil.getUploadedImageSrc(row.contents?.image)}
                                 alt={row.contents?.title ?? ""}
                                 className="post-image img-fluid"
                                 width={75}
@@ -335,13 +345,13 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                 [PostTypeId.Product].includes(this.state.typeId)
                     ? {
                         name: this.props.t("price"),
-                        selector: row => productLib.getPricingDefault(row).taxIncluded,
+                        selector: row => ProductUtil.getPricingDefault(row).taxIncluded,
                         sortable: true,
                         cell: row => {
                             return (
                                 <div>
-                                    <span>{productLib.getPricingDefault(row).taxIncluded}</span>
-                                    <span className="ms-1">{productLib.getCurrencyType(this.props.getStateApp.appData.currencyId)?.icon}</span>
+                                    <span>{ProductUtil.getPricingDefault(row).taxIncluded}</span>
+                                    <span className="ms-1">{ProductUtil.getCurrencyType(this.props.getStateApp.appData.currencyId)?.icon}</span>
                                 </div>
                             );
                         },
@@ -359,7 +369,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                 [PostTypeId.Page].includes(this.state.typeId)
                     ? {
                         name: this.props.t("pageType"),
-                        selector: row => this.props.t(PageTypes.findSingle("id", (row.pageTypeId ? row.pageTypeId : PageTypeId.Default))?.langKey ?? "[noLangAdd]"),
+                        selector: row => this.props.t(pageTypes.findSingle("id", (row.pageTypeId ? row.pageTypeId : PageTypeId.Default))?.langKey ?? "[noLangAdd]"),
                         sortable: true,
                         cell: row => <ComponentThemeBadgePageType t={this.props.t} pageTypeId={row.pageTypeId || PageTypeId.Default} />
                     } : {}
@@ -379,11 +389,14 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                 sortable: true,
                 selector: row => row.rank ?? 0,
                 cell: row => {
-                    return  (
-                        <span className="cursor-pointer" onClick={() => this.setState({selectedItemId: row._id, isShowModalUpdateRank: true})}>
+                    return PermissionUtil.check(
+                        this.props.getStateApp.sessionAuth!,
+                        PermissionUtil.getPostPermission(this.state.typeId, PostPermissionMethod.UPDATE)
+                    ) ? (
+                        <span className="cursor-pointer" onClick={() => this.onClickUpdateRank(row._id)}>
                             {row.rank ?? 0} <i className="fa fa-pencil-square-o"></i>
                         </span>
-                    )
+                    ) : (<span>{row.rank ?? 0}</span>)
                 }
             },
             {
@@ -392,21 +405,22 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                 selector: row => new Date(row.createdAt || "").toLocaleDateString(),
                 sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
             },
-            {
-                name: "",
-                width: "70px",
-                button: true,
-                cell: row => permissionLib.checkPermission(
-                    this.props.getStateApp.sessionData.roleId,
-                    this.props.getStateApp.sessionData.permissions,
-                    permissionLib.getPermissionIdForPostType(row.typeId, "Edit")
-                ) ? (
-                    <button
-                        onClick={() => this.navigatePage("edit", row._id)}
-                        className="btn btn-gradient-warning"
-                    ><i className="fa fa-pencil-square-o"></i></button>
-                ) : null
-            }
+            (
+                PermissionUtil.check(
+                    this.props.getStateApp.sessionAuth!,
+                    PermissionUtil.getPostPermission(this.state.typeId, PostPermissionMethod.UPDATE)
+                ) ?  {
+                    name: "",
+                    width: "70px",
+                    button: true,
+                    cell: row => (
+                        <button
+                            onClick={() => this.navigatePage("edit", row._id)}
+                            className="btn btn-gradient-warning"
+                        ><i className="fa fa-pencil-square-o"></i></button>
+                    )
+                } : {}
+            )
         ];
     }
 
@@ -495,17 +509,18 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                                     onSelect={rows => this.onSelect(rows)}
                                     onSearch={searchKey => this.onSearch(searchKey)}
                                     selectedRows={this.state.selectedItems}
-                                    t={this.props.t}
+                                    i18={{
+                                        search: this.props.t("search"),
+                                        noRecords: this.props.t("noRecords")
+                                    }}
                                     isSelectable={(
-                                        permissionLib.checkPermission(
-                                            this.props.getStateApp.sessionData.roleId,
-                                            this.props.getStateApp.sessionData.permissions,
-                                            permissionLib.getPermissionIdForPostType(this.state.typeId, "Edit")
+                                        PermissionUtil.check(
+                                            this.props.getStateApp.sessionAuth!,
+                                            PermissionUtil.getPostPermission(this.state.typeId, PostPermissionMethod.UPDATE)
                                         ) ||
-                                        permissionLib.checkPermission(
-                                            this.props.getStateApp.sessionData.roleId,
-                                            this.props.getStateApp.sessionData.permissions,
-                                            permissionLib.getPermissionIdForPostType(this.state.typeId, "Delete")
+                                        PermissionUtil.check(
+                                            this.props.getStateApp.sessionAuth!,
+                                            PermissionUtil.getPostPermission(this.state.typeId, PostPermissionMethod.DELETE)
                                         )
                                     )}
                                     isAllSelectable={true}

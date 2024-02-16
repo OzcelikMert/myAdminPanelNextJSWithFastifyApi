@@ -5,6 +5,9 @@ import ReactHandleFormLibrary from "library/react/handles/form";
 import settingService from "services/setting.service";
 import ComponentToast from "components/elements/toast";
 import {ISettingUpdateSEOParamService} from "types/services/setting.service";
+import {PermissionUtil} from "utils/permission.util";
+import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
+import {SettingProjectionKeys} from "constants/settingProjections";
 
 type IPageState = {
     isSubmitting: boolean
@@ -30,15 +33,17 @@ class PageSettingsSEO extends Component<IPageProps, IPageState> {
     }
 
     async componentDidMount() {
-        this.setPageTitle()
-        await this.getSeo();
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if(PermissionUtil.checkAndRedirect(this.props, SettingsEndPointPermission.UPDATE_SEO)){
+            this.setPageTitle()
+            await this.getSeo();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     async componentDidUpdate(prevProps: Readonly<IPageProps>) {
-        if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
+        if (prevProps.getStateApp.appData.currentLangId != this.props.getStateApp.appData.currentLangId) {
             this.props.setStateApp({
                 isPageLoading: true
             }, async () => {
@@ -55,7 +60,7 @@ class PageSettingsSEO extends Component<IPageProps, IPageState> {
     }
 
     async getSeo() {
-        let resData = await settingService.get({langId: this.props.getStateApp.pageData.langId, projection: "seo"});
+        let resData = await settingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.SEO});
         if (resData.status && resData.data) {
             let setting = resData.data;
             this.setState((state: IPageState) => {
@@ -63,7 +68,7 @@ class PageSettingsSEO extends Component<IPageProps, IPageState> {
                     seoContents: {
                         ...state.formData.seoContents,
                         ...setting.seoContents,
-                        langId: this.props.getStateApp.pageData.langId
+                        langId: this.props.getStateApp.appData.currentLangId
                     }
                 };
                 return state;

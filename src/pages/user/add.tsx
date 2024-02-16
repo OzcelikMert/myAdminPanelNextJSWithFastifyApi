@@ -2,18 +2,23 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import moment from "moment";
 import {IPagePropCommon} from "types/pageProps";
-import {PermissionGroups, Permissions, StatusId, UserRoleId, userRoles} from "constants/index";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import {ComponentFieldSet, ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import V, {DateMask} from "library/variable";
 import userService from "services/user.service";
-import staticContentLib from "lib/staticContent.lib";
-import PagePaths from "constants/pagePaths";
 import {IUserUpdateOneParamService} from "types/services/user.service";
 import Swal from "sweetalert2";
-import permissionLib from "lib/permission.lib";
-import {IPermission, IPermissionGroup} from "types/constants";
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {UserEndPointPermission} from "constants/endPointPermissions/user.endPoint.permission";
+import {PermissionUtil} from "utils/permission.util";
+import {ComponentUtil} from "utils/component.util";
+import {StatusId} from "constants/status";
+import {UserRoleId, userRoles} from "constants/userRoles";
+import {EndPoints} from "constants/endPoints";
+import {permissions} from "constants/permissions";
+import {IPermissionGroup} from "types/constants/permissionGroups";
+import {IPermission} from "types/constants/permissions";
+import {permissionGroups} from "constants/permissionGroups";
 
 type IPageState = {
     mainTabActiveKey: string
@@ -44,21 +49,24 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                 statusId: 0,
                 banDateEnd: new Date().getStringWithMask(DateMask.DATE),
                 banComment: "",
-                permissions: []
+                permissions: [],
             }
         }
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        this.getRoles();
-        this.getStatus();
-        if (this.state.formData._id) {
-            await this.getItem();
+        let permission = this.state.formData._id ? UserEndPointPermission.UPDATE : UserEndPointPermission.ADD;
+        if(PermissionUtil.checkAndRedirect(this.props, permission)){
+            this.setPageTitle();
+            this.getRoles();
+            this.getStatus();
+            if (this.state.formData._id) {
+                await this.getItem();
+            }
+            this.props.setStateApp({
+                isPageLoading: false
+            })
         }
-        this.props.setStateApp({
-            isPageLoading: false
-        })
     }
 
     setPageTitle() {
@@ -75,7 +83,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
 
     getStatus() {
         this.setState((state: IPageState) => {
-            state.status = staticContentLib.getStatusForSelect([
+            state.status = ComponentUtil.getStatusForSelect([
                 StatusId.Active,
                 StatusId.Pending,
                 StatusId.Disabled,
@@ -88,8 +96,8 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
 
     getRoles() {
         this.setState((state: IPageState) => {
-            let findUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionData.roleId);
-            state.userRoles = staticContentLib.getuserRolesForSelect(
+            let findUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionAuth?.user.roleId);
+            state.userRoles = ComponentUtil.getUserRolesForSelect(
                 userRoles.map(userRole => findUserRole && (findUserRole.rank > userRole.rank) ? userRole.id : 0).filter(roleId => roleId !== 0),
                 this.props.t
             );
@@ -131,7 +139,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
     }
 
     navigatePage() {
-        let path = PagePaths.settings().user().list();
+        let path = EndPoints.USER_WITH.LIST;
         this.props.router.push(path);
     }
 
@@ -164,7 +172,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
     onPermissionAllSelected(isSelected: boolean) {
         this.setState((state: IPageState) => {
             if (isSelected) {
-                state.formData.permissions = Permissions.map(perm => perm.id);
+                state.formData.permissions = permissions.map(perm => perm.id);
             } else {
                 state.formData.permissions = [];
             }
@@ -174,7 +182,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
 
     onChangeUserRole(roleId: number) {
         let role = userRoles.findSingle("id", roleId);
-        let permsForRole = Permissions.filter(perm => role && (perm.defaultRoleRank <= role.rank));
+        let permsForRole = permissions.filter(perm => role && (perm.defaultRoleRank <= role.rank));
         this.setState((state: IPageState) => {
             state.formData.permissions = [];
             permsForRole.forEach(perm => {
@@ -203,21 +211,20 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
         let self = this;
 
         function PermissionGroup(props: IPermissionGroup, index: number) {
-            let permissions = Permissions.findMulti("groupId", props.id).map((perm, index) =>
-                permissionLib.checkPermission(
-                    self.props.getStateApp.sessionData.roleId,
-                    self.props.getStateApp.sessionData.permissions,
-                    perm.id
+            let foundPermissions = permissions.findMulti("groupId", props.id).map((perm, index) =>
+                PermissionUtil.checkPermissionId(
+                    self.props.getStateApp.sessionAuth!.user.permissions,
+                    [perm.id]
                 ) ? PermissionItem(perm, index) : null
             )
 
-            return permissions.every(permission => permission == null) ? null : (
+            return foundPermissions.every(permission => permission == null) ? null : (
                 <div className="col-md-6 mb-3">
                     <ComponentFieldSet
                         key={index}
                         legend={self.props.t(props.langKey)}
                     >
-                        {permissions}
+                        {foundPermissions}
                     </ComponentFieldSet>
                 </div>
             )
@@ -249,7 +256,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                     />
                 </div>
                 {
-                    PermissionGroups.map((group, index) => PermissionGroup(group, index))
+                    permissionGroups.map((group, index) => PermissionGroup(group, index))
                 }
             </div>
         );

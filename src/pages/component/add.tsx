@@ -12,8 +12,12 @@ import Image from "next/image"
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 import {IComponentTypeModel} from "types/models/component.model";
 import {languageKeys} from "constants/languageKeys";
-import {componentInputTypes} from "constants/componentInputTypes";
+import {ComponentInputTypeId, componentInputTypes} from "constants/componentInputTypes";
 import {EndPoints} from "constants/endPoints";
+import {PermissionUtil} from "utils/permission.util";
+import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
+import {ImageSourceUtil} from "utils/imageSource.util";
+import {UserRoleId} from "constants/userRoles";
 
 type IPageState = {
     langKeys: ThemeFormSelectValueDocument[]
@@ -45,19 +49,22 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        this.getLangKeys();
-        this.getTypes();
-        if (this.state.formData._id) {
-            await this.getItem();
+        let permission = this.state.formData._id ? ComponentEndPointPermission.UPDATE : ComponentEndPointPermission.ADD;
+        if(PermissionUtil.checkAndRedirect(this.props, permission)){
+            this.setPageTitle();
+            this.getLangKeys();
+            this.getTypes();
+            if (this.state.formData._id) {
+                await this.getItem();
+            }
+            this.props.setStateApp({
+                isPageLoading: false
+            })
         }
-        this.props.setStateApp({
-            isPageLoading: false
-        })
     }
 
     async componentDidUpdate(prevProps: IPagePropCommon) {
-        if (prevProps.getStateApp.pageData.langId != this.props.getStateApp.pageData.langId) {
+        if (prevProps.getStateApp.appData.currentLangId != this.props.getStateApp.appData.currentLangId) {
             this.props.setStateApp({
                 isPageLoading: true
             }, async () => {
@@ -100,7 +107,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
     async getItem() {
         let resData = await componentService.getOne({
             _id: this.state.formData._id,
-            langId: this.props.getStateApp.pageData.langId,
+            langId: this.props.getStateApp.appData.currentLangId,
         });
         if (resData.status) {
             if (resData.data) {
@@ -113,12 +120,12 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                             ...type,
                             contents: {
                                 ...type.contents,
-                                langId: this.props.getStateApp.pageData.langId
+                                langId: this.props.getStateApp.appData.currentLangId
                             }
                         }))
                     };
 
-                    if (this.props.getStateApp.pageData.langId == this.props.getStateApp.appData.mainLangId) {
+                    if (this.props.getStateApp.appData.currentLangId == this.props.getStateApp.appData.mainLangId) {
                         state.mainTitle = this.props.t(item.langKey);
                     }
 
@@ -175,7 +182,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                 langKey: "[noLangAdd]",
                 typeId: ComponentInputTypeId.Text,
                 contents: {
-                    langId: this.props.getStateApp.pageData.langId,
+                    langId: this.props.getStateApp.appData.currentLangId,
                     content: ""
                 }
             }, ...state.formData.types]
@@ -244,7 +251,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                         />
                         <div>
                             <Image
-                                src={imageSourceLib.getUploadedImageSrc(typeProps.contents?.content)}
+                                src={ImageSourceUtil.getUploadedImageSrc(typeProps.contents?.content)}
                                 alt="Empty Image"
                                 className="post-image img-fluid"
                                 width={100}
@@ -305,14 +312,14 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                 <div className="col-md-7 mt-2">
                     <div className="row">
                         {
-                            this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                            this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                                 ? <div className="col-md-12 text-end">
                                     <button type={"button"} className="btn btn-gradient-danger btn-lg"
                                             onClick={() => this.onDelete(this.state.formData.types, typeIndex)}><i className="mdi mdi-trash-can-outline"></i> {this.props.t("delete")}</button>
                                 </div> : null
                         }
                         {
-                            this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                            this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                                 ? <div className="col-md-12 mt-3">
                                     <ComponentFormType
                                         title={`${this.props.t("elementId")}*`}
@@ -324,7 +331,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                                 </div> : null
                         }
                         {
-                            this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                            this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                                 ? <div className="col-md-12 mt-3">
                                     <ComponentFormSelect
                                         title={this.props.t("langKey")}
@@ -336,7 +343,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                                 </div> : null
                         }
                         {
-                            this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                            this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                                 ? <div className="col-md-12 mt-3">
                                     <ComponentFormSelect
                                         title={this.props.t("typeId")}
@@ -348,7 +355,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                                 </div> : null
                         }
                         {
-                            this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                            this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                                 ? <div className="col-md-12 mt-3">
                                     <ComponentFormType
                                         title={`${this.props.t("comment")}`}
@@ -359,7 +366,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                                 </div> : null
                         }
                         {
-                            this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                            this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                                 ? <div className="col-md-12 mt-3">
                                     <ComponentFormType
                                         title={`${this.props.t("rank")}*`}
@@ -375,7 +382,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                         </div>
                     </div>
                     {
-                        this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                        this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                             ? <hr/> : null
                     }
                 </div>
@@ -385,7 +392,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
         return (
             <div className="row mb-3">
                 {
-                    this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                    this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                         ? <div className="col-md-7">
                             <button type={"button"} className="btn btn-gradient-success btn-lg"
                                     onClick={() => this.onCreateType()}>+ {this.props.t("newType")}
@@ -463,14 +470,14 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                                                 className="mb-5"
                                                 transition={false}>
                                                 {
-                                                    this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                                                    this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                                                         ? <Tab eventKey="general" title={this.props.t("general")}>
                                                             <this.TabGeneral/>
                                                         </Tab> : null
                                                 }
                                                 <Tab
-                                                    eventKey={this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin ? "types" : "general"}
-                                                    title={this.props.t(this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin ? "content" : "general")}
+                                                    eventKey={this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin ? "types" : "general"}
+                                                    title={this.props.t(this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin ? "content" : "general")}
                                                 >
                                                     <this.TabTypes/>
                                                 </Tab>

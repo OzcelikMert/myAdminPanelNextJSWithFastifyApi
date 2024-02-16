@@ -1,11 +1,14 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormType} from "components/elements/form";
-import {UserRoleId} from "constants/index";
 import settingService from "services/setting.service";
 import ComponentToast from "components/elements/toast";
 import {ISettingUpdateContactFormParamService} from "types/services/setting.service";
 import {ISettingContactFormModel} from 'types/models/setting.model';
+import {SettingProjectionKeys} from "constants/settingProjections";
+import {UserRoleId} from "constants/userRoles";
+import {PermissionUtil} from "utils/permission.util";
+import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
 
 type IPageState = {
     isSubmitting: boolean
@@ -26,11 +29,13 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        await this.getSettings();
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if(PermissionUtil.checkAndRedirect(this.props, SettingsEndPointPermission.UPDATE_CONTACT_FORM)){
+            this.setPageTitle();
+            await this.getSettings();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     setPageTitle() {
@@ -38,7 +43,7 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
     }
 
     async getSettings() {
-        let resData = await settingService.get({projection: "contactForm"})
+        let resData = await settingService.get({projection: SettingProjectionKeys.ContactForm})
         if (resData.status && resData.data) {
             let setting = resData.data;
             this.setState((state: IPageState) => {
@@ -120,7 +125,7 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
                     <ComponentFieldSet
                         legend={`${this.props.t("contactForm")} (#${contactFormProps.key})`}
                         legendElement={
-                            this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                            this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                                 ? <i className="mdi mdi-pencil-box text-warning fs-3 cursor-pointer"
                                      onClick={() => this.onEdit(contactFormProps)}></i>
                                 : undefined
@@ -218,7 +223,7 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
         return (
             <div className="row">
                 {
-                    this.props.getStateApp.sessionData.roleId == UserRoleId.SuperAdmin
+                    this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
                         ? <div className="col-md-7">
                             <button type={"button"} className="btn btn-gradient-success btn-lg"
                                     onClick={() => this.onCreate()}>+ {this.props.t("newContactForm")}

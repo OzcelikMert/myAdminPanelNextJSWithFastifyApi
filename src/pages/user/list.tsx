@@ -1,19 +1,21 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {PermissionId, Status, UserRoleId, userRoles} from "constants/index";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import {IUserGetResultService} from "types/services/user.service";
 import ComponentThemeUsersProfileCard from "components/theme/users/profileCard";
 import userService from "services/user.service";
-import imageSourceLib from "lib/imageSource.lib";
-import permissionLib from "lib/permission.lib";
 import ComponentToast from "components/elements/toast";
-import PagePaths from "constants/pagePaths";
 import ComponentDataTable from "components/elements/table/dataTable";
 import Image from "next/image"
 import ComponentThemeBadgeStatus from "components/theme/badge/status";
 import ComponentThemeBadgeUserRole from "components/theme/badge/userRole";
+import {UserRoleId, userRoles} from "constants/userRoles";
+import {PermissionUtil} from "utils/permission.util";
+import {UserEndPointPermission} from "constants/endPointPermissions/user.endPoint.permission";
+import {EndPoints} from "constants/endPoints";
+import {ImageSourceUtil} from "utils/imageSource.util";
+import {status} from "constants/status";
 
 type IPageState = {
     searchKey: string
@@ -38,11 +40,13 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        await this.getItems();
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if(PermissionUtil.checkAndRedirect(this.props, UserEndPointPermission.GET)){
+            this.setPageTitle();
+            await this.getItems();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     setPageTitle() {
@@ -54,19 +58,21 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
     }
 
     async getItems() {
-        let items = (await userService.getMany({})).data;
-        items = items.orderBy("roleId", "desc");
-        this.setState((state: IPageState) => {
-            state.items = state.items.sort(item => {
-                let sort = 0;
-                if (item._id == this.props.getStateApp.sessionData.id) {
-                    sort = 1;
-                }
-                return sort;
-            })
-            state.items = items.filter(item => item.roleId != UserRoleId.SuperAdmin);
-            return state;
-        }, () => this.onSearch(this.state.searchKey));
+        let result = (await userService.getMany({}));
+        if(result.status && result.data){
+            let items = result.data.orderBy("roleId", "desc");
+            this.setState((state: IPageState) => {
+                state.items = state.items.sort(item => {
+                    let sort = 0;
+                    if (item._id == this.props.getStateApp.sessionAuth!.user.userId) {
+                        sort = 1;
+                    }
+                    return sort;
+                })
+                state.items = items.filter(item => item.roleId != UserRoleId.SuperAdmin);
+                return state;
+            }, () => this.onSearch(this.state.searchKey));
+        }
     }
 
     async onDelete(userId: string) {
@@ -119,7 +125,7 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
     }
 
     navigatePage(type: "edit", itemId = "") {
-        let path = PagePaths.settings().user().edit(itemId)
+        let path = EndPoints.USER_WITH.EDIT(itemId);
         this.props.router.push(path);
     }
 
@@ -131,7 +137,7 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                 cell: row => (
                     <div className="image mt-2 mb-2">
                         <Image
-                            src={imageSourceLib.getUploadedImageSrc(row.image)}
+                            src={ImageSourceUtil.getUploadedImageSrc(row.image)}
                             alt={row.name}
                             width={75}
                             height={75}
@@ -158,7 +164,7 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
             },
             {
                 name: this.props.t("status"),
-                selector: row => Status.findSingle("id", row.statusId)?.rank ?? 0,
+                selector: row => status.findSingle("id", row.statusId)?.rank ?? 0,
                 sortable: true,
                 cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId} />
             },
@@ -183,15 +189,14 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                 button: true,
                 width: "70px",
                 cell: row => {
-                    let sessionUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionData.roleId);
+                    let sessionUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionAuth?.user.roleId);
                     let rowUserRole = userRoles.findSingle("id", row.roleId);
                     return (
                         (sessionUserRole && rowUserRole) &&
                         (rowUserRole.rank < sessionUserRole.rank) &&
-                        permissionLib.checkPermission(
-                            this.props.getStateApp.sessionData.roleId,
-                            this.props.getStateApp.sessionData.permissions,
-                            PermissionId.UserEdit
+                        PermissionUtil.check(
+                            this.props.getStateApp.sessionAuth!,
+                            UserEndPointPermission.UPDATE
                         )
                     ) ? <button
                         onClick={() => this.navigatePage("edit", row._id)}
@@ -205,15 +210,14 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                 button: true,
                 width: "70px",
                 cell: row => {
-                    let sessionUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionData.roleId);
+                    let sessionUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionAuth?.user.roleId);
                     let rowUserRole = userRoles.findSingle("id", row.roleId);
                     return (
                         (sessionUserRole && rowUserRole) &&
                         (rowUserRole.rank < sessionUserRole.rank) &&
-                        permissionLib.checkPermission(
-                            this.props.getStateApp.sessionData.roleId,
-                            this.props.getStateApp.sessionData.permissions,
-                            PermissionId.UserDelete
+                        PermissionUtil.check(
+                            this.props.getStateApp.sessionAuth!,
+                            UserEndPointPermission.DELETE
                         )
                     ) ? <button
                         onClick={() => this.onDelete(row._id)}
@@ -239,7 +243,6 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                             }}
                             isShow={this.state.isViewItemInfo}
                             userInfo={userInfo}
-                            langId={this.props.getStateApp.sessionData.langId}
                         /> : null
                     })()
                 }
@@ -250,7 +253,10 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                                 <ComponentDataTable
                                     columns={this.getTableColumns}
                                     data={this.state.showingItems}
-                                    t={this.props.t}
+                                    i18={{
+                                        search: this.props.t("search"),
+                                        noRecords: this.props.t("noRecords")
+                                    }}
                                     onSearch={searchKey => this.onSearch(searchKey)}
                                     isSearchable={true}
                                 />

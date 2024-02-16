@@ -8,6 +8,9 @@ import {ISettingUpdateECommerceParamService} from "types/services/setting.servic
 import {Tab, Tabs} from "react-bootstrap";
 import {CurrencyId, currencyTypes} from "constants/currencyTypes";
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {SettingProjectionKeys} from "constants/settingProjections";
+import {PermissionUtil} from "utils/permission.util";
+import {ECommerceEndPointPermission} from "constants/endPointPermissions/eCommerce.endPoint.permission";
 
 type IPageState = {
     currencyTypes: ThemeFormSelectValueDocument[]
@@ -34,12 +37,14 @@ export default class PageECommerceSettings extends Component<IPageProps, IPageSt
     }
 
     async componentDidMount() {
-        this.setPageTitle();
-        this.getCurrencyTypes();
-        await this.getSettings();
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if(PermissionUtil.checkAndRedirect(this.props, ECommerceEndPointPermission.SETTINGS)){
+            this.setPageTitle();
+            this.getCurrencyTypes();
+            await this.getSettings();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     setPageTitle() {
@@ -47,7 +52,7 @@ export default class PageECommerceSettings extends Component<IPageProps, IPageSt
     }
 
     async getSettings() {
-        let resData = await settingService.get({projection: "eCommerce"})
+        let resData = await settingService.get({projection: SettingProjectionKeys.ECommerce})
         if (resData.status && resData.data) {
             let setting = resData.data;
             this.setState((state: IPageState) => {

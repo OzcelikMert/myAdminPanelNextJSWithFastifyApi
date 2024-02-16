@@ -5,6 +5,8 @@ import {ISidebarPath} from "types/constants/sidebarNavs";
 import clone from "clone";
 import {sidebarNavs} from "constants/sidebarNavs";
 import {PermissionUtil} from "utils/permission.util";
+import {RouteUtil} from "utils/route.util";
+import {EndPoints} from "constants/endPoints";
 
 type IPageState = {
     isMenuOpen: { [key: string]: any }
@@ -60,9 +62,9 @@ class ComponentToolSidebar extends Component<IPageProps, IPageState> {
         let self = this;
 
         function HasChild(_props: ISidebarPath) {
-            if (!PermissionUtil.check(self.props.getStateApp.sessionAuth, _props.minRoleId, _props.minPermId)) return null;
+            if (_props.permission && !PermissionUtil.check(self.props.getStateApp.sessionAuth!, _props.permission)) return null;
             return (
-                <span className={`nav-link ${self.isPathActive(_props.path) ? 'active' : ''}`} onClick={() => routeLib.change(self.props.router, _props.path ?? PagePaths.dashboard())}>
+                <span className={`nav-link ${self.isPathActive(_props.path) ? 'active' : ''}`} onClick={() => RouteUtil.change(self.props.router, _props.path ?? EndPoints.DASHBOARD)}>
                     <span className={`menu-title text-capitalize ${self.isPathActive(_props.path) ? 'active' : ''}`}>{self.props.t(_props.title)}</span>
                     <i className={`mdi mdi-${_props.icon} menu-icon`}></i>
                 </span>
@@ -70,7 +72,7 @@ class ComponentToolSidebar extends Component<IPageProps, IPageState> {
         }
 
         function HasChildren(_props: ISidebarPath) {
-            if (!PermissionUtil.check(self.props.getStateApp.sessionAuth, _props.minRoleId, _props.minPermId)) return null;
+            if (_props.permission && !PermissionUtil.check(self.props.getStateApp.sessionAuth!, _props.permission)) return null;
             let state = (_props.state) ? self.state.isMenuOpen[_props.state] : false;
             return (
                 <span>

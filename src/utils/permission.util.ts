@@ -5,21 +5,31 @@ import {PostTypeId} from "constants/postTypes";
 import {PostEndPointPermission} from "constants/endPointPermissions/post.endPoint.permission";
 import {IEndPointPermission} from "types/constants/endPoint.permissions";
 import {ApiRequestParamMethodDocument} from "library/types/api";
+import {IPagePropCommon} from "types/pageProps";
+import {EndPoints} from "constants/endPoints";
+import ComponentToast from "components/elements/toast";
 
-const getPermissionKeyPrefix = (method: ApiRequestParamMethodDocument) => {
+export enum PostPermissionMethod {
+    GET,
+    ADD,
+    UPDATE,
+    DELETE
+}
+
+const getPermissionKeyPrefix = (method: PostPermissionMethod) => {
     let prefix = "";
 
     switch (method) {
-        case "GET": prefix = "GET_"; break;
-        case "POST": prefix = "ADD_"; break;
-        case "PUT": prefix = "UPDATE_"; break;
-        case "DELETE": prefix = "DELETE_"; break;
+        case PostPermissionMethod.GET: prefix = "GET_"; break;
+        case PostPermissionMethod.ADD: prefix = "ADD_"; break;
+        case PostPermissionMethod.UPDATE: prefix = "UPDATE_"; break;
+        case PostPermissionMethod.DELETE: prefix = "DELETE_"; break;
     }
 
     return prefix;
 }
 
-const getPostPermission = (typeId: PostTypeId, method: ApiRequestParamMethodDocument) : IEndPointPermission => {
+const getPostPermission = (typeId: PostTypeId, method: PostPermissionMethod) : IEndPointPermission => {
     let permissionKeyPrefix = getPermissionKeyPrefix(method);
     const postTypeIdKey = Object.keys(PostTypeId).find(key => PostTypeId[key as keyof typeof PostTypeId] === typeId) ?? "";
 
@@ -39,13 +49,42 @@ const checkPermissionId = (targetPermissionId: PermissionId[], minPermissionId: 
 
 const check = (sessionAuth: ISessionAuthModel, minPermission: IEndPointPermission) => {
     return (
-        !checkPermissionRoleRank(sessionAuth.user.roleId, minPermission.userRoleId) ||
-        !checkPermissionId(sessionAuth.user.permissions, minPermission.permissionId)
+        checkPermissionRoleRank(sessionAuth.user.roleId, minPermission.userRoleId) &&
+        checkPermissionId(sessionAuth.user.permissions, minPermission.permissionId)
     );
 };
 
+const checkAndRedirect = (props: IPagePropCommon, minPermission: IEndPointPermission, redirectPath = EndPoints.DASHBOARD): boolean => {
+    let status = true;
+
+    if(props.getStateApp.sessionAuth){
+        if(!check(props.getStateApp.sessionAuth, minPermission)){
+            status = false;
+            new ComponentToast({
+                type: "error",
+                title: props.t("error"),
+                content: props.t("noPerm"),
+                position: "top-right"
+            });
+            props.router.push(redirectPath);
+        }
+    }else {
+        status = false;
+        new ComponentToast({
+            type: "error",
+            title: props.t("error"),
+            content: props.t("sessionRequired"),
+            position: "top-right"
+        });
+        props.router.push(EndPoints.LOGIN);
+    }
+
+    return status;
+}
+
 export const PermissionUtil = {
     check: check,
+    checkAndRedirect: checkAndRedirect,
     getPostPermission: getPostPermission,
     checkPermissionRoleRank: checkPermissionRoleRank,
     checkPermissionId: checkPermissionId

@@ -16,7 +16,7 @@ const setTheme = (theme: IThemeKeys) => {
     window.localStorage.setItem("adminTheme", theme);
 }
 
-export default {
+export const LocalStorageUtil = {
     getLanguage: getLanguage,
     setLanguage: setLanguage,
     getTheme: getTheme,

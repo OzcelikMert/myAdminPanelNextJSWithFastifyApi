@@ -11,7 +11,6 @@ import {AppProps} from "next/app";
 import ComponentHead from "components/head";
 import {useTranslation} from "react-i18next";
 import ComponentProviderAuth from "components/providers/auth";
-import ComponentProviderPermission from "components/providers/permission";
 import ComponentProviderAppInit from "components/providers/appInit";
 import Variable from "library/variable";
 import {ToastContainer} from "react-toastify";
@@ -40,12 +39,10 @@ class ComponentApp extends Component<IPageProps, IPageState> {
             isPageLoading: true,
             appData: {
                 mainLangId: "",
+                currentLangId: "",
                 contentLanguages: [],
                 currencyId: CurrencyId.TurkishLira
             },
-            pageData: {
-                langId: ""
-            }
         }
     }
 
@@ -65,9 +62,9 @@ class ComponentApp extends Component<IPageProps, IPageState> {
             isPageLoading: true,
         }, async () => {
             this.setState({
-                pageData: {
-                    ...this.state.pageData,
-                    langId: this.state.appData.mainLangId
+                appData: {
+                    ...this.state.appData,
+                    currentLangId: this.state.appData.mainLangId
                 }
             })
         })
@@ -95,6 +92,18 @@ class ComponentApp extends Component<IPageProps, IPageState> {
         })
     }
 
+    onLanguageChange(langId: string) {
+        this.setState((state: IPageState) => {
+            return {
+                ...state,
+                appData: {
+                    ...state.appData,
+                    currentLangId: langId
+                }
+            };
+        });
+    }
+
     PageHeader = (props: IPagePropCommon) => {
         let path = props.router.pathname.replaceAll("[", ":").replaceAll("]", "");
 
@@ -110,16 +119,8 @@ class ComponentApp extends Component<IPageProps, IPageState> {
                                 <ComponentThemeContentLanguage
                                     t={props.t}
                                     options={this.state.appData.contentLanguages}
-                                    value={this.state.appData.contentLanguages.findSingle("_id", this.state.pageData.langId)}
-                                    onChange={(item, e) => this.setState((state: IPageState) => {
-                                        return {
-                                            ...state,
-                                            pageData: {
-                                                ...state.pageData,
-                                                langId: item.value
-                                            }
-                                        };
-                                    })}
+                                    value={this.state.appData.contentLanguages.findSingle("_id", this.state.appData.currentLangId)}
+                                    onChange={(item, e) => this.onLanguageChange(item.value)}
                                 />
                             </div> : null
                     }
@@ -163,19 +164,17 @@ class ComponentApp extends Component<IPageProps, IPageState> {
                         {this.state.isPageLoading || this.state.isAppLoading ?
                             <ComponentToolSpinner isFullPage={isFullPageLayout}/> : null}
                         <ComponentProviderAuth {...commonProps}>
-                            <ComponentProviderPermission {...commonProps}>
-                                <ComponentProviderAppInit  {...commonProps}>
-                                    <div className="main-panel">
-                                        <div className="content-wrapper">
-                                            {
-                                                !isFullPageLayout ? <this.PageHeader {...commonProps} /> : null
-                                            }
-                                            <this.props.Component {...commonProps}/>
-                                        </div>
-                                        {!isFullPageLayout ? <ComponentToolFooter/> : ''}
+                            <ComponentProviderAppInit  {...commonProps}>
+                                <div className="main-panel">
+                                    <div className="content-wrapper">
+                                        {
+                                            !isFullPageLayout ? <this.PageHeader {...commonProps} /> : null
+                                        }
+                                        <this.props.Component {...commonProps}/>
                                     </div>
-                                </ComponentProviderAppInit>
-                            </ComponentProviderPermission>
+                                    {!isFullPageLayout ? <ComponentToolFooter/> : ''}
+                                </div>
+                            </ComponentProviderAppInit>
                         </ComponentProviderAuth>
                     </div>
                 </div>

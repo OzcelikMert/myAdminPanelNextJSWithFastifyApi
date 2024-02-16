@@ -2,21 +2,23 @@ import React, {Component} from 'react';
 import dynamic from "next/dynamic";
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
-import {PostTypeId, postTypes} from "constants/index";
 import {IPostGetManyResultService} from "types/services/post.service";
 import postService from "services/post.service";
 import viewService from "services/view.service";
 import {IViewGetNumberResultService, IViewGetStatisticsResultService} from "types/services/view.service";
-import imageSourceLib from "lib/imageSource.lib";
-import permissionLib from "lib/permission.lib";
 import ComponentDataTable from "components/elements/table/dataTable";
 import Image from "next/image"
 import ComponentChartArea from "components/elements/charts/area";
-import PostLib from "lib/post.lib";
 import ComponentThemeBadgeStatus from "components/theme/badge/status";
 import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
+import {PostUtil} from "utils/post.util";
+import {PostEndPoint} from "constants/endPoints/post.endPoint";
+import {ImageSourceUtil} from "utils/imageSource.util";
+import {postTypes} from "constants/postTypes";
+import {PermissionUtil} from "utils/permission.util";
+import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
 
-const WorldMap = dynamic(() => import('react-svg-worldmap').then((module) => module.WorldMap), {ssr: false});
+const WorldMap = dynamic(() => import('react-svg-worldmap'), {ssr: false});
 
 type IPageState = {
     lastPosts: IPostGetManyResultService[]
@@ -82,10 +84,10 @@ class PageDashboard extends Component<IPageProps, IPageState> {
     async getViewNumber() {
         let resData = await viewService.getNumber();
 
-        if (resData.status) {
+        if (resData.status && resData.data) {
             if (JSON.stringify(this.state.visitorData.number) != JSON.stringify(resData.data)) {
                 this.setState((state: IPageState) => {
-                    state.visitorData.number = resData.data;
+                    state.visitorData.number = resData.data!;
                     return state;
                 })
             }
@@ -95,9 +97,9 @@ class PageDashboard extends Component<IPageProps, IPageState> {
     async getViewStatistics() {
         let resData = await viewService.getStatistics();
 
-        if (resData.status) {
+        if (resData.status && resData.data) {
             this.setState((state: IPageState) => {
-                state.visitorData.statistics = resData.data;
+                state.visitorData.statistics = resData.data!;
                 return state;
             })
         }
@@ -109,7 +111,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
             count: 10,
             isRecent: true
         });
-        if (resData.status) {
+        if (resData.status && resData.data) {
             this.setState({
                 lastPosts: resData.data
             })
@@ -122,24 +124,24 @@ class PageDashboard extends Component<IPageProps, IPageState> {
         });
     }
 
-    async navigatePage(type: "termEdit" | "edit" | "listPost", postTypeId: number, itemId = "", termTypeId = 0) {
-        let pagePath = PostLib.getPagePath(postTypeId);
+    async navigatePostPage(type: "termEdit" | "edit" | "listPost", postTypeId: number, itemId = "", termTypeId = 0) {
+        let pagePath = PostUtil.getPagePath(postTypeId);
         let path = "";
         switch (type) {
             case "edit":
-                path = pagePath.edit(itemId);
+                path = pagePath.EDIT(itemId);
                 break;
             case "termEdit":
-                path = pagePath.term(termTypeId).edit(itemId);
+                path = pagePath.TERM_WITH(termTypeId).EDIT(itemId);
                 break;
             case "listPost":
-                path = pagePath.list();
+                path = pagePath.LIST;
                 break;
         }
         await this.props.router.push(path);
     }
 
-    get getTableColumns(): TableColumn<IPageState["lastPosts"][0]>[] {
+    get getLastPostTableColumns(): TableColumn<IPageState["lastPosts"][0]>[] {
         return [
             {
                 name: this.props.t("image"),
@@ -147,7 +149,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
                 cell: row => (
                     <div className="image pt-2 pb-2">
                         <Image
-                            src={imageSourceLib.getUploadedImageSrc(row.contents?.image)}
+                            src={ImageSourceUtil.getUploadedImageSrc(row.contents?.image)}
                             alt={row.contents?.title ?? ""}
                             width={75}
                             height={75}
@@ -167,7 +169,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
                 sortable: true,
                 cell: row => (
                     <label
-                        onClick={() => this.navigatePage("listPost", row.typeId, row._id)}
+                        onClick={() => this.navigatePostPage("listPost", row.typeId, row._id)}
                         className={`badge badge-gradient-primary cursor-pointer`}
                     >
                         {
@@ -186,21 +188,6 @@ class PageDashboard extends Component<IPageProps, IPageState> {
                 name: this.props.t("updatedBy"),
                 sortable: true,
                 cell: row => <ComponentTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""} />
-            },
-            {
-                name: "",
-                button: true,
-                width: "70px",
-                cell: row => permissionLib.checkPermission(
-                    this.props.getStateApp.sessionData.roleId,
-                    this.props.getStateApp.sessionData.permissions,
-                    permissionLib.getPermissionIdForPostType(row.typeId, "Edit")
-                ) ? (
-                    <button
-                        onClick={() => this.navigatePage("edit", row.typeId, row._id)}
-                        className="btn btn-gradient-warning"
-                    ><i className="fa fa-pencil-square-o"></i></button>
-                ) : null
             }
         ];
     }
@@ -339,9 +326,12 @@ class PageDashboard extends Component<IPageProps, IPageState> {
                             <h4 className="card-title">{this.props.t("lastPosts")}</h4>
                             <div className="table-post">
                                 <ComponentDataTable
-                                    columns={this.getTableColumns}
+                                    columns={this.getLastPostTableColumns}
                                     data={this.state.lastPosts}
-                                    t={this.props.t}
+                                    i18={{
+                                        search: this.props.t("search"),
+                                        noRecords: this.props.t("noRecords")
+                                    }}
                                 />
                             </div>
                         </div>
