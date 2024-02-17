@@ -1,10 +1,10 @@
 import React, {Component, createRef, RefObject} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {IUploadingFiles} from "types/pages/gallery/upload";
-import galleryService from "services/gallery.service";
+import {GalleryService} from "services/gallery.service";
 import ComponentToast from "components/elements/toast";
 import Image from "next/image"
-import {IGalleryModel} from "types/models/gallery.model";
+import {IGalleryGetResultService} from "types/services/gallery.service";
 
 type IPageState = {
     isDragging: boolean,
@@ -13,7 +13,7 @@ type IPageState = {
 
 type IPageProps = {
     isModal?: boolean
-    uploadedImages?: (images: IGalleryModel[]) => void
+    uploadedImages?: (images: IGalleryGetResultService[]) => void
 } & IPagePropCommon;
 
 class PageGalleryUpload extends Component<IPageProps, IPageState> {
@@ -44,7 +44,7 @@ class PageGalleryUpload extends Component<IPageProps, IPageState> {
     }
 
     async uploadFiles() {
-        let uploadedImages: IGalleryModel[] = [];
+        let uploadedImages: IGalleryGetResultService[] = [];
         for (const uploadingFile of this.state.uploadingFiles) {
             if (
                 uploadingFile.progressValue === 100 ||
@@ -53,9 +53,9 @@ class PageGalleryUpload extends Component<IPageProps, IPageState> {
             ) continue;
 
             const formData = new FormData();
-            formData.append("file", uploadingFile.file, uploadingFile.file.name);
+            formData.append("image", uploadingFile.file, uploadingFile.file.name);
 
-            let resData = await galleryService.add(formData, (e, percent) => {
+            let resData = await GalleryService.add(formData, (e, percent) => {
                 this.setState((state: IPageState) => {
                     let findIndex = state.uploadingFiles.indexOfKey("id", uploadingFile.id);
                     if(findIndex > -1){

@@ -6,7 +6,7 @@ import V from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import Swal from "sweetalert2";
 import {ILanguageUpdateOneParamService} from "types/services/language.service";
-import languageService from "services/language.service";
+import {LanguageService} from "services/language.service";
 import Image from "next/image";
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 import {PermissionUtil} from "utils/permission.util";
@@ -86,7 +86,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
     }
 
     async getFlags() {
-        let resData = await languageService.getFlags({});
+        let resData = await LanguageService.getFlags({});
         if (resData.status && resData.data) {
             this.setState((state: IPageState) => {
                 state.flags = [{value: "", label: this.props.t("notSelected")}];
@@ -100,7 +100,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
     }
 
     async getItem() {
-        let resData = await languageService.getOne({_id: this.state.formData._id});
+        let resData = await LanguageService.getOne({_id: this.state.formData._id});
         if (resData.status) {
             if (resData.data) {
                 const item = resData.data;
@@ -139,8 +139,8 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
             };
 
             let resData = await ((params._id)
-                ? languageService.updateOne(params)
-                : languageService.add(params));
+                ? LanguageService.updateOne(params)
+                : LanguageService.add(params));
             this.setState({
                 isSubmitting: false
             }, () => this.setMessage())

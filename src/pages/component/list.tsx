@@ -4,7 +4,7 @@ import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import ComponentToast from "components/elements/toast";
 import {IComponentGetResultService} from "types/services/component.service";
-import componentService from "services/component.service";
+import {ComponentService} from "services/component.service";
 import ComponentDataTable from "components/elements/table/dataTable";
 import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
 import {EndPoints} from "constants/endPoints";
@@ -53,7 +53,7 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
     }
 
     async getItems() {
-        let result = (await componentService.getMany({langId: this.props.getStateApp.appData.currentLangId}));
+        let result = (await ComponentService.getMany({langId: this.props.getStateApp.appData.currentLangId}));
         this.setState((state: IPageState) => {
             state.items = result.data ?? [];
             return state;
@@ -76,7 +76,7 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
                     content: this.props.t("deleting"),
                     type: "loading"
                 });
-                let resData = await componentService.deleteMany({_id: [_id]});
+                let resData = await ComponentService.deleteMany({_id: [_id]});
                 loadingToast.hide();
                 if (resData.status) {
                     this.setState({

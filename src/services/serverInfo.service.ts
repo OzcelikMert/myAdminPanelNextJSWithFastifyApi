@@ -10,6 +10,6 @@ const get = () => {
     }).get<IServerInfoGetResultService>();
 }
 
-export default {
+export const ServerInfoService = {
     get: get,
 }

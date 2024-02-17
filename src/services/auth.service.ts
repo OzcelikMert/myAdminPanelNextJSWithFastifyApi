@@ -27,7 +27,7 @@ const logOut = () => {
     }).delete();
 }
 
-export default {
+export const AuthService = {
     getSession: getSession,
     login: login,
     logOut: logOut

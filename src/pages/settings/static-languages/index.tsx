@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormType} from "components/elements/form";
-import settingService from "services/setting.service";
+import {SettingService} from "services/setting.service";
 import ComponentToast from "components/elements/toast";
 import {ISettingUpdateStaticLanguageParamService} from "types/services/setting.service";
 import {ISettingStaticLanguageModel} from "types/models/setting.model";
@@ -56,7 +56,7 @@ class PageSettingsStaticLanguages extends Component<IPageProps, IPageState> {
     }
 
     async getSettings() {
-        let resData = await settingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.StaticLanguage})
+        let resData = await SettingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.StaticLanguage})
         if (resData.status && resData.data) {
             let setting = resData.data;
             this.setState((state: IPageState) => {
@@ -79,7 +79,7 @@ class PageSettingsStaticLanguages extends Component<IPageProps, IPageState> {
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await settingService.updateStaticLanguage({
+            let resData = await SettingService.updateStaticLanguage({
                 staticLanguages: this.state.formData.staticLanguages
             });
             if (resData.status) {

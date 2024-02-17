@@ -3,7 +3,7 @@ import ThemeInputType from "components/elements/form/input/type";
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentForm, ComponentFormCheckBox} from "components/elements/form";
 import ReactHandleFormLibrary from "library/react/handles/form";
-import authService from "services/auth.service";
+import {AuthService} from "services/auth.service";
 import {IUserGetResultService} from "types/services/user.service";
 import Image from "next/image"
 
@@ -57,10 +57,10 @@ class PageLogin extends Component<IPageProps, IPageState> {
             isWrong: false,
             isSubmitting: true
         }, async () => {
-            let resData = await authService.login(this.state.formData);
+            let resData = await AuthService.login(this.state.formData);
             if (resData.data) {
                 if (resData.status) {
-                    let resultSession = await authService.getSession();
+                    let resultSession = await AuthService.getSession();
                     if (resultSession.status && resultSession.data) {
                         this.props.setStateApp({
                             sessionAuth: resultSession.data!

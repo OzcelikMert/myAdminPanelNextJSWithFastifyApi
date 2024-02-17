@@ -3,7 +3,7 @@ import PagePostAdd from "pages/post/[postTypeId]/add";
 import {ComponentFormLoadingButton, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import {Modal} from "react-bootstrap";
-import postTermService from "services/postTerm.service";
+import {PostTermService} from "services/postTerm.service";
 import {PostTermTypeId} from "constants/postTermTypes";
 import {StatusId} from "constants/status";
 import ComponentToast from "components/elements/toast";
@@ -32,7 +32,7 @@ export default class ComponentPagePostAddChooseTag extends Component<IPageProps,
         this.setState({
             isSubmitting: !this.state.isSubmitting
         }, async () => {
-            let resData = await postTermService.add({
+            let resData = await PostTermService.add({
                 typeId: PostTermTypeId.Tag,
                 postTypeId: this.props.page.state.formData.typeId,
                 statusId: StatusId.Active,

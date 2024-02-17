@@ -5,7 +5,7 @@ import {IPagePropCommon} from "types/pageProps";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import {ComponentFieldSet, ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import V, {DateMask} from "library/variable";
-import userService from "services/user.service";
+import {UserService} from "services/user.service";
 import {IUserUpdateOneParamService} from "types/services/user.service";
 import Swal from "sweetalert2";
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
@@ -107,7 +107,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
     }
 
     async getItem() {
-        let resData = await userService.getOne({
+        let resData = await UserService.getOne({
             _id: this.state.formData._id
         });
         if (resData.status) {
@@ -151,8 +151,8 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
             let params = this.state.formData;
 
             let resData = await ((params._id)
-                ? userService.updateOne(params)
-                : userService.add({...params, password: this.state.formData.password || ""}));
+                ? UserService.updateOne(params)
+                : UserService.add({...params, password: this.state.formData.password || ""}));
             this.setState({isSubmitting: false}, () => this.setMessage())
         })
     }
@@ -213,6 +213,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
         function PermissionGroup(props: IPermissionGroup, index: number) {
             let foundPermissions = permissions.findMulti("groupId", props.id).map((perm, index) =>
                 PermissionUtil.checkPermissionId(
+                    self.props.getStateApp.sessionAuth!.user.roleId,
                     self.props.getStateApp.sessionAuth!.user.permissions,
                     [perm.id]
                 ) ? PermissionItem(perm, index) : null

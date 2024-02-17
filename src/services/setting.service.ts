@@ -68,7 +68,7 @@ const updateECommerce = (params: ISettingUpdateECommerceParamService) => {
     }).put();
 }
 
-export default {
+export const SettingService = {
     get: get,
     updateGeneral: updateGeneral,
     updateSeo: updateSeo,

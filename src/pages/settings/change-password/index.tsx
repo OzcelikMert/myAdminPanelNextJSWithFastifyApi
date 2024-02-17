@@ -3,7 +3,7 @@ import {IPagePropCommon} from "types/pageProps";
 import {ComponentForm, ComponentFormType} from "components/elements/form";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import ComponentToast from "components/elements/toast";
-import userService from "services/user.service";
+import {UserService} from "services/user.service";
 
 type IPageState = {
     isSubmitting: boolean
@@ -54,7 +54,7 @@ export default class PageChangePassword extends Component<IPageProps, IPageState
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await userService.updatePassword(this.state.formData);
+            let resData = await UserService.updatePassword(this.state.formData);
             if (resData.status) {
                 new ComponentToast({
                     type: "success",

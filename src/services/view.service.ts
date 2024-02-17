@@ -29,7 +29,7 @@ const add = (params: IViewAddParamService) => {
     }).get();
 }
 
-export default {
+export const ViewService = {
     getNumber: getNumber,
     getStatistics: getStatistics,
     add: add,

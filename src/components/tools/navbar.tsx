@@ -3,7 +3,7 @@ import {Dropdown} from 'react-bootstrap';
 import Link from 'next/link';
 import {Trans} from 'react-i18next';
 import {IPagePropCommon} from "types/pageProps";
-import authService from "services/auth.service";
+import {AuthService} from "services/auth.service";
 import {LocalStorageUtil} from "utils/localStorage.util";
 import DarkModeToggle from "react-dark-mode-toggle";
 import {ThemeUtil} from "utils/theme.util";
@@ -51,18 +51,24 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
                 await this.props.router.push(EndPoints.SETTINGS_WITH.CHANGE_PASSWORD)
                 break;
             case "lock":
-                let resultLock = await authService.logOut();
+                let resultLock = await AuthService.logOut();
                 if(resultLock.status) {
                     this.props.setStateApp({
                         isPageLoading: true,
-                        sessionAuth: undefined
+                        sessionAuth: {
+                            ...this.props.getStateApp.sessionAuth,
+                            user: {
+                                ...this.props.getStateApp.sessionAuth!.user,
+                                userId: ""
+                            }
+                        }
                     },async () => {
                         await this.props.router.push(EndPoints.LOCK)
                     })
                 }
                 break;
             case "signOut":
-                let resultSignOut = await authService.logOut();
+                let resultSignOut = await AuthService.logOut();
                 if(resultSignOut.status) {
                     this.props.setStateApp({
                         isPageLoading: true,

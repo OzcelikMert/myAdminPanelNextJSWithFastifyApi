@@ -36,7 +36,7 @@ const deleteMany = (params: IGalleryDeleteManyParamService) => {
     }).delete();
 }
 
-export default {
+export const GalleryService = {
     get: get,
     add: add,
     deleteMany: deleteMany,

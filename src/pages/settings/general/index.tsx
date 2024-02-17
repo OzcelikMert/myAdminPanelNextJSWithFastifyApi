@@ -2,9 +2,9 @@ import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import ReactHandleFormLibrary from "library/react/handles/form";
-import settingService from "services/setting.service";
-import languageService from "services/language.service";
-import serverInfoService from "services/serverInfo.service";
+import {SettingService} from "services/setting.service";
+import {LanguageService} from "services/language.service";
+import {ServerInfoService} from "services/serverInfo.service";
 import ComponentToast from "components/elements/toast";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
 import {ISettingUpdateGeneralParamService} from "types/services/setting.service";
@@ -81,7 +81,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
     }
 
     async getSettings() {
-        let resData = await settingService.get({projection: SettingProjectionKeys.General})
+        let resData = await SettingService.get({projection: SettingProjectionKeys.General})
         if (resData.status && resData.data) {
             let setting = resData.data;
             this.setState((state: IPageState) => {
@@ -109,7 +109,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
     }
 
     async getLanguages() {
-        let resData = await languageService.getMany({statusId: StatusId.Active})
+        let resData = await LanguageService.getMany({statusId: StatusId.Active})
         if (resData.status && resData.data) {
             this.setState({
                 languages: resData.data.map(lang => ({
@@ -121,7 +121,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
     }
 
     async getServerDetails() {
-        let resData = await serverInfoService.get();
+        let resData = await ServerInfoService.get();
         if (resData.status && resData.data) {
             this.setState({
                 serverInfo: resData.data,
@@ -135,7 +135,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await settingService.updateGeneral({
+            let resData = await SettingService.updateGeneral({
                 ...this.state.formData,
                 head: this.state.formData.head,
                 script: this.state.formData.script,

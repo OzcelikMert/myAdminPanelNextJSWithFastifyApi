@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {ComponentForm, ComponentFormTags, ComponentFormType} from "components/elements/form";
 import {IPagePropCommon} from "types/pageProps";
 import ReactHandleFormLibrary from "library/react/handles/form";
-import settingService from "services/setting.service";
+import {SettingService} from "services/setting.service";
 import ComponentToast from "components/elements/toast";
 import {ISettingUpdateSEOParamService} from "types/services/setting.service";
 import {PermissionUtil} from "utils/permission.util";
@@ -60,7 +60,7 @@ class PageSettingsSEO extends Component<IPageProps, IPageState> {
     }
 
     async getSeo() {
-        let resData = await settingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.SEO});
+        let resData = await SettingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.SEO});
         if (resData.status && resData.data) {
             let setting = resData.data;
             this.setState((state: IPageState) => {
@@ -82,7 +82,7 @@ class PageSettingsSEO extends Component<IPageProps, IPageState> {
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await settingService.updateSeo(this.state.formData);
+            let resData = await SettingService.updateSeo(this.state.formData);
             if (resData.status) {
                 new ComponentToast({
                     type: "success",

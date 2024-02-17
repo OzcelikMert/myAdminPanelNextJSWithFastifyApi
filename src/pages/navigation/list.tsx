@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import ComponentToast from "components/elements/toast";
 import ComponentDataTable from "components/elements/table/dataTable";
 import {INavigationGetResultService} from "types/services/navigation.service";
-import navigationService from "services/navigation.service";
+import {NavigationService} from "services/navigation.service";
 import {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
 import ComponentThemeBadgeStatus, {getStatusIcon} from "components/theme/badge/status";
 import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
@@ -72,7 +72,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
     }
 
     async getItems() {
-        let result = (await navigationService.getMany({
+        let result = (await NavigationService.getMany({
             langId: this.props.getStateApp.appData.currentLangId,
             ignoreDefaultLanguage: true
         }));
@@ -103,7 +103,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                     type: "loading"
                 });
 
-                let resData = await navigationService.deleteMany({_id: selectedItemId});
+                let resData = await NavigationService.deleteMany({_id: selectedItemId});
                 loadingToast.hide();
                 if (resData.status) {
                     this.setState((state: IPageState) => {
@@ -124,7 +124,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                 content: this.props.t("updating"),
                 type: "loading"
             });
-            let resData = await navigationService.updateManyStatus({_id: selectedItemId, statusId: statusId});
+            let resData = await NavigationService.updateManyStatus({_id: selectedItemId, statusId: statusId});
             loadingToast.hide();
             if (resData.status) {
                 this.setState((state: IPageState) => {
@@ -147,7 +147,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
     }
 
     async onChangeRank(rank: number) {
-        let resData = await navigationService.updateOneRank({
+        let resData = await NavigationService.updateOneRank({
             _id: this.state.selectedItemId,
             rank: rank
         });

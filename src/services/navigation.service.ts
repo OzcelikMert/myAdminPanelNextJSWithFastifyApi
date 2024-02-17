@@ -68,7 +68,7 @@ const deleteMany = (params: INavigationDeleteManyParamService) =>  {
     }).delete();
 }
 
-export default {
+export const NavigationService = {
     getOne: getOne,
     getMany: getMany,
     add: add,

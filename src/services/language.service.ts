@@ -57,7 +57,7 @@ const updateOneRank = (params: ILanguageUpdateOneRankParamService) => {
     }).put();
 }
 
-export default {
+export const LanguageService = {
     getOne: getOne,
     getMany: getMany,
     getFlags: getFlags,

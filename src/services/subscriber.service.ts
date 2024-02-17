@@ -51,7 +51,7 @@ const deleteMany = (params: ISubscriberDeleteManyParamService) => {
 }
 
 
-export default {
+export const SubscriberService = {
     getOne: getOne,
     getMany: getMany,
     add: add,

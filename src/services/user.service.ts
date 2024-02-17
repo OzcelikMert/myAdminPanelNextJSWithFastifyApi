@@ -66,7 +66,7 @@ const deleteOne = (params: IUserDeleteOneParamService) => {
     }).delete();
 }
 
-export default {
+export const UserService = {
     getOne: getOne,
     getMany: getMany,
     add: add,

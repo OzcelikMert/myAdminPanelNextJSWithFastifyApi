@@ -3,7 +3,7 @@ import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import ComponentDataTable from "components/elements/table/dataTable";
 import {ILanguageGetResultService} from "types/services/language.service";
-import languageService from "services/language.service";
+import {LanguageService} from "services/language.service";
 import Image from "next/image";
 import ComponentThemeBadgeStatus from "components/theme/badge/status";
 import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
@@ -54,7 +54,7 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
     }
 
     async getItems() {
-        let result = (await languageService.getMany({}));
+        let result = (await LanguageService.getMany({}));
 
         if(result.status && result.data){
             this.setState((state: IPageState) => {
@@ -66,7 +66,7 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
     }
 
     async onChangeRank(rank: number) {
-        let resData = await languageService.updateOneRank({
+        let resData = await LanguageService.updateOneRank({
             _id: this.state.selectedItemId,
             rank: rank
         });

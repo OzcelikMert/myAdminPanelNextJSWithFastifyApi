@@ -11,6 +11,6 @@ const send = (params: IMailerSendParamService) => {
     }).post();
 }
 
-export default {
+export const MailerService = {
     send: send
 }

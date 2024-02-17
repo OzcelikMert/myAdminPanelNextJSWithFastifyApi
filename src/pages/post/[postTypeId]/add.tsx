@@ -7,10 +7,10 @@ import V from "library/variable";
 import Variable from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
-import postTermService from "services/postTerm.service";
-import postService from "services/post.service";
+import {PostTermService} from "services/postTerm.service";
+import {PostService} from "services/post.service";
 import {IPostUpdateOneParamService} from "types/services/post.service";
-import componentService from "services/component.service";
+import {ComponentService} from "services/component.service";
 import ComponentToolTip from "components/elements/tooltip";
 import Swal from "sweetalert2";
 import Image from "next/image"
@@ -192,7 +192,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     }
 
     async getComponents() {
-        let resData = await componentService.getMany({langId: this.props.getStateApp.appData.mainLangId});
+        let resData = await ComponentService.getMany({langId: this.props.getStateApp.appData.mainLangId});
         if (resData.status && resData.data) {
             this.setState((state: IPageState) => {
                 state.components = resData.data!.map(component => {
@@ -229,7 +229,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     }
 
     async getTerms() {
-        let resData = await postTermService.getMany({
+        let resData = await PostTermService.getMany({
             postTypeId: this.state.formData.typeId,
             langId: this.props.getStateApp.appData.mainLangId,
             statusId: StatusId.Active
@@ -268,7 +268,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     }
 
     async getItem() {
-        let resData = await postService.getOne({
+        let resData = await PostService.getOne({
             _id: this.state.formData._id,
             typeId: this.state.formData.typeId,
             langId: this.props.getStateApp.appData.currentLangId
@@ -360,8 +360,8 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
             };
 
             let resData = await ((params._id)
-                ? postService.updateOne(params)
-                : postService.add(params));
+                ? PostService.updateOne(params)
+                : PostService.add(params));
 
             this.setState({
                 isSubmitting: false

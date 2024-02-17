@@ -8,7 +8,7 @@ import {
     Title,
     Tooltip
 } from "chart.js";
-import ComponentToolSpinner from "react-bootstrap/ComponentToolSpinner";
+import Spinner from "react-bootstrap/Spinner";
 import {IPagePropCommon} from "types/pageProps";
 
 ChartJS.register(
@@ -80,7 +80,7 @@ class ComponentChartBar extends Component<IPageProps, IPageState> {
     }
 
     render() {
-        return this.state.isLoading ? <ComponentToolSpinner animation="border" /> : (
+        return this.state.isLoading ? <Spinner animation="border" /> : (
             <Bar
                 itemRef='chart'
                 className="chartLegendContainer"

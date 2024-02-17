@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormType} from "components/elements/form";
-import settingService from "services/setting.service";
+import {SettingService} from "services/setting.service";
 import ComponentToast from "components/elements/toast";
 import {ISettingUpdateSocialMediaParamService,} from "types/services/setting.service";
 import {ISettingSocialMediaModel} from 'types/models/setting.model';
@@ -43,7 +43,7 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
     }
 
     async getSettings() {
-        let resData = await settingService.get({projection: SettingProjectionKeys.SocialMedia})
+        let resData = await SettingService.get({projection: SettingProjectionKeys.SocialMedia})
         if (resData.status && resData.data) {
             let setting = resData.data;
             this.setState((state: IPageState) => {
@@ -60,7 +60,7 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await settingService.updateSocialMedia(this.state.formData)
+            let resData = await SettingService.updateSocialMedia(this.state.formData)
             if (resData.status) {
                 new ComponentToast({
                     type: "success",

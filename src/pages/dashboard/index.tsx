@@ -3,8 +3,8 @@ import dynamic from "next/dynamic";
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import {IPostGetManyResultService} from "types/services/post.service";
-import postService from "services/post.service";
-import viewService from "services/view.service";
+import {PostService} from "services/post.service";
+import {ViewService} from "services/view.service";
 import {IViewGetNumberResultService, IViewGetStatisticsResultService} from "types/services/view.service";
 import ComponentDataTable from "components/elements/table/dataTable";
 import Image from "next/image"
@@ -82,7 +82,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
     }
 
     async getViewNumber() {
-        let resData = await viewService.getNumber();
+        let resData = await ViewService.getNumber();
 
         if (resData.status && resData.data) {
             if (JSON.stringify(this.state.visitorData.number) != JSON.stringify(resData.data)) {
@@ -95,7 +95,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
     }
 
     async getViewStatistics() {
-        let resData = await viewService.getStatistics();
+        let resData = await ViewService.getStatistics();
 
         if (resData.status && resData.data) {
             this.setState((state: IPageState) => {
@@ -106,7 +106,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
     }
 
     async getLastPosts() {
-        let resData = await postService.getMany({
+        let resData = await PostService.getMany({
             langId: this.props.getStateApp.appData.mainLangId,
             count: 10,
             isRecent: true

@@ -3,7 +3,7 @@ import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
 import Swal from "sweetalert2";
-import postService from "services/post.service";
+import {PostService} from "services/post.service";
 import {IPostGetManyResultService} from "types/services/post.service";
 import ComponentToast from "components/elements/toast";
 import ComponentDataTable from "components/elements/table/dataTable";
@@ -97,7 +97,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
     }
 
     async getItems() {
-        let result = (await postService.getMany({
+        let result = (await PostService.getMany({
             typeId: [this.state.typeId],
             langId: this.props.getStateApp.appData.currentLangId,
             ignoreDefaultLanguage: true
@@ -129,7 +129,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                     type: "loading"
                 });
 
-                let resData = await postService.deleteMany({_id: selectedItemId, typeId: this.state.typeId})
+                let resData = await PostService.deleteMany({_id: selectedItemId, typeId: this.state.typeId})
                 loadingToast.hide();
                 if (resData.status) {
                     this.setState((state: IPageState) => {
@@ -151,7 +151,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                 type: "loading"
             });
 
-            let resData = await postService.updateManyStatus({
+            let resData = await PostService.updateManyStatus({
                 _id: selectedItemId,
                 typeId: this.state.typeId,
                 statusId: statusId
@@ -178,7 +178,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
     }
 
     async onChangeRank(rank: number) {
-        let resData = await postService.updateOneRank({
+        let resData = await PostService.updateOneRank({
             _id: this.state.selectedItemId,
             typeId: this.state.typeId,
             rank: rank

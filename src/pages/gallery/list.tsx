@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import Swal from "sweetalert2";
-import galleryService from "services/gallery.service";
+import {GalleryService} from "services/gallery.service";
 import {TableColumn} from "react-data-table-component";
 import ComponentToast from "components/elements/toast";
 import ComponentDataTable from "components/elements/table/dataTable";
@@ -70,7 +70,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
     }
 
     async getItems() {
-        let resData = await galleryService.get({typeId: GalleryTypeId.Image});
+        let resData = await GalleryService.get({typeId: GalleryTypeId.Image});
         if (resData.status) {
             if (resData.data) {
                 this.setListSort(resData.data);
@@ -145,7 +145,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
                 type: "loading"
             });
 
-            let resData = await galleryService.deleteMany({_id: this.state.selectedItems});
+            let resData = await GalleryService.deleteMany({_id: this.state.selectedItems});
             loadingToast.hide();
             if (resData.status) {
                 this.setState((state: IPageState) => {

@@ -68,7 +68,7 @@ const deleteMany = (params: IPostTermDeleteManyParamService) => {
     }).delete();
 }
 
-export default {
+export const PostTermService = {
     getOne: getOne,
     getMany: getMany,
     add: add,

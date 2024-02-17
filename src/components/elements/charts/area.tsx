@@ -11,7 +11,7 @@ import {
     Filler,
     Legend, ChartData,
 } from 'chart.js';
-import ComponentToolSpinner from "react-bootstrap/ComponentToolSpinner";
+import Spinner from "react-bootstrap/Spinner";
 
 ChartJS.register(
     CategoryScale,
@@ -99,7 +99,7 @@ export default class ComponentChartArea extends Component<IPageProps, IPageState
     }
 
     render() {
-        return this.state.isLoading ? <ComponentToolSpinner animation="border" /> : (
+        return this.state.isLoading ? <Spinner animation="border" /> : (
             <Line
                 itemRef='chart'
                 className="chartLegendContainer"

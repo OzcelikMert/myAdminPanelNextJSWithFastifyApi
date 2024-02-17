@@ -6,7 +6,7 @@ import V from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import Swal from "sweetalert2";
 import {INavigationUpdateOneParamService} from "types/services/navigation.service";
-import navigationService from "services/navigation.service";
+import {NavigationService} from "services/navigation.service";
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 import {PermissionUtil} from "utils/permission.util";
 import {NavigationEndPointPermission} from "constants/endPointPermissions/navigation.endPoint.permission";
@@ -99,7 +99,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
     }
 
     async getItems() {
-        let resData = await navigationService.getMany({
+        let resData = await NavigationService.getMany({
             langId: this.props.getStateApp.appData.mainLangId,
             statusId: StatusId.Active,
         });
@@ -121,7 +121,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
     }
 
     async getItem() {
-        let resData = await navigationService.getOne({
+        let resData = await NavigationService.getOne({
             _id: this.state.formData._id,
             langId: this.props.getStateApp.appData.currentLangId
         });
@@ -170,8 +170,8 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
             };
 
             let resData = await ((params._id)
-                ? navigationService.updateOne(params)
-                : navigationService.add(params));
+                ? NavigationService.updateOne(params)
+                : NavigationService.add(params));
             this.setState({
                 isSubmitting: false
             }, () => this.setMessage())

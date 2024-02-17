@@ -48,7 +48,7 @@ const deleteMany = (params: IComponentDeleteManyParamService) => {
     }).delete();
 }
 
-export default {
+export const ComponentService = {
     getOne: getOne,
     getMany: getMany,
     add: add,

@@ -3,13 +3,11 @@ import {Modal, Tab, Tabs} from "react-bootstrap";
 import PageGalleryList from "pages/gallery/list";
 import PageGalleryUpload from "pages/gallery/upload";
 import {IPagePropCommon} from "types/pageProps";
-import {IGalleryModel} from "types/models/gallery.model";
-import {PermissionUtil} from "utils/permission.util";
-import {PermissionId} from "constants/permissions";
+import {IGalleryGetResultService} from "types/services/gallery.service";
 
 type IPageState = {
     formActiveKey: string
-    uploadedImages: IGalleryModel[]
+    uploadedImages: IGalleryGetResultService[]
 };
 
 type IPageProps = {
@@ -58,19 +56,13 @@ class ComponentThemeChooseImageGallery extends Component<IPageProps, IPageState>
                                     activeKey={this.state.formActiveKey}
                                     className="mb-5"
                                     transition={false}>
-                                    {
-                                        PermissionUtil.checkPermission(
-                                            this.props.getStateApp.sessionAuth!.user.roleId,
-                                            this.props.getStateApp.sessionAuth!.user.permissions,
-                                            PermissionId.GalleryEdit
-                                        ) ? <Tab eventKey="upload" title={this.props.t("upload")}>
-                                            <PageGalleryUpload
-                                                {...this.props}
-                                                uploadedImages={uploadedImages => this.setState({uploadedImages: uploadedImages})}
-                                                isModal
-                                            />
-                                        </Tab> : null
-                                    }
+                                    <Tab eventKey="upload" title={this.props.t("upload")}>
+                                        <PageGalleryUpload
+                                            {...this.props}
+                                            uploadedImages={uploadedImages => this.setState({uploadedImages: uploadedImages})}
+                                            isModal
+                                        />
+                                    </Tab>
                                     <Tab eventKey="list" title={this.props.t("list")}>
                                         <PageGalleryList
                                             {...this.props}

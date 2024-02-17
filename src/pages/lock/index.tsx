@@ -4,7 +4,7 @@ import {IPagePropCommon} from "types/pageProps";
 import {ComponentForm} from "components/elements/form";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import V from "library/variable";
-import authService from "services/auth.service";
+import {AuthService} from "services/auth.service";
 import Image from "next/image"
 import {EndPoints} from "constants/endPoints";
 import {ImageSourceUtil} from "utils/imageSource.util";
@@ -52,12 +52,12 @@ class PageLock extends Component<IPageProps, IPageState> {
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await authService.login({
+            let resData = await AuthService.login({
                 password: this.state.formData.password,
                 email: this.props.getStateApp.sessionAuth?.user.email ?? ""
             });
             if (resData.status && resData.data) {
-                let resultSession = await authService.getSession();
+                let resultSession = await AuthService.getSession();
                 if(resultSession.status && resultSession.data){
                     this.props.setStateApp({
                         sessionAuth: resultSession.data

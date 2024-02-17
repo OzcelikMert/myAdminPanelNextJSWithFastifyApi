@@ -5,7 +5,7 @@ import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
-import postTermService from "services/postTerm.service";
+import {PostTermService} from "services/postTerm.service";
 import {IPostTermUpdateOneParamService} from "types/services/postTerm.service";
 import Swal from "sweetalert2";
 import Image from "next/image"
@@ -128,7 +128,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
         let typeId = this.state.formData.typeId == PostTermTypeId.Variations
             ? [PostTermTypeId.Attributes]
             : [this.state.formData.typeId];
-        let resData = await postTermService.getMany({
+        let resData = await PostTermService.getMany({
             typeId: typeId,
             postTypeId: this.state.formData.postTypeId,
             langId: this.props.getStateApp.appData.mainLangId,
@@ -152,7 +152,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
     }
 
     async getItem() {
-        let resData = await postTermService.getOne({
+        let resData = await PostTermService.getOne({
             _id: this.state.formData._id,
             typeId: this.state.formData.typeId,
             postTypeId: this.state.formData.postTypeId,
@@ -201,8 +201,8 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
         }, async () => {
             let params = this.state.formData;
             let resData = await ((params._id)
-                ? postTermService.updateOne(params)
-                : postTermService.add(params));
+                ? PostTermService.updateOne(params)
+                : PostTermService.add(params));
             if (this.state.formData.typeId == PostTermTypeId.Category && resData.status) {
                 await this.getItems();
             }

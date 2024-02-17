@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {IPagePropCommon} from "types/pageProps";
-import authService from "services/auth.service";
+import {AuthService} from "services/auth.service";
 import {ApiErrorCodes} from "library/api/errorCodes";
 import {EndPoints} from "constants/endPoints";
 
@@ -31,7 +31,7 @@ export default class ComponentProviderAuth extends Component<IPageProps, IPageSt
 
     async checkSession() {
         let isAuth = false;
-        let resData = await authService.getSession();
+        let resData = await AuthService.getSession();
         if (resData.status && resData.errorCode == ApiErrorCodes.success) {
             if (resData.data) {
                 isAuth = true;

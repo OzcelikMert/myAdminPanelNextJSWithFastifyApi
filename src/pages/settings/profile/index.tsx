@@ -3,7 +3,7 @@ import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormType} from "components/elements/form";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
-import userService from "services/user.service";
+import {UserService} from "services/user.service";
 import ComponentToast from "components/elements/toast";
 import Image from "next/image"
 import ComponentThemeBadgeStatus from "components/theme/badge/status";
@@ -68,7 +68,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
     }
 
     async getUser() {
-        let resData = await userService.getOne({_id: this.props.getStateApp.sessionAuth!.user.userId});
+        let resData = await UserService.getOne({_id: this.props.getStateApp.sessionAuth!.user.userId});
         if (resData.status && resData.data) {
             const user = resData.data;
             this.setState((state: IPageState) => {
@@ -99,7 +99,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
             isSubmitting: true,
             isImageChanging: true
         }, async () => {
-            let resData = await userService.updateProfile({image: image});
+            let resData = await UserService.updateProfile({image: image});
             if(resData.status){
                 this.setState((state: IPageState) => {
                     state.isSubmitting = false;
@@ -130,7 +130,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await userService.updateProfile(this.state.formData);
+            let resData = await UserService.updateProfile(this.state.formData);
             if (resData.status) {
                 this.props.setStateApp({
                     sessionAuth: {

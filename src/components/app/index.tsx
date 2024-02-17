@@ -143,7 +143,7 @@ class ComponentApp extends Component<IPageProps, IPageState> {
             EndPoints.LOGIN,
             EndPoints.LOCK
         ];
-        let isFullPageLayout = fullPageLayoutRoutes.includes(this.props.router.pathname) || !this.state.sessionAuth?.user.userId || this.state.isAppLoading;
+        let isFullPageLayout = fullPageLayoutRoutes.includes(this.props.router.pathname) || !this.state.sessionAuth || !this.state.sessionAuth.user || !this.state.sessionAuth.user.userId || this.state.isAppLoading;
 
         const commonProps: IPagePropCommon = {
             router: this.props.router,

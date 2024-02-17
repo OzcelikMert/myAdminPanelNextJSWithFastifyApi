@@ -7,7 +7,6 @@ export interface ISessionAuthUserModel{
     name: string
     image: string
     ip: string,
-    token?: string,
     permissions: number[]
     createAt?: string,
     updatedAt?: string

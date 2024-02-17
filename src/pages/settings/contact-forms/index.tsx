@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormType} from "components/elements/form";
-import settingService from "services/setting.service";
+import {SettingService} from "services/setting.service";
 import ComponentToast from "components/elements/toast";
 import {ISettingUpdateContactFormParamService} from "types/services/setting.service";
 import {ISettingContactFormModel} from 'types/models/setting.model';
@@ -43,7 +43,7 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
     }
 
     async getSettings() {
-        let resData = await settingService.get({projection: SettingProjectionKeys.ContactForm})
+        let resData = await SettingService.get({projection: SettingProjectionKeys.ContactForm})
         if (resData.status && resData.data) {
             let setting = resData.data;
             this.setState((state: IPageState) => {
@@ -60,7 +60,7 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await settingService.updateContactForm(this.state.formData);
+            let resData = await SettingService.updateContactForm(this.state.formData);
             if (resData.status) {
                 new ComponentToast({
                     type: "success",

@@ -4,7 +4,6 @@ import {ISessionAuthModel} from "types/models/sessionAuth.model";
 import {PostTypeId} from "constants/postTypes";
 import {PostEndPointPermission} from "constants/endPointPermissions/post.endPoint.permission";
 import {IEndPointPermission} from "types/constants/endPoint.permissions";
-import {ApiRequestParamMethodDocument} from "library/types/api";
 import {IPagePropCommon} from "types/pageProps";
 import {EndPoints} from "constants/endPoints";
 import ComponentToast from "components/elements/toast";
@@ -38,19 +37,20 @@ const getPostPermission = (typeId: PostTypeId, method: PostPermissionMethod) : I
 
 const checkPermissionRoleRank = (targetRoleId: UserRoleId, minRoleId: UserRoleId) => {
     let userRole = userRoles.findSingle("id", targetRoleId);
-    let minRole = userRoles.findSingle("id", UserRoleId.Editor);
+    let minRole = userRoles.findSingle("id", minRoleId);
 
-    return (userRole && minRole) && (userRole.rank >= minRole.rank);
+    return targetRoleId == UserRoleId.SuperAdmin || (userRole && minRole) && (userRole.rank >= minRole.rank);
 }
 
-const checkPermissionId = (targetPermissionId: PermissionId[], minPermissionId: PermissionId[]) => {
-    return (minPermissionId.every(permissionId => targetPermissionId.some(userPermissionId => permissionId == userPermissionId)));
+const checkPermissionId = (targetRoleId: UserRoleId, targetPermissionId: PermissionId[], minPermissionId: PermissionId[]) => {
+    return targetRoleId == UserRoleId.SuperAdmin || (minPermissionId.every(permissionId => targetPermissionId.some(userPermissionId => permissionId == userPermissionId)));
 }
 
 const check = (sessionAuth: ISessionAuthModel, minPermission: IEndPointPermission) => {
     return (
+        sessionAuth.user.roleId == UserRoleId.SuperAdmin ||
         checkPermissionRoleRank(sessionAuth.user.roleId, minPermission.userRoleId) &&
-        checkPermissionId(sessionAuth.user.permissions, minPermission.permissionId)
+        checkPermissionId(sessionAuth.user.roleId, sessionAuth.user.permissions, minPermission.permissionId)
     );
 };
 

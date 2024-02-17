@@ -4,7 +4,7 @@ import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import {IUserGetResultService} from "types/services/user.service";
 import ComponentThemeUsersProfileCard from "components/theme/users/profileCard";
-import userService from "services/user.service";
+import {UserService} from "services/user.service";
 import ComponentToast from "components/elements/toast";
 import ComponentDataTable from "components/elements/table/dataTable";
 import Image from "next/image"
@@ -58,7 +58,7 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
     }
 
     async getItems() {
-        let result = (await userService.getMany({}));
+        let result = (await UserService.getMany({}));
         if(result.status && result.data){
             let items = result.data.orderBy("roleId", "desc");
             this.setState((state: IPageState) => {
@@ -92,7 +92,7 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                     type: "loading"
                 });
 
-                let resData = await userService.deleteOne({_id: userId})
+                let resData = await UserService.deleteOne({_id: userId})
                 loadingToast.hide();
                 if (resData.status) {
                     this.setState((state: IPageState) => {

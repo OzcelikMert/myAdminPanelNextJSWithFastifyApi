@@ -4,7 +4,7 @@ import  {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import ComponentToast from "components/elements/toast";
 import {ISubscriberGetResultService} from "types/services/subscriber.service";
-import subscriberService from "services/subscriber.service";
+import {SubscriberService} from "services/subscriber.service";
 import {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
 import ComponentDataTable from "components/elements/table/dataTable";
 import {getStatusIcon} from "components/theme/badge/status";
@@ -50,7 +50,7 @@ export default class PageSubscribers extends Component<IPageProps, IPageState> {
     }
 
     async getItems() {
-        let result = (await subscriberService.getMany({}));
+        let result = (await SubscriberService.getMany({}));
 
         if(result.status && result.data){
             this.setState({
@@ -76,7 +76,7 @@ export default class PageSubscribers extends Component<IPageProps, IPageState> {
                 type: "loading"
             });
 
-            let resData = await subscriberService.getMany({
+            let resData = await SubscriberService.getMany({
                 _id: selectedItemId
             });
             loadingToast.hide();

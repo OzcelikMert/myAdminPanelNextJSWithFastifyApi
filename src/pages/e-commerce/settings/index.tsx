@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentForm, ComponentFormSelect} from "components/elements/form";
 import ReactHandleFormLibrary from "library/react/handles/form";
-import settingService from "services/setting.service";
+import {SettingService} from "services/setting.service";
 import ComponentToast from "components/elements/toast";
 import {ISettingUpdateECommerceParamService} from "types/services/setting.service";
 import {Tab, Tabs} from "react-bootstrap";
@@ -52,7 +52,7 @@ export default class PageECommerceSettings extends Component<IPageProps, IPageSt
     }
 
     async getSettings() {
-        let resData = await settingService.get({projection: SettingProjectionKeys.ECommerce})
+        let resData = await SettingService.get({projection: SettingProjectionKeys.ECommerce})
         if (resData.status && resData.data) {
             let setting = resData.data;
             this.setState((state: IPageState) => {
@@ -81,7 +81,7 @@ export default class PageECommerceSettings extends Component<IPageProps, IPageSt
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await settingService.updateECommerce(this.state.formData);
+            let resData = await SettingService.updateECommerce(this.state.formData);
             if (resData.status) {
                 this.props.setStateApp({
                     appData: {

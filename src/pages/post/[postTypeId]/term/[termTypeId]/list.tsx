@@ -4,7 +4,7 @@ import {TableColumn} from "react-data-table-component";
 import {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
 import Swal from "sweetalert2";
 import {IPostTermGetResultService} from "types/services/postTerm.service";
-import postTermService from "services/postTerm.service";
+import {PostTermService} from "services/postTerm.service";
 import ComponentToast from "components/elements/toast";
 import ComponentDataTable from "components/elements/table/dataTable";
 import Image from "next/image"
@@ -85,7 +85,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
     }
 
     async getItems() {
-        let result = (await postTermService.getMany({
+        let result = (await PostTermService.getMany({
             typeId: [this.state.typeId],
             postTypeId: this.state.postTypeId,
             langId: this.props.getStateApp.appData.currentLangId,
@@ -119,7 +119,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                     type: "loading"
                 });
 
-                let resData = await postTermService.deleteMany({
+                let resData = await PostTermService.deleteMany({
                     _id: selectedItemId,
                     typeId: this.state.typeId,
                     postTypeId: this.state.postTypeId
@@ -146,7 +146,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                 type: "loading"
             });
 
-            let resData = await postTermService.updateManyStatus({
+            let resData = await PostTermService.updateManyStatus({
                 _id: selectedItemId,
                 typeId: this.state.typeId,
                 postTypeId: this.state.postTypeId,
@@ -175,7 +175,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
     }
 
     async onChangeRank(rank: number) {
-        let resData = await postTermService.updateOneRank({
+        let resData = await PostTermService.updateOneRank({
             _id: this.state.selectedItemId,
             rank: rank,
             postTypeId: this.state.postTypeId,

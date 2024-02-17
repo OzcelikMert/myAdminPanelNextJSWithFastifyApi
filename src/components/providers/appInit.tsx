@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {IPagePropCommon} from "types/pageProps";
-import languageService from "services/language.service";
-import settingService from "services/setting.service";
+import {LanguageService} from "services/language.service";
+import {SettingService} from "services/setting.service";
 import {StatusId} from "constants/status";
 import {CurrencyId} from "constants/currencyTypes";
 import {SettingProjectionKeys} from "constants/settingProjections";
@@ -30,7 +30,7 @@ export default class ComponentProviderAppInit extends Component<IPageProps, IPag
     }
 
     async getContentLanguages() {
-        let resData = await languageService.getMany({statusId: StatusId.Active});
+        let resData = await LanguageService.getMany({statusId: StatusId.Active});
         if (resData.status) {
             this.props.setStateApp({
                 appData: {
@@ -41,7 +41,7 @@ export default class ComponentProviderAppInit extends Component<IPageProps, IPag
     }
 
     async getContentMainLanguage() {
-        let resData = await settingService.get({projection: SettingProjectionKeys.General});
+        let resData = await SettingService.get({projection: SettingProjectionKeys.General});
         if (resData.status && resData.data) {
             let data = resData.data;
             this.props.setStateApp({
@@ -54,7 +54,7 @@ export default class ComponentProviderAppInit extends Component<IPageProps, IPag
     }
 
     async getSettingECommerce() {
-        let resData = await settingService.get({projection: SettingProjectionKeys.ECommerce});
+        let resData = await SettingService.get({projection: SettingProjectionKeys.ECommerce});
         if (resData.status && resData.data) {
             let data = resData.data;
             this.props.setStateApp({
