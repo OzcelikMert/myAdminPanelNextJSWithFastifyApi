@@ -2,9 +2,10 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
+- yetkileri kontrol et
 - user icin sayfada islem yaparken status yada ban control yap (ayni zamanda isim ve yetki kontrolude dahil. bunlar admin tarafindan guncellendiginde userdada guncel olmali)
-- Diller icin export import yap
 - Yaptigin tum guncellemelerin hata kontrolunu yap
+- Diller icin export import yap
 + assets klasorunu yeni yapiya gore tekrar duzenle
 + gallery listteki resimler gelirken preloader calistir
 + lock sayfasinda session olmadigi icinlogin sayfasina atiyor onu duzenle
