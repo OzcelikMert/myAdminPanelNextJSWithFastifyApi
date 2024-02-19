@@ -86,7 +86,7 @@ class PageLogin extends Component<IPageProps, IPageState> {
     render() {
         return this.props.getStateApp.isPageLoading ? null : (
             <div className="page-login">
-                <div className="d-flex align-items-stretch auth auth-img-bg h-100">
+                <div className="d-flex align-items-stretch auth-img-bg h-100">
                     <div className="row flex-grow">
                         <div className="col-lg-6 d-flex align-items-center justify-content-center login-half-form">
                             <div className="auth-form-transparent text-left p-3">

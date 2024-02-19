@@ -57,7 +57,7 @@ export default class ComponentProviderAuth extends Component<IPageProps, IPageSt
 
         if (
             !this.state.isAuth &&
-            ![EndPoints.LOGIN, EndPoints.LOCK].includes(this.props.router.pathname)
+            ![EndPoints.LOGIN].includes(this.props.router.pathname)
         ) {
             this.props.router.push(EndPoints.LOGIN)
             return null;
@@ -65,7 +65,7 @@ export default class ComponentProviderAuth extends Component<IPageProps, IPageSt
 
         if (
             this.state.isAuth &&
-            [EndPoints.LOGIN, EndPoints.LOCK].includes(this.props.router.pathname)
+            [EndPoints.LOGIN].includes(this.props.router.pathname)
         ) {
             this.props.router.push(EndPoints.DASHBOARD)
             return null;

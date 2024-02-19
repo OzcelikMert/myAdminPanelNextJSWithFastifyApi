@@ -3,19 +3,19 @@ import React, {Component} from 'react'
 type IPageState = {};
 
 type IPageProps = {
-    isFullPage?: boolean
+    customClass?: string
 };
 
-export default class ComponentToolSpinner extends Component<IPageProps, IPageState> {
+export default class ComponentSpinnerDonut extends Component<IPageProps, IPageState> {
     constructor(props: IPageProps) {
         super(props);
     }
 
     render() {
         return (
-            <div className="spinner-main">
+            <div className={`component-spinner-donut ${this.props.customClass ?? ""}`}>
                 <div className="spinner-bg"></div>
-                <div className={`spinner-wrapper ${this.props.isFullPage ? "spinner-full-page" : ""}`}>
+                <div className="spinner-wrapper">
                     <div className="donut"></div>
                 </div>
             </div>

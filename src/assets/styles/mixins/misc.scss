@@ -40,9 +40,10 @@ body {
 }
 
 .main-panel {
+  position: relative;
   transition: width $action-transition-duration $action-transition-timing-function, margin $action-transition-duration $action-transition-timing-function;
-  width: calc(100% - #{$sidebar-width-lg});
-  min-height: calc(100vh - #{$navbar-height});
+  width: 100%;
+  min-height: 100vh;
   @include display-flex();
   @include flex-direction(column);
   @media (max-width: 991px) {
@@ -59,6 +60,7 @@ body {
   padding: 2.75rem 2.25rem;
   width: 100%;
   @include flex-grow(1);
+  position: relative;
 }
 
 .container-scroller {

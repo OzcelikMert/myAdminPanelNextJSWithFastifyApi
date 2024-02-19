@@ -5,6 +5,7 @@ import {ISessionAuthModel} from "types/models/sessionAuth.model";
 export type IGetStateApp = {
     isAppLoading: boolean
     isPageLoading: boolean
+    isLock: boolean
     appData: IGetStateAppData
     sessionAuth?: ISessionAuthModel
 }

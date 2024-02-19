@@ -2,6 +2,11 @@
   overflow: hidden;
   position: relative;
 
+  .component-table-spinner {
+    position: relative;
+    min-height: 550px;
+  }
+
   .table-responsive {
     min-height: 550px;
     .theme-data-table {

@@ -11,7 +11,6 @@ import {LanguageEndPoint} from "constants/endPoints/language.endPoint";
 
 export class EndPoints {
     static get LOGIN() { return "/login"; }
-    static get LOCK() { return "/lock"; }
     static get DASHBOARD() { return "/dashboard"; }
     static get SUBSCRIBER() { return "/subscriber"; }
 

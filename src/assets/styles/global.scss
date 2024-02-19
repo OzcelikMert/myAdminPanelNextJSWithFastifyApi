@@ -31,53 +31,54 @@
 @import "mixins/popovers";
 @import "mixins/tooltips";
 @import "mixins/no-ui-slider";
-
 @import "mixins/background";
 @import "mixins/reset";
 @import "mixins/responsive";
 @import "mixins/utilities";
-@import "mixins/tabs";
+@import "plugin-overrides/bootstrap-tabs";
 @import "mixins/typography";
 
-/* === Core Styles === */
+/* === Pages === */
 @import "pages/login";
 @import "pages/home";
 @import "pages/gallery";
 @import "pages/post";
 @import "pages/user";
 @import "pages/settings";
+@import "pages/profile";
 
 /* === Components === */
-@import "components/checkbox-radio";
-@import "components/tables";
-@import "components/badges";
-@import "components/buttons";
-@import "components/preview";
-@import "components/cards";
-@import "components/bootstrap-progress";
-@import "components/dropdowns";
-@import "components/spinner";
-@import "components/theme/form/input/index";
-@import "components/landing-screens/auth";
+/* elements */
+@import "components/elements/spinners/donut";
+@import "components/elements/table/dataTable/index";
+@import "components/elements/table/toggleMenu";
+@import "components/elements/form/input/index";
+@import "components/elements/toast";
+@import "components/elements/form";
+/* theme */
+@import "components/theme/badge/index";
 @import "components/theme/users/profileCard";
+@import "components/theme/contentLanguage/index";
 @import "components/theme/chooseImage/index";
-@import "components/contentLangauge";
-@import "components/widgets";
-@import "components/theme/table/toggleMenu";
-@import "components/theme/table/dataTable/index";
-@import "components/theme/toast";
-@import "components/theme/form";
 @import "components/theme/modal";
+/* providers */
+@import "components/providers/lock";
 
 /* === Plugin Overrides === */
-@import "components/plugin-overrides/date-picker";
-@import "components/plugin-overrides/full-calendar";
-@import "components/plugin-overrides/sweetAlert2";
-@import "components/plugin-overrides/react-bootstrap-modal";
-@import "components/plugin-overrides/cogoToast";
-@import "components/plugin-overrides/react-select";
+@import "plugin-overrides/bootstrap-checkbox-radio";
+@import "plugin-overrides/bootstrap-tables";
+@import "plugin-overrides/bootstrap-buttons";
+@import "plugin-overrides/bootstrap-cards";
+@import "plugin-overrides/bootstrap-progress";
+@import "plugin-overrides/bootstrap-dropdowns";
+@import "plugin-overrides/date-picker";
+@import "plugin-overrides/full-calendar";
+@import "plugin-overrides/sweetAlert2";
+@import "plugin-overrides/react-bootstrap-modal";
+@import "plugin-overrides/cogoToast";
+@import "plugin-overrides/react-select";
 
-/* === Layout === */
+/* === Tools === */
 @import "tools/navbar";
 @import "tools/sidebar";
 @import "tools/footer";
@@ -88,10 +89,11 @@
 @import "theme/index";
 
 html {
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   overflow-y: auto;
 }

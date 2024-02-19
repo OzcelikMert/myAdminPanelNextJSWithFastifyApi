@@ -8,23 +8,19 @@ import ComponentToast from "components/elements/toast";
 import Image from "next/image"
 import ComponentThemeBadgeStatus from "components/theme/badge/status";
 import ComponentThemeBadgeUserRole from "components/theme/badge/userRole";
-import {IUserUpdateProfileParamService} from "types/services/user.service";
+import {IUserGetResultService, IUserUpdateProfileParamService} from "types/services/user.service";
 import {permissions} from "constants/permissions";
 import {permissionGroups} from "constants/permissionGroups";
 import {IPermissionGroup} from "types/constants/permissionGroups";
 import {IPermission} from "types/constants/permissions";
 import {ImageSourceUtil} from "utils/imageSource.util";
+import ComponentSpinnerDonut from "components/elements/spinners/donut";
 
 type IPageState = {
     isSubmitting: boolean
     isImageChanging: boolean
     isSelectionImage: boolean
-    data: {
-        email: string
-        roleId: number
-        statusId: number
-        permissions: number[]
-    }
+    user?: IUserGetResultService
     formData: IUserUpdateProfileParamService
 };
 
@@ -37,12 +33,6 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
             isSubmitting: false,
             isImageChanging: false,
             isSelectionImage: false,
-            data: {
-                email: "",
-                roleId: 0,
-                statusId: 0,
-                permissions: []
-            },
             formData: {
                 image: "",
                 name: "",
@@ -71,25 +61,21 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
         let resData = await UserService.getOne({_id: this.props.getStateApp.sessionAuth!.user.userId});
         if (resData.status && resData.data) {
             const user = resData.data;
-            this.setState((state: IPageState) => {
-                state.data = {
-                    email: user.email,
-                    roleId: user.roleId,
-                    statusId: user.statusId,
-                    permissions: user.permissions
-                };
+            await new Promise(resolve => {
+                this.setState((state: IPageState) => {
+                    state.user = user;
+                    state.formData = {
+                        image: user.image,
+                        name: user.name,
+                        comment: user.comment,
+                        phone: user.phone,
+                        facebook: user.facebook,
+                        instagram: user.instagram,
+                        twitter: user.twitter
+                    }
 
-                state.formData = {
-                    image: user.image,
-                    name: user.name,
-                    comment: user.comment,
-                    phone: user.phone,
-                    facebook: user.facebook,
-                    instagram: user.instagram,
-                    twitter: user.twitter
-                }
-
-                return state;
+                    return state;
+                }, () => resolve(1));
             })
         }
     }
@@ -100,7 +86,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
             isImageChanging: true
         }, async () => {
             let resData = await UserService.updateProfile({image: image});
-            if(resData.status){
+            if (resData.status) {
                 this.setState((state: IPageState) => {
                     state.isSubmitting = false;
                     state.isImageChanging = false;
@@ -161,19 +147,25 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                 <div className="card-body">
                     <h6 className="pb-1 border-bottom fw-bold text-start">{this.props.t("general")}</h6>
                     <div className="row">
-                        <div className="col-sm-12">
+                        <div className="col-sm-12 pb-2 pt-2">
                             <span className="mb-2 fw-bold">{this.props.t("email")}:
-                                <h6 className="text-muted d-inline-block ms-1">{this.state.data.email}</h6>
+                                <h6 className="d-inline-block ms-2">{this.state.user?.email}</h6>
                             </span>
                         </div>
-                        <div className="col-sm-12">
+                        <div className="col-sm-12 pb-2 pt-2">
                             <span className="mb-2 fw-bold">{this.props.t("role")}:
-                                <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={this.state.data.roleId} />
+                                <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={this.state.user!.roleId} className="ms-2"/>
                             </span>
                         </div>
-                        <div className="col-sm-12">
+                        <div className="col-sm-12 pb-2 pt-2">
                             <span className="mb-2 fw-bold">{this.props.t("status")}:
-                                <ComponentThemeBadgeStatus t={this.props.t} statusId={this.state.data.statusId} className="ms-1" />
+                                <ComponentThemeBadgeStatus t={this.props.t} statusId={this.state.user!.statusId}
+                                                           className="ms-2"/>
+                            </span>
+                        </div>
+                        <div className="col-sm-12 pb-2 pt-2">
+                            <span className="mb-2 fw-bold">{this.props.t("createdDate")}:
+                                <h6 className="d-inline-block ms-2">{new Date(this.state.user?.createdAt || "").toLocaleString()}</h6>
                             </span>
                         </div>
                     </div>
@@ -183,7 +175,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
     )
 
     Permissions = () => {
-        let foundPermissions = permissions.findMulti("id", this.state.data.permissions);
+        let foundPermissions = permissions.findMulti("id", this.state.user!.permissions);
         let foundPermissionGroups = permissionGroups.findMulti("id", foundPermissions.map(permission => permission.groupId));
         foundPermissionGroups = foundPermissionGroups.filter((group, index) => foundPermissionGroups.indexOfKey("id", group.id) === index);
 
@@ -233,25 +225,27 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
         <div className="grid-margin stretch-card">
             <div className="card">
                 <div className="card-body">
-                    {
-                        this.state.isImageChanging
-                            ? null
-                            : <div className="d-flex flex-column align-items-center text-center">
+                    <div className="d-flex flex-column align-items-center text-center">
+                        {
+                            this.state.isImageChanging
+                                ? <ComponentSpinnerDonut customClass="profile-image-spinner" />
+                                :
                                 <Image
-                                    className="rounded-circle img-fluid"
+                                    className="rounded-circle"
                                     width={200}
                                     height={200}
                                     src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.image)}
                                     alt={this.props.getStateApp.sessionAuth!.user.name}
                                 />
-                                <button
-                                    className="btn btn-gradient-dark w-25 mt-2"
-                                    onClick={() => this.setState({isSelectionImage: true})}
-                                >
-                                    <i className="fa fa-pencil-square-o"></i>
-                                </button>
-                            </div>
-                    }
+
+                        }
+                        <button
+                            className="btn btn-gradient-dark w-25 mt-3"
+                            onClick={() => this.setState({isSelectionImage: true})}
+                        >
+                            <i className="fa fa-pencil-square-o"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -337,7 +331,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
 
     render() {
         return this.props.getStateApp.isPageLoading ? null : (
-            <div className="page-settings">
+            <div className="page-settings page-profile">
                 <ComponentThemeChooseImage
                     {...this.props}
                     isShow={this.state.isSelectionImage}
@@ -346,17 +340,21 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                     isMulti={false}
                 />
                 <div className="row">
-                    <div className="col-md-3">
-                        <this.Image/>
-                    </div>
-                    <div className="col-md-5">
-                        <this.Content/>
-                    </div>
-                    <div className="col-md-4">
+                    <div className="col-md-12">
                         <div className="row">
-                            <div className="col-md-12">
+                            <div className="col-md-4">
+                                <this.Image/>
+                            </div>
+                            <div className="col-md-8">
                                 <this.ProfileInformation/>
                             </div>
+                        </div>
+                    </div>
+                    <div className="col-md-12">
+                        <this.Content/>
+                    </div>
+                    <div className="col-md-12">
+                        <div className="row">
                             <div className="col-md-12">
                                 <this.Permissions/>
                             </div>

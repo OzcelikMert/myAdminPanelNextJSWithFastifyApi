@@ -16,6 +16,7 @@ type IPageState = {
     selectedItems: string[]
     selectedItemIndex: number
     searchKey: string
+    isListLoading: boolean
 };
 
 type IPageProps = {
@@ -30,6 +31,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
     toast: null | ComponentToast = null;
     listPage: number = 0;
     listPagePerCount: number = 10;
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -38,15 +40,23 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
             selectedItems: [],
             selectedItemIndex: 0,
             searchKey: "",
+            isListLoading: true
         }
     }
 
     async componentDidMount() {
-        this.setPageTitle()
         await this.getItems();
-        this.props.setStateApp({
-            isPageLoading: false
+
+        this.setState({
+            isListLoading: false
         })
+
+        if (!this.props.isModal) {
+            this.setPageTitle()
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     componentWillUnmount() {
@@ -99,7 +109,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
     }
 
     onSelect(images: string[]) {
-        if(!this.props.isModal) return;
+        if (!this.props.isModal) return;
 
         this.setState({
             selectedItems: images
@@ -192,6 +202,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
                             src={ImageSourceUtil.getUploadedImageSrc(row.name)}
                             width={100}
                             height={100}
+                            loading={"lazy"}
                         />
                     </div>
                 )
@@ -255,6 +266,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
                                 isAllSelectable={!(this.props.isModal && !this.props.isMulti)}
                                 isMultiSelectable={!(this.props.isModal && !this.props.isMulti)}
                                 isSearchable={true}
+                                progressPending={this.state.isListLoading}
                             />
                         </div>
                     </div>

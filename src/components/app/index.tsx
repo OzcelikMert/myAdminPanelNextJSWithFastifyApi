@@ -6,7 +6,6 @@ import ComponentToolFooter from "components/tools/footer";
 import {IGetStateApp, ISetStateApp} from "types/pages/_app";
 import ComponentThemeBreadCrumb from "components/theme/breadCrumb";
 import ComponentThemeContentLanguage from "components/theme/contentLanguage";
-import ComponentToolSpinner from "components/tools/spinner";
 import {AppProps} from "next/app";
 import ComponentHead from "components/head";
 import {useTranslation} from "react-i18next";
@@ -15,9 +14,10 @@ import ComponentProviderAppInit from "components/providers/appInit";
 import Variable from "library/variable";
 import {ToastContainer} from "react-toastify";
 import {CurrencyId} from "constants/currencyTypes";
-import {LanguageId} from "constants/languages";
 import {multiLanguagePaths} from "constants/multiLanguagePaths";
 import {EndPoints} from "constants/endPoints";
+import ComponentProviderLock from "components/providers/lock";
+import ComponentSpinnerDonut from "components/elements/spinners/donut";
 
 type IPageState = {
     breadCrumbTitle: string
@@ -37,6 +37,7 @@ class ComponentApp extends Component<IPageProps, IPageState> {
             breadCrumbTitle: "",
             isAppLoading: true,
             isPageLoading: true,
+            isLock: false,
             appData: {
                 mainLangId: "",
                 currentLangId: "",
@@ -139,11 +140,11 @@ class ComponentApp extends Component<IPageProps, IPageState> {
             return null;
         }
 
-        const fullPageLayoutRoutes = [
-            EndPoints.LOGIN,
-            EndPoints.LOCK
-        ];
-        let isFullPageLayout = fullPageLayoutRoutes.includes(this.props.router.pathname) || !this.state.sessionAuth || !this.state.sessionAuth.user || !this.state.sessionAuth.user.userId || this.state.isAppLoading;
+        const fullPageLayoutRoutes = [EndPoints.LOGIN];
+
+        let isFullPageLayout = fullPageLayoutRoutes.includes(this.props.router.pathname) ||
+            this.state.isLock ||
+            this.state.isAppLoading;
 
         const commonProps: IPagePropCommon = {
             router: this.props.router,
@@ -161,16 +162,22 @@ class ComponentApp extends Component<IPageProps, IPageState> {
                     {!isFullPageLayout ? <ComponentToolNavbar {...commonProps}/> : null}
                     <div className={`container-fluid page-body-wrapper ${isFullPageLayout ? "full-page-wrapper" : ""}`}>
                         {!isFullPageLayout ? <ComponentToolSidebar {...commonProps}/> : null}
-                        {this.state.isPageLoading || this.state.isAppLoading ?
-                            <ComponentToolSpinner isFullPage={isFullPageLayout}/> : null}
+                        {
+                            this.state.isAppLoading ? <ComponentSpinnerDonut customClass="app-spinner" /> : null
+                        }
                         <ComponentProviderAuth {...commonProps}>
                             <ComponentProviderAppInit  {...commonProps}>
                                 <div className="main-panel">
                                     <div className="content-wrapper">
                                         {
+                                            this.state.isPageLoading ? <ComponentSpinnerDonut customClass="page-spinner" /> : null
+                                        }
+                                        {
                                             !isFullPageLayout ? <this.PageHeader {...commonProps} /> : null
                                         }
-                                        <this.props.Component {...commonProps}/>
+                                        <ComponentProviderLock {...commonProps}>
+                                            <this.props.Component {...commonProps}/>
+                                        </ComponentProviderLock>
                                     </div>
                                     {!isFullPageLayout ? <ComponentToolFooter/> : ''}
                                 </div>

@@ -1,24 +1,16 @@
-.spinner-main {
-  position: relative;
+.component-spinner-donut {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   z-index: 1;
-  .spinner-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--theme-content-wrapper-bg);
-  }
+  top: 0;
+  left: 0;
   .spinner-wrapper {
-    top: 50%;
-    left: calc(50% + 90px);
+    top: calc(50% - 45px);
+    left: calc(50% - 38px);
+    position: absolute;
     @media(max-width: 990px) {
       left: calc(50% - 26px);
-    }
-    position: fixed;
-    &.spinner-full-page {
-      top: calc(50% - 25px);
-      left: calc(50% - 30px);
     }
 
     .donut {

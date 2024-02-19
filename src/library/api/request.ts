@@ -22,7 +22,6 @@ class ApiRequest {
         let apiResult = new ApiResult<Data, CustomData>();
 
         try {
-            console.log({params: this.params.data} , {data: this.params.data});
             let resData = await axios.request({
                 url: this.getApiUrl(),
                 ...(method === "GET" ? {params: this.params.data} : {data: this.params.data}),

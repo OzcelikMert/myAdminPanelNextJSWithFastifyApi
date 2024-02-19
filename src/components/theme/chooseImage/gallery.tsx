@@ -66,7 +66,7 @@ class ComponentThemeChooseImageGallery extends Component<IPageProps, IPageState>
                                     <Tab eventKey="list" title={this.props.t("list")}>
                                         <PageGalleryList
                                             {...this.props}
-                                            isModal
+                                            isModal={true}
                                             uploadedImages={this.state.uploadedImages}
                                         />
                                     </Tab>

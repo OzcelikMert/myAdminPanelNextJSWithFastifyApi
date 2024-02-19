@@ -54,17 +54,8 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
                 let resultLock = await AuthService.logOut();
                 if(resultLock.status) {
                     this.props.setStateApp({
-                        isPageLoading: true,
-                        sessionAuth: {
-                            ...this.props.getStateApp.sessionAuth,
-                            user: {
-                                ...this.props.getStateApp.sessionAuth!.user,
-                                userId: ""
-                            }
-                        }
-                    },async () => {
-                        await this.props.router.push(EndPoints.LOCK)
-                    })
+                        isLock: true
+                    });
                 }
                 break;
             case "signOut":

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import DataTable, {TableProps} from "react-data-table-component";
 import {ComponentFormCheckBox, ComponentFormType} from "components/elements/form";
 import ComponentTableToggleMenu, {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
+import ComponentSpinnerDonut from "components/elements/spinners/donut";
 
 type IPagePropI18 = {
     search?: string
@@ -158,6 +159,9 @@ export default class ComponentDataTable<T> extends Component<IPageProps<T>, IPag
                 }
                 <div className="table-responsive">
                     <DataTable
+                        customStyles={{
+                            progress: {style: {backgroundColor: "transparent"}}
+                        }}
                         className="theme-data-table"
                         columns={this.getColumns()}
                         data={this.props.data}
@@ -181,6 +185,8 @@ export default class ComponentDataTable<T> extends Component<IPageProps<T>, IPag
                             rangeSeparatorText: "/",
                             rowsPerPageText: "",
                         }}
+                        progressComponent={<ComponentSpinnerDonut customClass="component-table-spinner" />}
+                        progressPending={this.props.progressPending}
                     />
                 </div>
             </div>

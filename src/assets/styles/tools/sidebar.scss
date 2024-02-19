@@ -1,5 +1,5 @@
 .sidebar {
-  min-height: calc(100vh - #{$navbar-height});
+  min-height: 100vh;
   background: var(--theme-sidebar-bg);
   padding: 0;
   width: $sidebar-width-lg;

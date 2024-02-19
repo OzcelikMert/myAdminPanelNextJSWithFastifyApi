@@ -20,8 +20,8 @@ import {languages} from "constants/languages";
 import {StatusId} from "constants/status";
 import {ComponentUtil} from "utils/component.util";
 import {ImageSourceUtil} from "utils/imageSource.util";
-import ComponentToolSpinner from "components/tools/spinner";
 import {UserRoleId} from "constants/userRoles";
+import ComponentSpinnerDonut from "components/elements/spinners/donut";
 
 type IPageState = {
     languages: ThemeFormSelectValueDocument[]
@@ -363,7 +363,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                                         <p className="card-text mb-0 text-dark">{this.props.t("storage")}</p>
                                         <div className="fluid-container">
                                             {
-                                                this.state.isServerInfoLoading ? <ComponentToolSpinner/> :
+                                                this.state.isServerInfoLoading ? <ComponentSpinnerDonut /> :
                                                     <h3 className="mb-0 font-weight-medium text-dark">{this.state.serverInfo.storage}%</h3>
                                             }
                                         </div>
@@ -380,7 +380,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                                         <p className="card-text mb-0 text-dark">{this.props.t("memory")}</p>
                                         <div className="fluid-container">
                                             {
-                                                this.state.isServerInfoLoading ? <ComponentToolSpinner/> :
+                                                this.state.isServerInfoLoading ? <ComponentSpinnerDonut /> :
                                                     <h3 className="mb-0 font-weight-medium text-dark">{this.state.serverInfo.memory}%</h3>
                                             }
                                         </div>
@@ -397,7 +397,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                                         <p className="card-text mb-0 text-dark">{this.props.t("processor")}</p>
                                         <div className="fluid-container">
                                             {
-                                                this.state.isServerInfoLoading ? <ComponentToolSpinner/> :
+                                                this.state.isServerInfoLoading ? <ComponentSpinnerDonut /> :
                                                     <h3 className="mb-0 font-weight-medium text-dark">{this.state.serverInfo.cpu}%</h3>
                                             }
                                         </div>

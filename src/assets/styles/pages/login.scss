@@ -1,4 +1,78 @@
 .page-login {
   background: var(--theme-bg);
   color: var(--theme-h3-text-color);
+  height: 100%;
+
+  .login-half-bg {
+    background: url("../../images/auth/login.png");
+    background-size: cover;
+    background-color: #00000063;
+    background-blend-mode: color;
+    @media (max-width:768px) {
+      display: none !important;
+    }
+  }
+  .register-half-bg {
+    background-size: cover;
+  }
+
+  .login-half-form {
+    position: relative;
+    box-shadow: 6px 0px 20px 0px #000000c4;
+  }
+
+  .auth-form-transparent {
+    background: transparent;
+    .form-control,
+    .input-group-text {
+      border-color: theme-color(secondary);
+      &:focus,
+      &:active {
+        border-color: theme-color(secondary);
+      }
+    }
+    select {
+      outline-color: theme-color(secondary);
+    }
+  }
+
+  .auth-img-bg {
+    padding: 0;
+    .auth-form-transparent {
+      @media (min-width:768px) {
+        width: 55%;
+        margin: auto;
+      }
+    }
+  }
+  .brand-logo {
+    margin: auto;
+    img {
+      width: 300px;
+    }
+  }
+
+  form {
+    .form-group {
+      margin-bottom: 1.5rem;
+      label {
+        font-size: .8125rem;
+      }
+      .form-control {
+        background: transparent;
+        border-radius: 0;
+        font-size: .9375rem;
+      }
+    }
+    .auth-form-btn {
+      padding: 1rem 3rem;
+      line-height: 1.5;
+    }
+    .auth-link {
+      font-size: $default-font-size;
+      &:hover {
+        color: initial;
+      }
+    }
+  }
 }
