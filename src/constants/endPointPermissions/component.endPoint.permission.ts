@@ -14,7 +14,7 @@ const update: IEndPointPermission = {
 
 const get: IEndPointPermission = {
     permissionId: [PermissionId.ComponentEdit],
-    userRoleId: UserRoleId.SuperAdmin
+    userRoleId: UserRoleId.Editor
 }
 
 const remove: IEndPointPermission = {

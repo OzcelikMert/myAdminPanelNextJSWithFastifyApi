@@ -154,7 +154,8 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                         </div>
                         <div className="col-sm-12 pb-2 pt-2">
                             <span className="mb-2 fw-bold">{this.props.t("role")}:
-                                <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={this.state.user!.roleId} className="ms-2"/>
+                                <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={this.state.user!.roleId}
+                                                             className="ms-2"/>
                             </span>
                         </div>
                         <div className="col-sm-12 pb-2 pt-2">
@@ -182,9 +183,9 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
         const PermissionGroup = (props: IPermissionGroup) => (
             <div className="col-md-12 mt-3">
                 <ComponentFieldSet legend={this.props.t(props.langKey)}>
-                    <div className="row">
+                    <div className="permission-items">
                         {
-                            permissions.findMulti("groupId", props.id).map(permission =>
+                            foundPermissions.findMulti("groupId", props.id).map(permission =>
                                 <PermissionItem {...permission}/>
                             )
                         }
@@ -194,13 +195,11 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
         )
 
         const PermissionItem = (props: IPermission) => (
-            <div className="col-3 mt-2">
-                <label className="badge badge-outline-info ms-1 mb-1">
-                    {
-                        this.props.t(props.langKey)
-                    }
-                </label>
-            </div>
+            <label className="badge badge-outline-info ms-1 mb-1">
+                {
+                    this.props.t(props.langKey)
+                }
+            </label>
         )
 
         return (
@@ -210,7 +209,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                         <h6 className="pb-1 border-bottom fw-bold text-start">Permissions</h6>
                         <div className="row">
                             {
-                                permissionGroups.orderBy("rank", "asc").map(group =>
+                                foundPermissionGroups.orderBy("rank", "asc").map(group =>
                                     <PermissionGroup {...group} />
                                 )
                             }
@@ -228,7 +227,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                     <div className="d-flex flex-column align-items-center text-center">
                         {
                             this.state.isImageChanging
-                                ? <ComponentSpinnerDonut customClass="profile-image-spinner" />
+                                ? <ComponentSpinnerDonut customClass="profile-image-spinner"/>
                                 :
                                 <Image
                                     className="rounded-circle"

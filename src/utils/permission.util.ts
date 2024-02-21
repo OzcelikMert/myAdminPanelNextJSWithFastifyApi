@@ -43,7 +43,7 @@ const checkPermissionRoleRank = (targetRoleId: UserRoleId, minRoleId: UserRoleId
 }
 
 const checkPermissionId = (targetRoleId: UserRoleId, targetPermissionId: PermissionId[], minPermissionId: PermissionId[]) => {
-    return targetRoleId == UserRoleId.SuperAdmin || (minPermissionId.every(permissionId => targetPermissionId.some(userPermissionId => permissionId == userPermissionId)));
+    return targetRoleId == UserRoleId.SuperAdmin || (minPermissionId.some(permissionId => targetPermissionId.some(userPermissionId => permissionId == userPermissionId)));
 }
 
 const check = (sessionAuth: ISessionAuthModel, minPermission: IEndPointPermission) => {
