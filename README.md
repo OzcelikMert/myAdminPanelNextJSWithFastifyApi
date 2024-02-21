@@ -2,6 +2,7 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
+- apiye get ile gonderdigin array datalar data[]= seklinde gidiyor onlari data= olarak duzenle
 - yetkileri kontrol et
 - user icin sayfada islem yaparken status yada ban control yap (ayni zamanda isim ve yetki kontrolude dahil. bunlar admin tarafindan guncellendiginde userdada guncel olmali)
 - Yaptigin tum guncellemelerin hata kontrolunu yap
