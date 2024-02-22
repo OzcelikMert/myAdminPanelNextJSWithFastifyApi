@@ -28,9 +28,20 @@ const getPermissionKeyPrefix = (method: PostPermissionMethod) => {
     return prefix;
 }
 
+const getPostTypeIdKey = (typeId: PostTypeId) => {
+    let postTypeIdKey = "";
+
+    switch (typeId) {
+        case PostTypeId.BeforeAndAfter: postTypeIdKey = "BEFORE_AND_AFTER"; break;
+        default: postTypeIdKey = Object.keys(PostTypeId).find(key => PostTypeId[key as keyof typeof PostTypeId] === typeId) ?? ""; break;
+    }
+
+    return postTypeIdKey;
+}
+
 const getPostPermission = (typeId: PostTypeId, method: PostPermissionMethod) : IEndPointPermission => {
     let permissionKeyPrefix = getPermissionKeyPrefix(method);
-    const postTypeIdKey = Object.keys(PostTypeId).find(key => PostTypeId[key as keyof typeof PostTypeId] === typeId) ?? "";
+    const postTypeIdKey = getPostTypeIdKey(typeId);
 
     return (PostEndPointPermission as any)[`${permissionKeyPrefix}${postTypeIdKey.toUpperCase()}`] ?? {permissionId: [], userRoleId: UserRoleId.SuperAdmin};
 }

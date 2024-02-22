@@ -21,6 +21,7 @@ type IPageProps = {
 
 export default class ComponentThemeRichTextBox extends Component<IPageProps, IPageState> {
     editor: IJodit | null;
+
     constructor(props: IPageProps) {
         super(props);
         this.editor = null;
@@ -29,6 +30,7 @@ export default class ComponentThemeRichTextBox extends Component<IPageProps, IPa
             isGalleryShow: false,
             isLoading: true,
             config: {
+                safeMode: true,
                 activeButtonsInReadOnly: ['source', 'fullsize', 'print', 'about', 'dots'],
                 toolbarButtonSize: 'middle',
                 theme: 'default',
@@ -46,8 +48,8 @@ export default class ComponentThemeRichTextBox extends Component<IPageProps, IPa
                 defaultMode: Jodit.constants.MODE_WYSIWYG,
                 useSplitMode: false,
                 colors: {
-                    greyscale:  ['#000000', '#434343', '#666666', '#999999', '#B7B7B7', '#CCCCCC', '#D9D9D9', '#EFEFEF', '#F3F3F3', '#FFFFFF'],
-                    palette:    ['#980000', '#FF0000', '#FF9900', '#FFFF00', '#00F0F0', '#00FFFF', '#4A86E8', '#0000FF', '#9900FF', '#FF00FF'],
+                    greyscale: ['#000000', '#434343', '#666666', '#999999', '#B7B7B7', '#CCCCCC', '#D9D9D9', '#EFEFEF', '#F3F3F3', '#FFFFFF'],
+                    palette: ['#980000', '#FF0000', '#FF9900', '#FFFF00', '#00F0F0', '#00FFFF', '#4A86E8', '#0000FF', '#9900FF', '#FF00FF'],
                     full: [
                         '#E6B8AF', '#F4CCCC', '#FCE5CD', '#FFF2CC', '#D9EAD3', '#D0E0E3', '#C9DAF8', '#CFE2F3', '#D9D2E9', '#EAD1DC',
                         '#DD7E6B', '#EA9999', '#F9CB9C', '#FFE599', '#B6D7A8', '#A2C4C9', '#A4C2F4', '#9FC5E8', '#B4A7D6', '#D5A6BD',
@@ -70,7 +72,7 @@ export default class ComponentThemeRichTextBox extends Component<IPageProps, IPa
                     'italic', '|',
                     'ul',
                     'ol', '|',
-                    'outdent', 'indent',  '|',
+                    'outdent', 'indent', '|',
                     'font',
                     'fontsize',
                     'brush',
@@ -114,15 +116,15 @@ export default class ComponentThemeRichTextBox extends Component<IPageProps, IPa
     }
 
     render() {
-        return this.state.isLoading ? <Spinner animation="border" /> : (
+        return this.state.isLoading ? <Spinner animation="border"/> : (
             <div id={`themeRichTextBox_${String.createId()}`}>
                 <ComponentThemeChooseImage
                     {...this.props}
                     isShow={this.state.isGalleryShow}
                     onHide={() => this.setState({isGalleryShow: false})}
                     onSelected={images => {
-                        if(this.editor){
-                            for(let image of images){
+                        if (this.editor) {
+                            for (let image of images) {
                                 this.editor.selection.insertImage(ImageSourceUtil.getUploadedImageSrc(image))
                             }
                         }
@@ -131,13 +133,12 @@ export default class ComponentThemeRichTextBox extends Component<IPageProps, IPa
                 />
                 <React.Fragment>
                     {
-                        /*
+                        // @ts-ignore
                         <JoditEditor
-                        value={this.state.value}
-                        config={this.state.config}
-                        onBlur={newContent => this.props.onChange(newContent)}
+                            value={this.state.value}
+                            config={this.state.config}
+                            onBlur={newContent => this.props.onChange(newContent)}
                         />
-                         */
                     }
                 </React.Fragment>
             </div>

@@ -66,6 +66,10 @@ a {
   text-decoration: none;
 }
 
+.text-muted {
+  color: var(--theme-text-muted-color) !important;
+}
+
 .display-1 {
   font-size: 3.75rem;
   @media (max-width: 991px) {

@@ -174,25 +174,22 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                 : NavigationService.add(params));
             this.setState({
                 isSubmitting: false
-            }, () => this.setMessage())
+            });
+            if(resData.status){
+                Swal.fire({
+                    title: this.props.t("successful"),
+                    text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
+                    icon: "success",
+                    timer: 1000,
+                    timerProgressBar: true,
+                    didClose: () => {
+                        if (!this.state.formData._id) {
+                            this.navigatePage();
+                        }
+                    }
+                })
+            }
         })
-    }
-
-    setMessage() {
-        Swal.fire({
-            title: this.props.t("successful"),
-            text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
-            icon: "success",
-            timer: 1000,
-            timerProgressBar: true,
-            didClose: () => this.onCloseSuccessMessage()
-        })
-    }
-
-    onCloseSuccessMessage() {
-        if (!this.state.formData._id) {
-            this.navigatePage();
-        }
     }
 
     TabOptions = () => {

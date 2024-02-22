@@ -143,23 +143,18 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
                 : LanguageService.add(params));
             this.setState({
                 isSubmitting: false
-            }, () => this.setMessage())
+            });
+            if(resData.status){
+                Swal.fire({
+                    title: this.props.t("successful"),
+                    text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
+                    icon: "success",
+                    timer: 1000,
+                    timerProgressBar: true,
+                    didClose: () => this.navigatePage(true)
+                })
+            }
         })
-    }
-
-    setMessage() {
-        Swal.fire({
-            title: this.props.t("successful"),
-            text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
-            icon: "success",
-            timer: 1000,
-            timerProgressBar: true,
-            didClose: () => this.onCloseSuccessMessage()
-        })
-    }
-
-    onCloseSuccessMessage() {
-        this.navigatePage(true);
     }
 
     TabOptions = () => {

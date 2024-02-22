@@ -67,9 +67,9 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
 
     async componentDidMount() {
         let methodType = this.state.formData._id ? PostPermissionMethod.UPDATE : PostPermissionMethod.ADD;
-        if(PermissionUtil.checkAndRedirect(this.props, PermissionUtil.getPostPermission(this.state.formData.postTypeId, methodType))) {
+        if (PermissionUtil.checkAndRedirect(this.props, PermissionUtil.getPostPermission(this.state.formData.postTypeId, methodType))) {
             this.setPageTitle();
-            if([PostTermTypeId.Category, PostTermTypeId.Variations].includes(this.state.formData.typeId)){
+            if ([PostTermTypeId.Category, PostTermTypeId.Variations].includes(this.state.formData.typeId)) {
                 await this.getItems();
             }
             this.getStatus();
@@ -203,12 +203,17 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
             let resData = await ((params._id)
                 ? PostTermService.updateOne(params)
                 : PostTermService.add(params));
-            if (this.state.formData.typeId == PostTermTypeId.Category && resData.status) {
-                await this.getItems();
-            }
 
-            this.setState((state: IPageState) => {
-                if (resData.status) {
+            this.setState({
+                isSubmitting: false
+            });
+
+            if (resData.status) {
+                if (this.state.formData.typeId == PostTermTypeId.Category) {
+                    await this.getItems();
+                }
+
+                this.setState((state: IPageState) => {
                     state.formData = {
                         ...state.formData,
                         mainId: "",
@@ -221,29 +226,23 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                             url: "",
                         }
                     }
-                }
+                    return state;
+                });
 
-                state.isSubmitting = false;
-                return state;
-            }, () => this.setMessage());
+                Swal.fire({
+                    title: this.props.t("successful"),
+                    text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
+                    icon: "success",
+                    timer: 1000,
+                    timerProgressBar: true,
+                    didClose: () => {
+                        if (this.state.formData._id) {
+                            this.navigatePage();
+                        }
+                    }
+                })
+            }
         })
-    }
-
-    setMessage() {
-        Swal.fire({
-            title: this.props.t("successful"),
-            text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
-            icon: "success",
-            timer: 1000,
-            timerProgressBar: true,
-            didClose: () => this.onCloseSuccessMessage()
-        })
-    }
-
-    onCloseSuccessMessage() {
-        if (this.state.formData._id) {
-            this.navigatePage();
-        }
     }
 
     TabOptions = () => {

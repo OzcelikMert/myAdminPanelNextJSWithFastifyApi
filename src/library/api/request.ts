@@ -25,11 +25,12 @@ class ApiRequest {
             let resData = await axios.request({
                 url: this.getApiUrl(),
                 ...(method === "GET" ? {params: this.params.data} : {data: this.params.data}),
+                paramsSerializer: {indexes: null},
                 method: method,
                 withCredentials: true,
                 timeout: ApiTimeouts.verySlow,
                 onUploadProgress: (e) => {
-                    var percentComplete = Math.round((e.loaded * 100) / (e.total ?? 1))
+                    let percentComplete = Math.round((e.loaded * 100) / (e.total ?? 1))
                     if (typeof this.params.onUploadProgress !== "undefined") {
                         this.params.onUploadProgress(e, percentComplete);
                     }

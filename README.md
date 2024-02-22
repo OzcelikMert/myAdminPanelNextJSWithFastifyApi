@@ -2,11 +2,12 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
-- apiye get ile gonderdigin array datalar data[]= seklinde gidiyor onlari data= olarak duzenle
-- yetkileri kontrol et
-- user icin sayfada islem yaparken status yada ban control yap (ayni zamanda isim ve yetki kontrolude dahil. bunlar admin tarafindan guncellendiginde userdada guncel olmali)
 - Yaptigin tum guncellemelerin hata kontrolunu yap
 - Diller icin export import yap
+
++ user icin sayfada islem yaparken status yada ban control yap (ayni zamanda isim ve yetki kontrolude dahil. bunlar admin tarafindan guncellendiginde userdada guncel olmali)
++ yetkileri kontrol et
++ apiye get ile gonderdigin array datalar data[]= seklinde gidiyor onlari data= olarak duzenle
 + assets klasorunu yeni yapiya gore tekrar duzenle
 + gallery listteki resimler gelirken preloader calistir
 + lock sayfasinda session olmadigi icinlogin sayfasina atiyor onu duzenle

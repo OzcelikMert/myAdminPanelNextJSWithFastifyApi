@@ -134,7 +134,6 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
     }
 
     getPermissionsForUserRoleId(userRoleId: UserRoleId) {
-        console.log(this.state.formData);
         let filteredPermissions = permissions.filter(perm => PermissionUtil.checkPermissionRoleRank(userRoleId, perm.minUserRoleId));
         filteredPermissions = filteredPermissions.filter(perm => PermissionUtil.checkPermissionId(this.props.getStateApp.sessionAuth!.user.roleId, this.props.getStateApp.sessionAuth!.user.permissions, [perm.id]))
 
@@ -167,7 +166,17 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
             let resData = await ((params._id)
                 ? UserService.updateOne(params)
                 : UserService.add({...params, password: this.state.formData.password || ""}));
-            this.setState({isSubmitting: false}, () => this.setMessage())
+            this.setState({isSubmitting: false});
+            if(resData.status){
+                Swal.fire({
+                    title: this.props.t("successful"),
+                    text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
+                    icon: "success",
+                    timer: 1000,
+                    timerProgressBar: true,
+                    didClose: () => this.navigatePage()
+                });
+            }
         })
     }
 
@@ -201,25 +210,11 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
             this.setState({
                 formData: {
                     ...this.state.formData,
+                    roleId: roleId,
                     permissions: []
                 }
             });
         }
-    }
-
-    setMessage = () => {
-        Swal.fire({
-            title: this.props.t("successful"),
-            text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
-            icon: "success",
-            timer: 1000,
-            timerProgressBar: true,
-            didClose: () => this.onCloseSuccessMessage()
-        })
-    }
-
-    onCloseSuccessMessage() {
-        this.navigatePage()
     }
 
     TabPermissions = (props: any) => {

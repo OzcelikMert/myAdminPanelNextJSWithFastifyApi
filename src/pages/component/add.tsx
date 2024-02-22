@@ -155,14 +155,22 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                 : ComponentService.add(params))
             this.setState({
                 isSubmitting: false
-            }, () => this.setMessage())
+            });
+            if(resData.status){
+                Swal.fire({
+                    title: this.props.t("successful"),
+                    text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
+                    icon: "success",
+                    timer: 1000,
+                    timerProgressBar: true,
+                    didClose: () => {
+                        if (!this.state.formData._id) {
+                            this.navigatePage();
+                        }
+                    }
+                })
+            }
         })
-    }
-
-    onCloseSuccessMessage() {
-        if (!this.state.formData._id) {
-            this.navigatePage();
-        }
     }
 
     onInputChange(data: any, key: string, value: any) {
@@ -205,17 +213,6 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                 return state;
             })
         }
-    }
-
-    setMessage() {
-        Swal.fire({
-            title: this.props.t("successful"),
-            text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
-            icon: "success",
-            timer: 1000,
-            timerProgressBar: true,
-            didClose: () => this.onCloseSuccessMessage()
-        })
     }
 
     TabTypes = () => {
