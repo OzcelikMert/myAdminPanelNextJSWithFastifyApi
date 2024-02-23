@@ -2,14 +2,14 @@ import {ApiEndPoints} from "constants/apiEndPoints";
 import  {
     ILanguageAddParamService,
     ILanguageGetResultService,
-    ILanguageGetOneParamService,
-    ILanguageUpdateOneParamService,
-    ILanguageUpdateOneRankParamService
+    ILanguageGetWithIdParamService,
+    ILanguageUpdateWithIdParamService,
+    ILanguageUpdateWithIdRankParamService
 } from "types/services/language.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 
-const getOne = (params: ILanguageGetOneParamService) =>{
+const getWithId = (params: ILanguageGetWithIdParamService) =>{
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.LANGUAGE_WITH.GET_WITH_ID(params._id),
@@ -17,7 +17,7 @@ const getOne = (params: ILanguageGetOneParamService) =>{
     }).get<ILanguageGetResultService>();
 }
 
-const getMany = (params: ILanguageGetOneParamService) => {
+const getMany = (params: ILanguageGetWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.LANGUAGE_WITH.GET,
@@ -41,7 +41,7 @@ const add = (params: ILanguageAddParamService) => {
     }).post();
 }
 
-const updateOne = (params: ILanguageUpdateOneParamService) => {
+const updateWithId = (params: ILanguageUpdateWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.LANGUAGE_WITH.UPDATE_WITH_ID(params._id),
@@ -49,7 +49,7 @@ const updateOne = (params: ILanguageUpdateOneParamService) => {
     }).put();
 }
 
-const updateOneRank = (params: ILanguageUpdateOneRankParamService) => {
+const updateWithIdRank = (params: ILanguageUpdateWithIdRankParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.LANGUAGE_WITH.UPDATE_RANK_WITH_ID(params._id),
@@ -58,10 +58,10 @@ const updateOneRank = (params: ILanguageUpdateOneRankParamService) => {
 }
 
 export const LanguageService = {
-    getOne: getOne,
+    getWithId: getWithId,
     getMany: getMany,
     getFlags: getFlags,
     add: add,
-    updateOne: updateOne,
-    updateOneRank: updateOneRank
+    updateWithId: updateWithId,
+    updateWithIdRank: updateWithIdRank
 }

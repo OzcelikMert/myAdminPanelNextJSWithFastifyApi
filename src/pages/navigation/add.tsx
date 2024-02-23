@@ -5,7 +5,7 @@ import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import Swal from "sweetalert2";
-import {INavigationUpdateOneParamService} from "types/services/navigation.service";
+import {INavigationUpdateWithIdParamService} from "types/services/navigation.service";
 import {NavigationService} from "services/navigation.service";
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 import {PermissionUtil} from "utils/permission.util";
@@ -20,7 +20,7 @@ type IPageState = {
     status: ThemeFormSelectValueDocument[]
     isSubmitting: boolean
     mainTitle: string
-    formData: INavigationUpdateOneParamService,
+    formData: INavigationUpdateWithIdParamService,
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -121,7 +121,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
     }
 
     async getItem() {
-        let resData = await NavigationService.getOne({
+        let resData = await NavigationService.getWithId({
             _id: this.state.formData._id,
             langId: this.props.getStateApp.appData.currentLangId
         });
@@ -170,7 +170,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
             };
 
             let resData = await ((params._id)
-                ? NavigationService.updateOne(params)
+                ? NavigationService.updateWithId(params)
                 : NavigationService.add(params));
             this.setState({
                 isSubmitting: false

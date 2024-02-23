@@ -6,7 +6,7 @@ import V from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
 import {PostTermService} from "services/postTerm.service";
-import {IPostTermUpdateOneParamService} from "types/services/postTerm.service";
+import {IPostTermUpdateWithIdParamService} from "types/services/postTerm.service";
 import Swal from "sweetalert2";
 import Image from "next/image"
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
@@ -24,7 +24,7 @@ type IPageState = {
     status: ThemeFormSelectValueDocument[]
     isSubmitting: boolean
     mainTitle: string
-    formData: IPostTermUpdateOneParamService,
+    formData: IPostTermUpdateWithIdParamService,
     isSelectionImage: boolean
 };
 
@@ -152,7 +152,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
     }
 
     async getItem() {
-        let resData = await PostTermService.getOne({
+        let resData = await PostTermService.getWithId({
             _id: this.state.formData._id,
             typeId: this.state.formData.typeId,
             postTypeId: this.state.formData.postTypeId,
@@ -201,7 +201,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
         }, async () => {
             let params = this.state.formData;
             let resData = await ((params._id)
-                ? PostTermService.updateOne(params)
+                ? PostTermService.updateWithId(params)
                 : PostTermService.add(params));
 
             this.setState({

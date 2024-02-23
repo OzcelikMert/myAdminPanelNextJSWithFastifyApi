@@ -9,7 +9,7 @@ import ReactHandleFormLibrary from "library/react/handles/form";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
 import {PostTermService} from "services/postTerm.service";
 import {PostService} from "services/post.service";
-import {IPostUpdateOneParamService} from "types/services/post.service";
+import {IPostUpdateWithIdParamService} from "types/services/post.service";
 import {ComponentService} from "services/component.service";
 import ComponentToolTip from "components/elements/tooltip";
 import Swal from "sweetalert2";
@@ -50,7 +50,7 @@ export type IPageState = {
     status: ThemeFormSelectValueDocument[]
     isSubmitting: boolean
     mainTitle: string
-    formData: IPostUpdateOneParamService,
+    formData: IPostUpdateWithIdParamService,
     isSelectionImage: boolean
     isIconActive: boolean
 } & { [key: string]: any };
@@ -268,7 +268,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     }
 
     async getItem() {
-        let resData = await PostService.getOne({
+        let resData = await PostService.getWithId({
             _id: this.state.formData._id,
             typeId: this.state.formData.typeId,
             langId: this.props.getStateApp.appData.currentLangId
@@ -280,7 +280,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 this.setState((state: IPageState) => {
                     state.formData = {
                         ...state.formData,
-                        ...item as IPostUpdateOneParamService,
+                        ...item as IPostUpdateWithIdParamService,
                         dateStart: new Date(item.dateStart),
                         contents: {
                             ...state.formData.contents,
@@ -360,7 +360,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
             };
 
             let resData = await ((params._id)
-                ? PostService.updateOne(params)
+                ? PostService.updateWithId(params)
                 : PostService.add(params));
 
             this.setState({

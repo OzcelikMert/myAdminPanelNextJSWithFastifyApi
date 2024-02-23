@@ -14,7 +14,7 @@ export type IUserGetResultService = {
     isOnline?: boolean
 } & IUserModel
 
-export interface IUserGetOneParamService {
+export interface IUserGetWithIdParamService {
     _id: string
     statusId?: StatusId
 }
@@ -39,7 +39,7 @@ export type IUserAddParamService = {
     banComment?: string,
 }
 
-export type IUserUpdateOneParamService = {
+export type IUserUpdateWithIdParamService = {
     _id: string
     password?: string
 } & Omit<IUserAddParamService, "password">
@@ -59,6 +59,6 @@ export interface IUserUpdatePasswordParamService {
     newPassword: string,
 }
 
-export type IUserDeleteOneParamService = {
+export type IUserDeleteWithIdParamService = {
     _id: string
 }

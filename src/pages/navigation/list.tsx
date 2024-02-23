@@ -147,7 +147,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
     }
 
     async onChangeRank(rank: number) {
-        let resData = await NavigationService.updateOneRank({
+        let resData = await NavigationService.updateWithIdRank({
             _id: this.state.selectedItemId,
             rank: rank
         });

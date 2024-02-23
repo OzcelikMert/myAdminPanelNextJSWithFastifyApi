@@ -18,7 +18,7 @@ export type INavigationGetResultService = {
     contents?: INavigationContentModel
 } & Omit<INavigationModel, "contents"|"mainId"|"authorId"|"lastAuthorId">
 
-export interface INavigationGetOneParamService {
+export interface INavigationGetWithIdParamService {
     _id: string
     langId?: string
     statusId?: StatusId
@@ -33,11 +33,11 @@ export interface INavigationGetManyParamService {
 
 export type INavigationAddParamService = {} & Omit<INavigationModel, "_id"|"authorId"|"lastAuthorId">
 
-export type INavigationUpdateOneParamService = {
+export type INavigationUpdateWithIdParamService = {
     _id: string
 } & Omit<INavigationAddParamService, "authorId">
 
-export type INavigationUpdateOneRankParamService = {
+export type INavigationUpdateWithIdRankParamService = {
     _id: string
     rank: number
 }

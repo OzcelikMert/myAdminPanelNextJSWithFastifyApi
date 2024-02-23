@@ -5,7 +5,7 @@ import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import Swal from "sweetalert2";
-import {ILanguageUpdateOneParamService} from "types/services/language.service";
+import {ILanguageUpdateWithIdParamService} from "types/services/language.service";
 import {LanguageService} from "services/language.service";
 import Image from "next/image";
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
@@ -22,7 +22,7 @@ type IPageState = {
     flags: ThemeFormSelectValueDocument[]
     isSubmitting: boolean
     mainTitle: string
-    formData: ILanguageUpdateOneParamService,
+    formData: ILanguageUpdateWithIdParamService,
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -100,7 +100,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
     }
 
     async getItem() {
-        let resData = await LanguageService.getOne({_id: this.state.formData._id});
+        let resData = await LanguageService.getWithId({_id: this.state.formData._id});
         if (resData.status) {
             if (resData.data) {
                 const item = resData.data;
@@ -139,7 +139,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
             };
 
             let resData = await ((params._id)
-                ? LanguageService.updateOne(params)
+                ? LanguageService.updateWithId(params)
                 : LanguageService.add(params));
             this.setState({
                 isSubmitting: false

@@ -4,20 +4,20 @@ import {
     IPostDeleteManyParamService,
     IPostGetCountParamService,
     IPostGetManyParamService, IPostGetManyResultService,
-    IPostGetOneParamService, IPostGetOneResultService,
+    IPostGetWithIdParamService, IPostGetWithIdResultService,
     IPostUpdateManyStatusIdParamService,
-    IPostUpdateOneParamService,
-    IPostUpdateOneRankParamService,
+    IPostUpdateWithIdParamService,
+    IPostUpdateWithIdRankParamService,
 } from "types/services/post.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 
-const getOne = (params: IPostGetOneParamService) => {
+const getWithId = (params: IPostGetWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.GET_WITH_ID(params._id),
         data: params
-    }).get<IPostGetOneResultService>();
+    }).get<IPostGetWithIdResultService>();
 }
 
 const getMany = (params: IPostGetManyParamService) => {
@@ -44,7 +44,7 @@ const add = (params: PostAddParamDocument) => {
     }).post();
 }
 
-const updateOne = (params: IPostUpdateOneParamService) =>  {
+const updateWithId = (params: IPostUpdateWithIdParamService) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.UPDATE_WITH_ID(params._id),
@@ -52,7 +52,7 @@ const updateOne = (params: IPostUpdateOneParamService) =>  {
     }).put();
 }
 
-const updateOneRank = (params: IPostUpdateOneRankParamService) =>  {
+const updateWithIdRank = (params: IPostUpdateWithIdRankParamService) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.UPDATE_RANK_WITH_ID(params._id),
@@ -77,12 +77,12 @@ const deleteMany = (params: IPostDeleteManyParamService) =>  {
 }
 
 export const PostService = {
-    getOne: getOne,
+    getWithId: getWithId,
     getMany: getMany,
     getCount: getCount,
     add: add,
-    updateOne: updateOne,
-    updateOneRank: updateOneRank,
+    updateWithId: updateWithId,
+    updateWithIdRank: updateWithIdRank,
     updateManyStatus: updateManyStatus,
     deleteMany: deleteMany,
 }

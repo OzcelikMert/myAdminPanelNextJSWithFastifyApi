@@ -2,6 +2,7 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
+- service get one larin hepsini get withId yap
 - Yaptigin tum guncellemelerin hata kontrolunu yap
 - Diller icin export import yap
 

@@ -92,7 +92,7 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                     type: "loading"
                 });
 
-                let resData = await UserService.deleteOne({_id: userId})
+                let resData = await UserService.deleteWithId({_id: userId})
                 loadingToast.hide();
                 if (resData.status) {
                     this.setState((state: IPageState) => {

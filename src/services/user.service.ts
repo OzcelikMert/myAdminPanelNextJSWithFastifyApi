@@ -1,16 +1,16 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import {
-    IUserGetOneParamService,
+    IUserGetWithIdParamService,
     IUserGetManyParamService,
-    IUserUpdateOneParamService,
+    IUserUpdateWithIdParamService,
     IUserGetResultService,
     IUserAddParamService,
-    IUserDeleteOneParamService, IUserUpdateProfileParamService, IUserUpdatePasswordParamService
+    IUserDeleteWithIdParamService, IUserUpdateProfileParamService, IUserUpdatePasswordParamService
 } from "types/services/user.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 
-const getOne = (params: IUserGetOneParamService) => {
+const getWithId = (params: IUserGetWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.USER_WITH.GET_WITH_ID(params._id),
@@ -34,7 +34,7 @@ const add = (params: IUserAddParamService) => {
     }).post();
 }
 
-const updateOne = (params: IUserUpdateOneParamService) => {
+const updateWithId = (params: IUserUpdateWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.USER_WITH.UPDATE_WITH_ID(params._id),
@@ -58,7 +58,7 @@ const updatePassword = (params: IUserUpdatePasswordParamService) => {
     }).put();
 }
 
-const deleteOne = (params: IUserDeleteOneParamService) => {
+const deleteWithId = (params: IUserDeleteWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.USER_WITH.DELETE_WITH_ID(params._id),
@@ -67,11 +67,11 @@ const deleteOne = (params: IUserDeleteOneParamService) => {
 }
 
 export const UserService = {
-    getOne: getOne,
+    getWithId: getWithId,
     getMany: getMany,
     add: add,
-    updateOne: updateOne,
+    updateWithId: updateWithId,
     updateProfile: updateProfile,
     updatePassword: updatePassword,
-    deleteOne: deleteOne,
+    deleteWithId: deleteWithId,
 }

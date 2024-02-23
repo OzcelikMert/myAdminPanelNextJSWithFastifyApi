@@ -60,7 +60,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
         this.props.setStateApp({
             isPageLoading: false
         }, () => {
-            this.timerReportOne();
+            this.timerReportWithId();
         })
     }
 
@@ -72,7 +72,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
         this.props.setBreadCrumb([this.props.t("dashboard")])
     }
 
-    timerReportOne() {
+    timerReportWithId() {
         if (this.timer) {
             clearInterval(this.timer)
         }
@@ -192,7 +192,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
         ];
     }
 
-    ReportOne = () => {
+    ReportWithId = () => {
         return (
             <div className="col-12 grid-margin">
                 <div className="card card-statistics">
@@ -344,7 +344,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
     render() {
         return this.props.getStateApp.isPageLoading ? null : (
             <div className="page-dashboard">
-                <this.ReportOne/>
+                <this.ReportWithId/>
                 <this.ReportTwo/>
                 <this.LastPost/>
             </div>

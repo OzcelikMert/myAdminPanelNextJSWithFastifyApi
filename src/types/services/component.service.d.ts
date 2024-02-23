@@ -9,7 +9,7 @@ export type IComponentGetResultService = {
     })[]
 } & Omit<IComponentModel, "types"|"authorId"|"lastAuthorId">
 
-export interface IComponentGetOneParamService {
+export interface IComponentGetWithIdParamService {
     _id: string
     langId?: string,
     elementId?: string
@@ -23,7 +23,7 @@ export interface IComponentGetManyParamService {
 
 export type IComponentAddParamService = {} & Omit<IComponentModel, "_id"|"lastAuthorId"|"authorId">
 
-export type IComponentUpdateOneParamService = {
+export type IComponentUpdateWithIdParamService = {
     _id: string
 } & Omit<IComponentAddParamService, "authorId">
 

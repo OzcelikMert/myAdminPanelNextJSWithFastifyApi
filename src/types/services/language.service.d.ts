@@ -3,24 +3,24 @@ import {StatusId} from "constants/status";
 
 export type ILanguageGetResultService = {} & ILanguageModel
 
-export interface ILanguageGetOneParamService {
+export interface ILanguageGetWithIdParamService {
     _id: string
     shortKey?: string
     locale?: string
 }
 
-export interface ILanguageGetOneParamService {
+export interface ILanguageGetWithIdParamService {
     _id?: string[]
     statusId?: StatusId
 }
 
 export type ILanguageAddParamService = {} & Omit<ILanguageModel, "_id">
 
-export type ILanguageUpdateOneParamService = {
+export type ILanguageUpdateWithIdParamService = {
     _id: string
 } & ILanguageAddParamService
 
-export type ILanguageUpdateOneRankParamService = {
+export type ILanguageUpdateWithIdRankParamService = {
     _id: string
     rank: number
 }

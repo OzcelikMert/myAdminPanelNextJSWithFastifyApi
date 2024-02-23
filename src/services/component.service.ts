@@ -2,13 +2,13 @@ import {
     IComponentAddParamService, IComponentDeleteManyParamService,
     IComponentGetResultService,
     IComponentGetManyParamService,
-    IComponentGetOneParamService, IComponentUpdateOneParamService,
+    IComponentGetWithIdParamService, IComponentUpdateWithIdParamService,
 } from "types/services/component.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 import {ApiEndPoints} from "constants/apiEndPoints";
 
-const getOne = (params: IComponentGetOneParamService) => {
+const getWithId = (params: IComponentGetWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.COMPONENT_WITH.GET_WITH_ID(params._id),
@@ -32,7 +32,7 @@ const add = (params: IComponentAddParamService) => {
     }).post();
 }
 
-const updateOne = (params: IComponentUpdateOneParamService) => {
+const updateWithId = (params: IComponentUpdateWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.COMPONENT_WITH.UPDATE_WITH_ID(params._id),
@@ -49,9 +49,9 @@ const deleteMany = (params: IComponentDeleteManyParamService) => {
 }
 
 export const ComponentService = {
-    getOne: getOne,
+    getWithId: getWithId,
     getMany: getMany,
     add: add,
-    updateOne: updateOne,
+    updateWithId: updateWithId,
     deleteMany: deleteMany,
 }

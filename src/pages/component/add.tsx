@@ -4,7 +4,7 @@ import {IPagePropCommon} from "types/pageProps";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import V from "library/variable";
-import {IComponentUpdateOneParamService} from "types/services/component.service";
+import {IComponentUpdateWithIdParamService} from "types/services/component.service";
 import {ComponentService} from "services/component.service";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
 import Swal from "sweetalert2";
@@ -25,7 +25,7 @@ type IPageState = {
     mainTabActiveKey: string
     isSubmitting: boolean
     mainTitle: string,
-    formData: IComponentUpdateOneParamService,
+    formData: IComponentUpdateWithIdParamService,
 } & { [key: string]: any };
 
 type IPageProps = {} & IPagePropCommon;
@@ -105,7 +105,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
     }
 
     async getItem() {
-        let resData = await ComponentService.getOne({
+        let resData = await ComponentService.getWithId({
             _id: this.state.formData._id,
             langId: this.props.getStateApp.appData.currentLangId,
         });
@@ -151,7 +151,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
         }, async () => {
             let params = this.state.formData;
             let resData = await ((params._id)
-                ? ComponentService.updateOne(params)
+                ? ComponentService.updateWithId(params)
                 : ComponentService.add(params))
             this.setState({
                 isSubmitting: false

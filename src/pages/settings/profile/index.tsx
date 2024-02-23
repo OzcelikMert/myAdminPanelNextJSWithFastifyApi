@@ -58,7 +58,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
     }
 
     async getUser() {
-        let resData = await UserService.getOne({_id: this.props.getStateApp.sessionAuth!.user.userId});
+        let resData = await UserService.getWithId({_id: this.props.getStateApp.sessionAuth!.user.userId});
         if (resData.status && resData.data) {
             const user = resData.data;
             await new Promise(resolve => {

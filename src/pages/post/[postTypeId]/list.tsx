@@ -178,7 +178,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
     }
 
     async onChangeRank(rank: number) {
-        let resData = await PostService.updateOneRank({
+        let resData = await PostService.updateWithIdRank({
             _id: this.state.selectedItemId,
             typeId: this.state.typeId,
             rank: rank

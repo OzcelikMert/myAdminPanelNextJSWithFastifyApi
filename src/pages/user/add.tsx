@@ -12,7 +12,7 @@ import {
 } from "components/elements/form";
 import V, {DateMask} from "library/variable";
 import {UserService} from "services/user.service";
-import {IUserUpdateOneParamService} from "types/services/user.service";
+import {IUserUpdateWithIdParamService} from "types/services/user.service";
 import Swal from "sweetalert2";
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 import {UserEndPointPermission} from "constants/endPointPermissions/user.endPoint.permission";
@@ -34,7 +34,7 @@ type IPageState = {
     permissionGroups: IPermissionGroup[]
     mainTitle: string,
     isSubmitting: boolean
-    formData: IUserUpdateOneParamService
+    formData: IUserUpdateWithIdParamService
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -116,7 +116,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
     }
 
     async getItem() {
-        let resData = await UserService.getOne({
+        let resData = await UserService.getWithId({
             _id: this.state.formData._id
         });
         if (resData.status && resData.data) {
@@ -164,7 +164,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
         }, async () => {
             let params = this.state.formData;
             let resData = await ((params._id)
-                ? UserService.updateOne(params)
+                ? UserService.updateWithId(params)
                 : UserService.add({...params, password: this.state.formData.password || ""}));
             this.setState({isSubmitting: false});
             if(resData.status){

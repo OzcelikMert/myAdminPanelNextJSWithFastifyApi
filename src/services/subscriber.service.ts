@@ -1,8 +1,8 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import {
     ISubscriberAddParamService,
-    ISubscriberGetOneParamService,
-    ISubscriberDeleteOneParamService,
+    ISubscriberGetWithIdParamService,
+    ISubscriberDeleteWithIdParamService,
     ISubscriberDeleteManyParamService,
     ISubscriberGetResultService,
     ISubscriberGetManyParamService
@@ -10,7 +10,7 @@ import {
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 
-const getOne = (params: ISubscriberGetOneParamService) => {
+const getWithId = (params: ISubscriberGetWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.SUBSCRIBER_WITH.GET_WITH_ID(params._id),
@@ -34,7 +34,7 @@ const add = (params: ISubscriberAddParamService) => {
     }).post();
 }
 
-const deleteOne = (params: ISubscriberDeleteOneParamService) => {
+const deleteWithId = (params: ISubscriberDeleteWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.SUBSCRIBER_WITH.DELETE_WITH_ID(params._id),
@@ -52,9 +52,9 @@ const deleteMany = (params: ISubscriberDeleteManyParamService) => {
 
 
 export const SubscriberService = {
-    getOne: getOne,
+    getWithId: getWithId,
     getMany: getMany,
     add: add,
-    deleteOne: deleteOne,
+    deleteWithId: deleteWithId,
     deleteMany: deleteMany,
 }

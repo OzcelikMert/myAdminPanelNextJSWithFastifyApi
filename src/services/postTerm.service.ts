@@ -2,17 +2,17 @@ import {ApiEndPoints} from "constants/apiEndPoints";
 import  {
     IPostTermGetResultService,
     IPostTermUpdateManyStatusIdParamService,
-    IPostTermUpdateOneRankParamService,
+    IPostTermUpdateWithIdRankParamService,
     IPostTermAddParamService,
     IPostTermGetManyParamService,
-    IPostTermUpdateOneParamService,
-    IPostTermGetOneParamService,
+    IPostTermUpdateWithIdParamService,
+    IPostTermGetWithIdParamService,
     IPostTermDeleteManyParamService
 } from "types/services/postTerm.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 
-const getOne = (params: IPostTermGetOneParamService) => {
+const getWithId = (params: IPostTermGetWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_TERM_WITH.GET_WITH_ID(params._id),
@@ -36,7 +36,7 @@ const add = (params: IPostTermAddParamService) => {
     }).post<{_id: string}>();
 }
 
-const updateOne = (params: IPostTermUpdateOneParamService) => {
+const updateWithId = (params: IPostTermUpdateWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_TERM_WITH.UPDATE_WITH_ID(params._id),
@@ -44,7 +44,7 @@ const updateOne = (params: IPostTermUpdateOneParamService) => {
     }).put();
 }
 
-const updateOneRank = (params: IPostTermUpdateOneRankParamService) => {
+const updateWithIdRank = (params: IPostTermUpdateWithIdRankParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_TERM_WITH.UPDATE_RANK_WITH_ID(params._id),
@@ -69,11 +69,11 @@ const deleteMany = (params: IPostTermDeleteManyParamService) => {
 }
 
 export const PostTermService = {
-    getOne: getOne,
+    getWithId: getWithId,
     getMany: getMany,
     add: add,
-    updateOne: updateOne,
-    updateOneRank: updateOneRank,
+    updateWithId: updateWithId,
+    updateWithIdRank: updateWithIdRank,
     updateManyStatus: updateManyStatus,
     deleteMany: deleteMany,
 }

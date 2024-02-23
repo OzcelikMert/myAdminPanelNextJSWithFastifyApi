@@ -1,18 +1,18 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import {
     INavigationAddParamService,
-    INavigationGetOneParamService,
+    INavigationGetWithIdParamService,
     INavigationDeleteManyParamService,
     INavigationGetManyParamService,
     INavigationUpdateManyStatusIdParamService,
     INavigationGetResultService,
-    INavigationUpdateOneParamService,
-    INavigationUpdateOneRankParamService
+    INavigationUpdateWithIdParamService,
+    INavigationUpdateWithIdRankParamService
 } from "types/services/navigation.service";
 import {PathUtil} from "utils/path.util";
 import ApiRequest from "library/api/request";
 
-const getOne = (params: INavigationGetOneParamService) =>  {
+const getWithId = (params: INavigationGetWithIdParamService) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.NAVIGATION_WITH.GET_WITH_ID(params._id),
@@ -36,7 +36,7 @@ const add = (params: INavigationAddParamService) =>  {
     }).post();
 }
 
-const updateOne = (params: INavigationUpdateOneParamService) =>  {
+const updateWithId = (params: INavigationUpdateWithIdParamService) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.NAVIGATION_WITH.UPDATE_WITH_ID(params._id),
@@ -44,7 +44,7 @@ const updateOne = (params: INavigationUpdateOneParamService) =>  {
     }).put();
 }
 
-const updateOneRank = (params: INavigationUpdateOneRankParamService) =>  {
+const updateWithIdRank = (params: INavigationUpdateWithIdRankParamService) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.NAVIGATION_WITH.UPDATE_RANK_WITH_ID(params._id),
@@ -69,11 +69,11 @@ const deleteMany = (params: INavigationDeleteManyParamService) =>  {
 }
 
 export const NavigationService = {
-    getOne: getOne,
+    getWithId: getWithId,
     getMany: getMany,
     add: add,
-    updateOne: updateOne,
-    updateOneRank: updateOneRank,
+    updateWithId: updateWithId,
+    updateWithIdRank: updateWithIdRank,
     updateManyStatus: updateManyStatus,
     deleteMany: deleteMany,
 }
