@@ -2,10 +2,10 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
-- service get one larin hepsini get withId yap
 - Yaptigin tum guncellemelerin hata kontrolunu yap
 - Diller icin export import yap
 
++ service get one larin hepsini get withId yap
 + user icin sayfada islem yaparken status yada ban control yap (ayni zamanda isim ve yetki kontrolude dahil. bunlar admin tarafindan guncellendiginde userdada guncel olmali)
 + yetkileri kontrol et
 + apiye get ile gonderdigin array datalar data[]= seklinde gidiyor onlari data= olarak duzenle
