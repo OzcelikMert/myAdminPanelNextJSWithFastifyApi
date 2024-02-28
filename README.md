@@ -2,6 +2,10 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
+- cikis yapinca session hatasi aliyoruz
+- resim yukleyince listeye gelmiyor
+- editlemeye basinca (user) editlenecek isim gozukmuyor
+- kullanici resim silemiyor
 - Yaptigin tum guncellemelerin hata kontrolunu yap
 - Diller icin export import yap
 

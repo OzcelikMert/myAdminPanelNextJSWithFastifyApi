@@ -109,8 +109,6 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
     }
 
     onSelect(images: string[]) {
-        if (!this.props.isModal) return;
-
         this.setState({
             selectedItems: images
         }, () => {

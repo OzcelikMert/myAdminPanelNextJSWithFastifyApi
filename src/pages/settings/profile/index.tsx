@@ -231,8 +231,8 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                 :
                                 <Image
                                     className="rounded-circle"
-                                    width={200}
-                                    height={200}
+                                    width={150}
+                                    height={150}
                                     src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.image)}
                                     alt={this.props.getStateApp.sessionAuth!.user.name}
                                 />
