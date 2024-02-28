@@ -14,7 +14,7 @@ export enum PermissionGroupId {
     Testimonial,
     Subscriber,
     Component,
-    StaticLanguage,
+    StaticContent,
     Product,
     ECommerce,
     BeforeAndAfter
@@ -34,7 +34,7 @@ export const permissionGroups: Array<IPermissionGroup> = [
     {id: PermissionGroupId.Testimonial, rank: 11, langKey: "testimonials"},
     {id: PermissionGroupId.Subscriber, rank: 12, langKey: "subscribers"},
     {id: PermissionGroupId.Component, rank: 13, langKey: "components"},
-    {id: PermissionGroupId.StaticLanguage, rank: 14, langKey: "staticLanguages"},
+    {id: PermissionGroupId.StaticContent, rank: 14, langKey: "staticContents"},
     {id: PermissionGroupId.ECommerce, rank: 15, langKey: "eCommerce"},
     {id: PermissionGroupId.Product, rank: 16, langKey: "product"},
     {id: PermissionGroupId.BeforeAndAfter, rank: 16, langKey: "beforeAndAfter"},

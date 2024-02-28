@@ -1,4 +1,5 @@
 {
+  "richText": "Rich Text",
   "sessionRequired": "Session required!",
   "price": "Price",
   "shippingPrice": "Shipping Price",
@@ -226,8 +227,8 @@
   "components": "Components",
   "newType": "New Type",
   "component": "Component",
-  "staticLanguages": "Static Languages",
-  "newStaticLanguage": "New Static Language",
+  "staticContents": "Static Contents",
+  "newStaticContent": "New Static Content",
   "policies": "Policies",
   "cookie-policy": "Cookie Policy",
   "privacy-policy": "Privacy Policy",

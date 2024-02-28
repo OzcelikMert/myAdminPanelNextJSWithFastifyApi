@@ -1,4 +1,5 @@
 {
+  "richText": "Zengin Metin",
   "sessionRequired": "Oturum gerekli!",
   "price": "Fiyat",
   "shippingPrice": "Nakliye Fiyatı",
@@ -226,8 +227,8 @@
   "components": "Bileşenler",
   "newType": "Yeni Tip",
   "component": "Bileşen",
-  "staticLanguages": "Sabit Diller",
-  "newStaticLanguage": "Yeni Sabit Dil",
+  "staticContents": "Sabit İçerikler",
+  "newStaticContent": "Yeni Sabit İçerik",
   "policies": "Politikalar",
   "cookie-policy": "Çerez Politikası",
   "privacy-policy": "Gizlilik Politkası",

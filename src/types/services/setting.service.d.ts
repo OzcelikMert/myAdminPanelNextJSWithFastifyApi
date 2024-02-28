@@ -2,22 +2,22 @@ import {
     ISettingContactFormModel,
     ISettingModel, ISettingECommerceModel,
     ISettingSeoContentModel, ISettingSocialMediaModel,
-    ISettingStaticLanguageContentModel,
-    ISettingStaticLanguageModel
+    ISettingStaticContentContentModel,
+    ISettingStaticContentModel
 } from "../models/setting.model";
 import {SettingProjectionKeys} from "constants/settingProjections";
 
 export type ISettingGetResultService = {
     seoContents?: ISettingSeoContentModel
-    staticLanguages?: (Omit<ISettingStaticLanguageModel, "contents"> & { contents?: ISettingStaticLanguageContentModel })[]
-} & Omit<ISettingModel, "seoContents" | "staticLanguages">
+    staticContents?: (Omit<ISettingStaticContentModel, "contents"> & { contents?: ISettingStaticContentContentModel })[]
+} & Omit<ISettingModel, "seoContents" | "staticContents">
 
 export type ISettingGetParamService = {
     langId?: string
     projection?: SettingProjectionKeys
 }
 
-export type ISettingUpdateGeneralParamService = {} & Omit<ISettingModel, "seoContents"|"contactForms"|"staticLanguages"|"socialMedia">
+export type ISettingUpdateGeneralParamService = {} & Omit<ISettingModel, "seoContents"|"contactForms"|"staticContents"|"socialMedia">
 
 export type ISettingUpdateSEOParamService = {
     seoContents: ISettingSeoContentModel
@@ -35,6 +35,6 @@ export type ISettingUpdateSocialMediaParamService = {
     socialMedia: ISettingSocialMediaModel[]
 }
 
-export type ISettingUpdateStaticLanguageParamService = {
-    staticLanguages: ISettingStaticLanguageModel[]
+export type ISettingUpdateStaticContentParamService = {
+    staticContents: ISettingStaticContentModel[]
 }

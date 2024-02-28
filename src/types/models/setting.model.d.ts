@@ -1,4 +1,5 @@
 import {CurrencyId} from "constants/currencyTypes";
+import {StaticContentTypeId} from "constants/staticContentTypes";
 
 export interface ISettingModel {
     defaultLangId: string
@@ -10,7 +11,7 @@ export interface ISettingModel {
     seoContents: ISettingSeoContentModel,
     contact?: ISettingContactModel
     contactForms: ISettingContactFormModel[],
-    staticLanguages: ISettingStaticLanguageModel[]
+    staticContents: ISettingStaticContentModel[]
     socialMedia: ISettingSocialMediaModel[]
     eCommerce?: ISettingECommerceModel
 }
@@ -55,16 +56,18 @@ export interface ISettingSeoContentModel {
     tags?: string[]
 }
 
-export interface ISettingStaticLanguageModel {
+export interface ISettingStaticContentModel {
     _id?: string
-    langKey: string,
-    title: string
-    contents: ISettingStaticLanguageContentModel
-    isEditing?: boolean
+    typeId: StaticContentTypeId,
+    label: string
+    elementId: string
+    rank: number
+    contents: ISettingStaticContentContentModel
 }
 
-export interface ISettingStaticLanguageContentModel {
+export interface ISettingStaticContentContentModel {
     _id?: string
     langId: string
     content?: string,
+    url?: string
 }

@@ -6,7 +6,7 @@ import {
     ISettingUpdateContactFormParamService,
     ISettingUpdateSEOParamService,
     ISettingUpdateSocialMediaParamService,
-    ISettingUpdateStaticLanguageParamService,
+    ISettingUpdateStaticContentParamService,
     ISettingGetResultService
 } from "types/services/setting.service";
 import {PathUtil} from "utils/path.util";
@@ -44,10 +44,10 @@ const updateContactForm = (params: ISettingUpdateContactFormParamService) => {
     }).put();
 }
 
-const updateStaticLanguage = (params: ISettingUpdateStaticLanguageParamService) => {
+const updateStaticContent = (params: ISettingUpdateStaticContentParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoint: ApiEndPoints.SETTING_WITH.UPDATE_STATIC_LANGUAGE,
+        endPoint: ApiEndPoints.SETTING_WITH.UPDATE_STATIC_CONTENT,
         data: params,
     }).put();
 }
@@ -73,7 +73,7 @@ export const SettingService = {
     updateGeneral: updateGeneral,
     updateSeo: updateSeo,
     updateContactForm: updateContactForm,
-    updateStaticLanguage: updateStaticLanguage,
+    updateStaticContent: updateStaticContent,
     updateSocialMedia: updateSocialMedia,
     updateECommerce: updateECommerce
 }

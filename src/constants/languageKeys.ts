@@ -1,4 +1,5 @@
 export const languageKeys = [
+    "richText",
     "sessionRequired",
     "price",
     "shippingPrice",
@@ -226,8 +227,8 @@ export const languageKeys = [
     "components",
     "newType",
     "component",
-    "staticLanguages",
-    "newStaticLanguage",
+    "staticContents",
+    "newStaticContent",
     "policies",
     "cookie-policy",
     "privacy-policy",

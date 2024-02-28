@@ -12,7 +12,7 @@ import Image from "next/image"
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 import {IComponentTypeModel} from "types/models/component.model";
 import {languageKeys} from "constants/languageKeys";
-import {ComponentInputTypeId, componentInputTypes} from "constants/componentInputTypes";
+import {StaticContentTypeId, staticContentTypes} from "constants/staticContentTypes";
 import {EndPoints} from "constants/endPoints";
 import {PermissionUtil} from "utils/permission.util";
 import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
@@ -96,7 +96,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
 
     getTypes() {
         this.setState((state: IPageState) => {
-            state.types = componentInputTypes.map(type => ({
+            state.types = staticContentTypes.map(type => ({
                 label: this.props.t(type.langKey),
                 value: type.id
             }))
@@ -188,7 +188,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                 elementId: "",
                 rank: state.formData.types.length,
                 langKey: "[noLangAdd]",
-                typeId: ComponentInputTypeId.Text,
+                typeId: StaticContentTypeId.Text,
                 contents: {
                     langId: this.props.getStateApp.appData.currentLangId,
                     content: ""
@@ -219,7 +219,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
         const Type = (typeProps: IComponentTypeModel, typeIndex: number) => {
             let input = <div>{this.props.t("type")}</div>;
             switch (typeProps.typeId) {
-                case ComponentInputTypeId.TextArea:
+                case StaticContentTypeId.TextArea:
                     input = <ComponentFormType
                         type={"textarea"}
                         title={this.props.t(typeProps.langKey)}
@@ -227,7 +227,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                         onChange={e => this.onInputChange(typeProps.contents, "content", e.target.value)}
                     />
                     break;
-                case ComponentInputTypeId.Image:
+                case StaticContentTypeId.Image:
                     input = <ComponentFieldSet
                         legend={`${this.props.t(typeProps.langKey)} ${typeProps.contents?.comment ? `(${typeProps.contents.comment})` : ""}`}
                     >
@@ -265,7 +265,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                         </div>
                     </ComponentFieldSet>
                     break;
-                case ComponentInputTypeId.Button:
+                case StaticContentTypeId.Button:
                     input = (
                         <div className="row">
                             <div className="col-md-6">
@@ -287,7 +287,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                         </div>
                     )
                     break;
-                case ComponentInputTypeId.Number:
+                case StaticContentTypeId.RichText:
                     input = <ComponentFormType
                         type={"number"}
                         title={`${this.props.t(typeProps.langKey)} ${typeProps.contents?.comment ? `(${typeProps.contents.comment})` : ""}`}

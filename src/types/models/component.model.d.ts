@@ -1,5 +1,5 @@
 import {ILanguageKeys} from "../languages";
-import {ComponentInputTypeId} from "constants/componentInputTypes";
+import {StaticContentTypeId} from "constants/staticContentTypes";
 
 export interface IComponentModel {
     _id: string,
@@ -15,7 +15,7 @@ export interface IComponentModel {
 export interface IComponentTypeModel {
     _id: string,
     elementId: string
-    typeId: ComponentInputTypeId,
+    typeId: StaticContentTypeId,
     langKey: ILanguageKeys,
     rank: number,
     contents: IComponentTypeContentModel

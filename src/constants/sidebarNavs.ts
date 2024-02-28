@@ -181,7 +181,7 @@ export const sidebarNavs: ISidebarPath[] = [
     },
     {
         path: EndPoints.ECOMMERCE,
-        icon: `market`,
+        icon: `shopping`,
         title: "eCommerce",
         state: `eCommerce`,
         permission: ECommerceEndPointPermission.GET,
@@ -229,7 +229,7 @@ export const sidebarNavs: ISidebarPath[] = [
     },
     {
         path: EndPoints.LANGUAGE,
-        icon: `languages`,
+        icon: `translate`,
         title: "languages",
         state: `languages`,
         permission: LanguageEndPointPermission.GET,
@@ -270,9 +270,9 @@ export const sidebarNavs: ISidebarPath[] = [
                 permission: SettingsEndPointPermission.UPDATE_CONTACT_FORM,
             },
             {
-                path: EndPoints.SETTINGS_WITH.STATIC_LANGUAGES,
-                title: "staticLanguages",
-                permission: SettingsEndPointPermission.UPDATE_STATIC_LANGUAGE
+                path: EndPoints.SETTINGS_WITH.STATIC_CONTENTS,
+                title: "staticContents",
+                permission: SettingsEndPointPermission.UPDATE_STATIC_CONTENT
             },
             {
                 path: EndPoints.SETTINGS_WITH.SOCIAL_MEDIA,
