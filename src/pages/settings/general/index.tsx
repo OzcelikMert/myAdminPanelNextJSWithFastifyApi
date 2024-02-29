@@ -81,9 +81,9 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
     }
 
     async getSettings() {
-        let resData = await SettingService.get({projection: SettingProjectionKeys.General})
-        if (resData.status && resData.data) {
-            let setting = resData.data;
+        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.General})
+        if (serviceResult.status && serviceResult.data) {
+            let setting = serviceResult.data;
             this.setState((state: IPageState) => {
                 state.formData = {
                     ...this.state.formData,
@@ -109,10 +109,10 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
     }
 
     async getLanguages() {
-        let resData = await LanguageService.getMany({statusId: StatusId.Active})
-        if (resData.status && resData.data) {
+        let serviceResult = await LanguageService.getMany({statusId: StatusId.Active})
+        if (serviceResult.status && serviceResult.data) {
             this.setState({
-                languages: resData.data.map(lang => ({
+                languages: serviceResult.data.map(lang => ({
                     label: lang.title,
                     value: lang._id
                 }))
@@ -121,10 +121,10 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
     }
 
     async getServerDetails() {
-        let resData = await ServerInfoService.get();
-        if (resData.status && resData.data) {
+        let serviceResult = await ServerInfoService.get();
+        if (serviceResult.status && serviceResult.data) {
             this.setState({
-                serverInfo: resData.data,
+                serverInfo: serviceResult.data,
                 isServerInfoLoading: false
             })
         }
@@ -135,12 +135,12 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await SettingService.updateGeneral({
+            let serviceResult = await SettingService.updateGeneral({
                 ...this.state.formData,
                 head: this.state.formData.head,
                 script: this.state.formData.script,
             });
-            if (resData.status) {
+            if (serviceResult.status) {
                 this.props.setStateApp({
                     appData: {
                         mainLangId: this.state.formData.defaultLangId

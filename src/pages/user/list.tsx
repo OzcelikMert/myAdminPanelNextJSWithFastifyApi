@@ -92,13 +92,14 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                     type: "loading"
                 });
 
-                let resData = await UserService.deleteWithId({_id: userId})
+                let serviceResult = await UserService.deleteWithId({_id: userId})
                 loadingToast.hide();
-                if (resData.status) {
+                if (serviceResult.status) {
                     this.setState((state: IPageState) => {
                         state.items = state.items.filter(item => userId !== item._id);
                         return state;
                     }, () => {
+                        this.onSearch(this.state.searchKey);
                         new ComponentToast({
                             type: "success",
                             title: this.props.t("successful"),

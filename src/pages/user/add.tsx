@@ -67,13 +67,13 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
     async componentDidMount() {
         let permission = this.state.formData._id ? UserEndPointPermission.UPDATE : UserEndPointPermission.ADD;
         if(PermissionUtil.checkAndRedirect(this.props, permission)){
-            this.setPageTitle();
             this.getRoles();
             this.getStatus();
             if (this.state.formData._id) {
                 await this.getItem();
             }
             this.getPermissionsForUserRoleId(this.state.formData.roleId);
+            this.setPageTitle();
             this.props.setStateApp({
                 isPageLoading: false
             })
@@ -116,11 +116,11 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
     }
 
     async getItem() {
-        let resData = await UserService.getWithId({
+        let serviceResult = await UserService.getWithId({
             _id: this.state.formData._id
         });
-        if (resData.status && resData.data) {
-            const user = resData.data;
+        if (serviceResult.status && serviceResult.data) {
+            const user = serviceResult.data;
             await new Promise(resolve => {
                 this.setState((state: IPageState) => {
                     state.formData = user;
@@ -163,11 +163,11 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
             isSubmitting: true
         }, async () => {
             let params = this.state.formData;
-            let resData = await ((params._id)
+            let serviceResult = await ((params._id)
                 ? UserService.updateWithId(params)
                 : UserService.add({...params, password: this.state.formData.password || ""}));
             this.setState({isSubmitting: false});
-            if(resData.status){
+            if(serviceResult.status){
                 Swal.fire({
                     title: this.props.t("successful"),
                     text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,

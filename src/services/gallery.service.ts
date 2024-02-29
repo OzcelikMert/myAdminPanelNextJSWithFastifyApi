@@ -3,11 +3,12 @@ import {
     IGalleryDeleteManyParamService,
     IGalleryAddParamService,
     IGalleryGetManyParamService,
-    IGalleryGetResultService
+    IGalleryGetResultService, IGalleryImageProperties
 } from "types/services/gallery.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 import {ApiRequestParamDocument} from "library/types/api";
+import {IGalleryModel} from "types/models/gallery.model";
 
 const get = (params: IGalleryGetManyParamService) => {
     return new ApiRequest({
@@ -25,7 +26,7 @@ const add = (params: IGalleryAddParamService, onUploadProgress: ApiRequestParamD
         contentType: false,
         processData: false,
         onUploadProgress: onUploadProgress
-    }).post();
+    }).post<(IGalleryModel & IGalleryImageProperties)[]>();
 }
 
 const deleteMany = (params: IGalleryDeleteManyParamService) => {

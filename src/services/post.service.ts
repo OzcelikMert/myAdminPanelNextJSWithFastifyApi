@@ -11,6 +11,7 @@ import {
 } from "types/services/post.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
+import {IPostModel} from "types/models/post.model";
 
 const getWithId = (params: IPostGetWithIdParamService) => {
     return new ApiRequest({
@@ -41,7 +42,7 @@ const add = (params: PostAddParamDocument) => {
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.ADD,
         data: params
-    }).post();
+    }).post<IPostModel>();
 }
 
 const updateWithId = (params: IPostUpdateWithIdParamService) =>  {

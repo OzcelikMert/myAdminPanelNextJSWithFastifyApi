@@ -43,9 +43,9 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
     }
 
     async getSettings() {
-        let resData = await SettingService.get({projection: SettingProjectionKeys.ContactForm})
-        if (resData.status && resData.data) {
-            let setting = resData.data;
+        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.ContactForm})
+        if (serviceResult.status && serviceResult.data) {
+            let setting = serviceResult.data;
             this.setState((state: IPageState) => {
                 state.formData = {
                     contactForms: setting.contactForms ?? []
@@ -60,8 +60,8 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await SettingService.updateContactForm(this.state.formData);
-            if (resData.status) {
+            let serviceResult = await SettingService.updateContactForm(this.state.formData);
+            if (serviceResult.status) {
                 new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),

@@ -61,12 +61,11 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
             case "signOut":
                 let resultSignOut = await AuthService.logOut();
                 if(resultSignOut.status) {
+                    await this.props.router.push(EndPoints.LOGIN);
                     this.props.setStateApp({
                         isPageLoading: true,
                         sessionAuth: undefined
-                    }, async () => {
-                        await this.props.router.push(EndPoints.LOGIN)
-                    })
+                    });
                 }
                 break;
         }

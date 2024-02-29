@@ -51,12 +51,12 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
     async componentDidMount() {
         let permission = this.state.formData._id ? LanguageEndPointPermission.UPDATE : LanguageEndPointPermission.ADD;
         if(PermissionUtil.checkAndRedirect(this.props, permission)){
-            this.setPageTitle();
             await this.getFlags();
             this.getStatus();
             if (this.state.formData._id) {
                 await this.getItem();
             }
+            this.setPageTitle();
             this.props.setStateApp({
                 isPageLoading: false
             })
@@ -86,11 +86,11 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
     }
 
     async getFlags() {
-        let resData = await LanguageService.getFlags({});
-        if (resData.status && resData.data) {
+        let serviceResult = await LanguageService.getFlags({});
+        if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
                 state.flags = [{value: "", label: this.props.t("notSelected")}];
-                state.flags = resData.data!.map(item => ({
+                state.flags = serviceResult.data!.map(item => ({
                     value: item,
                     label: item.split(".")[0].toUpperCase()
                 }))
@@ -100,11 +100,11 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
     }
 
     async getItem() {
-        let resData = await LanguageService.getWithId({_id: this.state.formData._id});
-        if (resData.status) {
-            if (resData.data) {
-                const item = resData.data;
+        let serviceResult = await LanguageService.getWithId({_id: this.state.formData._id});
+        if (serviceResult.status && serviceResult.data) {
+            const item = serviceResult.data;
 
+            await new Promise(resolve => {
                 this.setState((state: IPageState) => {
                     state.formData = {
                         ...state.formData,
@@ -112,12 +112,10 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
                     };
 
                     return state;
-                }, () => {
-                    this.setPageTitle();
-                })
-            }
+                }, () => resolve(1));
+            })
         } else {
-            this.navigatePage();
+            await this.navigatePage();
         }
     }
 
@@ -138,13 +136,13 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
                 ...this.state.formData
             };
 
-            let resData = await ((params._id)
+            let serviceResult = await ((params._id)
                 ? LanguageService.updateWithId(params)
                 : LanguageService.add(params));
             this.setState({
                 isSubmitting: false
             });
-            if(resData.status){
+            if(serviceResult.status){
                 Swal.fire({
                     title: this.props.t("successful"),
                     text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,

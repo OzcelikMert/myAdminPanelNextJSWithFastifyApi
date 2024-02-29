@@ -31,12 +31,12 @@ export default class ComponentProviderAuth extends Component<IPageProps, IPageSt
 
     async checkSession() {
         let isAuth = false;
-        let resData = await AuthService.getSession();
-        if (resData.status && resData.errorCode == ApiErrorCodes.success) {
-            if (resData.data) {
+        let serviceResult = await AuthService.getSession();
+        if (serviceResult.status && serviceResult.errorCode == ApiErrorCodes.success) {
+            if (serviceResult.data) {
                 isAuth = true;
                 this.props.setStateApp({
-                    sessionAuth: resData.data
+                    sessionAuth: serviceResult.data
                 });
             }
         }

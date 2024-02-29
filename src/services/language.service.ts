@@ -8,6 +8,7 @@ import {
 } from "types/services/language.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
+import {ILanguageModel} from "types/models/language.model";
 
 const getWithId = (params: ILanguageGetWithIdParamService) =>{
     return new ApiRequest({
@@ -38,7 +39,7 @@ const add = (params: ILanguageAddParamService) => {
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.LANGUAGE_WITH.ADD,
         data: params
-    }).post();
+    }).post<ILanguageModel>();
 }
 
 const updateWithId = (params: ILanguageUpdateWithIdParamService) => {

@@ -18,11 +18,11 @@ class ApiRequest {
         return apiUrl;
     }
 
-    private async request<Data = any, CustomData = any>(method: ApiRequestParamMethodDocument) {
+    private async request<Data = any[], CustomData = null>(method: ApiRequestParamMethodDocument) {
         let apiResult = new ApiResult<Data, CustomData>();
 
         try {
-            let resData = await axios.request({
+            let serviceResult = await axios.request({
                 url: this.getApiUrl(),
                 ...(method === "GET" ? {params: this.params.data} : {data: this.params.data}),
                 paramsSerializer: {indexes: null},
@@ -36,7 +36,7 @@ class ApiRequest {
                     }
                 },
             });
-            apiResult = resData.data as ApiResult;
+            apiResult = serviceResult.data as ApiResult<Data, CustomData>;
         }catch (e: any) {
             if(e.response && e.response.data){
                 apiResult = e.response.data;
@@ -48,19 +48,19 @@ class ApiRequest {
         return apiResult;
     }
 
-    async get<Data = any, CustomData = any>() {
+    async get<Data = any[], CustomData = null>() {
         return await this.request<Data, CustomData>("GET");
     }
 
-    async post<Data = any, CustomData = any>() {
+    async post<Data = any[], CustomData = null>() {
         return await this.request<Data, CustomData>("POST");
     }
 
-    async put<Data = any, CustomData = any>() {
+    async put<Data = any[], CustomData = null>() {
         return await this.request<Data, CustomData>("PUT");
     }
 
-    async delete<Data = any, CustomData = any>() {
+    async delete<Data = any[], CustomData = null>() {
         return await this.request<Data, CustomData>("DELETE");
     }
 }

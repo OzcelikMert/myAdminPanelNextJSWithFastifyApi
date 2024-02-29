@@ -11,6 +11,7 @@ import  {
 } from "types/services/postTerm.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
+import {IPostTermModel} from "types/models/postTerm.model";
 
 const getWithId = (params: IPostTermGetWithIdParamService) => {
     return new ApiRequest({
@@ -33,7 +34,7 @@ const add = (params: IPostTermAddParamService) => {
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_TERM_WITH.ADD,
         data: params
-    }).post<{_id: string}>();
+    }).post<IPostTermModel>();
 }
 
 const updateWithId = (params: IPostTermUpdateWithIdParamService) => {

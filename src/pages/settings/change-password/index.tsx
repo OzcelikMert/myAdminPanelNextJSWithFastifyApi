@@ -54,8 +54,8 @@ export default class PageChangePassword extends Component<IPageProps, IPageState
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await UserService.updatePassword(this.state.formData);
-            if (resData.status) {
+            let serviceResult = await UserService.updatePassword(this.state.formData);
+            if (serviceResult.status) {
                 new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),

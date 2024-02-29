@@ -66,12 +66,12 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
     }
 
     async onChangeRank(rank: number) {
-        let resData = await LanguageService.updateRankWithId({
+        let serviceResult = await LanguageService.updateRankWithId({
             _id: this.state.selectedItemId,
             rank: rank
         });
 
-        if(resData.status){
+        if(serviceResult.status){
             this.setState((state: IPageState) => {
                 let item = this.state.items.findSingle("_id", this.state.selectedItemId);
                 if(item){

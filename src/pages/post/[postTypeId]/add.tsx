@@ -89,8 +89,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
 
     async componentDidMount() {
         let methodType = this.state.formData._id ? PostPermissionMethod.UPDATE : PostPermissionMethod.ADD;
-        if(PermissionUtil.checkAndRedirect(this.props, PermissionUtil.getPostPermission(this.state.formData.typeId, methodType))){
-            this.setPageTitle();
+        if (PermissionUtil.checkAndRedirect(this.props, PermissionUtil.getPostPermission(this.state.formData.typeId, methodType))) {
             this.getLangKeys();
             if (![PostTypeId.Slider, PostTypeId.Service, PostTypeId.Testimonial].includes(this.state.formData.typeId)) {
                 await this.getTerms();
@@ -127,6 +126,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
             if (this.state.formData._id) {
                 await this.getItem();
             }
+            this.setPageTitle();
             this.props.setStateApp({
                 isPageLoading: false
             })
@@ -209,16 +209,16 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     }
 
     async getTerms() {
-        let resData = await PostTermService.getMany({
+        let serviceResult = await PostTermService.getMany({
             postTypeId: this.state.formData.typeId,
             langId: this.props.getStateApp.appData.mainLangId,
             statusId: StatusId.Active
         });
-        if (resData.status && resData.data) {
+        if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
                 state.categories = [];
                 state.tags = [];
-                for (const term of resData.data!) {
+                for (const term of serviceResult.data!) {
                     if (term.typeId == PostTermTypeId.Category) {
                         state.categories.push({
                             value: term._id,
@@ -248,15 +248,15 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     }
 
     async getItem() {
-        let resData = await PostService.getWithId({
+        let serviceResult = await PostService.getWithId({
             _id: this.state.formData._id,
             typeId: this.state.formData.typeId,
             langId: this.props.getStateApp.appData.currentLangId
         });
-        if (resData.status) {
-            if (resData.data) {
-                const item = resData.data;
+        if (serviceResult.status && serviceResult.data) {
+            const item = serviceResult.data;
 
+            await new Promise(resolve => {
                 this.setState((state: IPageState) => {
                     state.formData = {
                         ...state.formData,
@@ -271,15 +271,15 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                         }
                     };
 
-                    if(item.categories){
+                    if (item.categories) {
                         state.formData.categories = item.categories.map(category => category._id);
                     }
 
-                    if(item.tags){
+                    if (item.tags) {
                         state.formData.tags = item.tags.map(tag => tag._id);
                     }
 
-                    if(item.eCommerce){
+                    if (item.eCommerce) {
                         state.formData.eCommerce = {
                             ...item.eCommerce,
                             attributes: item.eCommerce.attributes?.map(attribute => ({
@@ -310,10 +310,8 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                     state.isIconActive = Boolean(item.contents && item.contents.icon && item.contents.icon.length > 0);
 
                     return state;
-                }, () => {
-                    this.setPageTitle();
-                })
-            }
+                }, () => resolve(1))
+            })
         } else {
             this.navigatePage();
         }
@@ -334,7 +332,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 ...this.state.formData,
             };
 
-            let resData = await ((params._id)
+            let serviceResult = await ((params._id)
                 ? PostService.updateWithId(params)
                 : PostService.add(params));
 
@@ -342,7 +340,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 isSubmitting: false
             });
 
-            if(resData.status){
+            if (serviceResult.status) {
                 Swal.fire({
                     title: this.props.t("successful"),
                     text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
@@ -515,13 +513,13 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 {
                     ![PostTypeId.Page, PostTypeId.Slider, PostTypeId.Service, PostTypeId.Testimonial].includes(Number(this.state.formData.typeId))
                         ? <div className="col-md-7 mb-3">
-                            <ComponentPagePostAddChooseCategory page={this}  />
+                            <ComponentPagePostAddChooseCategory page={this}/>
                         </div> : null
                 }
                 {
                     ![PostTypeId.Slider, PostTypeId.Service, PostTypeId.Testimonial].includes(Number(this.state.formData.typeId))
                         ? <div className="col-md-7 mb-3">
-                            <ComponentPagePostAddChooseTag page={this}  />
+                            <ComponentPagePostAddChooseTag page={this}/>
                         </div> : null
                 }
             </div>
@@ -594,17 +592,17 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                             </div>
                             {
                                 [PostTypeId.BeforeAndAfter].includes(this.state.formData.typeId)
-                                    ? <ComponentPagePostAddBeforeAndAfter page={this} />
+                                    ? <ComponentPagePostAddBeforeAndAfter page={this}/>
                                     : null
                             }
                             {
                                 [PostTypeId.Slider, PostTypeId.Service].includes(this.state.formData.typeId)
-                                    ? <ComponentPagePostAddButton page={this} />
+                                    ? <ComponentPagePostAddButton page={this}/>
                                     : null
                             }
                             {
                                 [PostTypeId.Product].includes(this.state.formData.typeId)
-                                    ? <ComponentPagePostAddECommerce page={this} />
+                                    ? <ComponentPagePostAddECommerce page={this}/>
                                     : null
                             }
                         </ComponentForm>

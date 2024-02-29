@@ -76,11 +76,11 @@ export default class PageSubscribers extends Component<IPageProps, IPageState> {
                 type: "loading"
             });
 
-            let resData = await SubscriberService.getMany({
+            let serviceResult = await SubscriberService.getMany({
                 _id: selectedItemId
             });
             loadingToast.hide();
-            if (resData.status) {
+            if (serviceResult.status) {
                 this.setState((state: IPageState) => {
                     state.items = state.items.filter(item => !selectedItemId.includes(item._id));
                     return state;

@@ -65,9 +65,9 @@ class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
     }
 
     async getSettings() {
-        let resData = await SettingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.StaticContent})
-        if (resData.status && resData.data) {
-            let setting = resData.data;
+        let serviceResult = await SettingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.StaticContent})
+        if (serviceResult.status && serviceResult.data) {
+            let setting = serviceResult.data;
             this.setState((state: IPageState) => {
                 state.formData = {
                     staticContents: setting.staticContents?.map(staticLanguage => ({
@@ -98,10 +98,10 @@ class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await SettingService.updateStaticContent({
+            let serviceResult = await SettingService.updateStaticContent({
                 staticContents: this.state.formData.staticContents
             });
-            if (resData.status) {
+            if (serviceResult.status) {
                 new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),

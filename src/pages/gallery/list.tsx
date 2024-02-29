@@ -80,11 +80,9 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
     }
 
     async getItems() {
-        let resData = await GalleryService.get({typeId: GalleryTypeId.Image});
-        if (resData.status) {
-            if (resData.data) {
-                this.setListSort(resData.data);
-            }
+        let serviceResult = await GalleryService.get({typeId: GalleryTypeId.Image});
+        if (serviceResult.status && serviceResult.data) {
+            this.setListSort(serviceResult.data);
         }
     }
 
@@ -153,9 +151,9 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
                 type: "loading"
             });
 
-            let resData = await GalleryService.deleteMany({_id: this.state.selectedItems});
+            let serviceResult = await GalleryService.deleteMany({_id: this.state.selectedItems});
             loadingToast.hide();
-            if (resData.status) {
+            if (serviceResult.status) {
                 this.setState((state: IPageState) => {
                     state.items = state.items.filter(item => !state.selectedItems.includes(item.name));
                     state.selectedItems = [];

@@ -60,9 +60,9 @@ class PageSettingsSEO extends Component<IPageProps, IPageState> {
     }
 
     async getSeo() {
-        let resData = await SettingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.SEO});
-        if (resData.status && resData.data) {
-            let setting = resData.data;
+        let serviceResult = await SettingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.SEO});
+        if (serviceResult.status && serviceResult.data) {
+            let setting = serviceResult.data;
             this.setState((state: IPageState) => {
                 state.formData = {
                     seoContents: {
@@ -82,8 +82,8 @@ class PageSettingsSEO extends Component<IPageProps, IPageState> {
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await SettingService.updateSeo(this.state.formData);
-            if (resData.status) {
+            let serviceResult = await SettingService.updateSeo(this.state.formData);
+            if (serviceResult.status) {
                 new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),

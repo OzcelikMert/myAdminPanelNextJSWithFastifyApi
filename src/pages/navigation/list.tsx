@@ -103,9 +103,9 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                     type: "loading"
                 });
 
-                let resData = await NavigationService.deleteMany({_id: selectedItemId});
+                let serviceResult = await NavigationService.deleteMany({_id: selectedItemId});
                 loadingToast.hide();
-                if (resData.status) {
+                if (serviceResult.status) {
                     this.setState((state: IPageState) => {
                         state.items = state.items.filter(item => !selectedItemId.includes(item._id));
                         return state;
@@ -124,9 +124,9 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                 content: this.props.t("updating"),
                 type: "loading"
             });
-            let resData = await NavigationService.updateManyStatus({_id: selectedItemId, statusId: statusId});
+            let serviceResult = await NavigationService.updateManyStatus({_id: selectedItemId, statusId: statusId});
             loadingToast.hide();
-            if (resData.status) {
+            if (serviceResult.status) {
                 this.setState((state: IPageState) => {
                     state.items.map(item => {
                         if (selectedItemId.includes(item._id)) {
@@ -147,12 +147,12 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
     }
 
     async onChangeRank(rank: number) {
-        let resData = await NavigationService.updateRankWithId({
+        let serviceResult = await NavigationService.updateRankWithId({
             _id: this.state.selectedItemId,
             rank: rank
         });
 
-        if (resData.status) {
+        if (serviceResult.status) {
             this.setState((state: IPageState) => {
                 let item = this.state.items.findSingle("_id", this.state.selectedItemId);
                 if (item) {

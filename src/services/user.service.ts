@@ -9,6 +9,7 @@ import {
 } from "types/services/user.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
+import {IUserModel} from "types/models/user.model";
 
 const getWithId = (params: IUserGetWithIdParamService) => {
     return new ApiRequest({
@@ -31,7 +32,7 @@ const add = (params: IUserAddParamService) => {
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.USER_WITH.ADD,
         data: params,
-    }).post();
+    }).post<IUserModel>();
 }
 
 const updateWithId = (params: IUserUpdateWithIdParamService) => {

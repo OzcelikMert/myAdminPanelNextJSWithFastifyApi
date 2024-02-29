@@ -11,6 +11,7 @@ import {
 } from "types/services/navigation.service";
 import {PathUtil} from "utils/path.util";
 import ApiRequest from "library/api/request";
+import {INavigationModel} from "types/models/navigation.model";
 
 const getWithId = (params: INavigationGetWithIdParamService) =>  {
     return new ApiRequest({
@@ -33,7 +34,7 @@ const add = (params: INavigationAddParamService) =>  {
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.NAVIGATION_WITH.ADD,
         data: params,
-    }).post();
+    }).post<INavigationModel>();
 }
 
 const updateWithId = (params: INavigationUpdateWithIdParamService) =>  {

@@ -30,36 +30,34 @@ export default class ComponentProviderAppInit extends Component<IPageProps, IPag
     }
 
     async getContentLanguages() {
-        let resData = await LanguageService.getMany({statusId: StatusId.Active});
-        if (resData.status) {
+        let serviceResult = await LanguageService.getMany({statusId: StatusId.Active});
+        if (serviceResult.status && serviceResult.data) {
             this.props.setStateApp({
                 appData: {
-                    contentLanguages: resData.data
+                    contentLanguages: serviceResult.data
                 }
             })
         }
     }
 
     async getContentMainLanguage() {
-        let resData = await SettingService.get({projection: SettingProjectionKeys.General});
-        if (resData.status && resData.data) {
-            let data = resData.data;
+        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.General});
+        if (serviceResult.status && serviceResult.data) {
             this.props.setStateApp({
                 appData: {
-                  mainLangId: data.defaultLangId,
-                  currentLangId: data.defaultLangId
+                  mainLangId: serviceResult.data.defaultLangId,
+                  currentLangId: serviceResult.data.defaultLangId
                 }
             })
         }
     }
 
     async getSettingECommerce() {
-        let resData = await SettingService.get({projection: SettingProjectionKeys.ECommerce});
-        if (resData.status && resData.data) {
-            let data = resData.data;
+        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.ECommerce});
+        if (serviceResult.status && serviceResult.data) {
             this.props.setStateApp({
                 appData: {
-                    currencyId: data.eCommerce?.currencyId || CurrencyId.TurkishLira
+                    currencyId: serviceResult.data.eCommerce?.currencyId || CurrencyId.TurkishLira
                 },
             })
         }

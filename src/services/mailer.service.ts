@@ -8,7 +8,7 @@ const send = (params: IMailerSendParamService) => {
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.MAILER_WITH.SEND,
         data: params,
-    }).post();
+    }).post<{_id: string, response: string}>();
 }
 
 export const MailerService = {

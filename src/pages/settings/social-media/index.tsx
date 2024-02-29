@@ -43,9 +43,9 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
     }
 
     async getSettings() {
-        let resData = await SettingService.get({projection: SettingProjectionKeys.SocialMedia})
-        if (resData.status && resData.data) {
-            let setting = resData.data;
+        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.SocialMedia})
+        if (serviceResult.status && serviceResult.data) {
+            let setting = serviceResult.data;
             this.setState((state: IPageState) => {
                 state.formData = {
                     socialMedia: setting.socialMedia || []
@@ -60,8 +60,8 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await SettingService.updateSocialMedia(this.state.formData)
-            if (resData.status) {
+            let serviceResult = await SettingService.updateSocialMedia(this.state.formData)
+            if (serviceResult.status) {
                 new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),

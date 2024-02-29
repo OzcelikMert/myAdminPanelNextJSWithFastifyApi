@@ -119,14 +119,14 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                     type: "loading"
                 });
 
-                let resData = await PostTermService.deleteMany({
+                let serviceResult = await PostTermService.deleteMany({
                     _id: selectedItemId,
                     typeId: this.state.typeId,
                     postTypeId: this.state.postTypeId
                 })
 
                 loadingToast.hide();
-                if (resData.status) {
+                if (serviceResult.status) {
                     this.setState((state: IPageState) => {
                         state.items = state.items.filter(item => !selectedItemId.includes(item._id))
                         return state;
@@ -146,7 +146,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                 type: "loading"
             });
 
-            let resData = await PostTermService.updateManyStatus({
+            let serviceResult = await PostTermService.updateManyStatus({
                 _id: selectedItemId,
                 typeId: this.state.typeId,
                 postTypeId: this.state.postTypeId,
@@ -154,7 +154,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
             });
 
             loadingToast.hide();
-            if (resData.status) {
+            if (serviceResult.status) {
                 this.setState((state: IPageState) => {
                     state.items.map((item, index) => {
                         if (selectedItemId.includes(item._id)) {
@@ -175,14 +175,14 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
     }
 
     async onChangeRank(rank: number) {
-        let resData = await PostTermService.updateRankWithId({
+        let serviceResult = await PostTermService.updateRankWithId({
             _id: this.state.selectedItemId,
             rank: rank,
             postTypeId: this.state.postTypeId,
             typeId: this.state.typeId
         });
 
-        if (resData.status) {
+        if (serviceResult.status) {
             this.setState((state: IPageState) => {
                 let item = this.state.items.findSingle("_id", this.state.selectedItemId);
                 if (item) {

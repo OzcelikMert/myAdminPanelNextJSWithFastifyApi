@@ -62,7 +62,7 @@
 @import "components/theme/chooseImage/index";
 @import "components/theme/modal";
 /* providers */
-@import "components/providers/lock";
+@import "components/tools/lock";
 
 /* === Plugin Overrides === */
 @import "plugin-overrides/bootstrap-checkbox-radio";
@@ -79,11 +79,11 @@
 @import "plugin-overrides/react-select";
 
 /* === Tools === */
-@import "tools/navbar";
-@import "tools/sidebar";
-@import "tools/footer";
-@import "tools/layout";
-@import "tools/spinner";
+@import "components/tools/navbar";
+@import "components/tools/sidebar";
+@import "components/tools/footer";
+@import "components/tools/layout";
+@import "components/tools/spinner";
 
 /* === Theme Colors === */
 @import "theme/index";

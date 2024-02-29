@@ -50,12 +50,12 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
     async componentDidMount() {
         let permission = this.state.formData._id ? NavigationEndPointPermission.UPDATE : NavigationEndPointPermission.ADD;
         if(PermissionUtil.checkAndRedirect(this.props, permission)){
-            this.setPageTitle();
             await this.getItems();
             this.getStatus();
             if (this.state.formData._id) {
                 await this.getItem();
             }
+            this.setPageTitle();
             this.props.setStateApp({
                 isPageLoading: false
             })
@@ -99,14 +99,14 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
     }
 
     async getItems() {
-        let resData = await NavigationService.getMany({
+        let serviceResult = await NavigationService.getMany({
             langId: this.props.getStateApp.appData.mainLangId,
             statusId: StatusId.Active,
         });
-        if (resData.status && resData.data) {
+        if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
                 state.items = [{value: "", label: this.props.t("notSelected")}];
-                resData.data?.forEach(item => {
+                serviceResult.data?.forEach(item => {
                     if (!V.isEmpty(this.state.formData._id)) {
                         if (this.state.formData._id == item._id) return;
                     }
@@ -121,14 +121,14 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
     }
 
     async getItem() {
-        let resData = await NavigationService.getWithId({
+        let serviceResult = await NavigationService.getWithId({
             _id: this.state.formData._id,
             langId: this.props.getStateApp.appData.currentLangId
         });
-        if (resData.status) {
-            if (resData.data) {
-                const item = resData.data;
+        if (serviceResult.status && serviceResult.data) {
+            const item = serviceResult.data;
 
+            await new Promise(resolve => {
                 this.setState((state: IPageState) => {
                     state.formData = {
                         ...state.formData,
@@ -146,18 +146,16 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                     }
 
                     return state;
-                }, () => {
-                    this.setPageTitle();
-                })
-            }
+                }, () => resolve(1));
+            })
         } else {
-            this.navigatePage();
+            await this.navigatePage();
         }
     }
 
-    navigatePage() {
+    async navigatePage() {
         let pagePath = EndPoints.NAVIGATION_WITH.LIST;
-        this.props.router.push(pagePath);
+        await this.props.router.push(pagePath);
     }
 
     onSubmit(event: FormEvent) {
@@ -169,13 +167,13 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                 ...this.state.formData
             };
 
-            let resData = await ((params._id)
+            let serviceResult = await ((params._id)
                 ? NavigationService.updateWithId(params)
                 : NavigationService.add(params));
             this.setState({
                 isSubmitting: false
             });
-            if(resData.status){
+            if(serviceResult.status){
                 Swal.fire({
                     title: this.props.t("successful"),
                     text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,

@@ -79,12 +79,12 @@ class PageDashboard extends Component<IPageProps, IPageState> {
     }
 
     async getViewNumber() {
-        let resData = await ViewService.getNumber();
+        let serviceResult = await ViewService.getNumber();
 
-        if (resData.status && resData.data) {
-            if (JSON.stringify(this.state.visitorData.number) != JSON.stringify(resData.data)) {
+        if (serviceResult.status && serviceResult.data) {
+            if (JSON.stringify(this.state.visitorData.number) != JSON.stringify(serviceResult.data)) {
                 this.setState((state: IPageState) => {
-                    state.visitorData.number = resData.data!;
+                    state.visitorData.number = serviceResult.data!;
                     return state;
                 })
             }
@@ -92,25 +92,25 @@ class PageDashboard extends Component<IPageProps, IPageState> {
     }
 
     async getViewStatistics() {
-        let resData = await ViewService.getStatistics();
+        let serviceResult = await ViewService.getStatistics();
 
-        if (resData.status && resData.data) {
+        if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
-                state.visitorData.statistics = resData.data!;
+                state.visitorData.statistics = serviceResult.data!;
                 return state;
             })
         }
     }
 
     async getLastPosts() {
-        let resData = await PostService.getMany({
+        let serviceResult = await PostService.getMany({
             langId: this.props.getStateApp.appData.mainLangId,
             count: 10,
             isRecent: true
         });
-        if (resData.status && resData.data) {
+        if (serviceResult.status && serviceResult.data) {
             this.setState({
-                lastPosts: resData.data
+                lastPosts: serviceResult.data
             })
         }
     }

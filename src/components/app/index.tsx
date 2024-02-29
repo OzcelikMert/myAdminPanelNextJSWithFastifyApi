@@ -16,8 +16,8 @@ import {ToastContainer} from "react-toastify";
 import {CurrencyId} from "constants/currencyTypes";
 import {multiLanguagePaths} from "constants/multiLanguagePaths";
 import {EndPoints} from "constants/endPoints";
-import ComponentProviderLock from "components/providers/lock";
 import ComponentSpinnerDonut from "components/elements/spinners/donut";
+import ComponentToolLock from "components/tools/lock";
 
 type IPageState = {
     breadCrumbTitle: string
@@ -158,6 +158,11 @@ class ComponentApp extends Component<IPageProps, IPageState> {
             <div>
                 <ComponentHead title={this.state.breadCrumbTitle}/>
                 <div className="container-scroller">
+                    {
+                        ![EndPoints.LOGIN].includes(this.props.router.pathname) && this.state.isLock
+                            ? <ComponentToolLock {...commonProps} />
+                            : null
+                    }
                     <ToastContainer/>
                     {!isFullPageLayout ? <ComponentToolNavbar {...commonProps}/> : null}
                     <div className={`container-fluid page-body-wrapper ${isFullPageLayout ? "full-page-wrapper" : ""}`}>
@@ -175,9 +180,7 @@ class ComponentApp extends Component<IPageProps, IPageState> {
                                         {
                                             !isFullPageLayout ? <this.PageHeader {...commonProps} /> : null
                                         }
-                                        <ComponentProviderLock {...commonProps}>
-                                            <this.props.Component {...commonProps}/>
-                                        </ComponentProviderLock>
+                                        <this.props.Component {...commonProps}/>
                                     </div>
                                     {!isFullPageLayout ? <ComponentToolFooter/> : ''}
                                 </div>

@@ -52,9 +52,9 @@ export default class PageECommerceSettings extends Component<IPageProps, IPageSt
     }
 
     async getSettings() {
-        let resData = await SettingService.get({projection: SettingProjectionKeys.ECommerce})
-        if (resData.status && resData.data) {
-            let setting = resData.data;
+        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.ECommerce})
+        if (serviceResult.status && serviceResult.data) {
+            let setting = serviceResult.data;
             this.setState((state: IPageState) => {
                 state.formData = {
                     eCommerce: {
@@ -81,8 +81,8 @@ export default class PageECommerceSettings extends Component<IPageProps, IPageSt
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await SettingService.updateECommerce(this.state.formData);
-            if (resData.status) {
+            let serviceResult = await SettingService.updateECommerce(this.state.formData);
+            if (serviceResult.status) {
                 this.props.setStateApp({
                     appData: {
                         currencyId: this.state.formData.eCommerce.currencyId

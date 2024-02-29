@@ -68,7 +68,6 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
     async componentDidMount() {
         let methodType = this.state.formData._id ? PostPermissionMethod.UPDATE : PostPermissionMethod.ADD;
         if (PermissionUtil.checkAndRedirect(this.props, PermissionUtil.getPostPermission(this.state.formData.postTypeId, methodType))) {
-            this.setPageTitle();
             if ([PostTermTypeId.Category, PostTermTypeId.Variations].includes(this.state.formData.typeId)) {
                 await this.getItems();
             }
@@ -76,6 +75,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
             if (this.state.formData._id) {
                 await this.getItem();
             }
+            this.setPageTitle();
             this.props.setStateApp({
                 isPageLoading: false
             })
@@ -128,16 +128,16 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
         let typeId = this.state.formData.typeId == PostTermTypeId.Variations
             ? [PostTermTypeId.Attributes]
             : [this.state.formData.typeId];
-        let resData = await PostTermService.getMany({
+        let serviceResult = await PostTermService.getMany({
             typeId: typeId,
             postTypeId: this.state.formData.postTypeId,
             langId: this.props.getStateApp.appData.mainLangId,
             statusId: StatusId.Active
         });
-        if (resData.status && resData.data) {
+        if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
                 state.items = [{value: "", label: this.props.t("notSelected")}];
-                resData.data!.forEach(item => {
+                serviceResult.data!.forEach(item => {
                     if (!V.isEmpty(this.state.formData._id)) {
                         if (this.state.formData._id == item._id) return;
                     }
@@ -152,15 +152,16 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
     }
 
     async getItem() {
-        let resData = await PostTermService.getWithId({
+        let serviceResult = await PostTermService.getWithId({
             _id: this.state.formData._id,
             typeId: this.state.formData.typeId,
             postTypeId: this.state.formData.postTypeId,
             langId: this.props.getStateApp.appData.currentLangId
         });
-        if (resData.status) {
-            if (resData.data) {
-                const item = resData.data;
+        if (serviceResult.status && serviceResult.data) {
+            const item = serviceResult.data;
+
+            await new Promise(resolve => {
                 this.setState((state: IPageState) => {
                     state.formData = {
                         ...state.formData,
@@ -177,12 +178,10 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                         state.mainTitle = state.formData.contents.title || "";
                     }
                     return state;
-                }, () => {
-                    this.setPageTitle();
-                })
-            } else {
-                this.navigatePage();
-            }
+                }, () => resolve(1))
+            })
+        } else {
+            this.navigatePage();
         }
     }
 
@@ -200,7 +199,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
             isSubmitting: true
         }, async () => {
             let params = this.state.formData;
-            let resData = await ((params._id)
+            let serviceResult = await ((params._id)
                 ? PostTermService.updateWithId(params)
                 : PostTermService.add(params));
 
@@ -208,7 +207,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                 isSubmitting: false
             });
 
-            if (resData.status) {
+            if (serviceResult.status) {
                 if (this.state.formData.typeId == PostTermTypeId.Category) {
                     await this.getItems();
                 }

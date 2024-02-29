@@ -57,9 +57,9 @@ class PageLogin extends Component<IPageProps, IPageState> {
             isWrong: false,
             isSubmitting: true
         }, async () => {
-            let resData = await AuthService.login(this.state.formData);
-            if (resData.data) {
-                if (resData.status) {
+            let serviceResult = await AuthService.login(this.state.formData);
+            if (serviceResult.data) {
+                if (serviceResult.status) {
                     let resultSession = await AuthService.getSession();
                     if (resultSession.status && resultSession.data) {
                         this.props.setStateApp({
@@ -69,7 +69,7 @@ class PageLogin extends Component<IPageProps, IPageState> {
                     return this.props.router.push(EndPoints.DASHBOARD);
                 } else {
                     this.setState({
-                        user: resData.data
+                        user: serviceResult.data
                     })
                 }
             } else {

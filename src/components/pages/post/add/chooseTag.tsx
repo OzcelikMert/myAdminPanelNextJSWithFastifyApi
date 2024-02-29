@@ -32,7 +32,7 @@ export default class ComponentPagePostAddChooseTag extends Component<IPageProps,
         this.setState({
             isSubmitting: !this.state.isSubmitting
         }, async () => {
-            let resData = await PostTermService.add({
+            let serviceResult = await PostTermService.add({
                 typeId: PostTermTypeId.Tag,
                 postTypeId: this.props.page.state.formData.typeId,
                 statusId: StatusId.Active,
@@ -43,25 +43,23 @@ export default class ComponentPagePostAddChooseTag extends Component<IPageProps,
                 }
             });
 
-            if(resData.status){
-                if(resData.data){
-                    this.props.page.setState({
-                        tags: [
-                            {value: resData.data._id, label: this.state.newItemTitle},
-                            ...this.props.page.state.tags
-                        ]
-                    }, () => {
-                        this.setState({
-                            newItemTitle: ""
-                        })
-                        new ComponentToast({
-                            type: "success",
-                            title: this.props.page.props.t("successful"),
-                            content: `'${this.state.newItemTitle}' ${this.props.page.props.t("itemAdded")}`,
-                            timeOut: 3
-                        })
+            if(serviceResult.status && serviceResult.data){
+                this.props.page.setState({
+                    tags: [
+                        {value: serviceResult.data._id, label: this.state.newItemTitle},
+                        ...this.props.page.state.tags
+                    ]
+                }, () => {
+                    this.setState({
+                        newItemTitle: ""
                     })
-                }
+                    new ComponentToast({
+                        type: "success",
+                        title: this.props.page.props.t("successful"),
+                        content: `'${this.state.newItemTitle}' ${this.props.page.props.t("itemAdded")}`,
+                        timeOut: 3
+                    })
+                })
             }
 
             this.setState({isSubmitting: false})

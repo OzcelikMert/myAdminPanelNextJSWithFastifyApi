@@ -18,7 +18,6 @@ import {PostTypeId} from "constants/postTypes";
 import {PostUtil} from "utils/post.util";
 import {PermissionUtil, PostPermissionMethod} from "utils/permission.util";
 import {status, StatusId} from "constants/status";
-import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
 import {ImageSourceUtil} from "utils/imageSource.util";
 import {ProductUtil} from "utils/product.util";
 import {PageTypeId, pageTypes} from "constants/pageTypes";
@@ -129,9 +128,9 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                     type: "loading"
                 });
 
-                let resData = await PostService.deleteMany({_id: selectedItemId, typeId: this.state.typeId})
+                let serviceResult = await PostService.deleteMany({_id: selectedItemId, typeId: this.state.typeId})
                 loadingToast.hide();
-                if (resData.status) {
+                if (serviceResult.status) {
                     this.setState((state: IPageState) => {
                         state.items = state.items.filter(item => !selectedItemId.includes(item._id));
                         return state;
@@ -151,13 +150,13 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                 type: "loading"
             });
 
-            let resData = await PostService.updateManyStatus({
+            let serviceResult = await PostService.updateManyStatus({
                 _id: selectedItemId,
                 typeId: this.state.typeId,
                 statusId: statusId
             })
             loadingToast.hide();
-            if (resData.status) {
+            if (serviceResult.status) {
                 this.setState((state: IPageState) => {
                     state.items.map((item, index) => {
                         if (selectedItemId.includes(item._id)) {
@@ -178,13 +177,13 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
     }
 
     async onChangeRank(rank: number) {
-        let resData = await PostService.updateRankWithId({
+        let serviceResult = await PostService.updateRankWithId({
             _id: this.state.selectedItemId,
             typeId: this.state.typeId,
             rank: rank
         });
 
-        if(resData.status){
+        if(serviceResult.status){
             this.setState((state: IPageState) => {
                 let item = this.state.items.findSingle("_id", this.state.selectedItemId);
                 if(item){

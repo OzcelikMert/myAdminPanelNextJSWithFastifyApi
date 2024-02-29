@@ -44,7 +44,6 @@ class PageGalleryUpload extends Component<IPageProps, IPageState> {
     }
 
     async uploadFiles() {
-        let uploadedImages: IGalleryGetResultService[] = [];
         for (const uploadingFile of this.state.uploadingFiles) {
             if (
                 uploadingFile.progressValue === 100 ||
@@ -55,7 +54,7 @@ class PageGalleryUpload extends Component<IPageProps, IPageState> {
             const formData = new FormData();
             formData.append("image", uploadingFile.file, uploadingFile.file.name);
 
-            let resData = await GalleryService.add(formData, (e, percent) => {
+            let serviceResult = await GalleryService.add(formData, (e, percent) => {
                 this.setState((state: IPageState) => {
                     let findIndex = state.uploadingFiles.indexOfKey("id", uploadingFile.id);
                     if(findIndex > -1){
@@ -65,12 +64,7 @@ class PageGalleryUpload extends Component<IPageProps, IPageState> {
                 })
             });
 
-            if (
-                resData.status &&
-                Array.isArray(resData.data) &&
-                resData.data.length > 0
-            ) {
-                uploadedImages.push(resData.data[0]);
+            if (serviceResult.status && serviceResult.data) {
                 new ComponentToast({
                     type: "success",
                     title: this.props.t("successful"),
@@ -78,10 +72,18 @@ class PageGalleryUpload extends Component<IPageProps, IPageState> {
                     position: "top-right",
                     timeOut: 5
                 })
+                if(this.props.uploadedImages){
+                    this.props.uploadedImages(serviceResult.data.map(image => ({
+                        ...image,
+                        authorId: {
+                            _id: this.props.getStateApp.sessionAuth!.user.userId,
+                            name: this.props.getStateApp.sessionAuth!.user.name,
+                            image: this.props.getStateApp.sessionAuth!.user.image,
+                            url: ""
+                        }
+                    })));
+                }
             }
-        }
-        if(this.props.uploadedImages){
-            this.props.uploadedImages(uploadedImages);
         }
     }
 

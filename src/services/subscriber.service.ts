@@ -9,6 +9,7 @@ import {
 } from "types/services/subscriber.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
+import {ISubscriberModel} from "types/models/subscriber.model";
 
 const getWithId = (params: ISubscriberGetWithIdParamService) => {
     return new ApiRequest({
@@ -31,7 +32,7 @@ const add = (params: ISubscriberAddParamService) => {
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.SUBSCRIBER_WITH.ADD,
         data: params
-    }).post();
+    }).post<ISubscriberModel>();
 }
 
 const deleteWithId = (params: ISubscriberDeleteWithIdParamService) => {

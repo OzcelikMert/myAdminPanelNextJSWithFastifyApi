@@ -32,7 +32,7 @@ export default class ComponentPagePostAddChooseCategory extends Component<IPageP
         this.setState({
             isSubmitting: !this.state.isSubmitting
         }, async () => {
-            let resData = await PostTermService.add({
+            let serviceResult = await PostTermService.add({
                 typeId: PostTermTypeId.Category,
                 postTypeId: this.props.page.state.formData.typeId,
                 statusId: StatusId.Active,
@@ -43,25 +43,23 @@ export default class ComponentPagePostAddChooseCategory extends Component<IPageP
                 }
             });
 
-            if(resData.status){
-                if(resData.data){
-                    this.props.page.setState({
-                        categories: [
-                            {value: resData.data._id, label: this.state.newItemTitle},
-                            ...this.props.page.state.categories
-                        ]
-                    }, () => {
-                        this.setState({
-                            newItemTitle: ""
-                        })
-                        new ComponentToast({
-                            type: "success",
-                            title: this.props.page.props.t("successful"),
-                            content: `'${this.state.newItemTitle}' ${this.props.page.props.t("itemAdded")}`,
-                            timeOut: 3
-                        })
+            if (serviceResult.status && serviceResult.data) {
+                this.props.page.setState({
+                    categories: [
+                        {value: serviceResult.data._id, label: this.state.newItemTitle},
+                        ...this.props.page.state.categories
+                    ]
+                }, () => {
+                    this.setState({
+                        newItemTitle: ""
                     })
-                }
+                    new ComponentToast({
+                        type: "success",
+                        title: this.props.page.props.t("successful"),
+                        content: `'${this.state.newItemTitle}' ${this.props.page.props.t("itemAdded")}`,
+                        timeOut: 3
+                    })
+                })
             }
 
             this.setState({isSubmitting: false})
@@ -100,9 +98,9 @@ export default class ComponentPagePostAddChooseCategory extends Component<IPageP
                             <div className="col-md-12 mt-4 text-end submit">
                                 {
                                     this.state.isSubmitting
-                                        ? <ComponentFormLoadingButton text={this.props.page.props.t("loading")} />
+                                        ? <ComponentFormLoadingButton text={this.props.page.props.t("loading")}/>
                                         : <button type={"button"} className="btn btn-gradient-success"
-                                                 onClick={() => this.onAddNew()}>
+                                                  onClick={() => this.onAddNew()}>
                                             <i className="mdi mdi-plus"></i> {this.props.page.props.t("add")}
                                         </button>
                                 }
@@ -117,7 +115,7 @@ export default class ComponentPagePostAddChooseCategory extends Component<IPageP
     render() {
         return (
             <div>
-                <this.Modal />
+                <this.Modal/>
                 <div className="row">
                     <div className="col-md-10">
                         <ComponentFormSelect

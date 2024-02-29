@@ -58,9 +58,9 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
     }
 
     async getUser() {
-        let resData = await UserService.getWithId({_id: this.props.getStateApp.sessionAuth!.user.userId});
-        if (resData.status && resData.data) {
-            const user = resData.data;
+        let serviceResult = await UserService.getWithId({_id: this.props.getStateApp.sessionAuth!.user.userId});
+        if (serviceResult.status && serviceResult.data) {
+            const user = serviceResult.data;
             await new Promise(resolve => {
                 this.setState((state: IPageState) => {
                     state.user = user;
@@ -85,8 +85,8 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
             isSubmitting: true,
             isImageChanging: true
         }, async () => {
-            let resData = await UserService.updateProfile({image: image});
-            if (resData.status) {
+            let serviceResult = await UserService.updateProfile({image: image});
+            if (serviceResult.status) {
                 this.setState((state: IPageState) => {
                     state.isSubmitting = false;
                     state.isImageChanging = false;
@@ -116,8 +116,8 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
         this.setState({
             isSubmitting: true
         }, async () => {
-            let resData = await UserService.updateProfile(this.state.formData);
-            if (resData.status) {
+            let serviceResult = await UserService.updateProfile(this.state.formData);
+            if (serviceResult.status) {
                 this.props.setStateApp({
                     sessionAuth: {
                         ...this.props.getStateApp.sessionAuth,

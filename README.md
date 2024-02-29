@@ -2,13 +2,15 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
-- cikis yapinca session hatasi aliyoruz
 - resim yukleyince listeye gelmiyor
 - editlemeye basinca (user) editlenecek isim gozukmuyor
 - kullanici resim silemiyor
 - Yaptigin tum guncellemelerin hata kontrolunu yap
 - Diller icin export import yap
 
++ user list sayfasinda kullanici silince tablo yenilenmiyor
++ lock sayfasinda sifre girdikten sonra sayfa yenilenmesin
++ cikis yapinca session hatasi aliyoruz
 + service get one larin hepsini get withId yap
 + user icin sayfada islem yaparken status yada ban control yap (ayni zamanda isim ve yetki kontrolude dahil. bunlar admin tarafindan guncellendiginde userdada guncel olmali)
 + yetkileri kontrol et

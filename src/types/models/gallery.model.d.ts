@@ -8,6 +8,4 @@ export interface IGalleryModel {
     authorId: string
     createdAt: string
     updatedAt: string
-    sizeMB: number
-    sizeKB: number
 }
