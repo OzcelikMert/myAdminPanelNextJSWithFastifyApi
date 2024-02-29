@@ -63,10 +63,11 @@ class PageLogin extends Component<IPageProps, IPageState> {
                     let resultSession = await AuthService.getSession();
                     if (resultSession.status && resultSession.data) {
                         this.props.setStateApp({
-                            sessionAuth: resultSession.data!
+                            sessionAuth: resultSession.data
+                        }, () => {
+                            this.props.router.push(EndPoints.DASHBOARD);
                         });
                     }
-                    return this.props.router.push(EndPoints.DASHBOARD);
                 } else {
                     this.setState({
                         user: serviceResult.data

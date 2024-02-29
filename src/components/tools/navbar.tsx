@@ -18,7 +18,9 @@ type IPageState = {
     isDarkTheme: boolean
 };
 
-type IPageProps = {} & IPagePropCommon;
+type IPageProps = {
+    isFullPageLayout: boolean
+} & IPagePropCommon;
 
 export default class ComponentToolNavbar extends Component<IPageProps, IPageState> {
     constructor(props: IPageProps) {
@@ -26,6 +28,10 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
         this.state = {
             isDarkTheme: LocalStorageUtil.getTheme() == "dark"
         }
+    }
+
+    componentDidMount() {
+        console.log("navbar")
     }
 
     toggleOffCanvas() {
@@ -61,10 +67,11 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
             case "signOut":
                 let resultSignOut = await AuthService.logOut();
                 if(resultSignOut.status) {
-                    await this.props.router.push(EndPoints.LOGIN);
                     this.props.setStateApp({
                         isPageLoading: true,
                         sessionAuth: undefined
+                    }, async () => {
+                        await this.props.router.push(EndPoints.LOGIN);
                     });
                 }
                 break;
@@ -214,7 +221,7 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
     )
 
     render() {
-        return (
+        return this.props.isFullPageLayout ? null : (
             <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
                 <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                     <Link className="navbar-brand brand-logo" href={EndPoints.DASHBOARD}>

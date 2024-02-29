@@ -23,9 +23,8 @@ export default class ComponentProviderAuth extends Component<IPageProps, IPageSt
     }
 
     async componentDidMount() {
-        if(!this.props.getStateApp.isLock){
-            await this.checkSession()
-        }
+        console.log("provider auth did mount")
+        await this.checkSession();
         this.setState({
             isLoading: false
         })
@@ -37,9 +36,11 @@ export default class ComponentProviderAuth extends Component<IPageProps, IPageSt
         if (serviceResult.status && serviceResult.errorCode == ApiErrorCodes.success) {
             if (serviceResult.data) {
                 isAuth = true;
-                this.props.setStateApp({
-                    sessionAuth: serviceResult.data
-                });
+                if(JSON.stringify(serviceResult.data) != JSON.stringify(this.props.getStateApp.sessionAuth)){
+                    this.props.setStateApp({
+                        sessionAuth: serviceResult.data
+                    });
+                }
             }
         }
 

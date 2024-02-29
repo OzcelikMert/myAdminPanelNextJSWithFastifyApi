@@ -23,6 +23,7 @@ class ComponentToolSidebar extends Component<IPageProps, IPageState> {
     }
 
     componentDidMount() {
+        console.log("sidebar")
         this.onRouteChanged();
     }
 
