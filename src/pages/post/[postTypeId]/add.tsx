@@ -10,7 +10,6 @@ import ComponentThemeChooseImage from "components/theme/chooseImage";
 import {PostTermService} from "services/postTerm.service";
 import {PostService} from "services/post.service";
 import {IPostUpdateWithIdParamService} from "types/services/post.service";
-import {ComponentService} from "services/component.service";
 import ComponentToolTip from "components/elements/tooltip";
 import Swal from "sweetalert2";
 import Image from "next/image"
@@ -18,7 +17,6 @@ import dynamic from "next/dynamic";
 import {ProductTypeId, productTypes} from "constants/productTypes";
 import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
 import ComponentPagePostAddECommerce from "components/pages/post/add/eCommerce";
-import ComponentPagePostAddComponent from "components/pages/post/add/component";
 import ComponentPagePostAddButton from "components/pages/post/add/button";
 import ComponentPagePostAddBeforeAndAfter from "components/pages/post/add/beforeAndAfter";
 import ComponentPagePostAddChooseCategory from "components/pages/post/add/chooseCategory";
@@ -41,7 +39,6 @@ export type IPageState = {
     pageTypes: ThemeFormSelectValueDocument[]
     attributeTypes: ThemeFormSelectValueDocument[]
     productTypes: ThemeFormSelectValueDocument[]
-    components: ThemeFormSelectValueDocument[]
     mainTabActiveKey: string
     categories: ThemeFormSelectValueDocument[]
     tags: ThemeFormSelectValueDocument[]
@@ -71,7 +68,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
             pageTypes: [],
             tags: [],
             status: [],
-            components: [],
             isSubmitting: false,
             mainTitle: "",
             formData: {
@@ -100,7 +96,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 await this.getTerms();
             }
             if ([PostTypeId.Page].includes(this.state.formData.typeId)) {
-                await this.getComponents();
                 this.getPageTypes();
             }
             if ([PostTypeId.Product].includes(this.state.formData.typeId)) {
@@ -191,21 +186,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
         })
     }
 
-    async getComponents() {
-        let resData = await ComponentService.getMany({langId: this.props.getStateApp.appData.mainLangId});
-        if (resData.status && resData.data) {
-            this.setState((state: IPageState) => {
-                state.components = resData.data!.map(component => {
-                    return {
-                        value: component._id,
-                        label: this.props.t(component.langKey)
-                    };
-                });
-                return state;
-            })
-        }
-    }
-
     getPageTypes() {
         this.setState((state: IPageState) => {
             state.pageTypes = pageTypes.map(pageType => ({
@@ -291,10 +271,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                         }
                     };
 
-                    if(item.components){
-                        state.formData.components = item.components.map(component => component._id);
-                    }
-
                     if(item.categories){
                         state.formData.categories = item.categories.map(category => category._id);
                     }
@@ -356,7 +332,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
         }, async () => {
             let params = {
                 ...this.state.formData,
-                components: this.state.formData.components?.filter(component => !Variable.isEmpty(component))
             };
 
             let resData = await ((params._id)
@@ -625,11 +600,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                             {
                                 [PostTypeId.Slider, PostTypeId.Service].includes(this.state.formData.typeId)
                                     ? <ComponentPagePostAddButton page={this} />
-                                    : null
-                            }
-                            {
-                                [PostTypeId.Page].includes(this.state.formData.typeId)
-                                    ? <ComponentPagePostAddComponent page={this} />
                                     : null
                             }
                             {

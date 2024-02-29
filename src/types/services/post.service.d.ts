@@ -7,7 +7,6 @@ import {
     IPostECommerceVariationContentModel,
     IPostECommerceVariationModel
 } from "../models/post.model";
-import {IComponentModel} from "../models/component.model";
 import {PostTypeId} from "constants/postTypes";
 import {PageTypeId} from "constants/pageTypes";
 import {StatusId} from "constants/status";
@@ -25,23 +24,21 @@ export type IPostGetWithIdResultService = {
     categories?: IPostTermPopulateService[]
     tags?: IPostTermPopulateService[]
     contents?: IPostContentModel
-    components?: IComponentModel[],
     alternates?: IPostAlternateService[]
     eCommerce?: (Omit<IPostECommerceModel<IPostTermPopulateService, IPostTermPopulateService[]>, "variations"> & {
         variations?: (Omit<IPostECommerceVariationModel<IPostTermPopulateService>, "contents"> & {
             contents?: IPostECommerceVariationContentModel
         })[]
     })
-} & Omit<IPostModel, "contents"|"categories"|"tags"|"components"|"eCommerce"|"authorId"|"lastAuthorId">
+} & Omit<IPostModel, "contents"|"categories"|"tags"|"eCommerce"|"authorId"|"lastAuthorId">
 
 export type IPostGetManyResultService = {
-    components?: IPostModel["components"]
     eCommerce?: (Omit<IPostECommerceModel, "variations"> & {
         variations?: (Omit<IPostECommerceVariationModel, "contents"> & {
             contents?: IPostECommerceVariationContentModel | IPostECommerceVariationContentModel[]
         })[]
     })
-} & Omit<IPostGetWithIdResultService, "eCommerce"|"components">
+} & Omit<IPostGetWithIdResultService, "eCommerce">
 
 export interface IPostGetWithIdParamService {
     typeId: PostTypeId,
@@ -79,13 +76,13 @@ export type IPostUpdateWithIdParamService = {
     _id: string
 } & PostAddParamDocument
 
-export type IPostUpdateWithIdRankParamService = {
+export type IPostUpdateRankWithIdParamService = {
     _id: string
     typeId: PostTypeId
     rank: number
 }
 
-export type IPostUpdateWithIdViewParamService = {
+export type IPostUpdateViewWithIdParamService = {
     _id: string,
     typeId: PostTypeId
     langId: string

@@ -37,7 +37,7 @@ export type INavigationUpdateWithIdParamService = {
     _id: string
 } & Omit<INavigationAddParamService, "authorId">
 
-export type INavigationUpdateWithIdRankParamService = {
+export type INavigationUpdateRankWithIdParamService = {
     _id: string
     rank: number
 }

@@ -9,7 +9,7 @@ export interface ILanguageGetWithIdParamService {
     locale?: string
 }
 
-export interface ILanguageGetWithIdParamService {
+export interface ILanguageGetManyParamService {
     _id?: string[]
     statusId?: StatusId
 }
@@ -20,7 +20,7 @@ export type ILanguageUpdateWithIdParamService = {
     _id: string
 } & ILanguageAddParamService
 
-export type ILanguageUpdateWithIdRankParamService = {
+export type ILanguageUpdateRankWithIdParamService = {
     _id: string
     rank: number
 }

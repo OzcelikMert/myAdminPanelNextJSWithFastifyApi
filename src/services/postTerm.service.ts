@@ -2,7 +2,7 @@ import {ApiEndPoints} from "constants/apiEndPoints";
 import  {
     IPostTermGetResultService,
     IPostTermUpdateManyStatusIdParamService,
-    IPostTermUpdateWithIdRankParamService,
+    IPostTermUpdateRankWithIdParamService,
     IPostTermAddParamService,
     IPostTermGetManyParamService,
     IPostTermUpdateWithIdParamService,
@@ -44,7 +44,7 @@ const updateWithId = (params: IPostTermUpdateWithIdParamService) => {
     }).put();
 }
 
-const updateWithIdRank = (params: IPostTermUpdateWithIdRankParamService) => {
+const updateRankWithId = (params: IPostTermUpdateRankWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_TERM_WITH.UPDATE_RANK_WITH_ID(params._id),
@@ -73,7 +73,7 @@ export const PostTermService = {
     getMany: getMany,
     add: add,
     updateWithId: updateWithId,
-    updateWithIdRank: updateWithIdRank,
+    updateRankWithId: updateRankWithId,
     updateManyStatus: updateManyStatus,
     deleteMany: deleteMany,
 }

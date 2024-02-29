@@ -17,7 +17,6 @@ export interface IPostModel {
     categories?: string[]
     tags?: string[]
     contents: IPostContentModel
-    components?: string []
     beforeAndAfter?: IPostBeforeAndAfterModel
     eCommerce?: IPostECommerceModel
     updatedAt?: string

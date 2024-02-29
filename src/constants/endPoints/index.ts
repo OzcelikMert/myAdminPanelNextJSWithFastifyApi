@@ -1,6 +1,5 @@
 import {PostTypeId} from "constants/postTypes";
 import {GalleryEndPoint} from "constants/endPoints/gallery.endPoint";
-import {ComponentEndPoint} from "constants/endPoints/component.endPoint";
 import {NavigationEndPoint} from "constants/endPoints/navigation.endPoint";
 import {PostEndPoint} from "constants/endPoints/post.endPoint";
 import {ThemeContentEndPoint} from "constants/endPoints/themeContent.endPoint";
@@ -16,9 +15,6 @@ export class EndPoints {
 
     static get GALLERY() { return "/gallery"; }
     static get GALLERY_WITH() { return new GalleryEndPoint(); }
-
-    static get COMPONENT() { return "/component"; }
-    static get COMPONENT_WITH() { return new ComponentEndPoint(); }
 
     static get NAVIGATION() { return "/navigation"; }
     static get NAVIGATION_WITH() { return new NavigationEndPoint(); }

@@ -175,7 +175,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
     }
 
     async onChangeRank(rank: number) {
-        let resData = await PostTermService.updateWithIdRank({
+        let resData = await PostTermService.updateRankWithId({
             _id: this.state.selectedItemId,
             rank: rank,
             postTypeId: this.state.postTypeId,

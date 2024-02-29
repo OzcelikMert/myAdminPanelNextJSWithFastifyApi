@@ -59,7 +59,7 @@ export type IPostTermUpdateWithIdParamService = {
     _id: string,
 } & Omit<IPostTermAddParamService, "authorId">
 
-export type IPostTermUpdateWithIdRankParamService = {
+export type IPostTermUpdateRankWithIdParamService = {
     _id: string,
     postTypeId: PostTypeId,
     typeId: PostTermTypeId

@@ -1,10 +1,10 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
-import  {
-    ILanguageAddParamService,
+import {
+    ILanguageAddParamService, ILanguageGetManyParamService,
     ILanguageGetResultService,
     ILanguageGetWithIdParamService,
     ILanguageUpdateWithIdParamService,
-    ILanguageUpdateWithIdRankParamService
+    ILanguageUpdateRankWithIdParamService
 } from "types/services/language.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
@@ -17,7 +17,7 @@ const getWithId = (params: ILanguageGetWithIdParamService) =>{
     }).get<ILanguageGetResultService>();
 }
 
-const getMany = (params: ILanguageGetWithIdParamService) => {
+const getMany = (params: ILanguageGetManyParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.LANGUAGE_WITH.GET,
@@ -49,7 +49,7 @@ const updateWithId = (params: ILanguageUpdateWithIdParamService) => {
     }).put();
 }
 
-const updateWithIdRank = (params: ILanguageUpdateWithIdRankParamService) => {
+const updateRankWithId = (params: ILanguageUpdateRankWithIdParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.LANGUAGE_WITH.UPDATE_RANK_WITH_ID(params._id),
@@ -63,5 +63,5 @@ export const LanguageService = {
     getFlags: getFlags,
     add: add,
     updateWithId: updateWithId,
-    updateWithIdRank: updateWithIdRank
+    updateRankWithId: updateRankWithId
 }

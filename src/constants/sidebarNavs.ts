@@ -4,7 +4,6 @@ import {EndPoints} from "constants/endPoints";
 import {NavigationEndPointPermission} from "constants/endPointPermissions/navigation.endPoint.permission";
 import {PostEndPointPermission} from "constants/endPointPermissions/post.endPoint.permission";
 import {ThemeContentEndPointPermission} from "constants/endPointPermissions/themeContent.endPoint.permission";
-import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
 import {ECommerceEndPointPermission} from "constants/endPointPermissions/eCommerce.endPoint.permission";
 import {UserEndPointPermission} from "constants/endPointPermissions/user.endPoint.permission";
 import {SubscriberEndPointPermission} from "constants/endPointPermissions/subscriber.endPoint.permission";
@@ -162,21 +161,6 @@ export const sidebarNavs: ISidebarPath[] = [
                     {path: EndPoints.THEME_CONTENT_WITH.BEFORE_AND_AFTER_WITH.LIST, title: "list"}
                 ]
             },
-        ]
-    },
-    {
-        path: EndPoints.COMPONENT,
-        icon: `shape`,
-        title: "components",
-        state: `components`,
-        permission: ComponentEndPointPermission.GET,
-        subPaths: [
-            {
-                path: EndPoints.COMPONENT_WITH.ADD,
-                title: "add",
-                permission: ComponentEndPointPermission.ADD,
-            },
-            {path: EndPoints.COMPONENT_WITH.LIST, title: "list"}
         ]
     },
     {

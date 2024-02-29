@@ -9,7 +9,6 @@ import {ServerInfoApiEndPoint} from "constants/apiEndPoints/serverInfo.api.endPo
 import {ViewApiEndPoint} from "constants/apiEndPoints/view.api.endPoint";
 import {MailerApiEndPoint} from "constants/apiEndPoints/mailer.api.endPoint";
 import {SubscriberApiEndPoint} from "constants/apiEndPoints/subscriber.api.endPoint";
-import {ComponentApiEndPoint} from "constants/apiEndPoints/component.api.endPoint";
 import {SitemapApiEndPoint} from "constants/apiEndPoints/sitemap.api.endPoint";
 import {NavigationApiEndPoint} from "constants/apiEndPoints/navigation.api.endPoint";
 
@@ -46,9 +45,6 @@ export class ApiEndPoints {
 
     static get SUBSCRIBER() { return "/subscriber"; }
     static get SUBSCRIBER_WITH() { return new SubscriberApiEndPoint(); }
-
-    static get COMPONENT() { return "/component"; }
-    static get COMPONENT_WITH() { return new ComponentApiEndPoint(); }
 
     static get SITEMAP() { return "/sitemap"; }
     static get SITEMAP_WITH() { return new SitemapApiEndPoint(); }

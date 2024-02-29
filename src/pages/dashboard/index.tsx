@@ -12,11 +12,8 @@ import ComponentChartArea from "components/elements/charts/area";
 import ComponentThemeBadgeStatus from "components/theme/badge/status";
 import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
 import {PostUtil} from "utils/post.util";
-import {PostEndPoint} from "constants/endPoints/post.endPoint";
 import {ImageSourceUtil} from "utils/imageSource.util";
 import {postTypes} from "constants/postTypes";
-import {PermissionUtil} from "utils/permission.util";
-import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
 
 const WorldMap = dynamic(() => import('react-svg-worldmap'), {ssr: false});
 
@@ -60,7 +57,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
         this.props.setStateApp({
             isPageLoading: false
         }, () => {
-            this.timerReportWithId();
+            this.reportTimer();
         })
     }
 
@@ -72,7 +69,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
         this.props.setBreadCrumb([this.props.t("dashboard")])
     }
 
-    timerReportWithId() {
+    reportTimer() {
         if (this.timer) {
             clearInterval(this.timer)
         }
@@ -192,7 +189,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
         ];
     }
 
-    ReportWithId = () => {
+    Reports = () => {
         return (
             <div className="col-12 grid-margin">
                 <div className="card card-statistics">
@@ -344,7 +341,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
     render() {
         return this.props.getStateApp.isPageLoading ? null : (
             <div className="page-dashboard">
-                <this.ReportWithId/>
+                <this.Reports/>
                 <this.ReportTwo/>
                 <this.LastPost/>
             </div>
