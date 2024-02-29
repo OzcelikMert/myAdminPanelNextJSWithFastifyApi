@@ -155,7 +155,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
             loadingToast.hide();
             if (serviceResult.status) {
                 this.setState((state: IPageState) => {
-                    state.items = state.items.filter(item => !state.selectedItems.includes(item.name));
+                    state.items = state.items.filter(item => !state.selectedItems.includes(item._id));
                     state.selectedItems = [];
                     return state;
                 }, () => {
@@ -251,9 +251,9 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
                             <ComponentDataTable
                                 columns={this.getTableColumns}
                                 data={this.state.showingItems}
-                                onSelect={rows => this.onSelect(rows.map(item => item.name))}
+                                onSelect={rows => this.onSelect(rows.map(item => item._id))}
                                 onSearch={searchKey => this.onSearch(searchKey)}
-                                selectedRows={this.state.items.filter(item => this.state.selectedItems.includes(item.name))}
+                                selectedRows={this.state.items.filter(item => this.state.selectedItems.includes(item._id))}
                                 i18={{
                                     search: this.props.t("search"),
                                     noRecords: this.props.t("noRecords")

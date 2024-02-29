@@ -2,11 +2,11 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
-- resim yukleyince listeye gelmiyor
-- kullanici resim silemiyor
 - Yaptigin tum guncellemelerin hata kontrolunu yap
 - Diller icin export import yap
 
++ resim yukleyince listeye gelmiyor
++ kullanici resim silemiyor
 + editlemeye basinca (user) editlenecek isim gozukmuyor
 + user list sayfasinda kullanici silince tablo yenilenmiyor
 + lock sayfasinda sifre girdikten sonra sayfa yenilenmesin
