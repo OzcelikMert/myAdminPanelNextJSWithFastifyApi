@@ -159,6 +159,9 @@ class ComponentApp extends Component<IPageProps, IPageState> {
                 <ComponentHead title={this.state.breadCrumbTitle}/>
                 <div className="container-scroller">
                     {
+                        this.state.isAppLoading ? <ComponentSpinnerDonut customClass="app-spinner"/> : null
+                    }
+                    {
                         ![EndPoints.LOGIN].includes(this.props.router.pathname) && this.state.isLock
                             ? <ComponentToolLock {...commonProps} />
                             : null
@@ -167,25 +170,23 @@ class ComponentApp extends Component<IPageProps, IPageState> {
                     {!isFullPageLayout ? <ComponentToolNavbar {...commonProps}/> : null}
                     <div className={`container-fluid page-body-wrapper ${isFullPageLayout ? "full-page-wrapper" : ""}`}>
                         {!isFullPageLayout ? <ComponentToolSidebar {...commonProps}/> : null}
-                        {
-                            this.state.isAppLoading ? <ComponentSpinnerDonut customClass="app-spinner" /> : null
-                        }
-                        <ComponentProviderAuth {...commonProps}>
-                            <ComponentProviderAppInit  {...commonProps}>
-                                <div className="main-panel">
-                                    <div className="content-wrapper">
+                        <div className="main-panel">
+                            <div className="content-wrapper">
+                                <ComponentProviderAuth {...commonProps}>
+                                    <ComponentProviderAppInit  {...commonProps}>
                                         {
-                                            this.state.isPageLoading ? <ComponentSpinnerDonut customClass="page-spinner" /> : null
+                                            this.state.isPageLoading ?
+                                                <ComponentSpinnerDonut customClass="page-spinner"/> : null
                                         }
                                         {
                                             !isFullPageLayout ? <this.PageHeader {...commonProps} /> : null
                                         }
                                         <this.props.Component {...commonProps}/>
-                                    </div>
-                                    {!isFullPageLayout ? <ComponentToolFooter/> : ''}
-                                </div>
-                            </ComponentProviderAppInit>
-                        </ComponentProviderAuth>
+                                    </ComponentProviderAppInit>
+                                </ComponentProviderAuth>
+                            </div>
+                            {!isFullPageLayout ? <ComponentToolFooter/> : ''}
+                        </div>
                     </div>
                 </div>
             </div>

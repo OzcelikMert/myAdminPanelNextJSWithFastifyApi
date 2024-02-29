@@ -6,7 +6,7 @@ html {
 }
 
 body {
-  background: $content-bg;
+  background: var(--theme-content-wrapper-bg);
 }
 
 *:-moz-full-screen,

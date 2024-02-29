@@ -23,7 +23,9 @@ export default class ComponentProviderAuth extends Component<IPageProps, IPageSt
     }
 
     async componentDidMount() {
-        await this.checkSession()
+        if(!this.props.getStateApp.isLock){
+            await this.checkSession()
+        }
         this.setState({
             isLoading: false
         })
