@@ -30,10 +30,6 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
         }
     }
 
-    componentDidMount() {
-        console.log("navbar")
-    }
-
     toggleOffCanvas() {
         (document.querySelector('.sidebar-offcanvas') as HTMLCanvasElement).classList.toggle('active');
     }

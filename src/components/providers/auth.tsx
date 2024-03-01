@@ -23,7 +23,6 @@ export default class ComponentProviderAuth extends Component<IPageProps, IPageSt
     }
 
     async componentDidMount() {
-        console.log("provider auth did mount")
         await this.checkSession();
         this.setState({
             isLoading: false
