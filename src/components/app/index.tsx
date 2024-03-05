@@ -157,7 +157,6 @@ class ComponentApp extends Component<IPageProps, IPageState> {
         return (
             <div>
                 <ComponentHead title={this.state.breadCrumbTitle}/>
-
                 <div className="container-scroller">
                     {
                         this.state.isAppLoading ? <ComponentSpinnerDonut customClass="app-spinner"/> : null
