@@ -58,7 +58,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
             formData: {
                 defaultLangId: "",
                 contact: {},
-                panelLangId: LocalStorageUtil.getLanguage().toString()
+                panelLangId: LocalStorageUtil.getLanguageId().toString()
             }
         }
     }
@@ -156,10 +156,10 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
             this.setState({
                 isSubmitting: false
             }, () => {
-                if (this.state.formData.panelLangId != LocalStorageUtil.getLanguage().toString()) {
+                if (this.state.formData.panelLangId != LocalStorageUtil.getLanguageId().toString()) {
                     let language = languages.findSingle("id", Number(this.state.formData.panelLangId));
                     if (language) {
-                        LocalStorageUtil.setLanguage((Number(this.state.formData.panelLangId)));
+                        LocalStorageUtil.setLanguageId((Number(this.state.formData.panelLangId)));
                         window.location.reload();
                     }
                 }

@@ -29,7 +29,7 @@ if(typeof window !== "undefined") {
             tr: {translation: Turkish}
         },
         keySeparator: false,
-        lng: languages.findSingle("id", LocalStorageUtil.getLanguage())?.code || window.navigator.language.slice(0, 2) || languages[0].code,
+        lng: languages.findSingle("id", LocalStorageUtil.getLanguageId())?.code || window.navigator.language.slice(0, 2) || languages[0].code,
         fallbackLng: languages.findSingle("id", LanguageId.English)?.code || languages[0].code,
         interpolation: {
             escapeValue: false

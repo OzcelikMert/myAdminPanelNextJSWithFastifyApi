@@ -1,11 +1,11 @@
 import {IThemeKeys} from "types/themes";
 
-const getLanguage = () => {
-    return Number((window.localStorage.getItem("adminLanguage") ?? 1));
+const getLanguageId = () => {
+    return Number((window.localStorage.getItem("adminLangId") ?? 1));
 }
 
-const setLanguage = (langId: number) => {
-    window.localStorage.setItem("adminLanguage", langId.toString());
+const setLanguageId = (langId: number) => {
+    window.localStorage.setItem("adminLangId", langId.toString());
 }
 
 const getTheme = () => {
@@ -17,8 +17,8 @@ const setTheme = (theme: IThemeKeys) => {
 }
 
 export const LocalStorageUtil = {
-    getLanguage: getLanguage,
-    setLanguage: setLanguage,
+    getLanguageId: getLanguageId,
+    setLanguageId: setLanguageId,
     getTheme: getTheme,
     setTheme: setTheme,
 }
