@@ -1,4 +1,4 @@
-import {ILanguageKeys} from "../languages";
+import {ILanguageKeys} from "./languageKeys";
 import {StaticContentTypeId} from "constants/staticContentTypes";
 
 export interface IStaticContentType {

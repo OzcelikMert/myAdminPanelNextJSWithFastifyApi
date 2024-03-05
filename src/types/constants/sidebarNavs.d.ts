@@ -1,4 +1,4 @@
-import {ILanguageKeys} from "types/languages";
+import {ILanguageKeys} from "types/constants/languageKeys";
 import {IEndPointPermission} from "types/constants/endPoint.permissions";
 
 export interface ISidebarPath {

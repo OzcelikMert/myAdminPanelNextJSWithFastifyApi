@@ -1,4 +1,4 @@
-import {ILanguageKeys} from "../languages";
+import {ILanguageKeys} from "./languageKeys";
 import {PermissionId} from "constants/permissions";
 import {PermissionGroupId} from "constants/permissionGroups";
 import {UserRoleId, UserRoleRank} from "constants/userRoles";

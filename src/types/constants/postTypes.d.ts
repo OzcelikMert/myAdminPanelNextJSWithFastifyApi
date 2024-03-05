@@ -1,4 +1,4 @@
-import {ILanguageKeys} from "../languages";
+import {ILanguageKeys} from "./languageKeys";
 import {PostTypeId} from "constants/postTypes";
 
 export interface IPostType {

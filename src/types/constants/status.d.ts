@@ -1,4 +1,4 @@
-import {ILanguageKeys} from "../languages";
+import {ILanguageKeys} from "./languageKeys";
 import {StatusId} from "constants/status";
 
 export interface IStatus {

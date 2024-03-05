@@ -1,4 +1,4 @@
-import {ILanguageKeys} from "../languages";
+import {ILanguageKeys} from "./languageKeys";
 import {UserRoleId, UserRoleRank} from "constants/userRoles";
 
 export interface IUserRole {

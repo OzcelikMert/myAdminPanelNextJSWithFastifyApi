@@ -1,4 +1,4 @@
-import {ILanguageKeys} from "../languages";
+import {ILanguageKeys} from "./languageKeys";
 import {AttributeTypeId} from "constants/attributeTypes";
 
 export interface IAttributeType {

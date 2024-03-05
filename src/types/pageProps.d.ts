@@ -1,4 +1,4 @@
-import {ILanguageKeys} from "./languages";
+import {ILanguageKeys} from "./constants/languageKeys";
 import {IGetStateApp, ISetStateApp} from "./pages/_app";
 import {AppProps} from "next/app";
 
