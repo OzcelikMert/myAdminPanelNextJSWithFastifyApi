@@ -10,7 +10,7 @@ import {ThemeUtil} from "utils/theme.util";
 import Logo from "assets/images/ozcelikLogo.png"
 import LogoMini from "assets/images/ozcelikLogoMini.png"
 import Image from "next/image"
-import {IThemeKeys} from "types/themes";
+import {IThemeKeys} from "types/constants/themeKeys";
 import {EndPoints} from "constants/endPoints";
 import {ImageSourceUtil} from "utils/imageSource.util";
 

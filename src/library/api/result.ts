@@ -5,10 +5,10 @@ export class ApiResult<Data = any[], CustomData = null> {
     constructor(
         data: any = [],
         customData: any = null,
-        status: boolean = true,
+        status: boolean = false,
         message: any = "",
-        errorCode: ApiErrorCodes = ApiErrorCodes.success,
-        statusCode: ApiStatusCodes = ApiStatusCodes.success,
+        errorCode: ApiErrorCodes = ApiErrorCodes.incorrectData,
+        statusCode: ApiStatusCodes = ApiStatusCodes.conflict,
         source: string = ""
     ) {
         this.data = data;

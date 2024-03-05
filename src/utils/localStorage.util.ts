@@ -1,4 +1,4 @@
-import {IThemeKeys} from "types/themes";
+import {IThemeKeys} from "types/constants/themeKeys";
 
 const getLanguageId = () => {
     return Number((window.localStorage.getItem("adminLangId") ?? 1));
