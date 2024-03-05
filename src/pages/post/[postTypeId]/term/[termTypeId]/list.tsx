@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
-import {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
+import {IThemeToggleMenuItem} from "components/elements/table/toggleMenu";
 import Swal from "sweetalert2";
 import {IPostTermGetResultService} from "types/services/postTerm.service";
 import {PostTermService} from "services/postTerm.service";
@@ -253,7 +253,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
         this.setState({selectedItemId: itemId, isShowModalUpdateRank: true});
     }
 
-    get getToggleMenuItems(): ThemeToggleMenuItemDocument[] {
+    get getToggleMenuItems(): IThemeToggleMenuItem[] {
         return status.findMulti("id", [
                 StatusId.Active,
                 StatusId.Pending,

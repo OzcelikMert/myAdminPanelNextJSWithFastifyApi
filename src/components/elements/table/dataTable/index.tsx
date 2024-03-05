@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import DataTable, {TableProps} from "react-data-table-component";
 import {ComponentFormCheckBox, ComponentFormType} from "components/elements/form";
-import ComponentTableToggleMenu, {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
+import ComponentTableToggleMenu, {IThemeToggleMenuItem} from "components/elements/table/toggleMenu";
 import ComponentSpinnerDonut from "components/elements/spinners/donut";
 
 type IPagePropI18 = {
@@ -25,7 +25,7 @@ type IPageProps<T> = {
     isMultiSelectable?: boolean
     selectedRows?: T[]
     isActiveToggleMenu?: boolean
-    toggleMenuItems?: ThemeToggleMenuItemDocument[]
+    toggleMenuItems?: IThemeToggleMenuItem[]
     onSubmitToggleMenuItem?: (value: any) => void
 } & TableProps<T>;
 

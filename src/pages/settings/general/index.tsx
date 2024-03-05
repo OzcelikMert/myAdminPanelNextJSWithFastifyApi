@@ -10,7 +10,7 @@ import ComponentThemeChooseImage from "components/theme/chooseImage";
 import {ISettingUpdateGeneralParamService} from "types/services/setting.service";
 import {Tab, Tabs} from "react-bootstrap";
 import Image from "next/image"
-import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {IThemeFormSelectValue} from "components/elements/form/input/select";
 import {IServerInfoGetResultService} from "types/services/serverInfo.service";
 import {LocalStorageUtil} from "utils/localStorage.util";
 import {PermissionUtil} from "utils/permission.util";
@@ -24,8 +24,8 @@ import {UserRoleId} from "constants/userRoles";
 import ComponentSpinnerDonut from "components/elements/spinners/donut";
 
 type IPageState = {
-    languages: ThemeFormSelectValueDocument[]
-    panelLanguages: ThemeFormSelectValueDocument[]
+    languages: IThemeFormSelectValue[]
+    panelLanguages: IThemeFormSelectValue[]
     isSubmitting: boolean
     serverInfo: IServerInfoGetResultService
     formData: ISettingUpdateGeneralParamService & { panelLangId: string },

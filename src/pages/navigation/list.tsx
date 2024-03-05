@@ -6,7 +6,7 @@ import ComponentToast from "components/elements/toast";
 import ComponentDataTable from "components/elements/table/dataTable";
 import {INavigationGetResultService} from "types/services/navigation.service";
 import {NavigationService} from "services/navigation.service";
-import {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
+import {IThemeToggleMenuItem} from "components/elements/table/toggleMenu";
 import ComponentThemeBadgeStatus, {getStatusIcon} from "components/theme/badge/status";
 import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
 import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
@@ -213,7 +213,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
         this.setState({selectedItemId: itemId, isShowModalUpdateRank: true});
     }
 
-    get getToggleMenuItems(): ThemeToggleMenuItemDocument[] {
+    get getToggleMenuItems(): IThemeToggleMenuItem[] {
         return status.findMulti("id", [
                 StatusId.Active,
                 StatusId.Pending,

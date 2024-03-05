@@ -1,10 +1,10 @@
 import {ApiEndPoints} from "constants/apiEndPoints";
 import {
-    PostAddParamDocument,
+    IPostAddParamService,
     IPostDeleteManyParamService,
     IPostGetCountParamService,
     IPostGetManyParamService, IPostGetManyResultService,
-    IPostGetWithIdParamService, IPostGetWithIdResultService,
+    IPostGetWithIdParamService, IPostGetOneResultService,
     IPostUpdateManyStatusIdParamService,
     IPostUpdateWithIdParamService,
     IPostUpdateRankWithIdParamService,
@@ -18,7 +18,7 @@ const getWithId = (params: IPostGetWithIdParamService) => {
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.GET_WITH_ID(params._id),
         data: params
-    }).get<IPostGetWithIdResultService>();
+    }).get<IPostGetOneResultService>();
 }
 
 const getMany = (params: IPostGetManyParamService) => {
@@ -37,7 +37,7 @@ const getCount = (params: IPostGetCountParamService) => {
     }).get<number>();
 }
 
-const add = (params: PostAddParamDocument) => {
+const add = (params: IPostAddParamService) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.ADD,

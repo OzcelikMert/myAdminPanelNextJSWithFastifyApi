@@ -14,7 +14,7 @@ import V, {DateMask} from "library/variable";
 import {UserService} from "services/user.service";
 import {IUserUpdateWithIdParamService} from "types/services/user.service";
 import Swal from "sweetalert2";
-import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {IThemeFormSelectValue} from "components/elements/form/input/select";
 import {UserEndPointPermission} from "constants/endPointPermissions/user.endPoint.permission";
 import {PermissionUtil} from "utils/permission.util";
 import {ComponentUtil} from "utils/component.util";
@@ -28,8 +28,8 @@ import {permissionGroups} from "constants/permissionGroups";
 
 type IPageState = {
     mainTabActiveKey: string
-    userRoles: ThemeFormSelectValueDocument[]
-    status: ThemeFormSelectValueDocument[]
+    userRoles: IThemeFormSelectValue[]
+    status: IThemeFormSelectValue[]
     permissions: IPermission[]
     permissionGroups: IPermissionGroup[]
     mainTitle: string,

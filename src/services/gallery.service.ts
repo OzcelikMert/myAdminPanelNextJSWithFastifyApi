@@ -7,7 +7,7 @@ import {
 } from "types/services/gallery.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
-import {ApiRequestParamDocument} from "library/types/api";
+import {IApiRequestParam} from "library/types/api";
 import {IGalleryModel} from "types/models/gallery.model";
 
 const get = (params: IGalleryGetManyParamService) => {
@@ -18,7 +18,7 @@ const get = (params: IGalleryGetManyParamService) => {
     }).get<IGalleryGetResultService[]>();
 }
 
-const add = (params: IGalleryAddParamService, onUploadProgress: ApiRequestParamDocument["onUploadProgress"]) => {
+const add = (params: IGalleryAddParamService, onUploadProgress: IApiRequestParam["onUploadProgress"]) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.GALLERY_WITH.ADD_IMAGE,

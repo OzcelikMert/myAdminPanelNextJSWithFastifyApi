@@ -3,7 +3,7 @@ import {ComponentFormSelect} from "components/elements/form";
 import {IPagePropCommon} from "types/pageProps";
 import {ILanguageModel} from "types/models/language.model";
 import Image from "next/image"
-import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {IThemeFormSelectValue} from "components/elements/form/input/select";
 import {PathUtil} from "utils/path.util";
 
 type IPageState = {};
@@ -12,7 +12,7 @@ type IPageProps = {
     t: IPagePropCommon["t"]
     options: ILanguageModel[]
     value?: ILanguageModel
-    onChange: (item: ThemeFormSelectValueDocument, e: any) => void
+    onChange: (item: IThemeFormSelectValue, e: any) => void
 };
 
 export default class ComponentThemeContentLanguage extends Component<IPageProps, IPageState> {

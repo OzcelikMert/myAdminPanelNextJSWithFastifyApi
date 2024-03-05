@@ -9,7 +9,7 @@ import {PostTermService} from "services/postTerm.service";
 import {IPostTermUpdateWithIdParamService} from "types/services/postTerm.service";
 import Swal from "sweetalert2";
 import Image from "next/image"
-import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {IThemeFormSelectValue} from "components/elements/form/input/select";
 import {PostTypeId} from "constants/postTypes";
 import {PostTermTypeId} from "constants/postTermTypes";
 import {PermissionUtil, PostPermissionMethod} from "utils/permission.util";
@@ -20,8 +20,8 @@ import {ImageSourceUtil} from "utils/imageSource.util";
 
 type IPageState = {
     mainTabActiveKey: string
-    items: ThemeFormSelectValueDocument[]
-    status: ThemeFormSelectValueDocument[]
+    items: IThemeFormSelectValue[]
+    status: IThemeFormSelectValue[]
     isSubmitting: boolean
     mainTitle: string
     formData: IPostTermUpdateWithIdParamService,

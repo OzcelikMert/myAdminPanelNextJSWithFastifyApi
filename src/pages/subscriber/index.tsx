@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import ComponentToast from "components/elements/toast";
 import {ISubscriberGetResultService} from "types/services/subscriber.service";
 import {SubscriberService} from "services/subscriber.service";
-import {ThemeToggleMenuItemDocument} from "components/elements/table/toggleMenu";
+import {IThemeToggleMenuItem} from "components/elements/table/toggleMenu";
 import ComponentDataTable from "components/elements/table/dataTable";
 import {getStatusIcon} from "components/theme/badge/status";
 import {status, StatusId} from "constants/status";
@@ -110,7 +110,7 @@ export default class PageSubscribers extends Component<IPageProps, IPageState> {
         })
     }
 
-    get getToggleMenuItems(): ThemeToggleMenuItemDocument[] {
+    get getToggleMenuItems(): IThemeToggleMenuItem[] {
         return status.findMulti("id", [
                 StatusId.Deleted
             ]

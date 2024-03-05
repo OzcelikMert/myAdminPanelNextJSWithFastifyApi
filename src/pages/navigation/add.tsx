@@ -7,7 +7,7 @@ import ReactHandleFormLibrary from "library/react/handles/form";
 import Swal from "sweetalert2";
 import {INavigationUpdateWithIdParamService} from "types/services/navigation.service";
 import {NavigationService} from "services/navigation.service";
-import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {IThemeFormSelectValue} from "components/elements/form/input/select";
 import {PermissionUtil} from "utils/permission.util";
 import {NavigationEndPointPermission} from "constants/endPointPermissions/navigation.endPoint.permission";
 import {ComponentUtil} from "utils/component.util";
@@ -15,9 +15,9 @@ import {StatusId} from "constants/status";
 import {EndPoints} from "constants/endPoints";
 
 type IPageState = {
-    items: ThemeFormSelectValueDocument[]
+    items: IThemeFormSelectValue[]
     mainTabActiveKey: string
-    status: ThemeFormSelectValueDocument[]
+    status: IThemeFormSelectValue[]
     isSubmitting: boolean
     mainTitle: string
     formData: INavigationUpdateWithIdParamService,

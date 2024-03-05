@@ -1,4 +1,4 @@
-declare type ForeachParamFunctionDocument = (key: string, value: any) => any;
+declare type IForeachParamFunction = (key: string, value: any) => any;
 
 class StatementLibrary {
     /**
@@ -32,7 +32,7 @@ class StatementLibrary {
      * @param _function
      * Usage: (key: any, value: any) => {}
      */
-    static Foreach(data: any, _function: ForeachParamFunctionDocument) : any {
+    static Foreach(data: any, _function: IForeachParamFunction) : any {
         let result = Array<any>();
         // @ts-ignore
         for (let [key, value] of Object.entries(data)) {

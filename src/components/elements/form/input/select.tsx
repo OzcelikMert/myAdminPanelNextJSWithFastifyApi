@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import Select from "react-select";
 import {StateManagerProps} from "react-select/dist/declarations/src/useStateManager";
 
-export interface ThemeFormSelectValueDocument {label: any, value: any}
+export interface IThemeFormSelectValue {label: any, value: any}
 
 type IPageState = {} & any;
 

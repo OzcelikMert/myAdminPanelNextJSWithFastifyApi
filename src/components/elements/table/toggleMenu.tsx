@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Dropdown} from "react-bootstrap";
 
-export interface ThemeToggleMenuItemDocument {
+export interface IThemeToggleMenuItem {
     label: any
     value: any
     className?: string
@@ -11,7 +11,7 @@ export interface ThemeToggleMenuItemDocument {
 type IPageState = {};
 
 type IPageProps = {
-    items: ThemeToggleMenuItemDocument[]
+    items: IThemeToggleMenuItem[]
     onChange: (value: any) => void
     label?: string | any
 };

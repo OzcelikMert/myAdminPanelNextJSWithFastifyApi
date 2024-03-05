@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 import Image from "next/image"
 import dynamic from "next/dynamic";
 import {ProductTypeId, productTypes} from "constants/productTypes";
-import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {IThemeFormSelectValue} from "components/elements/form/input/select";
 import ComponentPagePostAddECommerce from "components/pages/post/add/eCommerce";
 import ComponentPagePostAddButton from "components/pages/post/add/button";
 import ComponentPagePostAddBeforeAndAfter from "components/pages/post/add/beforeAndAfter";
@@ -35,16 +35,16 @@ import {ImageSourceUtil} from "utils/imageSource.util";
 const ComponentThemeRichTextBox = dynamic(() => import("components/theme/richTextBox"), {ssr: false});
 
 export type IPageState = {
-    langKeys: ThemeFormSelectValueDocument[]
-    pageTypes: ThemeFormSelectValueDocument[]
-    attributeTypes: ThemeFormSelectValueDocument[]
-    productTypes: ThemeFormSelectValueDocument[]
+    langKeys: IThemeFormSelectValue[]
+    pageTypes: IThemeFormSelectValue[]
+    attributeTypes: IThemeFormSelectValue[]
+    productTypes: IThemeFormSelectValue[]
     mainTabActiveKey: string
-    categories: ThemeFormSelectValueDocument[]
-    tags: ThemeFormSelectValueDocument[]
-    attributes: ThemeFormSelectValueDocument[],
-    variations: (ThemeFormSelectValueDocument & { mainId: string })[],
-    status: ThemeFormSelectValueDocument[]
+    categories: IThemeFormSelectValue[]
+    tags: IThemeFormSelectValue[]
+    attributes: IThemeFormSelectValue[],
+    variations: (IThemeFormSelectValue & { mainId: string })[],
+    status: IThemeFormSelectValue[]
     isSubmitting: boolean
     mainTitle: string
     formData: IPostUpdateWithIdParamService,

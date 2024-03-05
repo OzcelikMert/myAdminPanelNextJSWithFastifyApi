@@ -12,14 +12,14 @@ import {UserRoleId} from "constants/userRoles";
 import {StaticContentTypeId, staticContentTypes} from "constants/staticContentTypes";
 import Swal from "sweetalert2";
 import ComponentPageSettingsStaticContentsTypeInput from "components/pages/settings/staticContents/typeInput";
-import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {IThemeFormSelectValue} from "components/elements/form/input/select";
 import {cloneDeepWith} from "lodash";
 
 type IPageState = {
     isSubmitting: boolean
     formData: ISettingUpdateStaticContentParamService,
     selectedData?: ISettingStaticContentModel
-    types: ThemeFormSelectValueDocument[]
+    types: IThemeFormSelectValue[]
 };
 
 type IPageProps = {} & IPagePropCommon;

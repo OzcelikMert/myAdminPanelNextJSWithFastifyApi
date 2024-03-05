@@ -1,14 +1,14 @@
-import {ApiRequestParamDocument, ApiRequestParamMethodDocument} from "library/types/api";
+import {IApiRequestParam, IApiRequestParamMethod} from "library/types/api";
 import axios from "axios";
 import {ApiTimeouts} from "library/api/timeouts";
 import {ApiResult} from "library/api/result";
 
 class ApiRequest {
-    constructor(params: ApiRequestParamDocument) {
+    constructor(params: IApiRequestParam) {
         this.params = params;
     }
 
-    private params: ApiRequestParamDocument;
+    private params: IApiRequestParam;
 
     private getApiUrl(): string {
         let apiUrl = this.params.apiUrl;
@@ -18,7 +18,7 @@ class ApiRequest {
         return apiUrl;
     }
 
-    private async request<Data = any[], CustomData = null>(method: ApiRequestParamMethodDocument) {
+    private async request<Data = any[], CustomData = null>(method: IApiRequestParamMethod) {
         let apiResult = new ApiResult<Data, CustomData>();
 
         try {

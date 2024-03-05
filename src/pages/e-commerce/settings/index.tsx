@@ -7,13 +7,13 @@ import ComponentToast from "components/elements/toast";
 import {ISettingUpdateECommerceParamService} from "types/services/setting.service";
 import {Tab, Tabs} from "react-bootstrap";
 import {CurrencyId, currencyTypes} from "constants/currencyTypes";
-import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {IThemeFormSelectValue} from "components/elements/form/input/select";
 import {SettingProjectionKeys} from "constants/settingProjections";
 import {PermissionUtil} from "utils/permission.util";
 import {ECommerceEndPointPermission} from "constants/endPointPermissions/eCommerce.endPoint.permission";
 
 type IPageState = {
-    currencyTypes: ThemeFormSelectValueDocument[]
+    currencyTypes: IThemeFormSelectValue[]
     isSubmitting: boolean
     formData: ISettingUpdateECommerceParamService,
     mainTabActiveKey: string

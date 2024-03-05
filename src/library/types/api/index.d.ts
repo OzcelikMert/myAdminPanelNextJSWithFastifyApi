@@ -1,6 +1,6 @@
 import {AxiosProgressEvent} from "axios";
 
-export interface ApiRequestParamDocument {
+export interface IApiRequestParam {
     endPoint?: string,
     apiUrl: string
     data?: object,
@@ -9,4 +9,4 @@ export interface ApiRequestParamDocument {
     onUploadProgress?: (e: AxiosProgressEvent, percent: number) => void
 }
 
-export type ApiRequestParamMethodDocument = "GET" | "POST" | "PUT" | "DELETE";
+export type IApiRequestParamMethod = "GET" | "POST" | "PUT" | "DELETE";

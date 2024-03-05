@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import {ILanguageUpdateWithIdParamService} from "types/services/language.service";
 import {LanguageService} from "services/language.service";
 import Image from "next/image";
-import {ThemeFormSelectValueDocument} from "components/elements/form/input/select";
+import {IThemeFormSelectValue} from "components/elements/form/input/select";
 import {PermissionUtil} from "utils/permission.util";
 import {LanguageEndPointPermission} from "constants/endPointPermissions/language.endPoint.permission";
 import {StatusId} from "constants/status";
@@ -18,8 +18,8 @@ import {ImageSourceUtil} from "utils/imageSource.util";
 
 type IPageState = {
     mainTabActiveKey: string
-    status: ThemeFormSelectValueDocument[]
-    flags: ThemeFormSelectValueDocument[]
+    status: IThemeFormSelectValue[]
+    flags: IThemeFormSelectValue[]
     isSubmitting: boolean
     mainTitle: string
     formData: ILanguageUpdateWithIdParamService,
