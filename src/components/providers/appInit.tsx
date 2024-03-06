@@ -21,7 +21,6 @@ export default class ComponentProviderAppInit extends Component<IPageProps, IPag
     async componentDidMount() {
         if(this.props.getStateApp.isAppLoading){
             await this.getContentLanguages();
-            await this.getContentMainLanguage();
             await this.getSettingECommerce();
             this.props.setStateApp({
                 isAppLoading: false
@@ -32,21 +31,15 @@ export default class ComponentProviderAppInit extends Component<IPageProps, IPag
     async getContentLanguages() {
         let serviceResult = await LanguageService.getMany({statusId: StatusId.Active});
         if (serviceResult.status && serviceResult.data) {
+            let foundDefaultLanguage = serviceResult.data.findSingle("isDefault", true);
+            if(!foundDefaultLanguage){
+                foundDefaultLanguage = serviceResult.data[0];
+            }
             this.props.setStateApp({
                 appData: {
-                    contentLanguages: serviceResult.data
-                }
-            })
-        }
-    }
-
-    async getContentMainLanguage() {
-        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.General});
-        if (serviceResult.status && serviceResult.data) {
-            this.props.setStateApp({
-                appData: {
-                  mainLangId: serviceResult.data.defaultLangId,
-                  currentLangId: serviceResult.data.defaultLangId
+                    contentLanguages: serviceResult.data,
+                    mainLangId: foundDefaultLanguage._id,
+                    currentLangId: foundDefaultLanguage._id
                 }
             })
         }

@@ -2,7 +2,6 @@ import {CurrencyId} from "constants/currencyTypes";
 import {StaticContentTypeId} from "constants/staticContentTypes";
 
 export interface ISettingModel {
-    defaultLangId: string
     icon?: string
     logo?: string
     logoTwo?: string

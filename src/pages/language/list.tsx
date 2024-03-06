@@ -136,6 +136,7 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
             {
                 name: this.props.t("status"),
                 sortable: true,
+                selector: row => row.statusId,
                 cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId} />
             },
             {
@@ -143,9 +144,26 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
                 sortable: true,
                 selector: row => row.rank ?? 0,
                 cell: row => {
-                    return  (
+                    return  PermissionUtil.check(
+                        this.props.getStateApp.sessionAuth!,
+                        LanguageEndPointPermission.UPDATE
+                    ) ? (
                         <span className="cursor-pointer" onClick={() => this.setState({selectedItemId: row._id, isShowModalUpdateRank: true})}>
                             {row.rank ?? 0} <i className="fa fa-pencil-square-o"></i>
+                        </span>
+                    ) : (<span>{row.rank ?? 0}</span>)
+                }
+            },
+            {
+                name: this.props.t("default"),
+                cell: row => {
+                    return row.isDefault ? (
+                        <span className="text-success fs-5">
+                            <i className="mdi mdi-check-circle"></i>
+                        </span>
+                    ) : (
+                        <span className="text-danger fs-5">
+                            <i className="mdi mdi-minus-circle"></i>
                         </span>
                     )
                 }

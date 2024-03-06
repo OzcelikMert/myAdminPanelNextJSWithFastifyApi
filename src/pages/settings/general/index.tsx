@@ -3,7 +3,6 @@ import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import {SettingService} from "services/setting.service";
-import {LanguageService} from "services/language.service";
 import {ServerInfoService} from "services/serverInfo.service";
 import ComponentToast from "components/elements/toast";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
@@ -17,14 +16,12 @@ import {PermissionUtil} from "utils/permission.util";
 import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
 import {SettingProjectionKeys} from "constants/settingProjections";
 import {languages} from "constants/languages";
-import {StatusId} from "constants/status";
 import {ComponentUtil} from "utils/component.util";
 import {ImageSourceUtil} from "utils/imageSource.util";
 import {UserRoleId} from "constants/userRoles";
 import ComponentSpinnerDonut from "components/elements/spinners/donut";
 
 type IPageState = {
-    languages: IThemeFormSelectValue[]
     panelLanguages: IThemeFormSelectValue[]
     isSubmitting: boolean
     serverInfo: IServerInfoGetResultService
@@ -46,7 +43,6 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
             isLogoSecondSelection: false,
             isLogoSelection: false,
             isServerInfoLoading: true,
-            languages: [],
             panelLanguages: [],
             isSubmitting: false,
             mainTabActiveKey: `general`,
@@ -56,7 +52,6 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                 memory: "0"
             },
             formData: {
-                defaultLangId: "",
                 contact: {},
                 panelLangId: LocalStorageUtil.getLanguageId().toString()
             }
@@ -64,11 +59,10 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
     }
 
     async componentDidMount() {
-        if(PermissionUtil.checkAndRedirect(this.props, SettingsEndPointPermission.UPDATE_GENERAL)) {
+        if (PermissionUtil.checkAndRedirect(this.props, SettingsEndPointPermission.UPDATE_GENERAL)) {
             this.setPageTitle();
             this.getServerDetails();
             this.getPanelLanguages();
-            await this.getLanguages();
             await this.getSettings();
             this.props.setStateApp({
                 isPageLoading: false
@@ -92,7 +86,6 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                     icon: setting.icon,
                     head: setting.head,
                     script: setting.script,
-                    defaultLangId: setting.defaultLangId,
                     contact: {
                         ...setting.contact
                     },
@@ -106,18 +99,6 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
         this.setState({
             panelLanguages: ComponentUtil.getPanelLanguageForSelect(languages)
         })
-    }
-
-    async getLanguages() {
-        let serviceResult = await LanguageService.getMany({statusId: StatusId.Active})
-        if (serviceResult.status && serviceResult.data) {
-            this.setState({
-                languages: serviceResult.data.map(lang => ({
-                    label: lang.title,
-                    value: lang._id
-                }))
-            })
-        }
     }
 
     async getServerDetails() {
@@ -141,17 +122,11 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                 script: this.state.formData.script,
             });
             if (serviceResult.status) {
-                this.props.setStateApp({
-                    appData: {
-                        mainLangId: this.state.formData.defaultLangId
-                    }
-                }, () => {
-                    new ComponentToast({
-                        type: "success",
-                        title: this.props.t("successful"),
-                        content: this.props.t("settingsUpdated")
-                    })
-                });
+                new ComponentToast({
+                    type: "success",
+                    title: this.props.t("successful"),
+                    content: this.props.t("settingsUpdated")
+                })
             }
             this.setState({
                 isSubmitting: false
@@ -239,17 +214,6 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
     TabGeneral = () => {
         return (
             <div className="row">
-                <div className="col-md-7 mb-3">
-                    <ComponentFormSelect
-                        title={this.props.t("websiteMainLanguage").toCapitalizeCase()}
-                        name="formData.defaultLangId"
-                        isMulti={false}
-                        isSearchable={false}
-                        options={this.state.languages}
-                        value={this.state.languages.findSingle("value", this.state.formData.defaultLangId || "")}
-                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
-                    />
-                </div>
                 <div className="col-md-7 mb-3">
                     <ComponentFieldSet legend={this.props.t("logo")}>
                         <ComponentThemeChooseImage
@@ -363,7 +327,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                                         <p className="card-text mb-0 text-dark">{this.props.t("storage")}</p>
                                         <div className="fluid-container">
                                             {
-                                                this.state.isServerInfoLoading ? <ComponentSpinnerDonut /> :
+                                                this.state.isServerInfoLoading ? <ComponentSpinnerDonut/> :
                                                     <h3 className="mb-0 font-weight-medium text-dark">{this.state.serverInfo.storage}%</h3>
                                             }
                                         </div>
@@ -380,7 +344,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                                         <p className="card-text mb-0 text-dark">{this.props.t("memory")}</p>
                                         <div className="fluid-container">
                                             {
-                                                this.state.isServerInfoLoading ? <ComponentSpinnerDonut /> :
+                                                this.state.isServerInfoLoading ? <ComponentSpinnerDonut/> :
                                                     <h3 className="mb-0 font-weight-medium text-dark">{this.state.serverInfo.memory}%</h3>
                                             }
                                         </div>
@@ -397,7 +361,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                                         <p className="card-text mb-0 text-dark">{this.props.t("processor")}</p>
                                         <div className="fluid-container">
                                             {
-                                                this.state.isServerInfoLoading ? <ComponentSpinnerDonut /> :
+                                                this.state.isServerInfoLoading ? <ComponentSpinnerDonut/> :
                                                     <h3 className="mb-0 font-weight-medium text-dark">{this.state.serverInfo.cpu}%</h3>
                                             }
                                         </div>

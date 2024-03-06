@@ -1,6 +1,6 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
-import {ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form"
+import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
@@ -43,7 +43,8 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
                 shortKey: "",
                 title: "",
                 image: "",
-                rank: 0
+                rank: 0,
+                isDefault: false
             }
         }
     }
@@ -174,6 +175,14 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
                         type="number"
                         required={true}
                         value={this.state.formData.rank}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                    />
+                </div>
+                <div className="col-md-7 mb-3">
+                    <ComponentFormCheckBox
+                        title={this.props.t("default")}
+                        name="formData.isDefault"
+                        checked={Boolean(this.state.formData.isDefault)}
                         onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
