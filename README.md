@@ -4,8 +4,8 @@ Admin Panel Using Next JS For Fastify Api
 Things to do:
 - Yaptigin tum guncellemelerin hata kontrolunu yap
 - Diller icin export import yap
-- default language id yi dillerden ayarla ayarlar sayfasiyla baglantisi olmasin birde sadece super admin ayarlasin
 
++ default language id yi dillerden ayarla ayarlar sayfasiyla baglantisi olmasin birde sadece super admin ayarlasin
 + resim yukleyince listeye gelmiyor
 + kullanici resim silemiyor
 + editlemeye basinca (user) editlenecek isim gozukmuyor
