@@ -88,7 +88,7 @@ export type IPostUpdateViewWithIdParamService = {
     langId: string
 }
 
-export type IPostUpdateManyStatusIdParamService = {
+export type IPostUpdateStatusManyParamService = {
     _id: string[],
     typeId: PostTypeId
     statusId: StatusId,

@@ -146,7 +146,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                 type: "loading"
             });
 
-            let serviceResult = await PostTermService.updateManyStatus({
+            let serviceResult = await PostTermService.updateStatusMany({
                 _id: selectedItemId,
                 typeId: this.state.typeId,
                 postTypeId: this.state.postTypeId,

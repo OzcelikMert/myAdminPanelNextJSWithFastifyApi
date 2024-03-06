@@ -124,7 +124,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                 content: this.props.t("updating"),
                 type: "loading"
             });
-            let serviceResult = await NavigationService.updateManyStatus({_id: selectedItemId, statusId: statusId});
+            let serviceResult = await NavigationService.updateStatusMany({_id: selectedItemId, statusId: statusId});
             loadingToast.hide();
             if (serviceResult.status) {
                 this.setState((state: IPageState) => {

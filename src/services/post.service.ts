@@ -5,7 +5,7 @@ import {
     IPostGetCountParamService,
     IPostGetManyParamService, IPostGetManyResultService,
     IPostGetWithIdParamService, IPostGetOneResultService,
-    IPostUpdateManyStatusIdParamService,
+    IPostUpdateStatusManyParamService,
     IPostUpdateWithIdParamService,
     IPostUpdateRankWithIdParamService,
 } from "types/services/post.service";
@@ -61,7 +61,7 @@ const updateRankWithId = (params: IPostUpdateRankWithIdParamService) =>  {
     }).put();
 }
 
-const updateManyStatus = (params: IPostUpdateManyStatusIdParamService) =>  {
+const updateStatusMany = (params: IPostUpdateStatusManyParamService) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.UPDATE_STATUS,
@@ -84,6 +84,6 @@ export const PostService = {
     add: add,
     updateWithId: updateWithId,
     updateRankWithId: updateRankWithId,
-    updateManyStatus: updateManyStatus,
+    updateStatusMany: updateStatusMany,
     deleteMany: deleteMany,
 }

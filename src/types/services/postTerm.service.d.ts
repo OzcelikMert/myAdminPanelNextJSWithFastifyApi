@@ -66,7 +66,7 @@ export type IPostTermUpdateRankWithIdParamService = {
     rank: number,
 }
 
-export type IPostTermUpdateManyStatusIdParamService = {
+export type IPostTermUpdateStatusManyParamService = {
     _id: string[],
     postTypeId: PostTypeId,
     typeId: PostTermTypeId

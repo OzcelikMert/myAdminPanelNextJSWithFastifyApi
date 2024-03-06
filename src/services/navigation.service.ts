@@ -4,7 +4,7 @@ import {
     INavigationGetWithIdParamService,
     INavigationDeleteManyParamService,
     INavigationGetManyParamService,
-    INavigationUpdateManyStatusIdParamService,
+    INavigationUpdateStatusManyIdParamService,
     INavigationGetResultService,
     INavigationUpdateWithIdParamService,
     INavigationUpdateRankWithIdParamService
@@ -53,7 +53,7 @@ const updateRankWithId = (params: INavigationUpdateRankWithIdParamService) =>  {
     }).put();
 }
 
-const updateManyStatus = (params: INavigationUpdateManyStatusIdParamService) =>  {
+const updateStatusMany = (params: INavigationUpdateStatusManyIdParamService) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.NAVIGATION_WITH.UPDATE_STATUS,
@@ -75,6 +75,6 @@ export const NavigationService = {
     add: add,
     updateWithId: updateWithId,
     updateRankWithId: updateRankWithId,
-    updateManyStatus: updateManyStatus,
+    updateStatusMany: updateStatusMany,
     deleteMany: deleteMany,
 }

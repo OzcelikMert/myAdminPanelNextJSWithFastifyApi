@@ -150,7 +150,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                 type: "loading"
             });
 
-            let serviceResult = await PostService.updateManyStatus({
+            let serviceResult = await PostService.updateStatusMany({
                 _id: selectedItemId,
                 typeId: this.state.typeId,
                 statusId: statusId
