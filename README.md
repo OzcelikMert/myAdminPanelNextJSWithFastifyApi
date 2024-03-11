@@ -5,6 +5,7 @@ Things to do:
 - Yaptigin tum guncellemelerin hata kontrolunu yap
 - Diller icin export import yap
 
++ components modelini tekrar ekle
 + default language id yi dillerden ayarla ayarlar sayfasiyla baglantisi olmasin birde sadece super admin ayarlasin
 + resim yukleyince listeye gelmiyor
 + kullanici resim silemiyor

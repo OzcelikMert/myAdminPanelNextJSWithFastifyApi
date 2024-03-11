@@ -40,7 +40,7 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
     }
 
     async componentDidMount() {
-        if(PermissionUtil.checkAndRedirect(this.props, UserEndPointPermission.GET)){
+        if (PermissionUtil.checkAndRedirect(this.props, UserEndPointPermission.GET)) {
             this.setPageTitle();
             await this.getItems();
             this.props.setStateApp({
@@ -59,7 +59,7 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
 
     async getItems() {
         let result = (await UserService.getMany({}));
-        if(result.status && result.data){
+        if (result.status && result.data) {
             let items = result.data.orderBy("roleId", "desc");
             this.setState((state: IPageState) => {
                 state.items = state.items.sort(item => {
@@ -161,13 +161,13 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                 name: this.props.t("role"),
                 selector: row => userRoles.findSingle("id", row.roleId)?.rank ?? 0,
                 sortable: true,
-                cell: row => <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={row.roleId} />
+                cell: row => <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={row.roleId}/>
             },
             {
                 name: this.props.t("status"),
                 selector: row => status.findSingle("id", row.statusId)?.rank ?? 0,
                 sortable: true,
-                cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId} />
+                cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId}/>
             },
             {
                 name: this.props.t("createdDate"),
@@ -185,48 +185,50 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                     ><i className="mdi mdi-eye"></i></button>
                 )
             },
-            {
-                name: "",
-                button: true,
-                width: "70px",
-                cell: row => {
-                    let sessionUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionAuth?.user.roleId);
-                    let rowUserRole = userRoles.findSingle("id", row.roleId);
-                    return (
-                        (sessionUserRole && rowUserRole) &&
-                        (rowUserRole.rank < sessionUserRole.rank) &&
-                        PermissionUtil.check(
-                            this.props.getStateApp.sessionAuth!,
-                            UserEndPointPermission.UPDATE
-                        )
-                    ) ? <button
-                        onClick={() => this.navigatePage("edit", row._id)}
-                        className="btn btn-gradient-warning"
-                    ><i className="fa fa-pencil-square-o"></i>
-                    </button> : null;
-                }
-            },
-            {
-                name: "",
-                button: true,
-                width: "70px",
-                cell: row => {
-                    let sessionUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionAuth?.user.roleId);
-                    let rowUserRole = userRoles.findSingle("id", row.roleId);
-                    return (
-                        (sessionUserRole && rowUserRole) &&
-                        (rowUserRole.rank < sessionUserRole.rank) &&
-                        PermissionUtil.check(
-                            this.props.getStateApp.sessionAuth!,
-                            UserEndPointPermission.DELETE
-                        )
-                    ) ? <button
-                        onClick={() => this.onDelete(row._id)}
-                        className="btn btn-gradient-danger"
-                    ><i className="mdi mdi-trash-can-outline"></i>
-                    </button> : null;
-                }
-            }
+            (
+                PermissionUtil.check(
+                    this.props.getStateApp.sessionAuth!,
+                    UserEndPointPermission.UPDATE
+                ) ? {
+                    name: "",
+                    button: true,
+                    width: "70px",
+                    cell: row => {
+                        let sessionUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionAuth?.user.roleId);
+                        let rowUserRole = userRoles.findSingle("id", row.roleId);
+                        return (
+                            (sessionUserRole && rowUserRole) &&
+                            (rowUserRole.rank < sessionUserRole.rank)
+                        ) ? <button
+                            onClick={() => this.navigatePage("edit", row._id)}
+                            className="btn btn-gradient-warning"
+                        ><i className="fa fa-pencil-square-o"></i>
+                        </button> : null;
+                    }
+                } : {}
+            ),
+            (
+                PermissionUtil.check(
+                    this.props.getStateApp.sessionAuth!,
+                    UserEndPointPermission.DELETE
+                ) ? {
+                    name: "",
+                    button: true,
+                    width: "70px",
+                    cell: row => {
+                        let sessionUserRole = userRoles.findSingle("id", this.props.getStateApp.sessionAuth?.user.roleId);
+                        let rowUserRole = userRoles.findSingle("id", row.roleId);
+                        return (
+                            (sessionUserRole && rowUserRole) &&
+                            (rowUserRole.rank < sessionUserRole.rank)
+                        ) ? <button
+                            onClick={() => this.onDelete(row._id)}
+                            className="btn btn-gradient-danger"
+                        ><i className="mdi mdi-trash-can-outline"></i>
+                        </button> : null;
+                    }
+                } : {}
+            )
         ];
     }
 
@@ -252,14 +254,14 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                         <div className="card-body">
                             <div className="table-user">
                                 <ComponentDataTable
-                                    columns={this.getTableColumns}
+                                    columns={this.getTableColumns.filter(column => typeof column.name !== "undefined")}
                                     data={this.state.showingItems}
                                     i18={{
                                         search: this.props.t("search"),
                                         noRecords: this.props.t("noRecords")
                                     }}
-                                    onSearch={searchKey => this.onSearch(searchKey)}
                                     isSearchable={true}
+                                    onSearch={searchKey => this.onSearch(searchKey)}
                                 />
                             </div>
                         </div>

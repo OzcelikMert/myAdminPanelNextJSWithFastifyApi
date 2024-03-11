@@ -10,6 +10,7 @@ import {
 import {PostTypeId} from "constants/postTypes";
 import {PageTypeId} from "constants/pageTypes";
 import {StatusId} from "constants/status";
+import {IComponentModel} from "types/models/component.model";
 
 export interface IPostAlternateService {
     langId: string
@@ -23,6 +24,7 @@ export type IPostGetOneResultService = {
     views?: number,
     categories?: IPostTermPopulateService[]
     tags?: IPostTermPopulateService[]
+    components?: IComponentModel[]
     contents?: IPostContentModel
     alternates?: IPostAlternateService[]
     eCommerce?: (Omit<IPostECommerceModel<IPostTermPopulateService, IPostTermPopulateService[]>, "variations"> & {
@@ -30,7 +32,7 @@ export type IPostGetOneResultService = {
             contents?: IPostECommerceVariationContentModel
         })[]
     })
-} & Omit<IPostModel, "contents"|"categories"|"tags"|"eCommerce"|"authorId"|"lastAuthorId">
+} & Omit<IPostModel, "contents"|"categories"|"tags"|"eCommerce"|"authorId"|"lastAuthorId"|"components">
 
 export type IPostGetManyResultService = {
     eCommerce?: (Omit<IPostECommerceModel, "variations"> & {

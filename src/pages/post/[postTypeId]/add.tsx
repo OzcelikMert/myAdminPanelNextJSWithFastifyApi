@@ -3,8 +3,6 @@ import {Tab, Tabs} from "react-bootstrap";
 import moment from "moment";
 import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
-import V from "library/variable";
-import Variable from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
 import {PostTermService} from "services/postTerm.service";
@@ -31,6 +29,8 @@ import {ComponentUtil} from "utils/component.util";
 import {StatusId} from "constants/status";
 import {PostTermTypeId} from "constants/postTermTypes";
 import {ImageSourceUtil} from "utils/imageSource.util";
+import {ComponentService} from "services/component.service";
+import ComponentPagePostAddComponent from "components/pages/post/add/component";
 
 const ComponentThemeRichTextBox = dynamic(() => import("components/theme/richTextBox"), {ssr: false});
 
@@ -39,6 +39,7 @@ export type IPageState = {
     pageTypes: IThemeFormSelectValue[]
     attributeTypes: IThemeFormSelectValue[]
     productTypes: IThemeFormSelectValue[]
+    components: IThemeFormSelectValue[]
     mainTabActiveKey: string
     categories: IThemeFormSelectValue[]
     tags: IThemeFormSelectValue[]
@@ -60,6 +61,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
         this.state = {
             mainTabActiveKey: `general`,
             attributeTypes: [],
+            components: [],
             productTypes: [],
             attributes: [],
             variations: [],
@@ -95,6 +97,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 await this.getTerms();
             }
             if ([PostTypeId.Page].includes(this.state.formData.typeId)) {
+                await this.getComponents();
                 this.getPageTypes();
             }
             if ([PostTypeId.Product].includes(this.state.formData.typeId)) {
@@ -208,6 +211,21 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
         })
     }
 
+    async getComponents() {
+        let serviceResult = await ComponentService.getMany({langId: this.props.getStateApp.appData.mainLangId});
+        if (serviceResult.status && serviceResult.data) {
+            this.setState((state: IPageState) => {
+                state.components = serviceResult.data!.map(component => {
+                    return {
+                        value: component._id,
+                        label: component.title
+                    };
+                });
+                return state;
+            })
+        }
+    }
+
     async getTerms() {
         let serviceResult = await PostTermService.getMany({
             postTypeId: this.state.formData.typeId,
@@ -279,6 +297,10 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                         state.formData.tags = item.tags.map(tag => tag._id);
                     }
 
+                    if (item.components) {
+                        state.formData.components = item.components.map(component => component._id);
+                    }
+
                     if (item.eCommerce) {
                         state.formData.eCommerce = {
                             ...item.eCommerce,
@@ -343,7 +365,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
             if (serviceResult.status) {
                 Swal.fire({
                     title: this.props.t("successful"),
-                    text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
+                    text: `${this.props.t(this.state.formData._id ? "itemAdded" : "itemEdited")}!`,
                     icon: "success",
                     timer: 1000,
                     timerProgressBar: true,
@@ -598,6 +620,11 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                             {
                                 [PostTypeId.Slider, PostTypeId.Service].includes(this.state.formData.typeId)
                                     ? <ComponentPagePostAddButton page={this}/>
+                                    : null
+                            }
+                            {
+                                [PostTypeId.Page].includes(this.state.formData.typeId)
+                                    ? <ComponentPagePostAddComponent page={this} />
                                     : null
                             }
                             {

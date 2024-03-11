@@ -173,8 +173,9 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
 
     onSubmit() {
         if (this.props.onSubmit) {
+            let foundSelectedItems = this.state.items.findMulti("_id", this.state.selectedItems);
             this.toast?.hide();
-            this.props.onSubmit(this.state.selectedItems);
+            this.props.onSubmit(foundSelectedItems.map(selectedItem => selectedItem.name));
         }
     }
 

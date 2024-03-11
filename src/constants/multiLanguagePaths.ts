@@ -18,4 +18,5 @@ export const multiLanguagePaths = [
     EndPoints.NAVIGATION_WITH.EDIT(),
     EndPoints.SETTINGS_WITH.STATIC_CONTENTS,
     EndPoints.SETTINGS_WITH.SEO,
+    EndPoints.COMPONENT_WITH.EDIT()
 ]

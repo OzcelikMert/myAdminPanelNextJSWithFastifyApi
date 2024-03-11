@@ -11,6 +11,7 @@ import {MailerApiEndPoint} from "constants/apiEndPoints/mailer.api.endPoint";
 import {SubscriberApiEndPoint} from "constants/apiEndPoints/subscriber.api.endPoint";
 import {SitemapApiEndPoint} from "constants/apiEndPoints/sitemap.api.endPoint";
 import {NavigationApiEndPoint} from "constants/apiEndPoints/navigation.api.endPoint";
+import {ComponentApiEndPoint} from "constants/apiEndPoints/component.api.endPoint";
 
 export class ApiEndPoints {
     static get AUTH() { return "/auth"; }
@@ -51,4 +52,7 @@ export class ApiEndPoints {
 
     static get NAVIGATION() { return "/navigation"; }
     static get NAVIGATION_WITH() { return new NavigationApiEndPoint(); }
+
+    static get COMPONENT() { return "/component"; }
+    static get COMPONENT_WITH() { return new ComponentApiEndPoint(); }
 }

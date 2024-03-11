@@ -38,9 +38,9 @@ class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
 
     async componentDidMount() {
         if(PermissionUtil.checkAndRedirect(this.props, SettingsEndPointPermission.UPDATE_STATIC_CONTENT)){
-            this.setPageTitle();
             await this.getSettings();
             this.getTypes();
+            this.setPageTitle();
             this.props.setStateApp({
                 isPageLoading: false
             })

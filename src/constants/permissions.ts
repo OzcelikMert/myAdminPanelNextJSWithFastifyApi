@@ -41,6 +41,7 @@ export enum PermissionId {
     BeforeAndAfterAdd,
     BeforeAndAfterEdit,
     BeforeAndAfterDelete,
+    ComponentEdit
 }
 
 export const permissions: Array<IPermission> = [
@@ -82,4 +83,5 @@ export const permissions: Array<IPermission> = [
     {id: PermissionId.ProductAdd, groupId: PermissionGroupId.Product, minUserRoleId: UserRoleId.Author, langKey: "add"},
     {id: PermissionId.ProductEdit, groupId: PermissionGroupId.Product, minUserRoleId: UserRoleId.Author, langKey: "edit"},
     {id: PermissionId.ProductDelete, groupId: PermissionGroupId.Product, minUserRoleId: UserRoleId.Author, langKey: "delete"},
+    {id: PermissionId.ComponentEdit, groupId: PermissionGroupId.Component, minUserRoleId: UserRoleId.Editor, langKey: "edit"},
 ]

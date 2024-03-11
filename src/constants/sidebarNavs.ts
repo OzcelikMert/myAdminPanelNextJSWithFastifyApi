@@ -9,6 +9,7 @@ import {UserEndPointPermission} from "constants/endPointPermissions/user.endPoin
 import {SubscriberEndPointPermission} from "constants/endPointPermissions/subscriber.endPoint.permission";
 import {LanguageEndPointPermission} from "constants/endPointPermissions/language.endPoint.permission";
 import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
+import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
 
 export const sidebarNavs: ISidebarPath[] = [
     {path: EndPoints.DASHBOARD, icon: `home`, title: "dashboard"},
@@ -189,6 +190,21 @@ export const sidebarNavs: ISidebarPath[] = [
                 title: "settings",
                 permission: ECommerceEndPointPermission.SETTINGS
             },
+        ]
+    },
+    {
+        path: EndPoints.COMPONENT,
+        icon: `shape`,
+        title: "components",
+        state: `components`,
+        permission: ComponentEndPointPermission.GET,
+        subPaths: [
+            {
+                path: EndPoints.COMPONENT_WITH.ADD,
+                title: "add",
+                permission: ComponentEndPointPermission.ADD
+            },
+            {path: EndPoints.COMPONENT_WITH.LIST, title: "list"}
         ]
     },
     {
