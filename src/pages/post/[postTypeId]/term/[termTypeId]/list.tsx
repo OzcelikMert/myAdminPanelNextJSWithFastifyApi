@@ -89,8 +89,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
             typeId: [this.state.typeId],
             postTypeId: this.state.postTypeId,
             langId: this.props.getStateApp.appData.currentLangId,
-            withPostCount: [PostTermTypeId.Category].includes(this.state.typeId),
-            ignoreDefaultLanguage: true
+            withPostCount: [PostTermTypeId.Category].includes(this.state.typeId)
         }));
 
         if (result.status && result.data) {
@@ -285,14 +284,22 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                 )
             },
             {
-                name: this.props.t("name"),
+                name: this.props.t("title"),
                 selector: row => row.contents?.title || this.props.t("[noLangAdd]"),
                 sortable: true,
+                cell: row => (
+                    <div className="row w-100">
+                        <div className="col-md-12">
+                            {row.contents?.title || this.props.t("[noLangAdd]")}
+                        </div>
+                    </div>
+                ),
+                width: "250px",
             },
             {
                 name: this.props.t("main"),
                 selector: row => row.mainId ? row.mainId.contents?.title || this.props.t("[noLangAdd]") : this.props.t("notSelected"),
-                sortable: true
+                sortable: true,
             },
             (
                 [PostTermTypeId.Category].includes(this.state.typeId) ?

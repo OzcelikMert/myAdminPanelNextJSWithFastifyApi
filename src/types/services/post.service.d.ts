@@ -30,6 +30,7 @@ export type IPostGetOneResultService = {
     eCommerce?: (Omit<IPostECommerceModel<IPostTermPopulateService, IPostTermPopulateService[]>, "variations"> & {
         variations?: (Omit<IPostECommerceVariationModel<IPostTermPopulateService>, "contents"> & {
             contents?: IPostECommerceVariationContentModel
+            alternates?: IPostAlternateService[]
         })[]
     })
 } & Omit<IPostModel, "contents"|"categories"|"tags"|"eCommerce"|"authorId"|"lastAuthorId"|"components">
@@ -37,7 +38,8 @@ export type IPostGetOneResultService = {
 export type IPostGetManyResultService = {
     eCommerce?: (Omit<IPostECommerceModel, "variations"> & {
         variations?: (Omit<IPostECommerceVariationModel, "contents"> & {
-            contents?: IPostECommerceVariationContentModel | IPostECommerceVariationContentModel[]
+            contents?: IPostECommerceVariationContentModel
+            alternates?: IPostAlternateService[]
         })[]
     })
 } & Omit<IPostGetOneResultService, "eCommerce">
@@ -61,7 +63,6 @@ export interface IPostGetManyParamService {
     page?: number
     ignorePostId?: string[]
     title?: string
-    ignoreDefaultLanguage?: boolean
     categories?: string[]
 }
 

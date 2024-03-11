@@ -1,6 +1,6 @@
-import {ILanguageGetResultService} from "types/services/language.service";
 import {CurrencyId} from "constants/currencyTypes";
 import {ISessionAuthModel} from "types/models/sessionAuth.model";
+import {ILanguageGetResultService} from "types/services/language.service";
 
 export type IGetStateApp = {
     isAppLoading: boolean

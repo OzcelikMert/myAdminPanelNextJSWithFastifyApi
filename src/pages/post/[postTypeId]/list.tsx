@@ -52,7 +52,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
     }
 
     async componentDidMount() {
-        if(PermissionUtil.checkAndRedirect(this.props, PermissionUtil.getPostPermission(this.state.typeId, PostPermissionMethod.GET))){
+        if (PermissionUtil.checkAndRedirect(this.props, PermissionUtil.getPostPermission(this.state.typeId, PostPermissionMethod.GET))) {
             this.setPageTitle();
             await this.getItems();
             this.props.setStateApp({
@@ -98,11 +98,10 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
     async getItems() {
         let result = (await PostService.getMany({
             typeId: [this.state.typeId],
-            langId: this.props.getStateApp.appData.currentLangId,
-            ignoreDefaultLanguage: true
+            langId: this.props.getStateApp.appData.currentLangId
         }));
 
-        if(result.status && result.data){
+        if (result.status && result.data) {
             this.setState((state: IPageState) => {
                 state.items = result.data!;
                 state.showingItems = result.data!.filter(item => item.statusId !== StatusId.Deleted);
@@ -183,10 +182,10 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
             rank: rank
         });
 
-        if(serviceResult.status){
+        if (serviceResult.status) {
             this.setState((state: IPageState) => {
                 let item = this.state.items.findSingle("_id", this.state.selectedItemId);
-                if(item){
+                if (item) {
                     item.rank = rank;
                 }
                 return state;
@@ -337,7 +336,8 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                         name: this.props.t("productType"),
                         selector: row => row.eCommerce?.typeId || 0,
                         sortable: true,
-                        cell: row => <ComponentThemeBadgeProductType t={this.props.t} productTypeId={row.eCommerce?.typeId || ProductTypeId.SimpleProduct} />
+                        cell: row => <ComponentThemeBadgeProductType t={this.props.t}
+                                                                     productTypeId={row.eCommerce?.typeId || ProductTypeId.SimpleProduct}/>
                     } : {}
             ),
             (
@@ -350,7 +350,8 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                             return (
                                 <div>
                                     <span>{ProductUtil.getPricingDefault(row).taxIncluded}</span>
-                                    <span className="ms-1">{ProductUtil.getCurrencyType(this.props.getStateApp.appData.currencyId)?.icon}</span>
+                                    <span
+                                        className="ms-1">{ProductUtil.getCurrencyType(this.props.getStateApp.appData.currencyId)?.icon}</span>
                                 </div>
                             );
                         },
@@ -370,18 +371,19 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                         name: this.props.t("pageType"),
                         selector: row => this.props.t(pageTypes.findSingle("id", (row.pageTypeId ? row.pageTypeId : PageTypeId.Default))?.langKey ?? "[noLangAdd]"),
                         sortable: true,
-                        cell: row => <ComponentThemeBadgePageType t={this.props.t} pageTypeId={row.pageTypeId || PageTypeId.Default} />
+                        cell: row => <ComponentThemeBadgePageType t={this.props.t}
+                                                                  pageTypeId={row.pageTypeId || PageTypeId.Default}/>
                     } : {}
             ),
             {
                 name: this.props.t("status"),
                 sortable: true,
-                cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId} />
+                cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId}/>
             },
             {
                 name: this.props.t("updatedBy"),
                 sortable: true,
-                cell: row => <ComponentTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""} />
+                cell: row => <ComponentTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""}/>
             },
             {
                 name: this.props.t("rank"),
@@ -408,7 +410,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                 PermissionUtil.check(
                     this.props.getStateApp.sessionAuth!,
                     PermissionUtil.getPostPermission(this.state.typeId, PostPermissionMethod.UPDATE)
-                ) ?  {
+                ) ? {
                     name: "",
                     width: "70px",
                     button: true,

@@ -42,7 +42,7 @@ class ComponentApp extends Component<IPageProps, IPageState> {
                 mainLangId: "",
                 currentLangId: "",
                 contentLanguages: [],
-                currencyId: CurrencyId.TurkishLira
+                currencyId: CurrencyId.TurkishLira,
             },
         }
     }
@@ -64,8 +64,8 @@ class ComponentApp extends Component<IPageProps, IPageState> {
                 state.isPageLoading = true;
                 if (this.state.appData.currentLangId != this.state.appData.mainLangId) {
                     state.appData = {
-                        ...this.state.appData,
-                        currentLangId: this.state.appData.mainLangId
+                        ...state.appData,
+                        currentLangId: state.appData.mainLangId,
                     }
                 }
                 return state;
@@ -121,8 +121,8 @@ class ComponentApp extends Component<IPageProps, IPageState> {
                             ? <div className="col-md-4 p-0 content-language">
                                 <ComponentThemeContentLanguage
                                     t={props.t}
-                                    options={this.state.appData.contentLanguages}
-                                    value={this.state.appData.contentLanguages.findSingle("_id", this.state.appData.currentLangId)}
+                                    languages={this.state.appData.contentLanguages}
+                                    selectedLanguage={this.state.appData.contentLanguages.findSingle("_id", this.state.appData.currentLangId)}
                                     onChange={(item, e) => this.onLanguageChange(item.value)}
                                 />
                             </div> : null

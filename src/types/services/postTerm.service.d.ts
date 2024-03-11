@@ -50,7 +50,6 @@ export interface IPostTermGetManyParamService {
     count?: number
     page?: number
     withPostCount?: boolean
-    ignoreDefaultLanguage?: boolean
 }
 
 export type IPostTermAddParamService = {} & Omit<IPostTermModel, "_id"|"lastAuthorId"|"authorId">

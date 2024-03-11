@@ -311,6 +311,10 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                             })),
                             variations: item.eCommerce.variations?.map(variation => ({
                                 ...variation,
+                                contents: {
+                                    ...variation.contents,
+                                    langId: this.props.getStateApp.appData.currentLangId,
+                                },
                                 selectedVariations: variation.selectedVariations.map(selectedVariation => ({
                                     ...selectedVariation,
                                     variationId: selectedVariation.variationId._id,
@@ -335,14 +339,14 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 }, () => resolve(1))
             })
         } else {
-            this.navigatePage();
+            await this.navigatePage();
         }
     }
 
-    navigatePage() {
+    async navigatePage() {
         let postTypeId = this.state.formData.typeId;
         let pagePath = PostUtil.getPagePath(postTypeId);
-        this.props.router.push(pagePath.LIST);
+        await this.props.router.push(pagePath.LIST);
     }
 
     onSubmit(event: FormEvent) {
@@ -384,6 +388,16 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
             state.formData.contents.content = newContent;
             return state;
         })
+    }
+
+    TotalViews = () => {
+        return <div className="col-6">
+            <ComponentToolTip message={this.props.t("views")}>
+                <label className="badge badge-gradient-primary w-100 p-2 fs-6 rounded-3">
+                    <i className="mdi mdi-eye"></i> {this.state.formData.contents.views}
+                </label>
+            </ComponentToolTip>
+        </div>;
     }
 
     TabOptions = () => {
@@ -562,13 +576,10 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                             </div>
                             {
                                 this.state.formData._id && [PostTypeId.Page, PostTypeId.Blog, PostTypeId.Portfolio, PostTypeId.Service].includes(Number(this.state.formData.typeId))
-                                    ? <div className="col-6">
-                                        <ComponentToolTip message={this.props.t("views")}>
-                                            <label className="badge badge-gradient-primary w-100 p-2 fs-6 rounded-3">
-                                                <i className="mdi mdi-eye"></i> {this.state.formData.contents.views}
-                                            </label>
-                                        </ComponentToolTip>
-                                    </div> : null
+                                    ? <this.TotalViews /> : null
+                            }
+                            {
+
                             }
                         </div>
                     </div>

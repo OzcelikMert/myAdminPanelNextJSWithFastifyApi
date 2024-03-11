@@ -132,7 +132,9 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
                 selector: row => row.title,
                 cell: row => (
                     <div className="row w-100">
-                        <div className="col-md-12">{row.title}</div>
+                        <div className="col-md-12">
+                            {row.title}
+                        </div>
                     </div>
                 ),
                 sortable: true

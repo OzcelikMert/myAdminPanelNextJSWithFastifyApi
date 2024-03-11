@@ -73,8 +73,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
 
     async getItems() {
         let result = (await NavigationService.getMany({
-            langId: this.props.getStateApp.appData.currentLangId,
-            ignoreDefaultLanguage: true
+            langId: this.props.getStateApp.appData.currentLangId
         }));
 
         if (result.status && result.data) {
@@ -234,7 +233,9 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                 selector: row => row.contents?.title || this.props.t("[noLangAdd]"),
                 cell: row => (
                     <div className="row w-100">
-                        <div className="col-md-12">{row.contents?.title || this.props.t("[noLangAdd]")}</div>
+                        <div className="col-md-12">
+                            {row.contents?.title || this.props.t("[noLangAdd]")}
+                        </div>
                     </div>
                 ),
                 width: "250px",

@@ -1,11 +1,16 @@
 import {IUserPopulateService} from "./user.service";
 import {IComponentElementContentModel, IComponentElementModel, IComponentModel} from "types/models/component.model";
 
+export interface IComponentAlternateService {
+    langId: string
+}
+
 export type IComponentGetResultService = {
     authorId: IUserPopulateService,
     lastAuthorId: IUserPopulateService,
     elements: (Omit<IComponentElementModel, "contents"> & {
         contents?: IComponentElementContentModel
+        alternates?: IComponentAlternateService[]
     })[]
 } & Omit<IComponentModel, "elements"|"authorId"|"lastAuthorId">
 

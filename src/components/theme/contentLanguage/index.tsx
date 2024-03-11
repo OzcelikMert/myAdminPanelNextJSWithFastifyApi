@@ -1,22 +1,24 @@
 import React, {Component} from 'react'
 import {ComponentFormSelect} from "components/elements/form";
 import {IPagePropCommon} from "types/pageProps";
-import {ILanguageModel} from "types/models/language.model";
 import Image from "next/image"
 import {IThemeFormSelectValue} from "components/elements/form/input/select";
 import {PathUtil} from "utils/path.util";
+import {ILanguageGetResultService} from "types/services/language.service";
+
+export type IContentLanguage = {} & ILanguageGetResultService
 
 type IPageState = {};
 
 type IPageProps = {
     t: IPagePropCommon["t"]
-    options: ILanguageModel[]
-    value?: ILanguageModel
+    languages: IContentLanguage[]
+    selectedLanguage?: IContentLanguage
     onChange: (item: IThemeFormSelectValue, e: any) => void
 };
 
 export default class ComponentThemeContentLanguage extends Component<IPageProps, IPageState> {
-    Item = (props: ILanguageModel) => (
+    Item = (props: IContentLanguage) => (
         <div className={`row p-0`}>
             <div className="col-6 text-end">
                 <Image
@@ -33,14 +35,16 @@ export default class ComponentThemeContentLanguage extends Component<IPageProps,
         </div>
     )
 
-
     render() {
         return (
             <ComponentFormSelect
                 title={this.props.t("contentLanguage")}
                 isSearchable={false}
-                options={this.props.options.map(option => ({label: <this.Item {...option} />, value: option._id}))}
-                value={ this.props.value ? {label: <this.Item {...this.props.value} />, value: this.props.value._id} : undefined }
+                options={this.props.languages.map(language => ({label: <this.Item {...language} />, value: language._id}))}
+                value={this.props.selectedLanguage ? {
+                    label: <this.Item {...this.props.selectedLanguage} />,
+                    value: this.props.selectedLanguage._id
+                } : undefined}
                 onChange={(item: any, e) => this.props.onChange(item, e)}
             />
         )
