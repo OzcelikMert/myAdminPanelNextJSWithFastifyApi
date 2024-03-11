@@ -232,7 +232,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
         return (
             <div className="col-md-12 mt-4">
                 <ComponentFieldSet
-                    legend={props.title}
+                    legend={`${props.title} ${PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin) ? `(#${props.elementId})` : ""}`}
                     legendElement={
                         PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
                             ? (<span>
@@ -245,7 +245,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                     }
                 >
                     <div className="row mt-2">
-                        <div className="col-md-12">
+                        <div className="col-md-12 mt-4">
                             <ComponentPageComponentElementTypeInput
                                 {...this.props}
                                 data={props}

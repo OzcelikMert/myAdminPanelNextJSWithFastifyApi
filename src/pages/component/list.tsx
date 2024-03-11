@@ -10,6 +10,7 @@ import {EndPoints} from "constants/endPoints";
 import {IComponentGetResultService} from "types/services/component.service";
 import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
 import {ComponentService} from "services/component.service";
+import {UserRoleId} from "constants/userRoles";
 
 type IPageState = {
     searchKey: string
@@ -139,11 +140,16 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
                 ),
                 sortable: true
             },
-            {
-                name: this.props.t("elementId"),
-                selector: row => row.elementId,
-                sortable: true
-            },
+            (
+                PermissionUtil.checkPermissionRoleRank(
+                    this.props.getStateApp.sessionAuth!.user.roleId,
+                    UserRoleId.SuperAdmin
+                ) ? {
+                    name: this.props.t("elementId"),
+                    selector: row => row.elementId,
+                    sortable: true
+                } : {}
+            ),
             {
                 name: this.props.t("updatedBy"),
                 sortable: true,
