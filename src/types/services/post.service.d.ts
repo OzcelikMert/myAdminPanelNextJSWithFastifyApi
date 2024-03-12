@@ -42,7 +42,8 @@ export type IPostGetManyResultService = {
             alternates?: IPostAlternateService[]
         })[]
     })
-} & Omit<IPostGetOneResultService, "eCommerce">
+    components?: IPostModel["components"]
+} & Omit<IPostGetOneResultService, "eCommerce"|"components">
 
 export interface IPostGetWithIdParamService {
     typeId: PostTypeId,

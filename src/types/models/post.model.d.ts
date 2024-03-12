@@ -15,11 +15,11 @@ export interface IPostModel {
     rank: number,
     isFixed?: boolean,
     categories?: string[]
-    components?: string[]
     tags?: string[]
     contents: IPostContentModel
     beforeAndAfter?: IPostBeforeAndAfterModel
     eCommerce?: IPostECommerceModel
+    components?: string[]
     updatedAt?: string
     createdAt?: string
 }
