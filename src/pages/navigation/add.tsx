@@ -106,7 +106,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
         if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
                 state.items = [{value: "", label: this.props.t("notSelected")}];
-                serviceResult.data?.forEach(item => {
+                serviceResult.data!.forEach(item => {
                     if (!V.isEmpty(this.state.formData._id)) {
                         if (this.state.formData._id == item._id) return;
                     }
@@ -115,6 +115,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                         label: item.contents?.title || this.props.t("[noLangAdd]")
                     });
                 });
+                state.formData.rank = state.items.length;
                 return state;
             })
         }
