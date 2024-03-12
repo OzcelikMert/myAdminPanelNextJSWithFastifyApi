@@ -1,4 +1,5 @@
 export const languageKeys = [
+    "tool",
     "itemLanguageWarning",
     "elements",
     "richText",

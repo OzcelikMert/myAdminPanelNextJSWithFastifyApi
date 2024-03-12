@@ -1,10 +1,12 @@
 import {ElementTypeId} from "constants/elementTypes";
+import {ComponentTypeId} from "constants/componentTypes";
 
 export interface IComponentModel {
     _id: string,
     authorId: string
     lastAuthorId: string
     title: string,
+    typeId: ComponentTypeId
     elementId: string
     elements: IComponentElementModel[]
     updatedAt?: string,

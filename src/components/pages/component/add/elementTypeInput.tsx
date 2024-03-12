@@ -68,7 +68,7 @@ export default class ComponentPageComponentElementTypeInput extends Component<IP
                     />
                     <button
                         type="button"
-                        className="btn btn-gradient-warning btn-xs ms-2"
+                        className="btn btn-gradient-warning btn-xs ms-0 ms-md-2 mt-2 mt-md-0"
                         onClick={() => this.setState((state: IPageState) => {
                             state[this.props.data._id ?? ""] = true;
                             return state;

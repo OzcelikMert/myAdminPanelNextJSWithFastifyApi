@@ -31,6 +31,7 @@ import {PostTermTypeId} from "constants/postTermTypes";
 import {ImageSourceUtil} from "utils/imageSource.util";
 import {ComponentService} from "services/component.service";
 import ComponentPagePostAddComponent from "components/pages/post/add/component";
+import {ComponentTypeId} from "constants/componentTypes";
 
 const ComponentThemeRichTextBox = dynamic(() => import("components/theme/richTextBox"), {ssr: false});
 
@@ -212,7 +213,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     }
 
     async getComponents() {
-        let serviceResult = await ComponentService.getMany({langId: this.props.getStateApp.appData.mainLangId});
+        let serviceResult = await ComponentService.getMany({langId: this.props.getStateApp.appData.mainLangId, typeId: ComponentTypeId.Theme});
         if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
                 state.components = serviceResult.data!.map(component => {

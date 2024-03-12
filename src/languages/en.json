@@ -1,4 +1,5 @@
 {
+  "tool": "Tool",
   "itemLanguageWarning": "Item has not been added in this language!",
   "elements": "Elements",
   "richText": "Rich Text",

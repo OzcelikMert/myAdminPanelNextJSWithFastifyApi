@@ -6,25 +6,25 @@ type IPageState = {};
 
 type IPageProps = {
     t: IPagePropCommon["t"]
-    pageTypeId: PageTypeId
+    typeId: PageTypeId
     className?: string
 };
 
 export default class ComponentThemeBadgePageType extends Component<IPageProps, IPageState> {
     render() {
         return (
-            <label className={`badge badge-gradient-${getPageTypeColor(this.props.pageTypeId)} text-start ${this.props.className ?? ""}`}>
+            <label className={`badge badge-gradient-${getTypeColor(this.props.typeId)} text-start ${this.props.className ?? ""}`}>
                 {
-                    this.props.t(pageTypes.findSingle("id", this.props.pageTypeId)?.langKey ?? "[noLangAdd]")
+                    this.props.t(pageTypes.findSingle("id", this.props.typeId)?.langKey ?? "[noLangAdd]")
                 }
             </label>
         )
     }
 }
 
-export function getPageTypeColor(pageTypeId: PageTypeId): string {
+export function getTypeColor(typeId: PageTypeId): string {
     let className = ``;
-    switch (pageTypeId) {
+    switch (typeId) {
         case PageTypeId.Default: className = `dark`; break;
         case PageTypeId.HomePage: className = `primary`; break;
         case PageTypeId.Blogs: className = `warning`; break;

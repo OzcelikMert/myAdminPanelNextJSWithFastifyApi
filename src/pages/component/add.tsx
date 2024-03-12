@@ -16,9 +16,12 @@ import {cloneDeepWith} from "lodash";
 import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
 import {UserRoleId} from "constants/userRoles";
 import ComponentPageComponentElementTypeInput from "components/pages/component/add/elementTypeInput";
+import {ComponentTypeId, componentTypes} from "constants/componentTypes";
+import ReactHandleFormLibrary from "library/react/handles/form";
 
 type IPageState = {
     elementTypes: IThemeFormSelectValue[]
+    componentTypes: IThemeFormSelectValue[]
     mainTabActiveKey: string
     isSubmitting: boolean
     mainTitle: string,
@@ -34,13 +37,15 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
         this.state = {
             mainTabActiveKey: PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin) ? "general" : "elements",
             elementTypes: [],
+            componentTypes: [],
             isSubmitting: false,
             mainTitle: "",
             formData: {
                 _id: this.props.router.query._id as string ?? "",
                 elements: [],
                 elementId: "",
-                title: ""
+                title: "",
+                typeId: ComponentTypeId.Theme
             }
         }
     }
@@ -49,6 +54,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
         let permission = this.state.formData._id ? ComponentEndPointPermission.UPDATE : ComponentEndPointPermission.ADD;
         if (PermissionUtil.checkAndRedirect(this.props, permission)) {
             this.getElementTypes();
+            this.getComponentTypes();
             if (this.state.formData._id) {
                 await this.getItem();
             }
@@ -81,6 +87,16 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
             titles.push(this.state.mainTitle)
         }
         this.props.setBreadCrumb(titles);
+    }
+
+    getComponentTypes() {
+        this.setState((state: IPageState) => {
+            state.componentTypes = componentTypes.map(type => ({
+                label: this.props.t(type.langKey),
+                value: type.id
+            }))
+            return state;
+        })
     }
 
     getElementTypes() {
@@ -222,7 +238,6 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
         if (result.isConfirmed) {
             this.setState((state: IPageState) => {
                 state.formData.elements.splice(index, 1);
-                state.selectedData = undefined;
                 return state;
             })
         }
@@ -230,7 +245,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
 
     ComponentElement = (props: IComponentElementModel, index: number) => {
         return (
-            <div className="col-md-12 mt-4">
+            <div className="col-md-12 mt-5">
                 <ComponentFieldSet
                     legend={`${props.title} ${PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin) ? `(#${props.elementId})` : ""}`}
                     legendElement={
@@ -244,8 +259,8 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                             : undefined
                     }
                 >
-                    <div className="row mt-2">
-                        <div className="col-md-12 mt-4">
+                    <div className="row">
+                        <div className="col-md-12">
                             <ComponentPageComponentElementTypeInput
                                 {...this.props}
                                 data={props}
@@ -363,6 +378,16 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                         required={true}
                         value={this.state.formData.elementId}
                         onChange={e => HandleForm.onChangeInput(e, this)}
+                    />
+                </div>
+                <div className="col-md-7 mt-3">
+                    <ComponentFormSelect
+                        title={`${this.props.t("typeId")}*`}
+                        name="formData.typeId"
+                        placeholder={this.props.t("typeId")}
+                        options={this.state.componentTypes}
+                        value={this.state.componentTypes.findSingle("value", this.state.formData.typeId)}
+                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
             </div>

@@ -11,6 +11,8 @@ import {IComponentGetResultService} from "types/services/component.service";
 import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
 import {ComponentService} from "services/component.service";
 import {UserRoleId} from "constants/userRoles";
+import ComponentThemeBadgeComponentType from "components/theme/badge/componentType";
+import {ComponentTypeId} from "constants/componentTypes";
 
 type IPageState = {
     searchKey: string
@@ -151,8 +153,15 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
                 } : {}
             ),
             {
+                name: this.props.t("typeId"),
+                sortable: true,
+                selector: row => row.typeId,
+                cell: row => <ComponentThemeBadgeComponentType t={this.props.t} typeId={row.typeId || ComponentTypeId.Theme}/>
+            },
+            {
                 name: this.props.t("updatedBy"),
                 sortable: true,
+                selector: row => new Date(row.updatedAt || "").toLocaleDateString(),
                 cell: row => <ComponentTableUpdatedBy name={row.lastAuthorId.name} updatedAt={row.updatedAt || ""}/>
             },
             {

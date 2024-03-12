@@ -336,8 +336,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                         name: this.props.t("productType"),
                         selector: row => row.eCommerce?.typeId || 0,
                         sortable: true,
-                        cell: row => <ComponentThemeBadgeProductType t={this.props.t}
-                                                                     productTypeId={row.eCommerce?.typeId || ProductTypeId.SimpleProduct}/>
+                        cell: row => <ComponentThemeBadgeProductType t={this.props.t} typeId={row.eCommerce?.typeId || ProductTypeId.SimpleProduct}/>
                     } : {}
             ),
             (
@@ -371,8 +370,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                         name: this.props.t("pageType"),
                         selector: row => this.props.t(pageTypes.findSingle("id", (row.pageTypeId ? row.pageTypeId : PageTypeId.Default))?.langKey ?? "[noLangAdd]"),
                         sortable: true,
-                        cell: row => <ComponentThemeBadgePageType t={this.props.t}
-                                                                  pageTypeId={row.pageTypeId || PageTypeId.Default}/>
+                        cell: row => <ComponentThemeBadgePageType t={this.props.t} typeId={row.pageTypeId || PageTypeId.Default}/>
                     } : {}
             ),
             {
