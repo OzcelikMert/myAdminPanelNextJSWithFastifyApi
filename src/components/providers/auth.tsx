@@ -36,9 +36,11 @@ export default class ComponentProviderAuth extends Component<IPageProps, IPageSt
             if (serviceResult.data) {
                 isAuth = true;
                 if(JSON.stringify(serviceResult.data) != JSON.stringify(this.props.getStateApp.sessionAuth)){
-                    this.props.setStateApp({
-                        sessionAuth: serviceResult.data
-                    });
+                    await new Promise(resolve => {
+                        this.props.setStateApp({
+                            sessionAuth: serviceResult.data!
+                        }, () => resolve(1));
+                    })
                 }
             }
         }
