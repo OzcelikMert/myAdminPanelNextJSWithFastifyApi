@@ -58,6 +58,21 @@ export const sidebarNavs: ISidebarPath[] = [
         ]
     },
     {
+        path: EndPoints.COMPONENT,
+        icon: `shape`,
+        title: "components",
+        state: `components`,
+        permission: ComponentEndPointPermission.GET,
+        subPaths: [
+            {
+                path: EndPoints.COMPONENT_WITH.ADD,
+                title: "add",
+                permission: ComponentEndPointPermission.ADD
+            },
+            {path: EndPoints.COMPONENT_WITH.LIST, title: "list"}
+        ]
+    },
+    {
         path: EndPoints.THEME_CONTENT,
         icon: `collage`,
         title: "themeContents",
@@ -190,21 +205,6 @@ export const sidebarNavs: ISidebarPath[] = [
                 title: "settings",
                 permission: ECommerceEndPointPermission.SETTINGS
             },
-        ]
-    },
-    {
-        path: EndPoints.COMPONENT,
-        icon: `shape`,
-        title: "components",
-        state: `components`,
-        permission: ComponentEndPointPermission.GET,
-        subPaths: [
-            {
-                path: EndPoints.COMPONENT_WITH.ADD,
-                title: "add",
-                permission: ComponentEndPointPermission.ADD
-            },
-            {path: EndPoints.COMPONENT_WITH.LIST, title: "list"}
         ]
     },
     {
