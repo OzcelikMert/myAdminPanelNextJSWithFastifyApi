@@ -9,10 +9,13 @@ import {PermissionUtil} from "utils/permission.util";
 import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
 import {SettingProjectionKeys} from "constants/settingProjections";
 import {UserRoleId} from "constants/userRoles";
+import {cloneDeepWith} from "lodash";
+import Swal from "sweetalert2";
 
 type IPageState = {
     isSubmitting: boolean
     formData: ISettingUpdateSocialMediaParamService,
+    selectedData?: ISettingSocialMediaModel
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -84,119 +87,149 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
 
     onCreate() {
         this.setState((state: IPageState) => {
-            state.formData.socialMedia = [{
+            state.formData.socialMedia = [...state.formData.socialMedia, {
                 _id: String.createId(),
                 elementId: "",
                 url: "",
                 title: ""
-            }, ...state.formData.socialMedia];
+            }];
+            return state;
+        }, () => this.onEdit(this.state.formData.socialMedia.length - 1))
+    }
+
+    onAccept(index: number) {
+        this.setState((state: IPageState) => {
+            state.formData.socialMedia[index] = state.selectedData!;
+            state.selectedData = undefined;
             return state;
         })
     }
 
-    onAccept(data: ISettingSocialMediaModel) {
+    onEdit(index: number) {
         this.setState((state: IPageState) => {
-            data.isEditing = false;
+            state.selectedData = cloneDeepWith(this.state.formData.socialMedia[index]);
             return state;
         })
     }
 
-    onDelete(data: ISettingSocialMediaModel[], index: number) {
+    onCancelEdit() {
         this.setState((state: IPageState) => {
-            data.remove(index);
+            state.selectedData = undefined;
             return state;
         })
     }
 
-    onEdit(data: ISettingSocialMediaModel) {
-        this.setState((state: IPageState) => {
-            data.isEditing = true;
-            return state;
-        })
+
+    async onDelete(index: number) {
+        let result = await Swal.fire({
+            title: this.props.t("deleteAction"),
+            html: `<b>'${this.state.formData.socialMedia[index].elementId}'</b> ${this.props.t("deleteItemQuestionWithItemName")}`,
+            confirmButtonText: this.props.t("yes"),
+            cancelButtonText: this.props.t("no"),
+            icon: "question",
+            showCancelButton: true
+        });
+
+        if (result.isConfirmed) {
+            this.setState((state: IPageState) => {
+                state.formData.socialMedia.splice(index, 1);
+                return state;
+            })
+        }
+    }
+
+    SocialMedia = (props: ISettingSocialMediaModel, index: number) => {
+        return (
+            <div className={`col-md-12 ${index > 0 ? "mt-5" : ""}`}>
+                <ComponentFieldSet
+                    legend={`${props.title} ${PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin) ? `(#${props.elementId})` : ""}`}
+                    legendElement={
+                        PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
+                            ? (<span>
+                                <i className="mdi mdi-pencil-box text-warning fs-1 cursor-pointer ms-2"
+                                   onClick={() => this.onEdit(index)}></i>
+                                <i className="mdi mdi-minus-box text-danger fs-1 cursor-pointer ms-2"
+                                   onClick={() => this.onDelete(index)}></i>
+                            </span>)
+                            : undefined
+                    }
+                >
+                    <div className="row">
+                        <div className="col-md-12">
+                            <ComponentFormType
+                                type="text"
+                                title={this.props.t("url")}
+                                value={props.url}
+                                onChange={e => this.onInputChange(props, "url", e.target.value)}
+                            />
+                        </div>
+                    </div>
+                </ComponentFieldSet>
+            </div>
+        )
+    }
+
+    SocialMediaEdit = (props: ISettingSocialMediaModel, index: number) => {
+        return (
+            <div className={`col-md-12 ${index > 0 ? "mt-5" : ""}`}>
+                <ComponentFieldSet legend={this.props.t("newSocialMedia")}>
+                    <div className="row mt-3">
+                        <div className="col-md-12">
+                            <ComponentFormType
+                                type="text"
+                                title={this.props.t("elementId")}
+                                value={props.elementId}
+                                onChange={e => this.onInputChange(props, "elementId", e.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-12 mt-3">
+                            <ComponentFormType
+                                type="text"
+                                title={this.props.t("title")}
+                                value={props.title}
+                                onChange={e => this.onInputChange(props, "title", e.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-12 mt-3">
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <button type="button" className="btn btn-gradient-success btn-lg"
+                                            onClick={() => this.onAccept(index)}>{this.props.t("okay")}</button>
+                                </div>
+                                <div className="col-md-6 text-end">
+                                    <button type="button" className="btn btn-gradient-dark btn-lg"
+                                            onClick={() => this.onCancelEdit()}>{this.props.t("cancel")}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ComponentFieldSet>
+            </div>
+        )
     }
 
     SocialMediaPlatforms = () => {
-        const SocialMedia = (props: ISettingSocialMediaModel, index: number) => {
-            return (
-                <div className="col-md-12 mt-3">
-                    <ComponentFieldSet
-                        legend={`${this.props.t("socialMedia")} (#${props.elementId})`}
-                        legendElement={
-                            this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
-                                ? <i className="mdi mdi-pencil-box text-warning fs-3 cursor-pointer"
-                                     onClick={() => this.onEdit(props)}></i>
-                                : undefined
-                        }
-                    >
-                        <div className="row mt-2">
-                            <div className="col-md-12">
-                                <ComponentFormType
-                                    type="url"
-                                    title={props.title}
-                                    value={props.url}
-                                    onChange={e => this.onInputChange(props, "url", e.target.value)}
-                                />
-                            </div>
-                        </div>
-                    </ComponentFieldSet>
-                </div>
-            )
-        }
-
-        const EditSocialMedia = (props: ISettingSocialMediaModel, index: number) => {
-            return (
-                <div className="col-md-12 mt-3">
-                    <ComponentFieldSet legend={this.props.t("newSocialMedia")}>
-                        <div className="row mt-3">
-                            <div className="col-md-12">
-                                <ComponentFormType
-                                    type="text"
-                                    title={this.props.t("elementId")}
-                                    value={props.elementId}
-                                    onChange={e => this.onInputChange(props, "elementId", e.target.value)}
-                                />
-                            </div>
-                            <div className="col-md-12 mt-3">
-                                <ComponentFormType
-                                    type="text"
-                                    title={this.props.t("title")}
-                                    value={props.title}
-                                    onChange={e => this.onInputChange(props, "title", e.target.value)}
-                                />
-                            </div>
-                            <div className="col-md-12 mt-3">
-                                <button type={"button"} className="btn btn-gradient-success btn-lg"
-                                        onClick={() => this.onAccept(props)}>{this.props.t("okay")}</button>
-                                <button type={"button"} className="btn btn-gradient-danger btn-lg"
-                                        onClick={() => this.onDelete(this.state.formData.socialMedia, index)}>{this.props.t("delete")}</button>
-                            </div>
-                        </div>
-                    </ComponentFieldSet>
-                </div>
-            )
-        }
-
         return (
             <div className="row">
-                {
-                    this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
-                        ? <div className="col-md-7">
-                            <button type={"button"} className="btn btn-gradient-success btn-lg"
-                                    onClick={() => this.onCreate()}>+ {this.props.t("newSocialMedia")}
-                            </button>
-                        </div> : null
-                }
                 <div className="col-md-7 mt-2">
                     <div className="row">
                         {
                             this.state.formData.socialMedia?.map((item, index) =>
-                                item.isEditing
-                                    ? EditSocialMedia(item, index)
-                                    : SocialMedia(item, index)
+                                this.state.selectedData && this.state.selectedData._id == item._id
+                                    ? this.SocialMediaEdit(this.state.selectedData, index)
+                                    : this.SocialMedia(item, index)
                             )
                         }
                     </div>
                 </div>
+                {
+                    PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
+                        ? <div className={`col-md-7 text-start ${this.state.formData.socialMedia.length > 0 ? "mt-4" : ""}`}>
+                            <button type={"button"} className="btn btn-gradient-success btn-lg"
+                                    onClick={() => this.onCreate()}>+ {this.props.t("addNew")}
+                            </button>
+                        </div> : null
+                }
             </div>
         );
     }

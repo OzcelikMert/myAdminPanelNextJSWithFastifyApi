@@ -196,7 +196,7 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
                     button: true,
                     cell: row => (
                         <button
-                            onClick={() => this.navigatePage("edit", row._id)}
+                            onClick={() => this.onDelete(row._id)}
                             className="btn btn-gradient-danger"
                         ><i className="mdi mdi-trash-can-outline"></i></button>
                     )

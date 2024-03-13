@@ -31,7 +31,6 @@ export interface ISettingSocialMediaModel {
     elementId: string
     title: string
     url: string
-    isEditing?: boolean
 }
 
 export interface ISettingContactFormModel {

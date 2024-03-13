@@ -347,7 +347,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                 </div>
                 {
                     PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
-                        ? <div className="col-md-7  mt-4 text-center">
+                        ? <div className={`col-md-7 text-start ${this.state.formData.elements.length > 0 ? "mt-4" : ""}`}>
                             <button type={"button"} className="btn btn-gradient-success btn-lg"
                                     onClick={() => this.onCreateElement()}>+ {this.props.t("addNew")}
                             </button>
