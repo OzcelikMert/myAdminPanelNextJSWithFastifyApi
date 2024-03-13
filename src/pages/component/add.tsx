@@ -189,7 +189,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
 
     onCreateElement() {
         this.setState((state: IPageState) => {
-            state.formData.elements = [{
+            state.formData.elements = [...state.formData.elements, {
                 _id: String.createId(),
                 title: "",
                 rank: state.formData.elements.length + 1,
@@ -198,9 +198,9 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                 contents: {
                     langId: this.props.getStateApp.appData.currentLangId
                 }
-            }, ...state.formData.elements]
+            }]
             return state;
-        })
+        }, () => this.onEdit(this.state.formData.elements.length - 1))
     }
 
     onAccept(index: number) {
@@ -245,7 +245,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
 
     ComponentElement = (props: IComponentElementModel, index: number) => {
         return (
-            <div className="col-md-12 mt-5">
+            <div className={`col-md-12 ${index > 0 ? "mt-5" : ""}`}>
                 <ComponentFieldSet
                     legend={`${props.title} ${PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin) ? `(#${props.elementId})` : ""}`}
                     legendElement={
@@ -275,7 +275,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
 
     ComponentElementEdit = (props: IComponentElementModel, index: number) => {
         return (
-            <div className="col-md-12 mt-3">
+            <div className={`col-md-12 ${index > 0 ? "mt-5" : ""}`}>
                 <ComponentFieldSet legend={this.props.t("newStaticContent")}>
                     <div className="row mt-3">
                         <div className="col-md-12">
@@ -334,15 +334,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
     TabElements = () => {
         return (
             <div className="row mb-3">
-                {
-                    PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
-                        ? <div className="col-md-7">
-                            <button type={"button"} className="btn btn-gradient-success btn-lg"
-                                    onClick={() => this.onCreateElement()}>+ {this.props.t("addNew")}
-                            </button>
-                        </div> : null
-                }
-                <div className="col-md-7 mt-2">
+                <div className="col-md-7">
                     <div className="row">
                         {
                             this.state.formData.elements?.orderBy("rank", "asc").map((item, index) =>
@@ -353,6 +345,14 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                         }
                     </div>
                 </div>
+                {
+                    PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
+                        ? <div className="col-md-7  mt-4 text-center">
+                            <button type={"button"} className="btn btn-gradient-success btn-lg"
+                                    onClick={() => this.onCreateElement()}>+ {this.props.t("addNew")}
+                            </button>
+                        </div> : null
+                }
             </div>
         );
     }
