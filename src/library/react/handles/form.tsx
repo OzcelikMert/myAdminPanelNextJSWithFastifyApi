@@ -30,7 +30,11 @@ class ReactHandleFormLibrary {
             if(event.target.type === "checkbox") {
                 value = event.target.checked ? 1 : 0;
             }else{
-                value = event.target.value;
+                if(event.target.type === "number"){
+                    value = Number(event.target.value) || 1;
+                }else {
+                    value = event.target.value;
+                }
             }
             state = setDataWithKeys(state, event.target.name.split("."), value);
             return state;
