@@ -31,7 +31,7 @@ class ReactHandleFormLibrary {
                 value = event.target.checked ? 1 : 0;
             }else{
                 if(event.target.type === "number"){
-                    value = Number(event.target.value) || 1;
+                    value = Number(event.target.value) || 0;
                 }else {
                     value = event.target.value;
                 }

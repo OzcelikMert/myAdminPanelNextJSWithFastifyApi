@@ -12,6 +12,7 @@ import {PermissionUtil} from "utils/permission.util";
 import {LanguageEndPointPermission} from "constants/endPointPermissions/language.endPoint.permission";
 import {EndPoints} from "constants/endPoints";
 import {ImageSourceUtil} from "utils/imageSource.util";
+import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
 
 type IPageState = {
     searchKey: string
@@ -94,7 +95,7 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
     onSearch(searchKey: string) {
         this.setState({
             searchKey: searchKey,
-            showingItems: this.state.showingItems.filter(item => (item.title ?? "").toLowerCase().search(searchKey) > -1)
+            showingItems: this.state.items.filter(item => (item.title ?? "").toLowerCase().search(searchKey) > -1)
         })
     }
 

@@ -24,7 +24,7 @@ import {PostTypeId} from "constants/postTypes";
 import {PostUtil} from "utils/post.util";
 import {languageKeys} from "constants/languageKeys";
 import {attributeTypes} from "constants/attributeTypes";
-import {pageTypes} from "constants/pageTypes";
+import {PageTypeId, pageTypes} from "constants/pageTypes";
 import {ComponentUtil} from "utils/component.util";
 import {StatusId} from "constants/status";
 import {PostTermTypeId} from "constants/postTermTypes";
@@ -196,6 +196,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 label: this.props.t(pageType.langKey),
                 value: pageType.id
             }))
+            state.formData.pageTypeId = PageTypeId.Default;
             return state;
         })
     }

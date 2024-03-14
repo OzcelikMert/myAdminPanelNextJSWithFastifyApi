@@ -657,7 +657,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                                 title={this.props.page.props.t("taxIncludedPrice")}
                                                 type="number"
                                                 value={variation.pricing?.taxIncluded}
-                                                onChange={e => this.onChange(variation.pricing, "taxIncluded", Number(e.target.value) || 1)}
+                                                onChange={e => this.onChange(variation.pricing, "taxIncluded", Number(e.target.value) || 0)}
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
@@ -665,7 +665,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                                 title={this.props.page.props.t("taxExcludedPrice")}
                                                 type="number"
                                                 value={variation.pricing?.taxExcluded}
-                                                onChange={e => this.onChange(variation.pricing, "taxExcluded", Number(e.target.value) || 1)}
+                                                onChange={e => this.onChange(variation.pricing, "taxExcluded", Number(e.target.value) || 0)}
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
@@ -673,7 +673,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                                 title={this.props.page.props.t("taxRate")}
                                                 type="number"
                                                 value={variation.pricing?.taxRate}
-                                                onChange={e => this.onChange(variation.pricing, "taxRate", Number(e.target.value) || 1)}
+                                                onChange={e => this.onChange(variation.pricing, "taxRate", Number(e.target.value) || 0)}
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
@@ -681,7 +681,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                                 title={this.props.page.props.t("comparedPrice")}
                                                 type="number"
                                                 value={variation.pricing?.compared}
-                                                onChange={e => this.onChange(variation.pricing, "compared", Number(e.target.value) || 1)}
+                                                onChange={e => this.onChange(variation.pricing, "compared", Number(e.target.value) || 0)}
                                             />
                                         </div>
                                     </div>

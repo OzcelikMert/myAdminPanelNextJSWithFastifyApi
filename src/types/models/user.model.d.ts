@@ -1,11 +1,14 @@
 import {UserRoleId} from "constants/userRoles";
 import {StatusId} from "constants/status";
 import {PermissionId} from "constants/permissions";
+import {IUserPopulateService} from "types/services/user.service";
 
 export interface IUserModel {
     _id: string
     roleId: UserRoleId,
     statusId: StatusId,
+    authorId?: IUserPopulateService
+    lastAuthorId?: IUserPopulateService
     name: string,
     email: string,
     image: string,

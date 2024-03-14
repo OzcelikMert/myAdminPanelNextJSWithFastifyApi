@@ -16,6 +16,7 @@ import {UserEndPointPermission} from "constants/endPointPermissions/user.endPoin
 import {EndPoints} from "constants/endPoints";
 import {ImageSourceUtil} from "utils/imageSource.util";
 import {status} from "constants/status";
+import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
 
 type IPageState = {
     searchKey: string
@@ -164,6 +165,11 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                 cell: row => <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={row.roleId}/>
             },
             {
+                name: this.props.t("updatedBy"),
+                sortable: true,
+                cell: row => <ComponentTableUpdatedBy name={row.lastAuthorId?.name || ""} updatedAt={row.updatedAt || ""}/>
+            },
+            {
                 name: this.props.t("status"),
                 selector: row => status.findSingle("id", row.statusId)?.rank ?? 0,
                 sortable: true,
@@ -173,7 +179,8 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                 name: this.props.t("createdDate"),
                 sortable: true,
                 selector: row => new Date(row.createdAt || "").toLocaleDateString(),
-                sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
+                sortFunction: (a, b) => ComponentDataTable.dateSort(a, b),
+                cell: row => <ComponentTableUpdatedBy name={row.authorId?.name || ""} updatedAt={row.createdAt || ""}/>
             },
             {
                 name: "",

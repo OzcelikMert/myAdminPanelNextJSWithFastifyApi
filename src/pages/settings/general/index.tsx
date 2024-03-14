@@ -320,12 +320,11 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                     <div className="row">
                         <div className="card-col col-xl-4 col-lg-4 col-md-4 col-6">
                             <div className="card-body">
-                                <div
-                                    className="d-flex align-items-center justify-content-center flex-column flex-sm-row">
+                                <div className="d-flex align-items-center justify-content-center flex-column flex-sm-row ">
                                     <i className="mdi mdi-harddisk text-primary ms-0 me-sm-4 icon-lg"></i>
                                     <div className="wrapper text-center text-sm-end">
                                         <p className="card-text mb-0 text-dark">{this.props.t("storage")}</p>
-                                        <div className="fluid-container">
+                                        <div className="fluid-container position-relative">
                                             {
                                                 this.state.isServerInfoLoading ? <ComponentSpinnerDonut/> :
                                                     <h3 className="mb-0 font-weight-medium text-dark">{this.state.serverInfo.storage}%</h3>
@@ -342,7 +341,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                                     <i className="mdi mdi-memory text-primary ms-0 me-sm-4 icon-lg"></i>
                                     <div className="wrapper text-center text-sm-end">
                                         <p className="card-text mb-0 text-dark">{this.props.t("memory")}</p>
-                                        <div className="fluid-container">
+                                        <div className="fluid-container position-relative">
                                             {
                                                 this.state.isServerInfoLoading ? <ComponentSpinnerDonut/> :
                                                     <h3 className="mb-0 font-weight-medium text-dark">{this.state.serverInfo.memory}%</h3>
@@ -359,7 +358,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                                     <i className="fa fa-microchip text-primary ms-0 me-sm-4 icon-lg"></i>
                                     <div className="wrapper text-center text-sm-end">
                                         <p className="card-text mb-0 text-dark">{this.props.t("processor")}</p>
-                                        <div className="fluid-container">
+                                        <div className="fluid-container position-relative">
                                             {
                                                 this.state.isServerInfoLoading ? <ComponentSpinnerDonut/> :
                                                     <h3 className="mb-0 font-weight-medium text-dark">{this.state.serverInfo.cpu}%</h3>

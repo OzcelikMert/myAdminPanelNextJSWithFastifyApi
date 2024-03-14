@@ -244,7 +244,7 @@ class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
                                 type="number"
                                 required={true}
                                 value={props.rank}
-                                onChange={e => this.onInputChange(props, "rank", Number(e.target.value) || 1)}
+                                onChange={e => this.onInputChange(props, "rank", Number(e.target.value) || 0)}
                             />
                         </div>
                         <div className="col-md-12 mt-3">

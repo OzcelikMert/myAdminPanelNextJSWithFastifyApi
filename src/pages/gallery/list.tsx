@@ -9,6 +9,7 @@ import Image from "next/image"
 import {GalleryTypeId} from "constants/galleryTypeId";
 import {ImageSourceUtil} from "utils/imageSource.util";
 import {IGalleryGetResultService} from "types/services/gallery.service";
+import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
 
 type IPageState = {
     items: IGalleryGetResultService[]
@@ -210,15 +211,11 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
                 sortable: true
             },
             {
-                name: this.props.t("author"),
-                selector: row => row.authorId.name,
-                sortable: true,
-            },
-            {
                 name: this.props.t("createdDate"),
                 selector: row => (new Date(row.createdAt)).toLocaleDateString(),
                 sortable: true,
-                sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
+                sortFunction: (a, b) => ComponentDataTable.dateSort(a, b),
+                cell: row => <ComponentTableUpdatedBy name={row.authorId.name} updatedAt={row.createdAt || ""}/>
             },
             {
                 name: this.props.t("size"),

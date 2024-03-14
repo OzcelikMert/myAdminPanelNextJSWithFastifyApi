@@ -275,7 +275,8 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                 name: this.props.t("createdDate"),
                 sortable: true,
                 selector: row => new Date(row.createdAt || "").toLocaleDateString(),
-                sortFunction: (a, b) => ComponentDataTable.dateSort(a, b)
+                sortFunction: (a, b) => ComponentDataTable.dateSort(a, b),
+                cell: row => <ComponentTableUpdatedBy name={row.authorId.name} updatedAt={row.createdAt || ""}/>
             },
             (
                 PermissionUtil.check(

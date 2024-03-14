@@ -48,7 +48,7 @@ export default class ComponentPagePostAddComponent extends Component<IPageProps,
 
     Component = (_id: string, index: number) => {
         return (
-            <div className="col-md-12 mt-4">
+            <div className={`col-md-12 ${index > 0 ? "mt-5" : ""}`}>
                 <div className="row">
                     <div className="col-md-9">
                         <ComponentFormSelect
@@ -91,12 +91,7 @@ export default class ComponentPagePostAddComponent extends Component<IPageProps,
                         <h4>{this.props.page.props.t("components")}</h4>
                     </div>
                     <div className="card-body">
-                        <div className="row mb-3">
-                            <div className="col-md-7">
-                                <button type={"button"} className="btn btn-gradient-success btn-lg"
-                                        onClick={() => this.onAddNew()}>+ {this.props.page.props.t("addNew")}
-                                </button>
-                            </div>
+                        <div className="row">
                             <div className="col-md-7 mt-2">
                                 <div className="row">
                                     {
@@ -104,6 +99,11 @@ export default class ComponentPagePostAddComponent extends Component<IPageProps,
                                             return this.Component(componentId, index)
                                         })
                                     }
+                                    <div className={`col-md-7 text-start ${(this.props.page.state.formData.components?.length ?? 0) > 0 ? "mt-4" : ""}`}>
+                                        <button type={"button"} className="btn btn-gradient-success btn-lg"
+                                                onClick={() => this.onAddNew()}>+ {this.props.page.props.t("addNew")}
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
