@@ -213,7 +213,10 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     }
 
     async getComponents() {
-        let serviceResult = await ComponentService.getMany({langId: this.props.getStateApp.appData.mainLangId, typeId: ComponentTypeId.Theme});
+        let serviceResult = await ComponentService.getMany({
+            langId: this.props.getStateApp.appData.mainLangId,
+            typeId: ComponentTypeId.Theme
+        });
         if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
                 state.components = serviceResult.data!.map(component => {
@@ -501,33 +504,36 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                             />
                         </div> : null
                 }
-                <div className="col-md-7 mb-3">
-                    <ComponentThemeChooseImage
-                        {...this.props}
-                        isShow={this.state.isSelectionImage}
-                        onHide={() => this.setState({isSelectionImage: false})}
-                        onSelected={images => this.setState((state: IPageState) => {
-                            state.formData.contents.image = images[0];
-                            return state
-                        })}
-                        isMulti={false}
-                        selectedImages={(this.state.formData.contents.image) ? [this.state.formData.contents.image] : undefined}
-                    />
-                    <Image
-                        src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.contents.image)}
-                        alt="Empty Image"
-                        className="post-image img-fluid"
-                        width={100}
-                        height={100}
-                    />
-                    <button
-                        type="button"
-                        className="btn btn-gradient-warning btn-xs ms-1"
-                        onClick={() => {
-                            this.setState({isSelectionImage: true})
-                        }}
-                    ><i className="fa fa-pencil-square-o"></i></button>
-                </div>
+                {
+                    ![PostTypeId.Service].includes(this.state.formData.typeId) || !this.state.isIconActive
+                        ? <div className="col-md-7 mb-3">
+                            <ComponentThemeChooseImage
+                                {...this.props}
+                                isShow={this.state.isSelectionImage}
+                                onHide={() => this.setState({isSelectionImage: false})}
+                                onSelected={images => this.setState((state: IPageState) => {
+                                    state.formData.contents.image = images[0];
+                                    return state
+                                })}
+                                isMulti={false}
+                                selectedImages={(this.state.formData.contents.image) ? [this.state.formData.contents.image] : undefined}
+                            />
+                            <Image
+                                src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.contents.image)}
+                                alt="Empty Image"
+                                className="post-image img-fluid"
+                                width={100}
+                                height={100}
+                            />
+                            <button
+                                type="button"
+                                className="btn btn-gradient-warning btn-xs ms-1"
+                                onClick={() => {
+                                    this.setState({isSelectionImage: true})
+                                }}
+                            ><i className="fa fa-pencil-square-o"></i></button>
+                        </div> : null
+                }
                 <div className="col-md-7 mb-3">
                     <ComponentFormType
                         title={`${this.props.t("title")}*`}
@@ -577,7 +583,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                             </div>
                             {
                                 this.state.formData._id && [PostTypeId.Page, PostTypeId.Blog, PostTypeId.Portfolio, PostTypeId.Service].includes(Number(this.state.formData.typeId))
-                                    ? <this.TotalViews /> : null
+                                    ? <this.TotalViews/> : null
                             }
                             {
 
@@ -636,7 +642,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                             }
                             {
                                 [PostTypeId.Page].includes(this.state.formData.typeId)
-                                    ? <ComponentPagePostAddComponent page={this} />
+                                    ? <ComponentPagePostAddComponent page={this}/>
                                     : null
                             }
                             {
