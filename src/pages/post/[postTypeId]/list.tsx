@@ -22,6 +22,7 @@ import {ImageSourceUtil} from "utils/imageSource.util";
 import {ProductUtil} from "utils/product.util";
 import {PageTypeId, pageTypes} from "constants/pageTypes";
 import {PostTermTypeId} from "constants/postTermTypes";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     typeId: PostTypeId
@@ -37,6 +38,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PagePostList extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -72,19 +75,11 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                     isPageLoading: false
                 })
             })
-
         }
+    }
 
-        if (prevProps.getStateApp.appData.currentLangId != this.props.getStateApp.appData.currentLangId) {
-            this.props.setStateApp({
-                isPageLoading: true
-            }, async () => {
-                await this.getItems()
-                this.props.setStateApp({
-                    isPageLoading: false
-                })
-            })
-        }
+    componentWillUnmount() {
+        this.abortController.abort();
     }
 
     setPageTitle() {
@@ -99,7 +94,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
         let result = (await PostService.getMany({
             typeId: [this.state.typeId],
             langId: this.props.getStateApp.appData.currentLangId
-        }));
+        }, this.abortController.signal));
 
         if (result.status && result.data) {
             this.setState((state: IPageState) => {
@@ -127,7 +122,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                     type: "loading"
                 });
 
-                let serviceResult = await PostService.deleteMany({_id: selectedItemId, typeId: this.state.typeId})
+                let serviceResult = await PostService.deleteMany({_id: selectedItemId, typeId: this.state.typeId}, this.abortController.signal)
                 loadingToast.hide();
                 if (serviceResult.status) {
                     this.setState((state: IPageState) => {
@@ -153,7 +148,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                 _id: selectedItemId,
                 typeId: this.state.typeId,
                 statusId: statusId
-            })
+            }, this.abortController.signal)
             loadingToast.hide();
             if (serviceResult.status) {
                 this.setState((state: IPageState) => {
@@ -180,7 +175,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
             _id: this.state.selectedItemId,
             typeId: this.state.typeId,
             rank: rank
-        });
+        }, this.abortController.signal);
 
         if (serviceResult.status) {
             this.setState((state: IPageState) => {
@@ -245,7 +240,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                 path = pagePath.TERM_WITH(termTypeId).LIST;
                 break;
         }
-        this.props.router.push(path);
+        RouteUtil.change({props: this.props, path: path});
     }
 
     onClickUpdateRank(itemId: string) {

@@ -13,59 +13,66 @@ import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 import {IPostTermModel} from "types/models/postTerm.model";
 
-const getWithId = (params: IPostTermGetWithIdParamService) => {
+const getWithId = (params: IPostTermGetWithIdParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_TERM_WITH.GET_WITH_ID(params._id),
-        data: params
+        data: params,
+        signal: signal
     }).get<IPostTermGetResultService>();
 }
 
-const getMany = (params: IPostTermGetManyParamService) => {
+const getMany = (params: IPostTermGetManyParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_TERM_WITH.GET,
-        data: params
+        data: params,
+        signal: signal
     }).get<IPostTermGetResultService[]>();
 }
 
-const add = (params: IPostTermAddParamService) => {
+const add = (params: IPostTermAddParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_TERM_WITH.ADD,
-        data: params
+        data: params,
+        signal: signal
     }).post<IPostTermModel>();
 }
 
-const updateWithId = (params: IPostTermUpdateWithIdParamService) => {
+const updateWithId = (params: IPostTermUpdateWithIdParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_TERM_WITH.UPDATE_WITH_ID(params._id),
-        data: params
+        data: params,
+        signal: signal
     }).put();
 }
 
-const updateRankWithId = (params: IPostTermUpdateRankWithIdParamService) => {
+const updateRankWithId = (params: IPostTermUpdateRankWithIdParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_TERM_WITH.UPDATE_RANK_WITH_ID(params._id),
-        data: params
+        data: params,
+        signal: signal
     }).put();
 }
 
-const updateStatusMany = (params: IPostTermUpdateStatusManyParamService) => {
+const updateStatusMany = (params: IPostTermUpdateStatusManyParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_TERM_WITH.UPDATE_STATUS,
-        data: params
+        data: params,
+        signal: signal
     }).put();
 }
 
-const deleteMany = (params: IPostTermDeleteManyParamService) => {
+const deleteMany = (params: IPostTermDeleteManyParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_TERM_WITH.DELETE,
-        data: params
+        data: params,
+        signal: signal
     }).delete();
 }
 

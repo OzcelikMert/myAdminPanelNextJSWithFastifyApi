@@ -26,6 +26,7 @@ export interface IUserGetManyParamService {
     count?: number,
     page?: number
     roleId?: UserRoleId
+    permissions?: PermissionId[]
 }
 
 export type IUserAddParamService = {

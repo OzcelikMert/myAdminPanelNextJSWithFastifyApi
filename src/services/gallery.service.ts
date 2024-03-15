@@ -10,30 +10,33 @@ import {PathUtil} from "utils/path.util";
 import {IApiRequestParam} from "library/types/api";
 import {IGalleryModel} from "types/models/gallery.model";
 
-const get = (params: IGalleryGetManyParamService) => {
+const get = (params: IGalleryGetManyParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.GALLERY_WITH.GET_IMAGE,
-        data: params
+        data: params,
+        signal: signal
     }).get<IGalleryGetResultService[]>();
 }
 
-const add = (params: IGalleryAddParamService, onUploadProgress: IApiRequestParam["onUploadProgress"]) => {
+const add = (params: IGalleryAddParamService, onUploadProgress: IApiRequestParam["onUploadProgress"], signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.GALLERY_WITH.ADD_IMAGE,
         data: params,
         contentType: false,
         processData: false,
-        onUploadProgress: onUploadProgress
+        onUploadProgress: onUploadProgress,
+        signal: signal
     }).post<(IGalleryModel & IGalleryImageProperties)[]>();
 }
 
-const deleteMany = (params: IGalleryDeleteManyParamService) => {
+const deleteMany = (params: IGalleryDeleteManyParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.GALLERY_WITH.DELETE_IMAGE,
-        data: params
+        data: params,
+        signal: signal
     }).delete();
 }
 

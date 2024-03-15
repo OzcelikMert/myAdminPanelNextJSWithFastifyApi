@@ -25,6 +25,7 @@ import {permissions} from "constants/permissions";
 import {IPermissionGroup} from "types/constants/permissionGroups";
 import {IPermission} from "types/constants/permissions";
 import {permissionGroups} from "constants/permissionGroups";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     mainTabActiveKey: string
@@ -40,6 +41,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageUserAdd extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -80,6 +83,10 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         let titles: string[] = [
             this.props.t("settings"),
@@ -118,7 +125,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
     async getItem() {
         let serviceResult = await UserService.getWithId({
             _id: this.state.formData._id
-        });
+        }, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             const user = serviceResult.data;
             await new Promise(resolve => {
@@ -154,7 +161,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
 
     async navigatePage() {
         let path = EndPoints.USER_WITH.LIST;
-        await this.props.router.push(path);
+        await RouteUtil.change({props: this.props, path: path});
     }
 
     onSubmit(event: FormEvent) {
@@ -164,8 +171,8 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
         }, async () => {
             let params = this.state.formData;
             let serviceResult = await ((params._id)
-                ? UserService.updateWithId(params)
-                : UserService.add({...params, password: this.state.formData.password || ""}));
+                ? UserService.updateWithId(params, this.abortController.signal)
+                : UserService.add({...params, password: this.state.formData.password || ""}, this.abortController.signal));
             this.setState({isSubmitting: false});
             if(serviceResult.status){
                 Swal.fire({

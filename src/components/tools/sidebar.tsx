@@ -59,7 +59,7 @@ class ComponentToolSidebar extends Component<IPageProps, IPageState> {
     }
 
     async navigatePage(path: string) {
-        await RouteUtil.change(this.props.router, path || EndPoints.DASHBOARD);
+        await RouteUtil.change({props: this.props, path: path || EndPoints.DASHBOARD});
         this.onRouteChanged();
     }
 

@@ -21,6 +21,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageSettingsSocialMedia extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -41,12 +43,16 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         this.props.setBreadCrumb([this.props.t("settings"), this.props.t("socialMedia")])
     }
 
     async getSettings() {
-        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.SocialMedia})
+        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.SocialMedia}, this.abortController.signal)
         if (serviceResult.status && serviceResult.data) {
             let setting = serviceResult.data;
             this.setState((state: IPageState) => {
@@ -63,7 +69,7 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
         this.setState({
             isSubmitting: true
         }, async () => {
-            let serviceResult = await SettingService.updateSocialMedia(this.state.formData)
+            let serviceResult = await SettingService.updateSocialMedia(this.state.formData, this.abortController.signal)
             if (serviceResult.status) {
                 new ComponentToast({
                     type: "success",

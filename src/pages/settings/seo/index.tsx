@@ -17,6 +17,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 class PageSettingsSEO extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -55,12 +57,16 @@ class PageSettingsSEO extends Component<IPageProps, IPageState> {
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         this.props.setBreadCrumb([this.props.t("settings"), this.props.t("seo")])
     }
 
     async getSeo() {
-        let serviceResult = await SettingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.SEO});
+        let serviceResult = await SettingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.SEO}, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             let setting = serviceResult.data;
             this.setState((state: IPageState) => {
@@ -82,7 +88,7 @@ class PageSettingsSEO extends Component<IPageProps, IPageState> {
         this.setState({
             isSubmitting: true
         }, async () => {
-            let serviceResult = await SettingService.updateSeo(this.state.formData);
+            let serviceResult = await SettingService.updateSeo(this.state.formData, this.abortController.signal);
             if (serviceResult.status) {
                 new ComponentToast({
                     type: "success",

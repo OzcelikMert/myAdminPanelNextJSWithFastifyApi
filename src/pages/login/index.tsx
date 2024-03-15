@@ -10,6 +10,7 @@ import Image from "next/image"
 import Logo from "assets/images/ozcelikLogo.png"
 import {EndPoints} from "constants/endPoints";
 import {StatusId} from "constants/status";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     isSubmitting: boolean
@@ -25,6 +26,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 class PageLogin extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(prop: any) {
         super(prop);
         this.state = {
@@ -45,6 +48,10 @@ class PageLogin extends Component<IPageProps, IPageState> {
         })
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         this.props.setBreadCrumb([
             this.props.t("login")
@@ -57,15 +64,15 @@ class PageLogin extends Component<IPageProps, IPageState> {
             isWrong: false,
             isSubmitting: true
         }, async () => {
-            let serviceResult = await AuthService.login(this.state.formData);
+            let serviceResult = await AuthService.login(this.state.formData, this.abortController.signal);
             if (serviceResult.data) {
                 if (serviceResult.status) {
-                    let resultSession = await AuthService.getSession();
+                    let resultSession = await AuthService.getSession(this.abortController.signal);
                     if (resultSession.status && resultSession.data) {
                         this.props.setStateApp({
                             sessionAuth: resultSession.data
                         }, () => {
-                            this.props.router.push(EndPoints.DASHBOARD);
+                            RouteUtil.change({props: this.props, path: EndPoints.DASHBOARD});
                         });
                     }
                 } else {

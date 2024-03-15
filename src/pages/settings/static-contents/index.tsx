@@ -25,6 +25,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -60,12 +62,16 @@ class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         this.props.setBreadCrumb([this.props.t("settings"), this.props.t("staticContents")])
     }
 
     async getSettings() {
-        let serviceResult = await SettingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.StaticContent})
+        let serviceResult = await SettingService.get({langId: this.props.getStateApp.appData.currentLangId, projection: SettingProjectionKeys.StaticContent}, this.abortController.signal)
         if (serviceResult.status && serviceResult.data) {
             let setting = serviceResult.data;
             this.setState((state: IPageState) => {
@@ -100,7 +106,7 @@ class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
         }, async () => {
             let serviceResult = await SettingService.updateStaticContent({
                 staticContents: this.state.formData.staticContents
-            });
+            }, this.abortController.signal);
             if (serviceResult.status) {
                 new ComponentToast({
                     type: "success",

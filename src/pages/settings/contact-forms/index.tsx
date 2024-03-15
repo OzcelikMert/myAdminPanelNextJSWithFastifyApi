@@ -18,6 +18,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 class PageSettingsContactForms extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -38,12 +40,16 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         this.props.setBreadCrumb([this.props.t("settings"), this.props.t("contactForms")])
     }
 
     async getSettings() {
-        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.ContactForm})
+        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.ContactForm}, this.abortController.signal)
         if (serviceResult.status && serviceResult.data) {
             let setting = serviceResult.data;
             this.setState((state: IPageState) => {
@@ -60,7 +66,7 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
         this.setState({
             isSubmitting: true
         }, async () => {
-            let serviceResult = await SettingService.updateContactForm(this.state.formData);
+            let serviceResult = await SettingService.updateContactForm(this.state.formData, this.abortController.signal);
             if (serviceResult.status) {
                 new ComponentToast({
                     type: "success",

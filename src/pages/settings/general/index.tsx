@@ -36,6 +36,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageSettingsGeneral extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -70,12 +72,16 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         this.props.setBreadCrumb([this.props.t("settings"), this.props.t("general")])
     }
 
     async getSettings() {
-        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.General})
+        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.General}, this.abortController.signal)
         if (serviceResult.status && serviceResult.data) {
             let setting = serviceResult.data;
             this.setState((state: IPageState) => {
@@ -102,7 +108,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
     }
 
     async getServerDetails() {
-        let serviceResult = await ServerInfoService.get();
+        let serviceResult = await ServerInfoService.get(this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             this.setState({
                 serverInfo: serviceResult.data,
@@ -120,7 +126,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                 ...this.state.formData,
                 head: this.state.formData.head,
                 script: this.state.formData.script,
-            });
+            }, this.abortController.signal);
             if (serviceResult.status) {
                 new ComponentToast({
                     type: "success",

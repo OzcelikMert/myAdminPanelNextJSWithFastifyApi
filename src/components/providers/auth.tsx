@@ -3,6 +3,7 @@ import {IPagePropCommon} from "types/pageProps";
 import {AuthService} from "services/auth.service";
 import {ApiErrorCodes} from "library/api/errorCodes";
 import {EndPoints} from "constants/endPoints";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     isAuth: boolean
@@ -14,6 +15,8 @@ type IPageProps = {
 } & IPagePropCommon;
 
 export default class ComponentProviderAuth extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -29,9 +32,14 @@ export default class ComponentProviderAuth extends Component<IPageProps, IPageSt
         })
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     async checkSession() {
         let isAuth = false;
-        let serviceResult = await AuthService.getSession();
+
+        let serviceResult = await AuthService.getSession(this.abortController.signal);
         if (serviceResult.status && serviceResult.errorCode == ApiErrorCodes.success) {
             if (serviceResult.data) {
                 isAuth = true;
@@ -55,7 +63,7 @@ export default class ComponentProviderAuth extends Component<IPageProps, IPageSt
     }
 
     render() {
-        if(this.state.isLoading){
+        if(this.state.isLoading || this.abortController.signal.aborted){
             return null;
         }
 
@@ -63,7 +71,7 @@ export default class ComponentProviderAuth extends Component<IPageProps, IPageSt
             !this.state.isAuth &&
             ![EndPoints.LOGIN].includes(this.props.router.pathname)
         ) {
-            this.props.router.push(EndPoints.LOGIN)
+            RouteUtil.change({props: this.props, path: EndPoints.LOGIN});
             return null;
         }
 
@@ -71,7 +79,7 @@ export default class ComponentProviderAuth extends Component<IPageProps, IPageSt
             this.state.isAuth &&
             [EndPoints.LOGIN].includes(this.props.router.pathname)
         ) {
-            this.props.router.push(EndPoints.DASHBOARD)
+            RouteUtil.change({props: this.props, path: EndPoints.DASHBOARD})
             return null;
         }
 

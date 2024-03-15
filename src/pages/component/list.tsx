@@ -13,6 +13,7 @@ import {ComponentService} from "services/component.service";
 import {UserRoleId} from "constants/userRoles";
 import ComponentThemeBadgeComponentType from "components/theme/badge/componentType";
 import {ComponentTypeId} from "constants/componentTypes";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     searchKey: string
@@ -23,6 +24,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageComponentList extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -42,17 +45,8 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
         }
     }
 
-    async componentDidUpdate(prevProps: Readonly<IPageProps>) {
-        if (prevProps.getStateApp.appData.currentLangId != this.props.getStateApp.appData.currentLangId) {
-            this.props.setStateApp({
-                isPageLoading: true
-            }, async () => {
-                await this.getItems()
-                this.props.setStateApp({
-                    isPageLoading: false
-                })
-            })
-        }
+    componentWillUnmount() {
+        this.abortController.abort();
     }
 
     setPageTitle() {
@@ -65,7 +59,7 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
     async getItems() {
         let result = (await ComponentService.getMany({
             langId: this.props.getStateApp.appData.currentLangId
-        }));
+        }, this.abortController.signal));
 
         if (result.status && result.data) {
             this.setState((state: IPageState) => {
@@ -93,7 +87,7 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
                     type: "loading"
                 });
 
-                let serviceResult = await ComponentService.deleteMany({_id: [_id]});
+                let serviceResult = await ComponentService.deleteMany({_id: [_id]}, this.abortController.signal);
                 loadingToast.hide();
                 if (serviceResult.status) {
                     this.setState((state: IPageState) => {
@@ -123,7 +117,7 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
         let pagePath = EndPoints.COMPONENT_WITH;
         switch (type) {
             case "edit":
-                await this.props.router.push(pagePath.EDIT(itemId));
+                await RouteUtil.change({props: this.props, path: pagePath.EDIT(itemId)});
                 break;
         }
     }

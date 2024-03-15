@@ -17,6 +17,7 @@ import {EndPoints} from "constants/endPoints";
 import {ImageSourceUtil} from "utils/imageSource.util";
 import {status} from "constants/status";
 import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     searchKey: string
@@ -29,6 +30,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageUserList extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -50,6 +53,10 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         this.props.setBreadCrumb([
             this.props.t("settings"),
@@ -59,18 +66,17 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
     }
 
     async getItems() {
-        let result = (await UserService.getMany({}));
+        let result = (await UserService.getMany({}, this.abortController.signal));
         if (result.status && result.data) {
             let items = result.data.orderBy("roleId", "desc");
             this.setState((state: IPageState) => {
-                state.items = state.items.sort(item => {
+                state.items = items.filter(item => item.roleId != UserRoleId.SuperAdmin).sort(item => {
                     let sort = 0;
                     if (item._id == this.props.getStateApp.sessionAuth!.user.userId) {
                         sort = 1;
                     }
                     return sort;
                 })
-                state.items = items.filter(item => item.roleId != UserRoleId.SuperAdmin);
                 return state;
             }, () => this.onSearch(this.state.searchKey));
         }
@@ -93,7 +99,7 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                     type: "loading"
                 });
 
-                let serviceResult = await UserService.deleteWithId({_id: userId})
+                let serviceResult = await UserService.deleteWithId({_id: userId}, this.abortController.signal)
                 loadingToast.hide();
                 if (serviceResult.status) {
                     this.setState((state: IPageState) => {
@@ -128,7 +134,7 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
 
     navigatePage(type: "edit", itemId = "") {
         let path = EndPoints.USER_WITH.EDIT(itemId);
-        this.props.router.push(path);
+        RouteUtil.change({props: this.props, path: path});
     }
 
     get getTableColumns(): TableColumn<IPageState["items"][0]>[] {

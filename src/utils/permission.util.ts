@@ -8,6 +8,7 @@ import {IPagePropCommon} from "types/pageProps";
 import {EndPoints} from "constants/endPoints";
 import ComponentToast from "components/elements/toast";
 import {bool} from "prop-types";
+import {RouteUtil} from "utils/route.util";
 
 export enum PostPermissionMethod {
     GET,
@@ -101,7 +102,7 @@ const checkAndRedirect = (props: IPagePropCommon, minPermission: IEndPointPermis
                 content: props.t("noPerm"),
                 position: "top-right"
             });
-            props.router.push(redirectPath);
+            RouteUtil.change({props: props, path: redirectPath});
         }
     } else {
         status = false;
@@ -111,7 +112,7 @@ const checkAndRedirect = (props: IPagePropCommon, minPermission: IEndPointPermis
             content: props.t("sessionRequired"),
             position: "top-right"
         });
-        props.router.push(EndPoints.LOGIN);
+        RouteUtil.change({props: props, path: EndPoints.LOGIN});
     }
 
     return status;

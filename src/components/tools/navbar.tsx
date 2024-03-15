@@ -13,6 +13,7 @@ import Image from "next/image"
 import {IThemeKeys} from "types/constants/themeKeys";
 import {EndPoints} from "constants/endPoints";
 import {ImageSourceUtil} from "utils/imageSource.util";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     isDarkTheme: boolean
@@ -47,10 +48,10 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
     async profileEvents(event: "profile" | "lock" | "signOut" | "changePassword") {
         switch(event) {
             case "profile":
-                await this.props.router.push(EndPoints.SETTINGS_WITH.PROFILE)
+                await RouteUtil.change({props: this.props, path: EndPoints.SETTINGS_WITH.PROFILE})
                 break;
             case "changePassword":
-                await this.props.router.push(EndPoints.SETTINGS_WITH.CHANGE_PASSWORD)
+                await RouteUtil.change({props: this.props, path: EndPoints.SETTINGS_WITH.CHANGE_PASSWORD})
                 break;
             case "lock":
                 let resultLock = await AuthService.logOut();
@@ -64,11 +65,9 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
                 let resultSignOut = await AuthService.logOut();
                 if(resultSignOut.status) {
                     this.props.setStateApp({
-                        isPageLoading: true,
-                        isAppLoading: true,
                         sessionAuth: undefined
                     }, async () => {
-                        await this.props.router.push(EndPoints.LOGIN);
+                        await RouteUtil.change({props: this.props, path: EndPoints.LOGIN});
                     });
                 }
                 break;

@@ -22,6 +22,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageSubscribers extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -42,6 +44,10 @@ export default class PageSubscribers extends Component<IPageProps, IPageState> {
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         this.props.setBreadCrumb([
             this.props.t("settings"),
@@ -50,7 +56,7 @@ export default class PageSubscribers extends Component<IPageProps, IPageState> {
     }
 
     async getItems() {
-        let result = (await SubscriberService.getMany({}));
+        let result = (await SubscriberService.getMany({}, this.abortController.signal));
 
         if(result.status && result.data){
             this.setState({
@@ -78,7 +84,7 @@ export default class PageSubscribers extends Component<IPageProps, IPageState> {
 
             let serviceResult = await SubscriberService.getMany({
                 _id: selectedItemId
-            });
+            }, this.abortController.signal);
             loadingToast.hide();
             if (serviceResult.status) {
                 this.setState((state: IPageState) => {

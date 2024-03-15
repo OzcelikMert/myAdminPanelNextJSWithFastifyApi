@@ -14,6 +14,7 @@ import {PermissionUtil} from "utils/permission.util";
 import {NavigationEndPointPermission} from "constants/endPointPermissions/navigation.endPoint.permission";
 import {status, StatusId} from "constants/status";
 import {EndPoints} from "constants/endPoints";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     searchKey: string
@@ -28,6 +29,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageNavigationList extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -51,17 +54,8 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
         }
     }
 
-    async componentDidUpdate(prevProps: Readonly<IPageProps>) {
-        if (prevProps.getStateApp.appData.currentLangId != this.props.getStateApp.appData.currentLangId) {
-            this.props.setStateApp({
-                isPageLoading: true
-            }, async () => {
-                await this.getItems()
-                this.props.setStateApp({
-                    isPageLoading: false
-                })
-            })
-        }
+    componentWillUnmount() {
+        this.abortController.abort();
     }
 
     setPageTitle() {
@@ -74,7 +68,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
     async getItems() {
         let result = (await NavigationService.getMany({
             langId: this.props.getStateApp.appData.currentLangId
-        }));
+        }, this.abortController.signal));
 
         if (result.status && result.data) {
             this.setState((state: IPageState) => {
@@ -102,7 +96,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                     type: "loading"
                 });
 
-                let serviceResult = await NavigationService.deleteMany({_id: selectedItemId});
+                let serviceResult = await NavigationService.deleteMany({_id: selectedItemId}, this.abortController.signal);
                 loadingToast.hide();
                 if (serviceResult.status) {
                     this.setState((state: IPageState) => {
@@ -123,7 +117,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                 content: this.props.t("updating"),
                 type: "loading"
             });
-            let serviceResult = await NavigationService.updateStatusMany({_id: selectedItemId, statusId: statusId});
+            let serviceResult = await NavigationService.updateStatusMany({_id: selectedItemId, statusId: statusId}, this.abortController.signal);
             loadingToast.hide();
             if (serviceResult.status) {
                 this.setState((state: IPageState) => {
@@ -149,7 +143,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
         let serviceResult = await NavigationService.updateRankWithId({
             _id: this.state.selectedItemId,
             rank: rank
-        });
+        }, this.abortController.signal);
 
         if (serviceResult.status) {
             this.setState((state: IPageState) => {
@@ -203,7 +197,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
         let pagePath = EndPoints.NAVIGATION_WITH;
         switch (type) {
             case "edit":
-                this.props.router.push(pagePath.EDIT(itemId));
+                RouteUtil.change({props: this.props, path: pagePath.EDIT(itemId)});
                 break;
         }
     }

@@ -21,6 +21,7 @@ export interface IPostAlternateService {
 export type IPostGetOneResultService = {
     authorId: IUserPopulateService,
     lastAuthorId: IUserPopulateService,
+    authors?: IUserPopulateService[],
     views?: number,
     categories?: IPostTermPopulateService[]
     tags?: IPostTermPopulateService[]
@@ -33,7 +34,7 @@ export type IPostGetOneResultService = {
             alternates?: IPostAlternateService[]
         })[]
     })
-} & Omit<IPostModel, "contents"|"categories"|"tags"|"eCommerce"|"authorId"|"lastAuthorId"|"components">
+} & Omit<IPostModel, "contents"|"categories"|"tags"|"eCommerce"|"authorId"|"lastAuthorId"|"components"|"authors">
 
 export type IPostGetManyResultService = {
     eCommerce?: (Omit<IPostECommerceModel, "variations"> & {

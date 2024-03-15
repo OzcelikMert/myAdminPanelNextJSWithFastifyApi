@@ -17,6 +17,7 @@ import {PermissionUtil, PostPermissionMethod} from "utils/permission.util";
 import {PostUtil} from "utils/post.util";
 import {status, StatusId} from "constants/status";
 import {ImageSourceUtil} from "utils/imageSource.util";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     typeId: PostTermTypeId
@@ -33,6 +34,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PagePostTermList extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -58,17 +61,8 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
         }
     }
 
-    async componentDidUpdate(prevProps: Readonly<IPageProps>) {
-        if (prevProps.getStateApp.appData.currentLangId != this.props.getStateApp.appData.currentLangId) {
-            this.props.setStateApp({
-                isPageLoading: true
-            }, async () => {
-                await this.getItems()
-                this.props.setStateApp({
-                    isPageLoading: false
-                })
-            })
-        }
+    componentWillUnmount() {
+        this.abortController.abort();
     }
 
     setPageTitle() {
@@ -90,7 +84,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
             postTypeId: this.state.postTypeId,
             langId: this.props.getStateApp.appData.currentLangId,
             withPostCount: [PostTermTypeId.Category].includes(this.state.typeId)
-        }));
+        }, this.abortController.signal));
 
         if (result.status && result.data) {
             this.setState({
@@ -122,7 +116,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                     _id: selectedItemId,
                     typeId: this.state.typeId,
                     postTypeId: this.state.postTypeId
-                })
+                }, this.abortController.signal)
 
                 loadingToast.hide();
                 if (serviceResult.status) {
@@ -150,7 +144,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                 typeId: this.state.typeId,
                 postTypeId: this.state.postTypeId,
                 statusId: statusId
-            });
+            }, this.abortController.signal);
 
             loadingToast.hide();
             if (serviceResult.status) {
@@ -179,7 +173,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
             rank: rank,
             postTypeId: this.state.postTypeId,
             typeId: this.state.typeId
-        });
+        }, this.abortController.signal);
 
         if (serviceResult.status) {
             this.setState((state: IPageState) => {
@@ -245,7 +239,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                 path = pagePath.LIST;
                 break;
         }
-        this.props.router.push(path);
+        RouteUtil.change({props: this.props, path: path});
     }
 
     onClickUpdateRank(itemId: string) {

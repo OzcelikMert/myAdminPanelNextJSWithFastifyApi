@@ -18,6 +18,7 @@ import {UserRoleId} from "constants/userRoles";
 import ComponentPageComponentElementTypeInput from "components/pages/component/add/elementTypeInput";
 import {ComponentTypeId, componentTypes} from "constants/componentTypes";
 import ReactHandleFormLibrary from "library/react/handles/form";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     elementTypes: IThemeFormSelectValue[]
@@ -32,6 +33,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageComponentAdd extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -78,6 +81,10 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         let titles: string[] = [
             this.props.t("components"),
@@ -113,7 +120,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
         let serviceResult = await ComponentService.getWithId({
             _id: this.state.formData._id,
             langId: this.props.getStateApp.appData.currentLangId,
-        });
+        }, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             const item = serviceResult.data;
 
@@ -145,7 +152,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
 
     async navigatePage() {
         let path = EndPoints.COMPONENT_WITH.LIST;
-        await this.props.router.push(path);
+        await RouteUtil.change({props: this.props, path: path});
     }
 
     onSubmit(event: FormEvent) {
@@ -156,8 +163,8 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
             let params = this.state.formData;
 
             let serviceResult = await ((params._id)
-                ? ComponentService.updateWithId(params)
-                : ComponentService.add(params))
+                ? ComponentService.updateWithId(params, this.abortController.signal)
+                : ComponentService.add(params, this.abortController.signal))
 
             this.setState({
                 isSubmitting: false

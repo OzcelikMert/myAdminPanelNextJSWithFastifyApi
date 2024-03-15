@@ -15,6 +15,7 @@ import {IPermissionGroup} from "types/constants/permissionGroups";
 import {IPermission} from "types/constants/permissions";
 import {ImageSourceUtil} from "utils/imageSource.util";
 import ComponentSpinnerDonut from "components/elements/spinners/donut";
+import {cloneDeepWith} from "lodash";
 
 type IPageState = {
     isSubmitting: boolean
@@ -27,6 +28,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageSettingsProfile extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -46,11 +49,15 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
     }
 
     async componentDidMount() {
-        this.setPageTitle();
         await this.getUser();
+        this.setPageTitle();
         this.props.setStateApp({
             isPageLoading: false
         })
+    }
+
+    componentWillUnmount() {
+        this.abortController.abort();
     }
 
     setPageTitle() {
@@ -58,7 +65,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
     }
 
     async getUser() {
-        let serviceResult = await UserService.getWithId({_id: this.props.getStateApp.sessionAuth!.user.userId});
+        let serviceResult = await UserService.getWithId({_id: this.props.getStateApp.sessionAuth!.user.userId}, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             const user = serviceResult.data;
             await new Promise(resolve => {
@@ -85,7 +92,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
             isSubmitting: true,
             isImageChanging: true
         }, async () => {
-            let serviceResult = await UserService.updateProfile({image: image});
+            let serviceResult = await UserService.updateProfile({image: image}, this.abortController.signal);
             if (serviceResult.status) {
                 this.setState((state: IPageState) => {
                     state.isSubmitting = false;
@@ -116,7 +123,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
         this.setState({
             isSubmitting: true
         }, async () => {
-            let serviceResult = await UserService.updateProfile(this.state.formData);
+            let serviceResult = await UserService.updateProfile(this.state.formData, this.abortController.signal);
             if (serviceResult.status) {
                 this.props.setStateApp({
                     sessionAuth: {

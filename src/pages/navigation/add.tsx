@@ -13,6 +13,7 @@ import {NavigationEndPointPermission} from "constants/endPointPermissions/naviga
 import {ComponentUtil} from "utils/component.util";
 import {StatusId} from "constants/status";
 import {EndPoints} from "constants/endPoints";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     items: IThemeFormSelectValue[]
@@ -26,6 +27,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageNavigationAdd extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -75,6 +78,10 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         let titles: string[] = [
             this.props.t("navigations"),
@@ -102,7 +109,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
         let serviceResult = await NavigationService.getMany({
             langId: this.props.getStateApp.appData.mainLangId,
             statusId: StatusId.Active,
-        });
+        }, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
                 state.items = [{value: "", label: this.props.t("notSelected")}];
@@ -125,7 +132,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
         let serviceResult = await NavigationService.getWithId({
             _id: this.state.formData._id,
             langId: this.props.getStateApp.appData.currentLangId
-        });
+        }, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             const item = serviceResult.data;
 
@@ -156,7 +163,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
 
     async navigatePage() {
         let pagePath = EndPoints.NAVIGATION_WITH.LIST;
-        await this.props.router.push(pagePath);
+        await RouteUtil.change({props: this.props, path: pagePath});
     }
 
     onSubmit(event: FormEvent) {
@@ -169,8 +176,8 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
             };
 
             let serviceResult = await ((params._id)
-                ? NavigationService.updateWithId(params)
-                : NavigationService.add(params));
+                ? NavigationService.updateWithId(params, this.abortController.signal)
+                : NavigationService.add(params, this.abortController.signal));
             this.setState({
                 isSubmitting: false
             });

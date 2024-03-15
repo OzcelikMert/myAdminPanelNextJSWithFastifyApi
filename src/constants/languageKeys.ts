@@ -1,4 +1,5 @@
 export const languageKeys = [
+    "authors",
     "tool",
     "itemLanguageWarning",
     "elements",

@@ -17,6 +17,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageChangePassword extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -34,6 +36,10 @@ export default class PageChangePassword extends Component<IPageProps, IPageState
         this.props.setStateApp({
             isPageLoading: false
         })
+    }
+
+    componentWillUnmount() {
+        this.abortController.abort();
     }
 
     setPageTitle() {
@@ -54,7 +60,7 @@ export default class PageChangePassword extends Component<IPageProps, IPageState
         this.setState({
             isSubmitting: true
         }, async () => {
-            let serviceResult = await UserService.updatePassword(this.state.formData);
+            let serviceResult = await UserService.updatePassword(this.state.formData, this.abortController.signal);
             if (serviceResult.status) {
                 new ComponentToast({
                     type: "success",

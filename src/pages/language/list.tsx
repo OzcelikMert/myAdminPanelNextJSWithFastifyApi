@@ -13,6 +13,7 @@ import {LanguageEndPointPermission} from "constants/endPointPermissions/language
 import {EndPoints} from "constants/endPoints";
 import {ImageSourceUtil} from "utils/imageSource.util";
 import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     searchKey: string
@@ -25,6 +26,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageSettingLanguageList extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -46,6 +49,10 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         this.props.setBreadCrumb([
             this.props.t("settings"),
@@ -55,7 +62,7 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
     }
 
     async getItems() {
-        let result = (await LanguageService.getMany({}));
+        let result = (await LanguageService.getMany({}, this.abortController.signal));
 
         if(result.status && result.data){
             this.setState((state: IPageState) => {
@@ -70,7 +77,7 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
         let serviceResult = await LanguageService.updateRankWithId({
             _id: this.state.selectedItemId,
             rank: rank
-        });
+        }, this.abortController.signal);
 
         if(serviceResult.status){
             this.setState((state: IPageState) => {
@@ -102,7 +109,7 @@ export default class PageSettingLanguageList extends Component<IPageProps, IPage
     navigatePage(type: "edit", itemId = "") {
         let pagePath = EndPoints.LANGUAGE_WITH;
         switch(type){
-            case "edit": this.props.router.push(pagePath.EDIT(itemId)); break;
+            case "edit": RouteUtil.change({props: this.props, path: pagePath.EDIT(itemId)}); break;
         }
     }
 

@@ -15,6 +15,7 @@ import {StatusId} from "constants/status";
 import {ComponentUtil} from "utils/component.util";
 import {EndPoints} from "constants/endPoints";
 import {ImageSourceUtil} from "utils/imageSource.util";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     mainTabActiveKey: string
@@ -28,6 +29,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageSettingLanguageAdd extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -64,6 +67,10 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         let titles: string[] = [
             this.props.t("settings"),
@@ -87,7 +94,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
     }
 
     async getFlags() {
-        let serviceResult = await LanguageService.getFlags({});
+        let serviceResult = await LanguageService.getFlags({}, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
                 state.flags = [{value: "", label: this.props.t("notSelected")}];
@@ -101,7 +108,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
     }
 
     async getItem() {
-        let serviceResult = await LanguageService.getWithId({_id: this.state.formData._id});
+        let serviceResult = await LanguageService.getWithId({_id: this.state.formData._id}, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             const item = serviceResult.data;
 
@@ -122,7 +129,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
 
     async navigatePage(isReload?: boolean) {
         let pagePath = EndPoints.LANGUAGE_WITH.LIST;
-        await this.props.router.push(pagePath);
+        await RouteUtil.change({props: this.props, path: pagePath});
         if(isReload){
             window.location.reload();
         }
@@ -138,8 +145,8 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
             };
 
             let serviceResult = await ((params._id)
-                ? LanguageService.updateWithId(params)
-                : LanguageService.add(params));
+                ? LanguageService.updateWithId(params, this.abortController.signal)
+                : LanguageService.add(params, this.abortController.signal));
             this.setState({
                 isSubmitting: false
             });

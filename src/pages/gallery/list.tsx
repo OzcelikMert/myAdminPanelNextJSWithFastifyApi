@@ -32,6 +32,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
     toast: null | ComponentToast = null;
     listPage: number = 0;
     listPagePerCount: number = 10;
+    abortController = new AbortController();
 
     constructor(props: IPageProps) {
         super(props);
@@ -61,6 +62,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
     }
 
     componentWillUnmount() {
+        this.abortController.abort();
         this.toast?.hide();
     }
 
@@ -81,7 +83,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
     }
 
     async getItems() {
-        let serviceResult = await GalleryService.get({typeId: GalleryTypeId.Image});
+        let serviceResult = await GalleryService.get({typeId: GalleryTypeId.Image}, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             this.setListSort(serviceResult.data);
         }
@@ -152,7 +154,7 @@ export default class PageGalleryList extends Component<IPageProps, IPageState> {
                 type: "loading"
             });
 
-            let serviceResult = await GalleryService.deleteMany({_id: this.state.selectedItems});
+            let serviceResult = await GalleryService.deleteMany({_id: this.state.selectedItems}, this.abortController.signal);
             loadingToast.hide();
             if (serviceResult.status) {
                 this.setState((state: IPageState) => {

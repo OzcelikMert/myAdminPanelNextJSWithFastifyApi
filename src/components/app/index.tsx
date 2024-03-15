@@ -18,6 +18,7 @@ import {multiLanguagePaths} from "constants/multiLanguagePaths";
 import {EndPoints} from "constants/endPoints";
 import ComponentSpinnerDonut from "components/elements/spinners/donut";
 import ComponentToolLock from "components/tools/lock";
+import {cloneDeepWith} from "lodash";
 
 type IPageState = {
     breadCrumbTitle: string
@@ -28,7 +29,7 @@ type IPageProps = {
 } & AppProps
 
 class ComponentApp extends Component<IPageProps, IPageState> {
-    pathname: string;
+    pathname: string = "";
 
     constructor(props: IPageProps) {
         super(props);
@@ -37,6 +38,7 @@ class ComponentApp extends Component<IPageProps, IPageState> {
             breadCrumbTitle: "",
             isAppLoading: true,
             isPageLoading: true,
+            isRouteChanged: true,
             isLock: false,
             appData: {
                 mainLangId: "",
@@ -50,7 +52,7 @@ class ComponentApp extends Component<IPageProps, IPageState> {
     async componentDidUpdate(prevProps: Readonly<IPageProps>, prevState: Readonly<IPageState>) {
         if (this.pathname !== this.props.router.asPath) {
             this.pathname = this.props.router.asPath;
-            await this.onRouteChanged()
+            await this.onRouteChanged();
         }
         if (prevState.isPageLoading && !this.state.isPageLoading) {
             window.scrollTo(0, 0);
@@ -61,13 +63,18 @@ class ComponentApp extends Component<IPageProps, IPageState> {
     async onRouteChanged() {
         await new Promise(resolve => {
             this.setState((state: IPageState) => {
-                state.isPageLoading = true;
+                if (!this.state.isPageLoading) {
+                    state.isPageLoading = true;
+                }
+
                 if (this.state.appData.currentLangId != this.state.appData.mainLangId) {
                     state.appData = {
                         ...state.appData,
                         currentLangId: state.appData.mainLangId,
                     }
                 }
+
+                state.isRouteChanged = true;
                 return state;
             }, () => resolve(1));
         })
@@ -86,7 +93,7 @@ class ComponentApp extends Component<IPageProps, IPageState> {
 
     setStateApp(data: ISetStateApp, callBack?: () => void) {
         this.setState((state: IPageState) => {
-            state = Variable.nestedObjectAssign(Object.create(state), data);
+            state = Variable.nestedObjectAssign(cloneDeepWith(state), data);
             return state;
         }, () => {
             if (callBack) {
@@ -133,8 +140,6 @@ class ComponentApp extends Component<IPageProps, IPageState> {
     }
 
     render() {
-        let isPageChange = this.pathname !== this.props.router.asPath;
-
         if (this.props.router.asPath === "/" || typeof this.props.pageProps.statusCode !== "undefined") {
             this.props.router.replace(EndPoints.LOGIN);
             return null;
@@ -157,43 +162,43 @@ class ComponentApp extends Component<IPageProps, IPageState> {
         return (
             <div>
                 <ComponentHead title={this.state.breadCrumbTitle}/>
-                <div className="container-scroller">
-                    {
-                        this.state.isAppLoading ? <ComponentSpinnerDonut customClass="app-spinner"/> : null
-                    }
-                    {
-                        ![EndPoints.LOGIN].includes(this.props.router.pathname) && this.state.isLock
-                            ? <ComponentToolLock {...commonProps} />
-                            : null
-                    }
-                    <ToastContainer/>
-                    <ComponentToolNavbar {...commonProps} isFullPageLayout={isFullPageLayout}/>
-                    <div
-                        className={`container-fluid page-body-wrapper ${isFullPageLayout ? "full-page-wrapper" : ""}`}>
-                        {!isFullPageLayout ? <ComponentToolSidebar {...commonProps}/> : null}
-                        <div className="main-panel">
-                            <div className="content-wrapper">
-                                {
-                                    this.state.isPageLoading ?
-                                        <ComponentSpinnerDonut customClass="page-spinner"/> : null
-                                }
-                                {
-                                    !isFullPageLayout ? <this.PageHeader {...commonProps} /> : null
-                                }
+                {
+                    this.state.isAppLoading ? <ComponentSpinnerDonut customClass="app-spinner"/> : null
+                }
+                <ComponentProviderAppInit  {...commonProps}>
+                    <div className="container-scroller">
+                        {
+                            ![EndPoints.LOGIN].includes(this.props.router.pathname) && this.state.isLock
+                                ? <ComponentToolLock {...commonProps} />
+                                : null
+                        }
+                        <ToastContainer/>
+                        <ComponentToolNavbar {...commonProps} isFullPageLayout={isFullPageLayout}/>
+                        <div
+                            className={`container-fluid page-body-wrapper ${isFullPageLayout ? "full-page-wrapper" : ""}`}>
+                            {!isFullPageLayout ? <ComponentToolSidebar {...commonProps}/> : null}
+                            <div className="main-panel">
+                                <div className="content-wrapper">
+                                    {
+                                        this.state.isPageLoading ?
+                                            <ComponentSpinnerDonut customClass="page-spinner"/> : null
+                                    }
+                                    {
+                                        !isFullPageLayout ? <this.PageHeader {...commonProps} /> : null
+                                    }
 
                                     {
-                                        !isPageChange
+                                        this.state.isRouteChanged
                                             ? <ComponentProviderAuth {...commonProps}>
-                                                <ComponentProviderAppInit  {...commonProps}>
-                                                    <this.props.Component {...commonProps}/>
-                                                </ComponentProviderAppInit>
+                                                <this.props.Component {...commonProps}/>
                                             </ComponentProviderAuth> : null
                                     }
+                                </div>
+                                {!isFullPageLayout ? <ComponentToolFooter/> : ''}
                             </div>
-                            {!isFullPageLayout ? <ComponentToolFooter/> : ''}
                         </div>
                     </div>
-                </div>
+                </ComponentProviderAppInit>
             </div>
         );
     }

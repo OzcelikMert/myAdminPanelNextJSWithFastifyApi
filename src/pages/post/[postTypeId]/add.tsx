@@ -32,11 +32,16 @@ import {ImageSourceUtil} from "utils/imageSource.util";
 import {ComponentService} from "services/component.service";
 import ComponentPagePostAddComponent from "components/pages/post/add/component";
 import {ComponentTypeId} from "constants/componentTypes";
+import {UserService} from "services/user.service";
+import {UserRoleId} from "constants/userRoles";
+import {IUserPopulateService} from "types/services/user.service";
+import {RouteUtil} from "utils/route.util";
 
 const ComponentThemeRichTextBox = dynamic(() => import("components/theme/richTextBox"), {ssr: false});
 
 export type IPageState = {
     langKeys: IThemeFormSelectValue[]
+    authors: IThemeFormSelectValue[]
     pageTypes: IThemeFormSelectValue[]
     attributeTypes: IThemeFormSelectValue[]
     productTypes: IThemeFormSelectValue[]
@@ -49,7 +54,7 @@ export type IPageState = {
     status: IThemeFormSelectValue[]
     isSubmitting: boolean
     mainTitle: string
-    formData: IPostUpdateWithIdParamService,
+    formData: IPostUpdateWithIdParamService & { authorId?: IUserPopulateService },
     isSelectionImage: boolean
     isIconActive: boolean
 } & { [key: string]: any };
@@ -57,11 +62,14 @@ export type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PagePostAdd extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
             mainTabActiveKey: `general`,
             attributeTypes: [],
+            authors: [],
             components: [],
             productTypes: [],
             attributes: [],
@@ -126,6 +134,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                     }
                 })
             }
+            await this.getAuthors();
             this.getStatus();
             if (this.state.formData._id) {
                 await this.getItem();
@@ -148,6 +157,10 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 })
             })
         }
+    }
+
+    componentWillUnmount() {
+        this.abortController.abort();
     }
 
     setPageTitle() {
@@ -213,11 +226,29 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
         })
     }
 
+    async getAuthors() {
+        let serviceResult = await UserService.getMany({
+            permissions: [...PermissionUtil.getPostPermission(this.state.formData.typeId, PostPermissionMethod.UPDATE).permissionId]
+        }, this.abortController.signal);
+        if (serviceResult.status && serviceResult.data) {
+            let items = serviceResult.data;
+            this.setState((state: IPageState) => {
+                state.authors = items.filter(item => item.roleId != UserRoleId.SuperAdmin && item._id != this.props.getStateApp.sessionAuth?.user.userId).map(author => {
+                    return {
+                        value: author._id,
+                        label: author.email
+                    };
+                });
+                return state;
+            })
+        }
+    }
+
     async getComponents() {
         let serviceResult = await ComponentService.getMany({
             langId: this.props.getStateApp.appData.mainLangId,
             typeId: ComponentTypeId.Theme
-        });
+        }, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
                 state.components = serviceResult.data!.map(component => {
@@ -236,7 +267,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
             postTypeId: this.state.formData.typeId,
             langId: this.props.getStateApp.appData.mainLangId,
             statusId: StatusId.Active
-        });
+        }, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
                 state.categories = [];
@@ -275,7 +306,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
             _id: this.state.formData._id,
             typeId: this.state.formData.typeId,
             langId: this.props.getStateApp.appData.currentLangId
-        });
+        }, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             const item = serviceResult.data;
 
@@ -304,6 +335,10 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
 
                     if (item.components) {
                         state.formData.components = item.components.map(component => component._id);
+                    }
+
+                    if (item.authors) {
+                        state.formData.authors = item.authors.map(author => author._id);
                     }
 
                     if (item.eCommerce) {
@@ -351,7 +386,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     async navigatePage() {
         let postTypeId = this.state.formData.typeId;
         let pagePath = PostUtil.getPagePath(postTypeId);
-        await this.props.router.push(pagePath.LIST);
+        await RouteUtil.change({props: this.props, path: pagePath.LIST});
     }
 
     onSubmit(event: FormEvent) {
@@ -364,8 +399,8 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
             };
 
             let serviceResult = await ((params._id)
-                ? PostService.updateWithId(params)
-                : PostService.add(params));
+                ? PostService.updateWithId(params, this.abortController.signal)
+                : PostService.add(params, this.abortController.signal));
 
             this.setState({
                 isSubmitting: false
@@ -438,13 +473,29 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 </div>
                 {
                     [PostTypeId.Page].includes(Number(this.state.formData.typeId))
-                        ? <div className="col-md-7">
+                        ? <div className="col-md-7 mb-3">
                             <ComponentFormSelect
                                 title={this.props.t("pageType")}
                                 name="formData.pageTypeId"
                                 options={this.state.pageTypes}
                                 value={this.state.pageTypes?.findSingle("value", this.state.formData.pageTypeId || "")}
                                 onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
+                            />
+                        </div> : null
+                }
+                {
+                    !this.state.formData._id ||
+                    PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.Editor) ||
+                    this.props.getStateApp.sessionAuth!.user.userId == this.state.formData.authorId?._id
+                        ? <div className="col-md-7 mb-3">
+                            <ComponentFormSelect
+                                title={this.props.t("authors")}
+                                name="formData.authors"
+                                isMulti
+                                closeMenuOnSelect={false}
+                                options={this.state.authors}
+                                value={this.state.authors?.filter(selectAuthor => this.state.formData.authors?.includes(selectAuthor.value))}
+                                onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item, this)}
                             />
                         </div> : null
                 }

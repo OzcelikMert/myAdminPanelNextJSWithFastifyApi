@@ -8,25 +8,28 @@ import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 import {IViewModel} from "types/models/view.model";
 
-const getNumber = () => {
+const getNumber = (signal?: any) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoint: ApiEndPoints.VIEW_WITH.GET_NUMBER
+        endPoint: ApiEndPoints.VIEW_WITH.GET_NUMBER,
+        signal: signal
     }).get<IViewGetNumberResultService>();
 }
 
-const getStatistics = () => {
+const getStatistics = (signal?: any) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoint: ApiEndPoints.VIEW_WITH.GET_STATISTICS
+        endPoint: ApiEndPoints.VIEW_WITH.GET_STATISTICS,
+        signal: signal
     }).get<IViewGetStatisticsResultService>();
 }
 
-const add = (params: IViewAddParamService) => {
+const add = (params: IViewAddParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.VIEW_WITH.ADD,
-        data: params
+        data: params,
+        signal: signal
     }).post<IViewModel>();
 }
 

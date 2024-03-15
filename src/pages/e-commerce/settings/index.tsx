@@ -22,6 +22,8 @@ type IPageState = {
 type IPageProps = {} & IPagePropCommon;
 
 export default class PageECommerceSettings extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -47,12 +49,16 @@ export default class PageECommerceSettings extends Component<IPageProps, IPageSt
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         this.props.setBreadCrumb([this.props.t("eCommerce"), this.props.t("settings")])
     }
 
     async getSettings() {
-        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.ECommerce})
+        let serviceResult = await SettingService.get({projection: SettingProjectionKeys.ECommerce}, this.abortController.signal)
         if (serviceResult.status && serviceResult.data) {
             let setting = serviceResult.data;
             this.setState((state: IPageState) => {
@@ -81,7 +87,7 @@ export default class PageECommerceSettings extends Component<IPageProps, IPageSt
         this.setState({
             isSubmitting: true
         }, async () => {
-            let serviceResult = await SettingService.updateECommerce(this.state.formData);
+            let serviceResult = await SettingService.updateECommerce(this.state.formData, this.abortController.signal);
             if (serviceResult.status) {
                 this.props.setStateApp({
                     appData: {

@@ -9,51 +9,57 @@ import {
 } from "types/services/component.service";
 import {IComponentModel} from "types/models/component.model";
 
-const getWithId = (params: IComponentGetWithIdParamService) =>  {
+const getWithId = (params: IComponentGetWithIdParamService, signal?: AbortSignal) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.COMPONENT_WITH.GET_WITH_ID(params._id),
-        data: params
+        data: params,
+        signal: signal
     }).get<IComponentGetResultService>();
 }
 
-const getWithElementId = (params: IComponentGetWithElementIdParamService) =>  {
+const getWithElementId = (params: IComponentGetWithElementIdParamService, signal?: AbortSignal) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.COMPONENT_WITH.GET_WITH_ELEMENT_ID(params.elementId),
-        data: params
+        data: params,
+        signal: signal
     }).get<IComponentGetResultService>();
 }
 
-const getMany = (params: IComponentGetManyParamService) =>  {
+const getMany = (params: IComponentGetManyParamService, signal?: AbortSignal) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.COMPONENT_WITH.GET,
         data: params,
+        signal: signal
     }).get<IComponentGetResultService[]>();
 }
 
-const add = (params: IComponentAddParamService) =>  {
+const add = (params: IComponentAddParamService, signal?: AbortSignal) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.COMPONENT_WITH.ADD,
         data: params,
+        signal: signal
     }).post<IComponentModel>();
 }
 
-const updateWithId = (params: IComponentUpdateWithIdParamService) =>  {
+const updateWithId = (params: IComponentUpdateWithIdParamService, signal?: AbortSignal) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.COMPONENT_WITH.UPDATE_WITH_ID(params._id),
         data: params,
+        signal: signal
     }).put();
 }
 
-const deleteMany = (params: IComponentDeleteManyParamService) =>  {
+const deleteMany = (params: IComponentDeleteManyParamService, signal?: AbortSignal) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.COMPONENT_WITH.DELETE,
         data: params,
+        signal: signal
     }).delete();
 }
 

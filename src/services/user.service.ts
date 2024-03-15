@@ -11,59 +11,66 @@ import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 import {IUserModel} from "types/models/user.model";
 
-const getWithId = (params: IUserGetWithIdParamService) => {
+const getWithId = (params: IUserGetWithIdParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.USER_WITH.GET_WITH_ID(params._id),
         data: params,
+        signal: signal
     }).get<IUserGetResultService>();
 }
 
-const getMany = (params: IUserGetManyParamService) => {
+const getMany = (params: IUserGetManyParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.USER_WITH.GET,
         data: params,
+        signal: signal
     }).get<IUserGetResultService[]>();
 }
 
-const add = (params: IUserAddParamService) => {
+const add = (params: IUserAddParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.USER_WITH.ADD,
         data: params,
+        signal: signal
     }).post<IUserModel>();
 }
 
-const updateWithId = (params: IUserUpdateWithIdParamService) => {
+const updateWithId = (params: IUserUpdateWithIdParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.USER_WITH.UPDATE_WITH_ID(params._id),
         data: params,
+        signal: signal
     }).put();
 }
 
-const updateProfile = (params: IUserUpdateProfileParamService) => {
+const updateProfile = (params: IUserUpdateProfileParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.USER_WITH.UPDATE_PROFILE,
         data: params,
+        signal: signal
     }).put();
 }
 
-const updatePassword = (params: IUserUpdatePasswordParamService) => {
+const updatePassword = (params: IUserUpdatePasswordParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.USER_WITH.UPDATE_PASSWORD,
         data: params,
+        signal: signal
     }).put();
 }
 
-const deleteWithId = (params: IUserDeleteWithIdParamService) => {
+const deleteWithId = (params: IUserDeleteWithIdParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.USER_WITH.DELETE_WITH_ID(params._id),
         data: params,
+        signal: signal
     }).delete();
 }
 

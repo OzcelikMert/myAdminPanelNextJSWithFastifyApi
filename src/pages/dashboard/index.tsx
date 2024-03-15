@@ -14,6 +14,7 @@ import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
 import {PostUtil} from "utils/post.util";
 import {ImageSourceUtil} from "utils/imageSource.util";
 import {postTypes} from "constants/postTypes";
+import {RouteUtil} from "utils/route.util";
 
 const WorldMap = dynamic(() => import('react-svg-worldmap'), {ssr: false});
 
@@ -30,6 +31,8 @@ type IPageProps = {} & IPagePropCommon;
 
 class PageDashboard extends Component<IPageProps, IPageState> {
     timer: any;
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         this.state = {
@@ -62,6 +65,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
     }
 
     componentWillUnmount() {
+        this.abortController.abort();
         clearInterval(this.timer);
     }
 
@@ -79,7 +83,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
     }
 
     async getViewNumber() {
-        let serviceResult = await ViewService.getNumber();
+        let serviceResult = await ViewService.getNumber(this.abortController.signal);
 
         if (serviceResult.status && serviceResult.data) {
             if (JSON.stringify(this.state.visitorData.number) != JSON.stringify(serviceResult.data)) {
@@ -92,7 +96,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
     }
 
     async getViewStatistics() {
-        let serviceResult = await ViewService.getStatistics();
+        let serviceResult = await ViewService.getStatistics(this.abortController.signal);
 
         if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
@@ -107,7 +111,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
             langId: this.props.getStateApp.appData.mainLangId,
             count: 10,
             isRecent: true
-        });
+        }, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             this.setState({
                 lastPosts: serviceResult.data
@@ -135,7 +139,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
                 path = pagePath.LIST;
                 break;
         }
-        await this.props.router.push(path);
+        await RouteUtil.change({props: this.props, path: path});
     }
 
     get getLastPostTableColumns(): TableColumn<IPageState["lastPosts"][0]>[] {

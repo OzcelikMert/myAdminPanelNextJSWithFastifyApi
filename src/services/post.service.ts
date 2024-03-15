@@ -13,67 +13,75 @@ import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 import {IPostModel} from "types/models/post.model";
 
-const getWithId = (params: IPostGetWithIdParamService) => {
+const getWithId = (params: IPostGetWithIdParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.GET_WITH_ID(params._id),
-        data: params
+        data: params,
+        signal: signal
     }).get<IPostGetOneResultService>();
 }
 
-const getMany = (params: IPostGetManyParamService) => {
+const getMany = (params: IPostGetManyParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.GET,
-        data: params
+        data: params,
+        signal: signal
     }).get<IPostGetManyResultService[]>();
 }
 
-const getCount = (params: IPostGetCountParamService) => {
+const getCount = (params: IPostGetCountParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.GET_COUNT,
-        data: params
+        data: params,
+        signal: signal
     }).get<number>();
 }
 
-const add = (params: IPostAddParamService) => {
+const add = (params: IPostAddParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.ADD,
-        data: params
+        data: params,
+        signal: signal
     }).post<IPostModel>();
 }
 
-const updateWithId = (params: IPostUpdateWithIdParamService) =>  {
+const updateWithId = (params: IPostUpdateWithIdParamService, signal?: AbortSignal) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.UPDATE_WITH_ID(params._id),
-        data: params
+        data: params,
+        signal: signal
     }).put();
 }
 
-const updateRankWithId = (params: IPostUpdateRankWithIdParamService) =>  {
+const updateRankWithId = (params: IPostUpdateRankWithIdParamService, signal?: AbortSignal) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.UPDATE_RANK_WITH_ID(params._id),
-        data: params
+        data: params,
+        signal: signal
     }).put();
 }
 
-const updateStatusMany = (params: IPostUpdateStatusManyParamService) =>  {
+const updateStatusMany = (params: IPostUpdateStatusManyParamService, signal?: AbortSignal) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.UPDATE_STATUS,
-        data: params
+        data: params,
+        signal: signal
     }).put();
 }
 
-const deleteMany = (params: IPostDeleteManyParamService) =>  {
+const deleteMany = (params: IPostDeleteManyParamService, signal?: AbortSignal) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.POST_WITH.DELETE,
-        data: params
+        data: params,
+        signal: signal
     }).delete();
 }
 

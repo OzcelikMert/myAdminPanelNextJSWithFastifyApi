@@ -17,6 +17,7 @@ import {PostUtil} from "utils/post.util";
 import {StatusId} from "constants/status";
 import {ComponentUtil} from "utils/component.util";
 import {ImageSourceUtil} from "utils/imageSource.util";
+import {RouteUtil} from "utils/route.util";
 
 type IPageState = {
     mainTabActiveKey: string
@@ -36,6 +37,8 @@ type IPageProps = {
 } & IPagePropCommon;
 
 export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
+    abortController = new AbortController();
+
     constructor(props: IPageProps) {
         super(props);
         let _id = this.props._id ?? this.props.router.query._id as string ?? "";
@@ -95,6 +98,10 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
         }
     }
 
+    componentWillUnmount() {
+        this.abortController.abort();
+    }
+
     setPageTitle() {
         let titles: string[] = [
             ...PostUtil.getPageTitles({
@@ -133,7 +140,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
             postTypeId: this.state.formData.postTypeId,
             langId: this.props.getStateApp.appData.mainLangId,
             statusId: StatusId.Active
-        });
+        }, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
                 state.items = [{value: "", label: this.props.t("notSelected")}];
@@ -157,7 +164,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
             typeId: this.state.formData.typeId,
             postTypeId: this.state.formData.postTypeId,
             langId: this.props.getStateApp.appData.currentLangId
-        });
+        }, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             const item = serviceResult.data;
 
@@ -190,7 +197,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
         let postTermTypeId = this.state.formData.typeId;
         let pagePath = PostUtil.getPagePath(postTypeId);
         let path = pagePath.TERM_WITH(postTermTypeId).LIST
-        this.props.router.push(path);
+        RouteUtil.change({props: this.props, path: path});
     }
 
     onSubmit(event: FormEvent) {
@@ -200,8 +207,8 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
         }, async () => {
             let params = this.state.formData;
             let serviceResult = await ((params._id)
-                ? PostTermService.updateWithId(params)
-                : PostTermService.add(params));
+                ? PostTermService.updateWithId(params, this.abortController.signal)
+                : PostTermService.add(params, this.abortController.signal));
 
             this.setState({
                 isSubmitting: false

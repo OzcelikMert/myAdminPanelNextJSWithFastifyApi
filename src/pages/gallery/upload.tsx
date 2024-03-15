@@ -19,6 +19,7 @@ type IPageProps = {
 class PageGalleryUpload extends Component<IPageProps, IPageState> {
     refInputFile: RefObject<HTMLInputElement> = createRef();
     maxFileSize: number;
+    abortController = new AbortController();
 
     constructor(props: IPageProps) {
         super(props);
@@ -34,6 +35,10 @@ class PageGalleryUpload extends Component<IPageProps, IPageState> {
         this.props.setStateApp({
             isPageLoading: false
         })
+    }
+
+    componentWillUnmount() {
+        this.abortController.abort();
     }
 
     setPageTitle() {
@@ -62,7 +67,7 @@ class PageGalleryUpload extends Component<IPageProps, IPageState> {
                     }
                     return state;
                 })
-            });
+            }, this.abortController.signal);
 
             if (serviceResult.status && serviceResult.data) {
                 new ComponentToast({

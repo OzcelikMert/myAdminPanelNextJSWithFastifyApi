@@ -29,6 +29,7 @@ class ApiRequest {
                 method: method,
                 withCredentials: true,
                 timeout: ApiTimeouts.verySlow,
+                signal: this.params.signal,
                 onUploadProgress: (e) => {
                     let percentComplete = Math.round((e.loaded * 100) / (e.total ?? 1))
                     if (typeof this.params.onUploadProgress !== "undefined") {

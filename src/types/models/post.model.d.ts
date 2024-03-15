@@ -11,6 +11,7 @@ export interface IPostModel {
     pageTypeId?: PageTypeId,
     authorId: string
     lastAuthorId: string
+    authors?: string[]
     dateStart: Date,
     rank: number,
     isFixed?: boolean,

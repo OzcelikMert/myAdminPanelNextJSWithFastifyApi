@@ -5,25 +5,28 @@ import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
 import {ISessionAuthModel} from "types/models/sessionAuth.model";
 
-const getSession = () => {
+const getSession = (signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoint: ApiEndPoints.AUTH_WITH.GET
+        endPoint: ApiEndPoints.AUTH_WITH.GET,
+        signal: signal
     }).get<ISessionAuthModel>();
 }
 
-const login = (params: IAuthLoginParamService) => {
+const login = (params: IAuthLoginParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.AUTH_WITH.LOGIN,
         data: params,
+        signal: signal
     }).post<IUserGetResultService>();
 }
 
-const logOut = () => {
+const logOut = (signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
         endPoint: ApiEndPoints.AUTH_WITH.LOGOUT,
+        signal: signal
     }).delete();
 }
 

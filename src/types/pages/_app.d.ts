@@ -5,6 +5,7 @@ import {ILanguageGetResultService} from "types/services/language.service";
 export type IGetStateApp = {
     isAppLoading: boolean
     isPageLoading: boolean
+    isRouteChanged: boolean
     isLock: boolean
     appData: IGetStateAppData
     sessionAuth?: ISessionAuthModel
