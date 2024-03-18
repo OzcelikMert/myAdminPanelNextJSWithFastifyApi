@@ -2,6 +2,7 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
+- post listlerdeki categoriler alt alta geliyor onlari yan yana duzenli guizel gozukecek sekilde ayarla
 - elementId olanlari key olarak guncelle
 - settings contact formu guncelle componentlerden(is editing yerine selectedelement falan kullan)
 - rich textboxdaki buglari hallet (font color, edit image size, vs.)
