@@ -13,7 +13,7 @@ type IPageProps = {
 export default class ComponentThemeBadgeComponentType extends Component<IPageProps, IPageState> {
     render() {
         return (
-            <label className={`badge badge-gradient-${getTypeColor(this.props.typeId)} text-start ${this.props.className ?? ""}`}>
+            <label className={`badge badge-gradient-${getComponentTypeColor(this.props.typeId)} text-start ${this.props.className ?? ""}`}>
                 {
                     this.props.t(componentTypes.findSingle("id", this.props.typeId)?.langKey ?? "[noLangAdd]")
                 }
@@ -22,7 +22,7 @@ export default class ComponentThemeBadgeComponentType extends Component<IPagePro
     }
 }
 
-export function getTypeColor(typeId: ComponentTypeId): string {
+export function getComponentTypeColor(typeId: ComponentTypeId): string {
     let className = ``;
     switch (typeId) {
         case ComponentTypeId.Tool: className = `dark`; break;
