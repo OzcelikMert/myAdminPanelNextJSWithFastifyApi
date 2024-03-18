@@ -2,6 +2,7 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
+- elementId olanlari key olarak guncelle
 - settings contact formu guncelle componentlerden(is editing yerine selectedelement falan kullan)
 - rich textboxdaki buglari hallet (font color, edit image size, vs.)
 - websitenin urllerini dynamic yapmak icin panelden duzenlettir (ornek olarak blog urli her dilde farkli olsun)
