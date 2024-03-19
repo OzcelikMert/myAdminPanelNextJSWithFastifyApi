@@ -128,7 +128,7 @@ class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
 
     onCreate() {
         this.setState((state: IPageState) => {
-            state.formData.staticContents = [{
+            state.formData.staticContents = [...state.formData.staticContents, {
                 _id: String.createId(),
                 label: "",
                 rank: state.formData.staticContents.length + 1,
@@ -137,9 +137,9 @@ class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
                 contents: {
                     langId: this.props.getStateApp.appData.currentLangId
                 }
-            }, ...state.formData.staticContents]
+            }]
             return state;
-        })
+        }, () => this.onEdit(this.state.formData.staticContents.length - 1))
     }
 
     onAccept(index: number) {
@@ -163,7 +163,6 @@ class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
         if (result.isConfirmed) {
             this.setState((state: IPageState) => {
                 state.formData.staticContents.splice(index, 1);
-                state.selectedData = undefined;
                 return state;
             })
         }
@@ -185,7 +184,7 @@ class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
 
     StaticContent = (props: ISettingStaticContentModel, index: number) => {
         return (
-            <div className="col-md-12 mt-4">
+            <div className={`col-md-12 ${index > 0 ? "mt-5" : ""}`}>
                 <ComponentFieldSet
                     legend={props.label}
                     legendElement={
@@ -215,7 +214,7 @@ class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
 
     EditStaticContent = (props: ISettingStaticContentModel, index: number) => {
         return (
-            <div className="col-md-12 mt-3">
+            <div className={`col-md-12 ${index > 0 ? "mt-5" : ""}`}>
                 <ComponentFieldSet legend={this.props.t("newStaticContent")}>
                     <div className="row mt-3">
                         <div className="col-md-12">
@@ -287,15 +286,7 @@ class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
                                 <div className="card">
                                     <div className="card-body">
                                         <div className="row">
-                                            {
-                                                PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
-                                                    ? <div className="col-md-7">
-                                                        <button type={"button"} className="btn btn-gradient-success btn-lg"
-                                                                onClick={() => this.onCreate()}>+ {this.props.t("newStaticContent")}
-                                                        </button>
-                                                    </div> : null
-                                            }
-                                            <div className="col-md-7 mt-2">
+                                            <div className="col-md-7 mt">
                                                 <div className="row">
                                                     {
                                                         this.state.formData.staticContents?.orderBy("rank", "asc").map((item, index) =>
@@ -306,6 +297,14 @@ class PageSettingsStaticContents extends Component<IPageProps, IPageState> {
                                                     }
                                                 </div>
                                             </div>
+                                            {
+                                                PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
+                                                    ? <div className={`col-md-7 text-start ${this.state.formData.staticContents.length > 0 ? "mt-4" : ""}`}>
+                                                        <button type={"button"} className="btn btn-gradient-success btn-lg"
+                                                                onClick={() => this.onCreate()}>+ {this.props.t("newStaticContent")}
+                                                        </button>
+                                                    </div> : null
+                                            }
                                         </div>
                                     </div>
                                 </div>
