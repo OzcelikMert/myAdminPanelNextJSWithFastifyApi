@@ -2,6 +2,7 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
+- pagelerde componentsi sadece super admin ekleyebilsin.
 - sweet alertleri toast olarak degistir
 - post listlerdeki categoriler alt alta geliyor onlari yan yana duzenli guizel gozukecek sekilde ayarla
 - elementId olanlari key olarak guncelle
