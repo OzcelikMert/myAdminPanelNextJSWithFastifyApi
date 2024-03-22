@@ -228,6 +228,7 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                 cell: row => (
                     <div className="row w-100">
                         <div className="col-md-12">
+                            {row.mainId ? <span className="pe-3">-</span> : null}
                             {row.contents?.title || this.props.t("[noLangAdd]")}
                         </div>
                     </div>
