@@ -35,7 +35,10 @@ export interface INavigationGetManyParamService {
     statusId?: StatusId
 }
 
-export type INavigationAddParamService = {} & Omit<INavigationModel, "_id"|"authorId"|"lastAuthorId">
+export type INavigationAddParamService = {
+    isPrimary?: boolean
+    isSecondary?: boolean
+} & Omit<INavigationModel, "_id"|"authorId"|"lastAuthorId"|"isPrimary"|"isSecondary">
 
 export type INavigationUpdateWithIdParamService = {
     _id: string

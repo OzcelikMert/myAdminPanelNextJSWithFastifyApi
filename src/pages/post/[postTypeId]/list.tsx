@@ -371,7 +371,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
             {
                 name: this.props.t("status"),
                 sortable: true,
-                cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId}/>
+                cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId} date={row.dateStart}/>
             },
             {
                 name: this.props.t("updatedBy"),

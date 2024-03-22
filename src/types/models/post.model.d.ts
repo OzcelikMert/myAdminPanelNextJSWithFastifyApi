@@ -12,7 +12,7 @@ export interface IPostModel {
     authorId: string
     lastAuthorId: string
     authors?: string[]
-    dateStart: Date,
+    dateStart?: string,
     rank: number,
     isFixed?: boolean,
     categories?: string[]

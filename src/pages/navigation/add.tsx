@@ -1,6 +1,6 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
-import {ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form"
+import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
@@ -217,6 +217,22 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                         type="number"
                         required={true}
                         value={this.state.formData.rank}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                    />
+                </div>
+                <div className="col-md-7">
+                    <ComponentFormCheckBox
+                        title={this.props.t("primary")}
+                        name="formData.isPrimary"
+                        checked={Boolean(this.state.formData.isPrimary)}
+                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                    />
+                </div>
+                <div className="col-md-7">
+                    <ComponentFormCheckBox
+                        title={this.props.t("secondary")}
+                        name="formData.isSecondary"
+                        checked={Boolean(this.state.formData.isSecondary)}
                         onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>

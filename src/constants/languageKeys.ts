@@ -1,4 +1,6 @@
 export const languageKeys = [
+    "primary",
+    "secondary",
     "authors",
     "tool",
     "itemLanguageWarning",

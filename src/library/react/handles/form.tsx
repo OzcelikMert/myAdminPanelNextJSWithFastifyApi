@@ -28,7 +28,7 @@ class ReactHandleFormLibrary {
         component.setState((state: any) => {
             let value: any = null;
             if(event.target.type === "checkbox") {
-                value = event.target.checked ? 1 : 0;
+                value = event.target.checked;
             }else{
                 if(event.target.type === "number"){
                     value = Number(event.target.value) || 0;

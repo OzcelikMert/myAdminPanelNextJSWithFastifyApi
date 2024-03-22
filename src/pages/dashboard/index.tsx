@@ -15,6 +15,7 @@ import {PostUtil} from "utils/post.util";
 import {ImageSourceUtil} from "utils/imageSource.util";
 import {postTypes} from "constants/postTypes";
 import {RouteUtil} from "utils/route.util";
+import {PostSortTypeId} from "constants/postSortTypes";
 
 const WorldMap = dynamic(() => import('react-svg-worldmap'), {ssr: false});
 
@@ -110,7 +111,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
         let serviceResult = await PostService.getMany({
             langId: this.props.getStateApp.appData.mainLangId,
             count: 10,
-            isRecent: true
+            sortTypeId: PostSortTypeId.Newest
         }, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             this.setState({

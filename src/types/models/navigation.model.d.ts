@@ -6,7 +6,9 @@ export interface INavigationModel {
     mainId?: string
     authorId: string
     lastAuthorId: string
-    rank: number,
+    rank: number
+    isPrimary: boolean
+    isSecondary: boolean
     contents: INavigationContentModel
     createdAt?: string
     updatedAt?: string

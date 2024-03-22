@@ -86,7 +86,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 typeId: Number(this.props.router.query.postTypeId ?? 1),
                 statusId: 0,
                 rank: 0,
-                dateStart: new Date(),
                 isFixed: false,
                 contents: {
                     langId: this.props.getStateApp.appData.currentLangId,
@@ -315,7 +314,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                     state.formData = {
                         ...state.formData,
                         ...item as IPostUpdateWithIdParamService,
-                        dateStart: new Date(item.dateStart),
                         contents: {
                             ...state.formData.contents,
                             ...item.contents,
@@ -444,15 +442,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <ComponentFormType
-                        title={`${this.props.t("startDate").toCapitalizeCase()}*`}
-                        type="date"
-                        name="formData.dateStart"
-                        value={moment(this.state.formData.dateStart).format("YYYY-MM-DD")}
-                        onChange={(event) => ReactHandleFormLibrary.onChangeInput(event, this)}
-                    />
-                </div>
-                <div className="col-md-7 mb-3">
                     <ComponentFormSelect
                         title={this.props.t("status")}
                         name="formData.statusId"
@@ -461,6 +450,18 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                         onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
+                {
+                    this.state.formData.statusId == StatusId.Pending
+                        ? <div className="col-md-7 mb-3">
+                            <ComponentFormType
+                                title={`${this.props.t("startDate").toCapitalizeCase()}*`}
+                                type="date"
+                                name="formData.dateStart"
+                                value={moment(this.state.formData.dateStart).format("YYYY-MM-DD")}
+                                onChange={(event) => ReactHandleFormLibrary.onChangeInput(event, this)}
+                            />
+                        </div> : null
+                }
                 <div className="col-md-7 mb-3">
                     <ComponentFormType
                         title={this.props.t("rank")}

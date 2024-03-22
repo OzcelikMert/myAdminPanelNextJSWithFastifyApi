@@ -69,7 +69,7 @@ class ComponentToolSidebar extends Component<IPageProps, IPageState> {
         function HasChild(_props: ISidebarPath) {
             if (_props.permission && !PermissionUtil.check(self.props.getStateApp.sessionAuth!, _props.permission)) return null;
             return (
-                <span className={`nav-link ${self.isPathActive(_props.path) ? 'active' : ''}`} onClick={() => self.navigatePage(_props.path)}>
+                <span className={`nav-link ${self.isPathActive(_props.path) ? 'active' : ''}`} onClick={() => self.isPathActive(_props.path) ? null : self.navigatePage(_props.path)}>
                     <span className={`menu-title text-capitalize ${self.isPathActive(_props.path) ? 'active' : ''}`}>{self.props.t(_props.title)}</span>
                     <i className={`mdi mdi-${_props.icon} menu-icon`}></i>
                 </span>
