@@ -63,37 +63,34 @@ class ComponentToolSidebar extends Component<IPageProps, IPageState> {
         this.onRouteChanged();
     }
 
-    Item = (props: ISidebarPath) => {
-        let self = this;
-
-        function HasChild(_props: ISidebarPath) {
-            if (_props.permission && !PermissionUtil.check(self.props.getStateApp.sessionAuth!, _props.permission)) return null;
-            return (
-                <span className={`nav-link ${self.isPathActive(_props.path) ? 'active' : ''}`} onClick={() => self.isPathActive(_props.path) ? null : self.navigatePage(_props.path)}>
-                    <span className={`menu-title text-capitalize ${self.isPathActive(_props.path) ? 'active' : ''}`}>{self.props.t(_props.title)}</span>
-                    <i className={`mdi mdi-${_props.icon} menu-icon`}></i>
+    HasChild = (props: ISidebarPath) => {
+        if (props.permission && !PermissionUtil.check(this.props.getStateApp.sessionAuth!, props.permission)) return null;
+        return (
+            <span className={`nav-link ${this.isPathActive(props.path) ? 'active' : ''}`} onClick={() => this.isPathActive(props.path) ? null : this.navigatePage(props.path)}>
+                    <span className={`menu-title text-capitalize ${this.isPathActive(props.path) ? 'active' : ''}`}>{this.props.t(props.title)}</span>
+                    <i className={`mdi mdi-${props.icon} menu-icon`}></i>
                 </span>
-            );
-        }
+        );
+    }
 
-        function HasChildren(_props: ISidebarPath) {
-            if (_props.permission && !PermissionUtil.check(self.props.getStateApp.sessionAuth!, _props.permission)) return null;
-            let state = (_props.state) ? self.state.isMenuOpen[_props.state] : false;
-            return (
-                <span>
-                    <div className={`nav-link ${state ? 'menu-expanded' : ''} ${self.isPathActive(_props.path) ? 'active' : ''}`} onClick={() => self.toggleMenuState(_props.state)} data-toggle="collapse">
-                        <span className={`menu-title text-capitalize ${self.isPathActive(_props.path) ? 'active' : ''}`}>{self.props.t(_props.title)}</span>
+    HasChildren = (props: ISidebarPath) => {
+        if (props.permission && !PermissionUtil.check(this.props.getStateApp.sessionAuth!, props.permission)) return null;
+        let state = (props.state) ? this.state.isMenuOpen[props.state] : false;
+        return (
+            <span>
+                    <div className={`nav-link ${state ? 'menu-expanded' : ''} ${this.isPathActive(props.path) ? 'active' : ''}`} onClick={() => this.toggleMenuState(props.state)} data-toggle="collapse">
+                        <span className={`menu-title text-capitalize ${this.isPathActive(props.path) ? 'active' : ''}`}>{this.props.t(props.title)}</span>
                         <i className="menu-arrow"></i>
-                        <i className={`mdi mdi-${_props.icon} menu-icon`}></i>
+                        <i className={`mdi mdi-${props.icon} menu-icon`}></i>
                     </div>
                     <Collapse in={state}>
                       <ul className="nav flex-column sub-menu">
                         {
-                            _props.subPaths?.map((item, index) => {
+                            props.subPaths?.map((item, index) => {
                                 return (
                                     <li className="nav-item" key={index}>
                                         {
-                                            item.subPaths ? <HasChildren key={index} {...item} /> : <HasChild key={index} {...item}/>
+                                            item.subPaths ? <this.HasChildren key={index} {...item} /> : <this.HasChild key={index} {...item}/>
                                         }
                                     </li>
                                 );
@@ -102,13 +99,14 @@ class ComponentToolSidebar extends Component<IPageProps, IPageState> {
                       </ul>
                     </Collapse>
                 </span>
-            );
-        }
+        );
+    }
 
+    Item = (props: ISidebarPath) => {
         return (
-            <li className={`nav-item ${self.isPathActive(props.path) ? 'active' : ''}`}>
+            <li className={`nav-item ${this.isPathActive(props.path) ? 'active' : ''}`}>
                 {
-                    (props.subPaths) ? <HasChildren {...props} /> : <HasChild {...props}/>
+                    (props.subPaths) ? <this.HasChildren {...props} /> : <this.HasChild {...props}/>
                 }
             </li>
         )
