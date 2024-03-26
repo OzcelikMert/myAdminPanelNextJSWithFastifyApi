@@ -5,7 +5,10 @@ import {
     IUserUpdateWithIdParamService,
     IUserGetResultService,
     IUserAddParamService,
-    IUserDeleteWithIdParamService, IUserUpdateProfileParamService, IUserUpdatePasswordParamService
+    IUserDeleteWithIdParamService,
+    IUserUpdateProfileParamService,
+    IUserUpdatePasswordParamService,
+    IUserUpdateProfileImageParamService
 } from "types/services/user.service";
 import ApiRequest from "library/api/request";
 import {PathUtil} from "utils/path.util";
@@ -56,6 +59,15 @@ const updateProfile = (params: IUserUpdateProfileParamService, signal?: AbortSig
     }).put();
 }
 
+const updateProfileImage = (params: IUserUpdateProfileImageParamService, signal?: AbortSignal) => {
+    return new ApiRequest({
+        apiUrl: PathUtil.getApiURL(),
+        endPoint: ApiEndPoints.USER_WITH.UPDATE_PROFILE_IMAGE,
+        data: params,
+        signal: signal
+    }).put();
+}
+
 const updatePassword = (params: IUserUpdatePasswordParamService, signal?: AbortSignal) => {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
@@ -80,6 +92,7 @@ export const UserService = {
     add: add,
     updateWithId: updateWithId,
     updateProfile: updateProfile,
+    updateProfileImage: updateProfileImage,
     updatePassword: updatePassword,
     deleteWithId: deleteWithId,
 }

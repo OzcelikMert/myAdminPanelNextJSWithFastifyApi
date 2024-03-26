@@ -8,7 +8,11 @@ import ComponentToast from "components/elements/toast";
 import Image from "next/image"
 import ComponentThemeBadgeStatus from "components/theme/badge/status";
 import ComponentThemeBadgeUserRole from "components/theme/badge/userRole";
-import {IUserGetResultService, IUserUpdateProfileParamService} from "types/services/user.service";
+import {
+    IUserGetResultService,
+    IUserUpdateProfileImageParamService,
+    IUserUpdateProfileParamService
+} from "types/services/user.service";
 import {permissions} from "constants/permissions";
 import {permissionGroups} from "constants/permissionGroups";
 import {IPermissionGroup} from "types/constants/permissionGroups";
@@ -22,7 +26,7 @@ type IPageState = {
     isImageChanging: boolean
     isSelectionImage: boolean
     user?: IUserGetResultService
-    formData: IUserUpdateProfileParamService
+    formData: IUserUpdateProfileParamService & IUserUpdateProfileImageParamService
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -92,7 +96,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
             isSubmitting: true,
             isImageChanging: true
         }, async () => {
-            let serviceResult = await UserService.updateProfile({image: image}, this.abortController.signal);
+            let serviceResult = await UserService.updateProfileImage({image: image}, this.abortController.signal);
             if (serviceResult.status) {
                 this.setState((state: IPageState) => {
                     state.isSubmitting = false;
@@ -111,10 +115,6 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                     })
                 });
             }
-        })
-        this.setState((state: IPageState) => {
-            state.formData.image = image;
-            return state
         })
     }
 

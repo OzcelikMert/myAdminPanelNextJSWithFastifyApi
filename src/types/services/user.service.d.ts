@@ -25,7 +25,6 @@ export interface IUserGetManyParamService {
     email?: string,
     count?: number,
     page?: number
-    roleId?: UserRoleId
     permissions?: PermissionId[]
 }
 
@@ -46,13 +45,16 @@ export type IUserUpdateWithIdParamService = {
 } & Omit<IUserAddParamService, "password">
 
 export interface IUserUpdateProfileParamService {
-    image?: string,
-    name?: string,
+    name: string,
     comment?: string,
     phone?: string,
     facebook?: string,
     instagram?: string,
     twitter?: string
+}
+
+export interface IUserUpdateProfileImageParamService {
+    image: string,
 }
 
 export interface IUserUpdatePasswordParamService {

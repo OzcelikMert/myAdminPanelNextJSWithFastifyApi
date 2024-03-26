@@ -28,21 +28,6 @@ export const sidebarNavs: ISidebarPath[] = [
         ]
     },
     {
-        path: EndPoints.NAVIGATION,
-        icon: `navigation-variant`,
-        title: "navigations",
-        state: `navigates`,
-        permission: NavigationEndPointPermission.GET,
-        subPaths: [
-            {
-                path: EndPoints.NAVIGATION_WITH.ADD,
-                title: "add",
-                permission: NavigationEndPointPermission.ADD
-            },
-            {path: EndPoints.NAVIGATION_WITH.LIST, title: "list"}
-        ]
-    },
-    {
         path: EndPoints.POST(PostTypeId.Page),
         icon: `note-multiple`,
         title: "pages",
@@ -55,6 +40,21 @@ export const sidebarNavs: ISidebarPath[] = [
                 permission: PostEndPointPermission.ADD_PAGE
             },
             {path: EndPoints.POST_WITH(PostTypeId.Page).LIST, title: "list"}
+        ]
+    },
+    {
+        path: EndPoints.NAVIGATION,
+        icon: `navigation-variant`,
+        title: "navigations",
+        state: `navigates`,
+        permission: NavigationEndPointPermission.GET,
+        subPaths: [
+            {
+                path: EndPoints.NAVIGATION_WITH.ADD,
+                title: "add",
+                permission: NavigationEndPointPermission.ADD
+            },
+            {path: EndPoints.NAVIGATION_WITH.LIST, title: "list"}
         ]
     },
     {

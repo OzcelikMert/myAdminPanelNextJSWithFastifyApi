@@ -59,7 +59,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                 email: "",
                 password: "",
                 roleId: UserRoleId.User,
-                statusId: StatusId.Disabled,
+                statusId: StatusId.Active,
                 banDateEnd: new Date().getStringWithMask(DateMask.DATE),
                 banComment: "",
                 permissions: [],
