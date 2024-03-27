@@ -4,7 +4,8 @@ export enum PageTypeId {
     Default = 1,
     HomePage,
     Blogs,
-    Contact
+    Contact,
+    ErrorPage404
 }
 
 export const pageTypes: Array<IPageType> = [
@@ -12,4 +13,5 @@ export const pageTypes: Array<IPageType> = [
     {id: PageTypeId.HomePage, rank: 2, langKey: "homePage"},
     {id: PageTypeId.Blogs, rank: 3, langKey: "blogs"},
     {id: PageTypeId.Contact, rank: 4, langKey: "contact"},
+    {id: PageTypeId.ErrorPage404, rank: 5, langKey: "errorPage404"},
 ]

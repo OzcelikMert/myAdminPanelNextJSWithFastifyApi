@@ -29,6 +29,7 @@ export function getPageTypeColor(typeId: PageTypeId): string {
         case PageTypeId.HomePage: className = `primary`; break;
         case PageTypeId.Blogs: className = `warning`; break;
         case PageTypeId.Contact: className = `info`; break;
+        case PageTypeId.ErrorPage404: className = `danger`; break;
     }
     return className;
 }

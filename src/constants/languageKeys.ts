@@ -1,4 +1,5 @@
 export const languageKeys = [
+    "errorPage404",
     "primary",
     "secondary",
     "authors",
