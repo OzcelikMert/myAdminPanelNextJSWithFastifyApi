@@ -34,7 +34,7 @@ export default class ComponentThemeRichTextBox extends Component<IPageProps, IPa
                 activeButtonsInReadOnly: ['source', 'fullsize', 'print', 'about', 'dots'],
                 toolbarButtonSize: 'middle',
                 theme: 'default',
-                editorCssClass: false,
+                editorCssClass: "rich-text-box",
                 triggerChangeEvent: true,
                 editHTMLDocumentMode: true,
                 defaultActionOnPaste: "insert_clear_html",
@@ -49,49 +49,25 @@ export default class ComponentThemeRichTextBox extends Component<IPageProps, IPa
                 useSplitMode: false,
                 colorPickerDefaultTab: 'background',
                 imageDefaultWidth: 300,
-                removeButtons: ["image"],
+                removeButtons: [],
                 disablePlugins: [],
-                extraButtons: ["uploadImage"],
-                buttons: [
-                    'source', '|',
-                    'bold',
-                    'strikethrough',
-                    'underline',
-                    'italic', '|',
-                    'ul',
-                    'ol', '|',
-                    'outdent', 'indent', '|',
-                    'font',
-                    'fontsize',
-                    'brush',
-                    'paragraph', '|',
-                    'video',
-                    'table',
-                    'link', '|',
-                    'align', 'undo', 'redo', '|',
-                    'hr',
-                    'eraser',
-                    'copyformat', '|',
-                    'symbol',
-                    'fullsize',
-                    'print',
-                ]
+                extraButtons: ["chooseImage"],
             }
         }
     }
 
     async componentDidMount() {
-        await this.uploadImage();
+        await this.initEditorControls();
         this.setState({
             isLoading: false
         })
     }
 
-    async uploadImage() {
+    async initEditorControls() {
         let self = this;
 
         Jodit.defaultOptions.controls.uploadImage = {
-            name: "Upload Image",
+            name: "chooseImage",
             icon: "image",
             exec: (async (editor) => {
                 self.editor = editor as IJodit;
@@ -112,7 +88,8 @@ export default class ComponentThemeRichTextBox extends Component<IPageProps, IPa
                     onSelected={images => {
                         if (this.editor) {
                             for (let image of images) {
-                                this.editor.selection.insertImage(ImageSourceUtil.getUploadedImageSrc(image))
+                                this.editor.selection.insertImage(ImageSourceUtil.getUploadedImageSrc(image));
+                                this.editor.synchronizeValues();
                             }
                         }
                     }}
