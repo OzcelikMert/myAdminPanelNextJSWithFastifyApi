@@ -14,6 +14,7 @@ import {ComponentUtil} from "utils/component.util";
 import {StatusId} from "constants/status";
 import {EndPoints} from "constants/endPoints";
 import {RouteUtil} from "utils/route.util";
+import ComponentToast from "components/elements/toast";
 
 type IPageState = {
     items: IThemeFormSelectValue[]
@@ -166,7 +167,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
         await RouteUtil.change({props: this.props, path: pagePath});
     }
 
-    onSubmit(event: FormEvent) {
+    async onSubmit(event: FormEvent) {
         event.preventDefault();
         this.setState({
             isSubmitting: true
@@ -182,18 +183,14 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                 isSubmitting: false
             });
             if(serviceResult.status){
-                Swal.fire({
+                new ComponentToast({
+                    type: "success",
                     title: this.props.t("successful"),
-                    text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
-                    icon: "success",
-                    timer: 1000,
-                    timerProgressBar: true,
-                    didClose: () => {
-                        if (!this.state.formData._id) {
-                            this.navigatePage();
-                        }
-                    }
-                })
+                    content: `${this.props.t(this.state.formData._id ? "itemEdited" : "itemAdded")}!`
+                });
+                if (!this.state.formData._id) {
+                    await this.navigatePage();
+                }
             }
         })
     }

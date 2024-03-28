@@ -36,6 +36,8 @@ import {UserService} from "services/user.service";
 import {UserRoleId} from "constants/userRoles";
 import {IUserPopulateService} from "types/services/user.service";
 import {RouteUtil} from "utils/route.util";
+import ComponentToast from "components/elements/toast";
+import V from "library/variable";
 
 const ComponentThemeRichTextBox = dynamic(() => import("components/theme/richTextBox"), {ssr: false});
 
@@ -387,7 +389,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
         await RouteUtil.change({props: this.props, path: pagePath.LIST});
     }
 
-    onSubmit(event: FormEvent) {
+    async onSubmit(event: FormEvent) {
         event.preventDefault();
         this.setState({
             isSubmitting: true
@@ -405,18 +407,14 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
             });
 
             if (serviceResult.status) {
-                Swal.fire({
+                new ComponentToast({
+                    type: "success",
                     title: this.props.t("successful"),
-                    text: `${this.props.t(this.state.formData._id ? "itemAdded" : "itemEdited")}!`,
-                    icon: "success",
-                    timer: 1000,
-                    timerProgressBar: true,
-                    didClose: () => {
-                        if (!this.state.formData._id) {
-                            this.navigatePage();
-                        }
-                    }
+                    content: `${this.props.t(this.state.formData._id ? "itemEdited" : "itemAdded")}!`
                 })
+                if (!this.state.formData._id) {
+                    await this.navigatePage();
+                }
             }
         })
     }

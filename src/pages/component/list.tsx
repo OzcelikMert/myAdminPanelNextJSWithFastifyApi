@@ -141,8 +141,8 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
                     this.props.getStateApp.sessionAuth!.user.roleId,
                     UserRoleId.SuperAdmin
                 ) ? {
-                    name: this.props.t("elementId"),
-                    selector: row => row.elementId,
+                    name: this.props.t("key"),
+                    selector: row => row.key,
                     sortable: true
                 } : {}
             ),

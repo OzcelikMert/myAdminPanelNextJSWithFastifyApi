@@ -7,7 +7,7 @@ export interface IComponentModel {
     lastAuthorId: string
     title: string,
     typeId: ComponentTypeId
-    elementId: string
+    key: string
     elements: IComponentElementModel[]
     updatedAt?: string,
     createdAt?: string
@@ -15,7 +15,7 @@ export interface IComponentModel {
 
 export interface IComponentElementModel {
     _id: string,
-    elementId: string
+    key: string
     typeId: ElementTypeId,
     title: string,
     rank: number,

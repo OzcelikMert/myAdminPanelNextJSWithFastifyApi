@@ -20,14 +20,14 @@ export interface IComponentGetWithIdParamService {
     langId?: string
 }
 
-export interface IComponentGetWithElementIdParamService {
-    elementId: string
+export interface IComponentGetWithKeyParamService {
+    key: string
     langId?: string
 }
 
 export interface IComponentGetManyParamService {
     _id?: string[]
-    elementId?: string[]
+    key?: string[]
     langId?: string
     typeId?: ComponentTypeId
     withContent?: boolean

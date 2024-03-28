@@ -18,6 +18,7 @@ import {StatusId} from "constants/status";
 import {ComponentUtil} from "utils/component.util";
 import {ImageSourceUtil} from "utils/imageSource.util";
 import {RouteUtil} from "utils/route.util";
+import ComponentToast from "components/elements/toast";
 
 type IPageState = {
     mainTabActiveKey: string
@@ -200,7 +201,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
         RouteUtil.change({props: this.props, path: path});
     }
 
-    onSubmit(event: FormEvent) {
+    async onSubmit(event: FormEvent) {
         event.preventDefault();
         this.setState({
             isSubmitting: true
@@ -235,18 +236,15 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                     return state;
                 });
 
-                Swal.fire({
+                new ComponentToast({
+                    type: "success",
                     title: this.props.t("successful"),
-                    text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
-                    icon: "success",
-                    timer: 1000,
-                    timerProgressBar: true,
-                    didClose: () => {
-                        if (this.state.formData._id) {
-                            this.navigatePage();
-                        }
-                    }
+                    content: `${this.props.t(this.state.formData._id ? "itemEdited" : "itemAdded")}!`
                 })
+
+                if (this.state.formData._id) {
+                    await this.navigatePage();
+                }
             }
         })
     }

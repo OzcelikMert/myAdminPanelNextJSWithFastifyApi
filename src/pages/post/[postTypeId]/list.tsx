@@ -122,7 +122,10 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                     type: "loading"
                 });
 
-                let serviceResult = await PostService.deleteMany({_id: selectedItemId, typeId: this.state.typeId}, this.abortController.signal)
+                let serviceResult = await PostService.deleteMany({
+                    _id: selectedItemId,
+                    typeId: this.state.typeId
+                }, this.abortController.signal)
                 loadingToast.hide();
                 if (serviceResult.status) {
                     this.setState((state: IPageState) => {
@@ -304,21 +307,19 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                 [PostTypeId.Blog, PostTypeId.Portfolio, PostTypeId.Product, PostTypeId.BeforeAndAfter].includes(this.state.typeId)
                     ? {
                         name: this.props.t("category"),
+                        width: "250px",
                         cell: row => row.categories && row.categories.length > 0
-                            ? <div className="d-flex flex-row flex-wrap">
+                            ? <div className="d-flex flex-row overflow-auto">
                                 {
-                                    row.categories.map(item => {
-                                            if (typeof item === "undefined") {
-                                                return <label
-                                                    className={`badge badge-gradient-danger m-1`}
-                                                >{this.props.t("deleted")}</label>
-                                            } else {
-                                                return <label
-                                                    onClick={() => this.navigatePage("termEdit", item._id, item.typeId)}
-                                                    className={`badge badge-gradient-success m-1 cursor-pointer`}
-                                                >{item.contents?.title || this.props.t("[noLangAdd]")}</label>
-                                            }
-                                        }
+                                    row.categories.map(item => typeof item != "undefined" ?
+                                        (
+                                            <label
+                                                onClick={() => this.navigatePage("termEdit", item._id, item.typeId)}
+                                                className={`badge badge-gradient-success m-1 cursor-pointer`}
+                                            >
+                                                {item.contents?.title || this.props.t("[noLangAdd]")}
+                                            </label>
+                                        ) : null
                                     )
                                 }
                             </div> : this.props.t("notSelected")
@@ -331,7 +332,8 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                         name: this.props.t("productType"),
                         selector: row => row.eCommerce?.typeId || 0,
                         sortable: true,
-                        cell: row => <ComponentThemeBadgeProductType t={this.props.t} typeId={row.eCommerce?.typeId || ProductTypeId.SimpleProduct}/>
+                        cell: row => <ComponentThemeBadgeProductType t={this.props.t}
+                                                                     typeId={row.eCommerce?.typeId || ProductTypeId.SimpleProduct}/>
                     } : {}
             ),
             (
@@ -365,7 +367,8 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                         name: this.props.t("pageType"),
                         selector: row => this.props.t(pageTypes.findSingle("id", (row.pageTypeId ? row.pageTypeId : PageTypeId.Default))?.langKey ?? "[noLangAdd]"),
                         sortable: true,
-                        cell: row => <ComponentThemeBadgePageType t={this.props.t} typeId={row.pageTypeId || PageTypeId.Default}/>
+                        cell: row => <ComponentThemeBadgePageType t={this.props.t}
+                                                                  typeId={row.pageTypeId || PageTypeId.Default}/>
                     } : {}
             ),
             {

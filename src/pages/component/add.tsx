@@ -19,6 +19,7 @@ import ComponentPageComponentElementTypeInput from "components/pages/component/a
 import {ComponentTypeId, componentTypes} from "constants/componentTypes";
 import ReactHandleFormLibrary from "library/react/handles/form";
 import {RouteUtil} from "utils/route.util";
+import ComponentToast from "components/elements/toast";
 
 type IPageState = {
     elementTypes: IThemeFormSelectValue[]
@@ -46,7 +47,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
             formData: {
                 _id: this.props.router.query._id as string ?? "",
                 elements: [],
-                elementId: "",
+                key: "",
                 title: "",
                 typeId: ComponentTypeId.Theme
             }
@@ -155,12 +156,13 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
         await RouteUtil.change({props: this.props, path: path});
     }
 
-    onSubmit(event: FormEvent) {
+    async onSubmit(event: FormEvent) {
         event.preventDefault();
         this.setState({
             isSubmitting: true
         }, async () => {
             let params = this.state.formData;
+            console.log(params);
 
             let serviceResult = await ((params._id)
                 ? ComponentService.updateWithId(params, this.abortController.signal)
@@ -171,18 +173,14 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
             });
 
             if(serviceResult.status){
-                Swal.fire({
+                new ComponentToast({
+                    type: "success",
                     title: this.props.t("successful"),
-                    text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
-                    icon: "success",
-                    timer: 1000,
-                    timerProgressBar: true,
-                    didClose: () => {
-                        if (!this.state.formData._id) {
-                            this.navigatePage();
-                        }
-                    }
+                    content: `${this.props.t(this.state.formData._id ? "itemEdited" : "itemAdded")}!`
                 })
+                if (!this.state.formData._id) {
+                    await this.navigatePage();
+                }
             }
         })
     }
@@ -201,7 +199,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                 title: "",
                 rank: state.formData.elements.length + 1,
                 typeId: ElementTypeId.Text,
-                elementId: "",
+                key: "",
                 contents: {
                     langId: this.props.getStateApp.appData.currentLangId
                 }
@@ -235,7 +233,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
     async onDelete(index: number) {
         let result = await Swal.fire({
             title: this.props.t("deleteAction"),
-            html: `<b>'${this.state.formData.elements[index].elementId}'</b> ${this.props.t("deleteItemQuestionWithItemName")}`,
+            html: `<b>'${this.state.formData.elements[index].key}'</b> ${this.props.t("deleteItemQuestionWithItemName")}`,
             confirmButtonText: this.props.t("yes"),
             cancelButtonText: this.props.t("no"),
             icon: "question",
@@ -254,7 +252,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
         return (
             <div className={`col-md-12 ${index > 0 ? "mt-5" : ""}`}>
                 <ComponentFieldSet
-                    legend={`${props.title} ${PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin) ? `(#${props.elementId})` : ""}`}
+                    legend={`${props.title} ${PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin) ? `(#${props.key})` : ""}`}
                     legendElement={
                         PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
                             ? (<span>
@@ -296,10 +294,10 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                         </div>
                         <div className="col-md-12 mt-3">
                             <ComponentFormType
-                                title={`${this.props.t("elementId")}*`}
+                                title={`${this.props.t("key")}*`}
                                 type="text"
-                                value={props.elementId}
-                                onChange={e => this.onInputChange(props, "elementId", e.target.value)}
+                                value={props.key}
+                                onChange={e => this.onInputChange(props, "key", e.target.value)}
                             />
                         </div>
                         <div className="col-md-12 mt-3">
@@ -379,11 +377,11 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                 </div>
                 <div className="col-md-7 mb-3">
                     <ComponentFormType
-                        title={`${this.props.t("elementId")}*`}
-                        name="formData.elementId"
+                        title={`${this.props.t("key")}*`}
+                        name="formData.key"
                         type="text"
                         required={true}
-                        value={this.state.formData.elementId}
+                        value={this.state.formData.key}
                         onChange={e => HandleForm.onChangeInput(e, this)}
                     />
                 </div>

@@ -26,6 +26,7 @@ import {IPermissionGroup} from "types/constants/permissionGroups";
 import {IPermission} from "types/constants/permissions";
 import {permissionGroups} from "constants/permissionGroups";
 import {RouteUtil} from "utils/route.util";
+import ComponentToast from "components/elements/toast";
 
 type IPageState = {
     mainTabActiveKey: string
@@ -164,7 +165,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
         await RouteUtil.change({props: this.props, path: path});
     }
 
-    onSubmit(event: FormEvent) {
+    async onSubmit(event: FormEvent) {
         event.preventDefault();
         this.setState({
             isSubmitting: true
@@ -173,16 +174,16 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
             let serviceResult = await ((params._id)
                 ? UserService.updateWithId(params, this.abortController.signal)
                 : UserService.add({...params, password: this.state.formData.password || ""}, this.abortController.signal));
+
             this.setState({isSubmitting: false});
+
             if(serviceResult.status){
-                Swal.fire({
+                new ComponentToast({
+                    type: "success",
                     title: this.props.t("successful"),
-                    text: `${this.props.t((V.isEmpty(this.state.formData._id)) ? "itemAdded" : "itemEdited")}!`,
-                    icon: "success",
-                    timer: 1000,
-                    timerProgressBar: true,
-                    didClose: () => this.navigatePage()
-                });
+                    content: `${this.props.t(this.state.formData._id ? "itemEdited" : "itemAdded")}!`
+                })
+                await this.navigatePage();
             }
         })
     }

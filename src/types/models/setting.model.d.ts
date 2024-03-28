@@ -28,7 +28,7 @@ export interface ISettingContactModel {
 
 export interface ISettingSocialMediaModel {
     _id?: string
-    elementId: string
+    key: string
     title: string
     url: string
 }
@@ -43,7 +43,6 @@ export interface ISettingContactFormModel {
     outGoingServer: string
     inComingServer: string
     port: number
-    isEditing?: boolean
 }
 
 export interface ISettingSeoContentModel {
@@ -58,7 +57,7 @@ export interface ISettingStaticContentModel {
     _id?: string
     typeId: StaticContentTypeId,
     label: string
-    elementId: string
+    key: string
     rank: number
     contents: ISettingStaticContentContentModel
 }

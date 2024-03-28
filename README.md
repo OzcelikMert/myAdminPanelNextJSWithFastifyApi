@@ -2,18 +2,17 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
-- cikis yap diyince session hatasi aliniyor
-- pagelerde componentsi sadece super admin ekleyebilsin.
-- sweet alertleri toast olarak degistir
-- post listlerdeki categoriler alt alta geliyor onlari yan yana duzenli guizel gozukecek sekilde ayarla
-- elementId olanlari key olarak guncelle
-- settings contact formu guncelle componentlerden(is editing yerine selectedelement falan kullan)
 - rich textboxdaki buglari hallet (font color, edit image size, vs.)
 - websitenin urllerini dynamic yapmak icin panelden duzenlettir (ornek olarak blog urli her dilde farkli olsun)
 - urunler varyasyonlari icin farkli bir yol bul (ornek tum urun varyasyonlari aslinda urun olmali fakat urunun icine cekildiginde varyasyon olmali yada urun ekleme yerinde urun tipi olmali varyasyon yada urun diye)
 - Yaptigin tum guncellemelerin hata kontrolunu yap
 - Diller icin export import yap
 
++ settings contact formu guncelle componentlerden(is editing yerine selectedelement falan kullan)
++ elementId olanlari key olarak guncelle
++ post listlerdeki categoriler alt alta geliyor onlari yan yana gozukecek sekilde ayarla
++ sweet alertleri (success olanlari) toast olarak degistir
++ cikis yap diyince session hatasi aliniyor
 + components modelini tekrar ekle
 + default language id yi dillerden ayarla ayarlar sayfasiyla baglantisi olmasin birde sadece super admin ayarlasin
 + resim yukleyince listeye gelmiyor

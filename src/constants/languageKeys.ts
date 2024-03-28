@@ -171,7 +171,7 @@ export const languageKeys = [
     "updating",
     "theme",
     "newGroup",
-    "elementId",
+    "key",
     "langKey",
     "typeId",
     "active",

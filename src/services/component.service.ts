@@ -4,7 +4,7 @@ import ApiRequest from "library/api/request";
 import {
     IComponentAddParamService, IComponentDeleteManyParamService,
     IComponentGetManyParamService,
-    IComponentGetResultService, IComponentGetWithElementIdParamService,
+    IComponentGetResultService, IComponentGetWithKeyParamService,
     IComponentGetWithIdParamService, IComponentUpdateWithIdParamService
 } from "types/services/component.service";
 import {IComponentModel} from "types/models/component.model";
@@ -18,10 +18,10 @@ const getWithId = (params: IComponentGetWithIdParamService, signal?: AbortSignal
     }).get<IComponentGetResultService>();
 }
 
-const getWithElementId = (params: IComponentGetWithElementIdParamService, signal?: AbortSignal) =>  {
+const getWithKey = (params: IComponentGetWithKeyParamService, signal?: AbortSignal) =>  {
     return new ApiRequest({
         apiUrl: PathUtil.getApiURL(),
-        endPoint: ApiEndPoints.COMPONENT_WITH.GET_WITH_ELEMENT_ID(params.elementId),
+        endPoint: ApiEndPoints.COMPONENT_WITH.GET_WITH_KEY(params.key),
         data: params,
         signal: signal
     }).get<IComponentGetResultService>();
@@ -65,7 +65,7 @@ const deleteMany = (params: IComponentDeleteManyParamService, signal?: AbortSign
 
 export const ComponentService = {
     getWithId: getWithId,
-    getWithElementId: getWithElementId,
+    getWithKey: getWithKey,
     getMany: getMany,
     add: add,
     updateWithId: updateWithId,

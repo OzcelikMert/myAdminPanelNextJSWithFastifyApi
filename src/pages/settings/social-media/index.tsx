@@ -95,7 +95,7 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
         this.setState((state: IPageState) => {
             state.formData.socialMedia = [...state.formData.socialMedia, {
                 _id: String.createId(),
-                elementId: "",
+                key: "",
                 url: "",
                 title: ""
             }];
@@ -129,7 +129,7 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
     async onDelete(index: number) {
         let result = await Swal.fire({
             title: this.props.t("deleteAction"),
-            html: `<b>'${this.state.formData.socialMedia[index].elementId}'</b> ${this.props.t("deleteItemQuestionWithItemName")}`,
+            html: `<b>'${this.state.formData.socialMedia[index].key}'</b> ${this.props.t("deleteItemQuestionWithItemName")}`,
             confirmButtonText: this.props.t("yes"),
             cancelButtonText: this.props.t("no"),
             icon: "question",
@@ -148,7 +148,7 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
         return (
             <div className={`col-md-12 ${index > 0 ? "mt-5" : ""}`}>
                 <ComponentFieldSet
-                    legend={`${props.title} ${PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin) ? `(#${props.elementId})` : ""}`}
+                    legend={`${props.title} ${PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin) ? `(#${props.key})` : ""}`}
                     legendElement={
                         PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
                             ? (<span>
@@ -183,9 +183,9 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
                         <div className="col-md-12">
                             <ComponentFormType
                                 type="text"
-                                title={this.props.t("elementId")}
-                                value={props.elementId}
-                                onChange={e => this.onInputChange(props, "elementId", e.target.value)}
+                                title={this.props.t("key")}
+                                value={props.key}
+                                onChange={e => this.onInputChange(props, "key", e.target.value)}
                             />
                         </div>
                         <div className="col-md-12 mt-3">

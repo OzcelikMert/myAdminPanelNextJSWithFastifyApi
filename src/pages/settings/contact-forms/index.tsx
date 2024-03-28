@@ -9,10 +9,13 @@ import {SettingProjectionKeys} from "constants/settingProjections";
 import {UserRoleId} from "constants/userRoles";
 import {PermissionUtil} from "utils/permission.util";
 import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
+import {cloneDeepWith} from "lodash";
+import Swal from "sweetalert2";
 
 type IPageState = {
     isSubmitting: boolean
     formData: ISettingUpdateContactFormParamService
+    selectedData?: ISettingContactFormModel
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -88,7 +91,7 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
 
     onCreate() {
         this.setState((state: IPageState) => {
-            state.formData.contactForms = [{
+            state.formData.contactForms = [...state.formData.contactForms, {
                 _id: String.createId(),
                 key: "",
                 port: 465,
@@ -98,156 +101,161 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
                 name: "",
                 password: "",
                 email: ""
-            }, ...state.formData.contactForms];
+            }];
             return state;
-        })
+        }, () => this.onEdit(this.state.formData.contactForms.length - 1))
     }
 
-    onAccept(data: ISettingContactFormModel) {
+    onAccept(index: number) {
+        console.log(index, this.state.formData.contactForms[index], this.state.selectedData);
         this.setState((state: IPageState) => {
-            data.isEditing = false;
+            state.formData.contactForms[index] = state.selectedData!;
+            state.selectedData = undefined;
             return state;
         })
     }
 
-    onDelete(data: ISettingContactFormModel[], index: number) {
+    onEdit(index: number) {
         this.setState((state: IPageState) => {
-            data.splice(index, 1);
+            state.selectedData = cloneDeepWith(this.state.formData.contactForms[index]);
             return state;
         })
     }
 
-    onEdit(data: ISettingContactFormModel) {
+    onCancelEdit() {
         this.setState((state: IPageState) => {
-            data.isEditing = true;
+            state.selectedData = undefined;
             return state;
         })
     }
 
-    ContactForms = () => {
-        const ContactForm = (contactFormProps: ISettingContactFormModel, contactFormIndex: number) => {
-            return (
-                <div className="col-md-12 mt-4">
-                    <ComponentFieldSet
-                        legend={`${this.props.t("contactForm")} (#${contactFormProps.key})`}
-                        legendElement={
-                            this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
-                                ? <i className="mdi mdi-pencil-box text-warning fs-3 cursor-pointer"
-                                     onClick={() => this.onEdit(contactFormProps)}></i>
-                                : undefined
-                        }
-                    >
-                        <div className="row">
-                            <div className="col-md-12 mt-4">
-                                <ComponentFormType
-                                    type="text"
-                                    title={this.props.t("name")}
-                                    value={contactFormProps.name}
-                                    onChange={e => this.onInputChange(contactFormProps, "name", e.target.value)}
-                                />
-                            </div>
-                            <div className="col-md-12 mt-4">
-                                <ComponentFormType
-                                    type="text"
-                                    title={this.props.t("outGoingEmail")}
-                                    value={contactFormProps.outGoingEmail}
-                                    onChange={e => this.onInputChange(contactFormProps, "outGoingEmail", e.target.value)}
-                                />
-                            </div>
-                            <div className="col-md-12 mt-4">
-                                <ComponentFormType
-                                    type="text"
-                                    title={this.props.t("email")}
-                                    value={contactFormProps.email}
-                                    onChange={e => this.onInputChange(contactFormProps, "email", e.target.value)}
-                                />
-                            </div>
-                            <div className="col-md-12 mt-4">
-                                <ComponentFormType
-                                    type="password"
-                                    title={this.props.t("password")}
-                                    value={contactFormProps.password}
-                                    onChange={e => this.onInputChange(contactFormProps, "password", e.target.value)}
-                                />
-                            </div>
-                            <div className="col-md-12 mt-4">
-                                <ComponentFormType
-                                    type="text"
-                                    title={this.props.t("outGoingServer")}
-                                    value={contactFormProps.outGoingServer}
-                                    onChange={e => this.onInputChange(contactFormProps, "outGoingServer", e.target.value)}
-                                />
-                            </div>
-                            <div className="col-md-12 mt-4">
-                                <ComponentFormType
-                                    type="text"
-                                    title={this.props.t("inComingServer")}
-                                    value={contactFormProps.inComingServer}
-                                    onChange={e => this.onInputChange(contactFormProps, "inComingServer", e.target.value)}
-                                />
-                            </div>
-                            <div className="col-md-12 mt-4">
-                                <ComponentFormType
-                                    type="text"
-                                    title={this.props.t("port")}
-                                    value={contactFormProps.port}
-                                    onChange={e => this.onInputChange(contactFormProps, "port", e.target.value)}
-                                />
-                            </div>
-                        </div>
-                    </ComponentFieldSet>
-                </div>
-            )
+    async onDelete(index: number) {
+        let result = await Swal.fire({
+            title: this.props.t("deleteAction"),
+            html: `<b>'${this.state.formData.contactForms[index].key}'</b> ${this.props.t("deleteItemQuestionWithItemName")}`,
+            confirmButtonText: this.props.t("yes"),
+            cancelButtonText: this.props.t("no"),
+            icon: "question",
+            showCancelButton: true
+        });
+
+        if (result.isConfirmed) {
+            this.setState((state: IPageState) => {
+                state.formData.contactForms.splice(index, 1);
+                return state;
+            })
         }
+    }
 
-        const EditContactForm = (contactFormProps: ISettingContactFormModel, contactFormIndex: number) => {
-            return (
-                <div className="col-md-12 mt-3">
-                    <ComponentFieldSet legend={this.props.t("newContactForm")}>
-                        <div className="row mt-3">
-                            <div className="col-md-12">
-                                <ComponentFormType
-                                    title={`${this.props.t("key")}*`}
-                                    type="text"
-                                    required={true}
-                                    value={contactFormProps.key}
-                                    onChange={e => this.onInputChange(contactFormProps, "key", e.target.value)}
-                                />
-                            </div>
-                            <div className="col-md-12 mt-3">
-                                <button type={"button"} className="btn btn-gradient-success btn-lg"
-                                        onClick={() => this.onAccept(contactFormProps)}>{this.props.t("okay")}</button>
-                                <button type={"button"} className="btn btn-gradient-danger btn-lg"
-                                        onClick={() => this.onDelete(this.state.formData.contactForms, contactFormIndex)}>{this.props.t("delete")}</button>
-                            </div>
-                        </div>
-                    </ComponentFieldSet>
-                </div>
-            )
-        }
-
+    ContactForm = (props: ISettingContactFormModel, index: number) => {
         return (
-            <div className="row">
-                {
-                    this.props.getStateApp.sessionAuth?.user.roleId == UserRoleId.SuperAdmin
-                        ? <div className="col-md-7">
-                            <button type={"button"} className="btn btn-gradient-success btn-lg"
-                                    onClick={() => this.onCreate()}>+ {this.props.t("newContactForm")}
-                            </button>
-                        </div> : null
-                }
-                <div className="col-md-7 mt-2">
+            <div className={`col-md-12 ${index > 0 ? "mt-5" : ""}`}>
+                <ComponentFieldSet
+                    legend={`${this.props.t("contactForm")} (#${props.key})`}
+                    legendElement={
+                        PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
+                            ? (<span>
+                                <i className="mdi mdi-pencil-box text-warning fs-1 cursor-pointer ms-2"
+                                   onClick={() => this.onEdit(index)}></i>
+                                <i className="mdi mdi-minus-box text-danger fs-1 cursor-pointer ms-2"
+                                   onClick={() => this.onDelete(index)}></i>
+                            </span>)
+                            : undefined
+                    }
+                >
                     <div className="row">
-                        {
-                            this.state.formData.contactForms?.map((item, index) =>
-                                item.isEditing
-                                    ? EditContactForm(item, index)
-                                    : ContactForm(item, index))
-                        }
+                        <div className="col-md-12 mt-4">
+                            <ComponentFormType
+                                type="text"
+                                title={this.props.t("name")}
+                                value={props.name}
+                                onChange={e => this.onInputChange(props, "name", e.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-12 mt-4">
+                            <ComponentFormType
+                                type="text"
+                                title={this.props.t("outGoingEmail")}
+                                value={props.outGoingEmail}
+                                onChange={e => this.onInputChange(props, "outGoingEmail", e.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-12 mt-4">
+                            <ComponentFormType
+                                type="text"
+                                title={this.props.t("email")}
+                                value={props.email}
+                                onChange={e => this.onInputChange(props, "email", e.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-12 mt-4">
+                            <ComponentFormType
+                                type="password"
+                                title={this.props.t("password")}
+                                value={props.password}
+                                onChange={e => this.onInputChange(props, "password", e.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-12 mt-4">
+                            <ComponentFormType
+                                type="text"
+                                title={this.props.t("outGoingServer")}
+                                value={props.outGoingServer}
+                                onChange={e => this.onInputChange(props, "outGoingServer", e.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-12 mt-4">
+                            <ComponentFormType
+                                type="text"
+                                title={this.props.t("inComingServer")}
+                                value={props.inComingServer}
+                                onChange={e => this.onInputChange(props, "inComingServer", e.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-12 mt-4">
+                            <ComponentFormType
+                                type="text"
+                                title={this.props.t("port")}
+                                value={props.port}
+                                onChange={e => this.onInputChange(props, "port", e.target.value)}
+                            />
+                        </div>
                     </div>
-                </div>
+                </ComponentFieldSet>
             </div>
-        );
+        )
+    }
+
+    ContactFormEdit = (props: ISettingContactFormModel, index: number) => {
+        return (
+            <div className={`col-md-12 ${index > 0 ? "mt-5" : ""}`}>
+                <ComponentFieldSet legend={this.props.t("newContactForm")}>
+                    <div className="row mt-3">
+                        <div className="col-md-12">
+                            <ComponentFormType
+                                title={`${this.props.t("key")}*`}
+                                type="text"
+                                required={true}
+                                value={props.key}
+                                onChange={e => this.onInputChange(props, "key", e.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-12 mt-3">
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <button type="button" className="btn btn-gradient-success btn-lg"
+                                            onClick={() => this.onAccept(index)}>{this.props.t("okay")}</button>
+                                </div>
+                                <div className="col-md-6 text-end">
+                                    <button type="button" className="btn btn-gradient-dark btn-lg"
+                                            onClick={() => this.onCancelEdit()}>{this.props.t("cancel")}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ComponentFieldSet>
+            </div>
+        )
     }
 
     render() {
@@ -265,7 +273,26 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
                             <div className="grid-margin stretch-card">
                                 <div className="card">
                                     <div className="card-body">
-                                        <this.ContactForms/>
+                                        <div className="row">
+                                            <div className="col-md-7 mt-2">
+                                                <div className="row">
+                                                    {
+                                                        this.state.formData.contactForms?.map((item, index) =>
+                                                            this.state.selectedData && this.state.selectedData._id == item._id
+                                                                ? this.ContactFormEdit(this.state.selectedData, index)
+                                                                : this.ContactForm(item, index))
+                                                    }
+                                                </div>
+                                            </div>
+                                            {
+                                                PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
+                                                    ? <div className={`col-md-7 text-start ${this.state.formData.contactForms.length > 0 ? "mt-4" : ""}`}>
+                                                        <button type={"button"} className="btn btn-gradient-success btn-lg"
+                                                                onClick={() => this.onCreate()}>+ {this.props.t("addNew")}
+                                                        </button>
+                                                    </div> : null
+                                            }
+                                        </div>
                                     </div>
                                 </div>
                             </div>
