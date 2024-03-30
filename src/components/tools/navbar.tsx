@@ -7,8 +7,6 @@ import {AuthService} from "services/auth.service";
 import {LocalStorageUtil} from "utils/localStorage.util";
 import DarkModeToggle from "react-dark-mode-toggle";
 import {ThemeUtil} from "utils/theme.util";
-import Logo from "assets/images/ozcelikLogo.png"
-import LogoMini from "assets/images/ozcelikLogoMini.png"
 import Image from "next/image"
 import {IThemeKeys} from "types/constants/themeKeys";
 import {EndPoints} from "constants/endPoints";
@@ -221,7 +219,7 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
                 <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
                     <Link className="navbar-brand brand-logo" href={EndPoints.DASHBOARD}>
                         <Image
-                            src={Logo.src}
+                            src="/images/ozcelikLogo.png"
                             alt="logo"
                             width={100}
                             height={75}
@@ -230,7 +228,7 @@ export default class ComponentToolNavbar extends Component<IPageProps, IPageStat
                     </Link>
                     <Link className="navbar-brand brand-logo-mini" href={EndPoints.DASHBOARD}>
                         <Image
-                            src={LogoMini.src}
+                            src="/images/ozcelikLogoMini.png"
                             alt="logo"
                             width={50}
                             height={50}

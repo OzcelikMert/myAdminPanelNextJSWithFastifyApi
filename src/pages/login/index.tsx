@@ -6,8 +6,6 @@ import ReactHandleFormLibrary from "library/react/handles/form";
 import {AuthService} from "services/auth.service";
 import {IUserGetResultService} from "types/services/user.service";
 import Image from "next/image"
-
-import Logo from "assets/images/ozcelikLogo.png"
 import {EndPoints} from "constants/endPoints";
 import {StatusId} from "constants/status";
 import {RouteUtil} from "utils/route.util";
@@ -187,7 +185,7 @@ class PageLogin extends Component<IPageProps, IPageState> {
                         <div className="col-lg-6 login-half-bg d-flex flex-row">
                             <div className="brand-logo">
                                 <Image
-                                    src={Logo.src}
+                                    src="/images/ozcelikLogo.png"
                                     alt="Özçelik Software"
                                     width={150}
                                     height={100}

@@ -1,2 +1,12 @@
 @import "light/index";
 @import "dark/index";
+
+html {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  overflow-y: auto;
+}

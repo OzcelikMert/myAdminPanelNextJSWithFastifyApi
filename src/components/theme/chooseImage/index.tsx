@@ -2,8 +2,6 @@ import React, {Component} from "react";
 import {IPagePropCommon} from "types/pageProps";
 import ComponentThemeChooseImageGallery from "./gallery";
 
-const emptyImage = require("images/empty.png");
-
 type IPageState = {};
 
 type IPageProps = {
@@ -38,6 +36,3 @@ class ComponentThemeChooseImage extends Component<IPageProps, IPageState> {
 }
 
 export default ComponentThemeChooseImage;
-export {
-    emptyImage
-}
