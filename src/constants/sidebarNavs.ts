@@ -225,6 +225,7 @@ export const sidebarNavs: ISidebarPath[] = [
     {
         path: EndPoints.SUBSCRIBER,
         title: "subscribers",
+        icon: "account-group",
         permission: SubscriberEndPointPermission.GET
     },
     {
