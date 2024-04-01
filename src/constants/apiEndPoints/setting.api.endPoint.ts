@@ -12,7 +12,6 @@ export class SettingApiEndPoint {
     get UPDATE_GENERAL() { return PathUtil.createPath(this.mainPath, "/update/general"); }
     get UPDATE_SEO() { return PathUtil.createPath(this.mainPath, "/update/seo"); }
     get UPDATE_CONTACT_FORM() { return PathUtil.createPath(this.mainPath, "/update/contact-form"); }
-    get UPDATE_STATIC_CONTENT() { return PathUtil.createPath(this.mainPath, "/update/static-content"); }
     get UPDATE_SOCIAL_MEDIA() { return PathUtil.createPath(this.mainPath, "/update/social-media"); }
     get UPDATE_ECOMMERCE() { return PathUtil.createPath(this.mainPath, "/update/ecommerce"); }
 }

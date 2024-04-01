@@ -7,6 +7,7 @@ Things to do:
 - Yaptigin tum guncellemelerin hata kontrolunu yap
 - Diller icin export import yap
 
++ static contenti kaldir
 + rich textboxdaki buglari hallet (font color, edit image size, vs.)
 + settings contact formu guncelle componentlerden(is editing yerine selectedelement falan kullan)
 + elementId olanlari key olarak guncelle

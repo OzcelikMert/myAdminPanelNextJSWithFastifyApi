@@ -1,5 +1,4 @@
 import {CurrencyId} from "constants/currencyTypes";
-import {StaticContentTypeId} from "constants/staticContentTypes";
 
 export interface ISettingModel {
     icon?: string
@@ -10,7 +9,6 @@ export interface ISettingModel {
     seoContents: ISettingSeoContentModel,
     contact?: ISettingContactModel
     contactForms: ISettingContactFormModel[],
-    staticContents: ISettingStaticContentModel[]
     socialMedia: ISettingSocialMediaModel[]
     eCommerce?: ISettingECommerceModel
 }
@@ -51,20 +49,4 @@ export interface ISettingSeoContentModel {
     title?: string,
     content?: string,
     tags?: string[]
-}
-
-export interface ISettingStaticContentModel {
-    _id?: string
-    typeId: StaticContentTypeId,
-    label: string
-    key: string
-    rank: number
-    contents: ISettingStaticContentContentModel
-}
-
-export interface ISettingStaticContentContentModel {
-    _id?: string
-    langId: string
-    content?: string,
-    url?: string
 }

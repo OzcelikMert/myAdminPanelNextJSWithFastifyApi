@@ -271,11 +271,6 @@ export const sidebarNavs: ISidebarPath[] = [
                 permission: SettingsEndPointPermission.UPDATE_CONTACT_FORM,
             },
             {
-                path: EndPoints.SETTINGS_WITH.STATIC_CONTENTS,
-                title: "staticContents",
-                permission: SettingsEndPointPermission.UPDATE_STATIC_CONTENT
-            },
-            {
                 path: EndPoints.SETTINGS_WITH.SOCIAL_MEDIA,
                 title: "socialMedia",
                 permission: SettingsEndPointPermission.UPDATE_SOCIAL_MEDIA

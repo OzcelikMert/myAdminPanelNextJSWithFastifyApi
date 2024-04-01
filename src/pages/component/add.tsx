@@ -281,7 +281,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
     ComponentElementEdit = (props: IComponentElementModel, index: number) => {
         return (
             <div className={`col-md-12 ${index > 0 ? "mt-5" : ""}`}>
-                <ComponentFieldSet legend={this.props.t("newStaticContent")}>
+                <ComponentFieldSet legend={this.props.t("newElement")}>
                     <div className="row mt-3">
                         <div className="col-md-12">
                             <ComponentFormType
