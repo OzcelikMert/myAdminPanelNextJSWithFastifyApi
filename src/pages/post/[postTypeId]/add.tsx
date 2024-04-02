@@ -36,7 +36,6 @@ import {UserRoleId} from "constants/userRoles";
 import {IUserPopulateService} from "types/services/user.service";
 import {RouteUtil} from "utils/route.util";
 import ComponentToast from "components/elements/toast";
-import V from "library/variable";
 
 const ComponentThemeRichTextBox = dynamic(() => import("components/theme/richTextBox"), {ssr: false});
 
@@ -470,7 +469,8 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                     />
                 </div>
                 {
-                    [PostTypeId.Page].includes(Number(this.state.formData.typeId))
+                    [PostTypeId.Page].includes(Number(this.state.formData.typeId)) &&
+                    PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
                         ? <div className="col-md-7 mb-3">
                             <ComponentFormSelect
                                 title={this.props.t("pageType")}

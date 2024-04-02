@@ -259,6 +259,7 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                             }}
                             isShow={this.state.isViewItemInfo}
                             userInfo={userInfo}
+                            isShowPermissions={PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.Admin)}
                         /> : null
                     })()
                 }

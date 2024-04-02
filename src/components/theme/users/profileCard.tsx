@@ -6,7 +6,6 @@ import {ComponentFieldSet} from "../../elements/form";
 import Image from "next/image"
 import ComponentThemeBadgeStatus from "components/theme/badge/status";
 import ComponentThemeBadgeUserRole from "components/theme/badge/userRole";
-import {LanguageId} from "constants/languages";
 import {StatusId} from "constants/status";
 import {IPermissionGroup} from "types/constants/permissionGroups";
 import {permissions} from "constants/permissions";
@@ -22,6 +21,7 @@ type IPageProps = {
     isShow: boolean
     onClose: any
     userInfo: IUserModel
+    isShowPermissions: boolean
 };
 
 class ComponentThemeUsersProfileCard extends Component<IPageProps, IPageState> {
@@ -46,42 +46,42 @@ class ComponentThemeUsersProfileCard extends Component<IPageProps, IPageState> {
     )
 
     General = () => (
-        <>
+        <div className="general">
             <h6 className="pb-1 border-bottom fw-bold text-end">{this.props.t("general")}</h6>
             <div className="row">
-                <div className="col-sm-12">
-                    <span className="mb-2 fw-bold">{this.props.t("email")}:
+                <div className="col-sm-12 mb-3">
+                    <span className="fw-bold">{this.props.t("email")}:
                         <h6 className="text-muted d-inline-block ms-1">{this.props.userInfo.email}</h6>
                     </span>
                 </div>
-                <div className="col-sm-12">
-                    <span className="mb-2 fw-bold">{this.props.t("phone")}:
-                        <h6 className="text-muted d-inline-block ms-1">{this.props.userInfo.phone}</h6>
+                <div className="col-sm-12 mb-3">
+                    <span className="fw-bold">{this.props.t("phone")}:
+                        <h6 className="text-muted d-inline-block ms-1">{this.props.userInfo.phone || "---"}</h6>
                     </span>
                 </div>
-                <div className="col-sm-12">
-                    <span className="mb-2 fw-bold">{this.props.t("role")}:
-                        <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={this.props.userInfo.roleId} />
+                <div className="col-sm-12 mb-3">
+                    <span className="fw-bold">{this.props.t("role")}:
+                        <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={this.props.userInfo.roleId} className="ms-1"/>
                     </span>
                 </div>
-                <div className="col-sm-12">
-                    <span className="mb-2 fw-bold">{this.props.t("status")}:
+                <div className="col-sm-12 mb-3">
+                    <span className="fw-bold">{this.props.t("status")}:
                         {<ComponentThemeBadgeStatus t={this.props.t} statusId={this.props.userInfo.statusId} className="ms-1"/>}
                     </span>
                 </div>
                 {
                     (this.props.userInfo.statusId == StatusId.Banned)
                         ? (
-                            <div className="col-sm-12">
+                            <div className="col-sm-12 mb-3">
                                 <div className="row">
-                                    <div className="col-sm-12">
-                                        <p className="mb-2 fw-bold">{this.props.t("banDateEnd")}:
+                                    <div className="col-sm-12 mb-3">
+                                        <p className="fw-bold">{this.props.t("banDateEnd")}:
                                             <h6 className="text-muted d-inline-block ms-1">{new Date(this.props.userInfo.banDateEnd || "").toLocaleDateString() || ""}</h6>
                                         </p>
                                     </div>
-                                    <div className="col-sm-12">
-                                        <p className="mb-2 fw-bold">{this.props.t("banComment")}:
-                                            <h6 className="text-muted d-inline-block ms-1">{this.props.userInfo.banComment}</h6>
+                                    <div className="col-sm-12 mb-3">
+                                        <p className="fw-bold">{this.props.t("banComment")}:
+                                            <h6 className="text-muted d-inline-block ms-1">{this.props.userInfo.banComment || "---"}</h6>
                                         </p>
                                     </div>
                                 </div>
@@ -89,12 +89,12 @@ class ComponentThemeUsersProfileCard extends Component<IPageProps, IPageState> {
                         ) : null
                 }
                 <div className="col-sm-12">
-                    <span className="mb-2 fw-bold">{this.props.t("comment")}:
-                        <small className="fw-bold ms-1 text-muted">{this.props.userInfo.comment}</small>
+                    <span className="fw-bold">{this.props.t("comment")}:
+                        <small className="fw-bold ms-1 text-muted">{this.props.userInfo.comment || "---"}</small>
                     </span>
                 </div>
             </div>
-        </>
+        </div>
     )
 
     Permissions = () => {
@@ -127,7 +127,7 @@ class ComponentThemeUsersProfileCard extends Component<IPageProps, IPageState> {
         )
 
         return (
-            <>
+            <div className="permissions">
                 <h6 className="pb-1 border-bottom fw-bold text-end">{this.props.t("permissions")}</h6>
                 <div className="row">
                     {
@@ -136,7 +136,7 @@ class ComponentThemeUsersProfileCard extends Component<IPageProps, IPageState> {
                         )
                     }
                 </div>
-            </>
+            </div>
         )
     }
 
@@ -173,7 +173,11 @@ class ComponentThemeUsersProfileCard extends Component<IPageProps, IPageState> {
                             <div className="col-sm-8 position-relative card-profile-title">
                                 <div className="p-2">
                                     <this.General/>
-                                    <this.Permissions/>
+                                    {
+                                        this.props.isShowPermissions
+                                            ? <this.Permissions/>
+                                            : null
+                                    }
                                 </div>
                             </div>
                         </div>

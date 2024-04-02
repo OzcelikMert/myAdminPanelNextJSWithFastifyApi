@@ -19,7 +19,6 @@ import {IPermissionGroup} from "types/constants/permissionGroups";
 import {IPermission} from "types/constants/permissions";
 import {ImageSourceUtil} from "utils/imageSource.util";
 import ComponentSpinnerDonut from "components/elements/spinners/donut";
-import {cloneDeepWith} from "lodash";
 
 type IPageState = {
     isSubmitting: boolean
@@ -213,7 +212,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
             <div className="grid-margin stretch-card">
                 <div className="card">
                     <div className="card-body">
-                        <h6 className="pb-1 border-bottom fw-bold text-start">Permissions</h6>
+                        <h6 className="pb-1 border-bottom fw-bold text-start">{this.props.t("permissions")}</h6>
                         <div className="row">
                             {
                                 foundPermissionGroups.orderBy("rank", "asc").map(group =>
