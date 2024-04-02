@@ -7,6 +7,9 @@ Things to do:
 - Yaptigin tum guncellemelerin hata kontrolunu yap
 - Diller icin export import yap
 
++ post haric hic bir yerde pending statusu olmasin
++ toplu status guncellemelerinde pendingi kaldir
++ user permissionlari yetkilere gore goster (profil cardda)
 + static contenti kaldir
 + rich textboxdaki buglari hallet (font color, edit image size, vs.)
 + settings contact formu guncelle componentlerden(is editing yerine selectedelement falan kullan)

@@ -63,7 +63,7 @@ const getPostPermission = (typeId: PostTypeId, method: PostPermissionMethod): IE
     };
 }
 
-const checkPermissionRoleRank = (targetRoleId: UserRoleId, minRoleId: UserRoleId): boolean => {
+const checkPermissionRoleRank = (targetRoleId: UserRoleId, minRoleId: UserRoleId, checkOnlyGTE: boolean = false): boolean => {
     let userRole = userRoles.findSingle("id", targetRoleId);
     let minRole = userRoles.findSingle("id", minRoleId);
 
@@ -71,7 +71,10 @@ const checkPermissionRoleRank = (targetRoleId: UserRoleId, minRoleId: UserRoleId
         (
             userRole &&
             minRole &&
-            userRole.rank >= minRole.rank
+            (
+                (checkOnlyGTE && userRole.rank > minRole.rank) ||
+                (!checkOnlyGTE && userRole.rank >= minRole.rank)
+            )
         ) || targetRoleId == UserRoleId.SuperAdmin
     );
 }

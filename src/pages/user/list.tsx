@@ -252,14 +252,12 @@ export default class PageUserList extends Component<IPageProps, IPageState> {
                     (() => {
                         let userInfo = this.state.items.findSingle("_id", this.state.selectedItemId);
                         return userInfo ? <ComponentThemeUsersProfileCard
-                            router={this.props.router}
-                            t={this.props.t}
+                            {...this.props}
                             onClose={() => {
                                 this.setState({isViewItemInfo: false})
                             }}
                             isShow={this.state.isViewItemInfo}
                             userInfo={userInfo}
-                            isShowPermissions={PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.Admin)}
                         /> : null
                     })()
                 }

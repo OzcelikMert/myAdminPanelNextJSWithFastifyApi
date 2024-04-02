@@ -12,17 +12,15 @@ import {permissions} from "constants/permissions";
 import {permissionGroups} from "constants/permissionGroups";
 import {IPermission} from "types/constants/permissions";
 import {ImageSourceUtil} from "utils/imageSource.util";
+import {PermissionUtil} from "utils/permission.util";
 
 type IPageState = {};
 
 type IPageProps = {
-    router: IPagePropCommon["router"];
-    t: IPagePropCommon["t"];
     isShow: boolean
     onClose: any
     userInfo: IUserModel
-    isShowPermissions: boolean
-};
+} & IPagePropCommon;
 
 class ComponentThemeUsersProfileCard extends Component<IPageProps, IPageState> {
     SocialMedia = () => (
@@ -174,7 +172,7 @@ class ComponentThemeUsersProfileCard extends Component<IPageProps, IPageState> {
                                 <div className="p-2">
                                     <this.General/>
                                     {
-                                        this.props.isShowPermissions
+                                        PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, this.props.userInfo.roleId, true)
                                             ? <this.Permissions/>
                                             : null
                                     }
