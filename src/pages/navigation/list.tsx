@@ -117,7 +117,10 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                 content: this.props.t("updating"),
                 type: "loading"
             });
-            let serviceResult = await NavigationService.updateStatusMany({_id: selectedItemId, statusId: statusId}, this.abortController.signal);
+            let serviceResult = await NavigationService.updateStatusMany({
+                _id: selectedItemId,
+                statusId: statusId
+            }, this.abortController.signal);
             loadingToast.hide();
             if (serviceResult.status) {
                 this.setState((state: IPageState) => {
@@ -209,14 +212,9 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
     get getToggleMenuItems(): IThemeToggleMenuItem[] {
         return status.findMulti("id", [
                 StatusId.Active,
-                StatusId.Pending,
-                StatusId.InProgress
-            ].concat(
-                PermissionUtil.check(
-                    this.props.getStateApp.sessionAuth!,
-                    NavigationEndPointPermission.DELETE
-                ) ? [StatusId.Deleted] : []
-            )
+                StatusId.InProgress,
+                StatusId.Deleted
+            ]
         ).map(item => ({label: this.props.t(item.langKey), value: item.id, icon: getStatusIcon(item.id)}))
     }
 
@@ -308,15 +306,20 @@ export default class PageNavigationList extends Component<IPageProps, IPageState
                     <div className="col-md-3"></div>
                     <div className="col-md-9 text-end">
                         {
-                            this.state.listMode === "list"
-                                ? <button className="btn btn-gradient-danger btn-lg list-mode-btn"
-                                          onClick={() => this.onChangeListMode("deleted")}>
-                                    <i className="mdi mdi-delete"></i> {this.props.t("trash")} ({this.state.items.findMulti("statusId", StatusId.Deleted).length})
-                                </button>
-                                : <button className="btn btn-gradient-success btn-lg list-mode-btn"
-                                          onClick={() => this.onChangeListMode("list")}>
-                                    <i className="mdi mdi-view-list"></i> {this.props.t("list")} ({this.state.items.findMulti("statusId", StatusId.Deleted, false).length})
-                                </button>
+                            PermissionUtil.check(
+                                this.props.getStateApp.sessionAuth!,
+                                NavigationEndPointPermission.DELETE
+                            ) ? (
+                                this.state.listMode === "list"
+                                    ? <button className="btn btn-gradient-danger btn-lg list-mode-btn"
+                                              onClick={() => this.onChangeListMode("deleted")}>
+                                        <i className="mdi mdi-delete"></i> {this.props.t("trash")} ({this.state.items.findMulti("statusId", StatusId.Deleted).length})
+                                    </button>
+                                    : <button className="btn btn-gradient-success btn-lg list-mode-btn"
+                                              onClick={() => this.onChangeListMode("list")}>
+                                        <i className="mdi mdi-view-list"></i> {this.props.t("list")} ({this.state.items.findMulti("statusId", StatusId.Deleted, false).length})
+                                    </button>
+                            ) : null
                         }
                     </div>
                 </div>

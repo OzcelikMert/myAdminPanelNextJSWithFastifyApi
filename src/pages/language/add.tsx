@@ -2,9 +2,7 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
-import V from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
-import Swal from "sweetalert2";
 import {ILanguageUpdateWithIdParamService} from "types/services/language.service";
 import {LanguageService} from "services/language.service";
 import Image from "next/image";

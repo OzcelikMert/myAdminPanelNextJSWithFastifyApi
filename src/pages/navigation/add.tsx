@@ -4,7 +4,6 @@ import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentForm
 import {IPagePropCommon} from "types/pageProps";
 import V from "library/variable";
 import ReactHandleFormLibrary from "library/react/handles/form";
-import Swal from "sweetalert2";
 import {INavigationUpdateWithIdParamService} from "types/services/navigation.service";
 import {NavigationService} from "services/navigation.service";
 import {IThemeFormSelectValue} from "components/elements/form/input/select";
@@ -98,8 +97,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
         this.setState((state: IPageState) => {
             state.status = ComponentUtil.getStatusForSelect([
                 StatusId.Active,
-                StatusId.InProgress,
-                StatusId.Pending
+                StatusId.InProgress
             ], this.props.t);
             state.formData.statusId = StatusId.Active;
             return state;

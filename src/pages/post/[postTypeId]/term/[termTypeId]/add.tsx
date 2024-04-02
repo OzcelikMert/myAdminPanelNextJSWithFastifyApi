@@ -7,7 +7,6 @@ import ReactHandleFormLibrary from "library/react/handles/form";
 import ComponentThemeChooseImage from "components/theme/chooseImage";
 import {PostTermService} from "services/postTerm.service";
 import {IPostTermUpdateWithIdParamService} from "types/services/postTerm.service";
-import Swal from "sweetalert2";
 import Image from "next/image"
 import {IThemeFormSelectValue} from "components/elements/form/input/select";
 import {PostTypeId} from "constants/postTypes";
@@ -124,8 +123,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
         this.setState((state: IPageState) => {
             state.status = ComponentUtil.getStatusForSelect([
                 StatusId.Active,
-                StatusId.InProgress,
-                StatusId.Pending
+                StatusId.InProgress
             ], this.props.t);
             state.formData.statusId = StatusId.Active;
             return state;

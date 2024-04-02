@@ -1,7 +1,6 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import HandleForm from "library/react/handles/form";
-import V from "library/variable";
 import Swal from "sweetalert2";
 import {IThemeFormSelectValue} from "components/elements/form/input/select";
 import {IComponentUpdateWithIdParamService} from "types/services/component.service";

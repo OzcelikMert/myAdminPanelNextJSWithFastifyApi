@@ -9,7 +9,6 @@ import {PostTermService} from "services/postTerm.service";
 import {PostService} from "services/post.service";
 import {IPostUpdateWithIdParamService} from "types/services/post.service";
 import ComponentToolTip from "components/elements/tooltip";
-import Swal from "sweetalert2";
 import Image from "next/image"
 import dynamic from "next/dynamic";
 import {ProductTypeId, productTypes} from "constants/productTypes";

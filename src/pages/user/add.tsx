@@ -13,7 +13,6 @@ import {
 import V, {DateMask} from "library/variable";
 import {UserService} from "services/user.service";
 import {IUserUpdateWithIdParamService} from "types/services/user.service";
-import Swal from "sweetalert2";
 import {IThemeFormSelectValue} from "components/elements/form/input/select";
 import {UserEndPointPermission} from "constants/endPointPermissions/user.endPoint.permission";
 import {PermissionUtil} from "utils/permission.util";
