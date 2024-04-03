@@ -14,4 +14,5 @@ export class SettingApiEndPoint {
     get UPDATE_CONTACT_FORM() { return PathUtil.createPath(this.mainPath, "/update/contact-form"); }
     get UPDATE_SOCIAL_MEDIA() { return PathUtil.createPath(this.mainPath, "/update/social-media"); }
     get UPDATE_ECOMMERCE() { return PathUtil.createPath(this.mainPath, "/update/ecommerce"); }
+    get UPDATE_PATH() { return PathUtil.createPath(this.mainPath, "/update/path"); }
 }

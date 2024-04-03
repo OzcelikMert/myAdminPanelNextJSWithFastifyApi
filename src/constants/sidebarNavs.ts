@@ -261,9 +261,15 @@ export const sidebarNavs: ISidebarPath[] = [
             },
             {
                 path: EndPoints.SETTINGS_WITH.SEO,
-                icon: `magnify`,
+                icon: `tag-search`,
                 title: "seo",
                 permission: SettingsEndPointPermission.UPDATE_SEO
+            },
+            {
+                path: EndPoints.SETTINGS_WITH.PATHS,
+                icon: `sign-direction`,
+                title: "paths",
+                permission: SettingsEndPointPermission.UPDATE_PATH
             },
             {
                 path: EndPoints.SETTINGS_WITH.CONTACT_FORMS,

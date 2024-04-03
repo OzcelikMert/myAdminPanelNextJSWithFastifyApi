@@ -15,4 +15,5 @@ export class SettingsEndPoint {
     get SUBSCRIBERS() { return PathUtil.createPath(this.mainPath, "/subscribers"); };
     get CONTACT_FORMS() { return PathUtil.createPath(this.mainPath, "/contact-forms"); };
     get SOCIAL_MEDIA() { return PathUtil.createPath(this.mainPath, "/social-media"); };
+    get PATHS() { return PathUtil.createPath(this.mainPath, "/paths"); };
 }

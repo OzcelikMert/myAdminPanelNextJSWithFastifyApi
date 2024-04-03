@@ -1,4 +1,5 @@
 export const languageKeys = [
+    "paths",
     "newElement",
     "errorPage404",
     "primary",
