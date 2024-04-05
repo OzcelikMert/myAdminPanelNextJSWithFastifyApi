@@ -6,7 +6,7 @@ import {
     ISettingUpdateContactFormParamService,
     ISettingUpdateSEOParamService,
     ISettingUpdateSocialMediaParamService,
-    ISettingGetResultService
+    ISettingGetResultService, ISettingUpdatePathParamService
 } from "types/services/setting.service";
 import {PathUtil} from "utils/path.util";
 import ApiRequest from "library/api/request";
@@ -65,11 +65,21 @@ const updateECommerce = (params: ISettingUpdateECommerceParamService, signal?: A
     }).put();
 }
 
+const updatePath = (params: ISettingUpdatePathParamService, signal?: AbortSignal) => {
+    return new ApiRequest({
+        apiUrl: PathUtil.getApiURL(),
+        endPoint: ApiEndPoints.SETTING_WITH.UPDATE_PATH,
+        data: params,
+        signal: signal
+    }).put();
+}
+
 export const SettingService = {
     get: get,
     updateGeneral: updateGeneral,
     updateSeo: updateSeo,
     updateContactForm: updateContactForm,
     updateSocialMedia: updateSocialMedia,
-    updateECommerce: updateECommerce
+    updateECommerce: updateECommerce,
+    updatePath: updatePath
 }

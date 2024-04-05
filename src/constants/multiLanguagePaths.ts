@@ -10,5 +10,6 @@ export const multiLanguagePaths = [
     PathUtil.createPath(EndPoints.THEME_CONTENT, EndPoints.POST_WITH().TERM_WITH().EDIT()),
     EndPoints.NAVIGATION_WITH.EDIT(),
     EndPoints.SETTINGS_WITH.SEO,
-    EndPoints.COMPONENT_WITH.EDIT()
+    EndPoints.SETTINGS_WITH.PATHS,
+    EndPoints.COMPONENT_WITH.EDIT(),
 ]

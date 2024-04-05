@@ -6,11 +6,12 @@ export interface ISettingModel {
     logoTwo?: string
     head?: string
     script?: string
-    seoContents: ISettingSeoContentModel,
+    seoContents?: ISettingSeoContentModel,
     contact?: ISettingContactModel
-    contactForms: ISettingContactFormModel[],
-    socialMedia: ISettingSocialMediaModel[]
+    contactForms?: ISettingContactFormModel[],
+    socialMedia?: ISettingSocialMediaModel[]
     eCommerce?: ISettingECommerceModel
+    paths?: ISettingPathModel[]
 }
 
 export interface ISettingECommerceModel {
@@ -49,4 +50,18 @@ export interface ISettingSeoContentModel {
     title?: string,
     content?: string,
     tags?: string[]
+}
+
+export interface ISettingPathModel {
+    _id?: string
+    title: string
+    key: string
+    path: string
+    contents: ISettingPathContentModel
+}
+
+export interface ISettingPathContentModel {
+    _id?: string
+    langId: string
+    asPath: string,
 }

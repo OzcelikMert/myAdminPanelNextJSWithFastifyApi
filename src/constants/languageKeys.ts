@@ -1,4 +1,7 @@
 export const languageKeys = [
+    "newPath",
+    "pathMask",
+    "path",
     "paths",
     "newElement",
     "errorPage404",

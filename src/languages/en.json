@@ -1,4 +1,7 @@
 {
+  "newPath": "New Path",
+  "pathMask": "Path Mask",
+  "path": "Path",
   "paths": "Paths",
   "newElement": "New Element",
   "errorPage404": "Error Page: 404",

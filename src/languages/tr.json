@@ -1,4 +1,7 @@
 {
+  "newPath": "Yeni Yol",
+  "pathMask": "Yol Maskesi",
+  "path": "Yol",
   "paths": "Yollar",
   "newElement": "Yeni Eleman",
   "error404": "Hata Sayfası: 404",
