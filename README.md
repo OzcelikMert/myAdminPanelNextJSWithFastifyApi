@@ -2,12 +2,12 @@
 Admin Panel Using Next JS For Fastify Api
 
 Things to do:
-- tscongifdeki pathslere '@' koy (types haric)
 - websitenin urllerini dynamic yapmak icin panelden duzenlettir (ornek olarak blog urli her dilde farkli olsun)
 - urunler varyasyonlari icin farkli bir yol bul (ornek tum urun varyasyonlari aslinda urun olmali fakat urunun icine cekildiginde varyasyon olmali yada urun ekleme yerinde urun tipi olmali varyasyon yada urun diye)
 - Yaptigin tum guncellemelerin hata kontrolunu yap
 - Diller icin export import yap
 
++ tscongifdeki pathslere '@' koy (types haric)
 + post haric hic bir yerde pending statusu olmasin
 + toplu status guncellemelerinde pendingi kaldir
 + user permissionlari yetkilere gore goster (profil cardda)

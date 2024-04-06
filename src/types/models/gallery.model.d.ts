@@ -1,4 +1,4 @@
-import {GalleryTypeId} from "constants/galleryTypeId";
+import {GalleryTypeId} from "@constants/galleryTypeId";
 
 export interface IGalleryModel {
     _id: string

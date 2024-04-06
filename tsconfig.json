@@ -17,17 +17,14 @@
     "baseUrl": "src",
     "typeRoots" : ["../node_modules/@types", "types", "node"],
     "paths": {
-      "pages/*": ["pages/*"],
-      "components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
+      "@components/*": ["components/*"],
       "types/*": ["types/*"],
-      "styles/*": ["assets/styles/*"],
-      "images/*": ["assets/images/*"],
-      "json/*": ["assets/json/*"],
-      "services/*": ["services/*"],
-      "constants/*": ["constants/*"],
-      "library/*": ["library/*"],
-      "utils/*": ["utils/*"],
-      "lib/*": ["lib/*"]
+      "@styles/*": ["assets/styles/*"],
+      "@services/*": ["services/*"],
+      "@constants/*": ["constants/*"],
+      "@library/*": ["library/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": ["../next-env.d.ts", "**/*.ts", "**/*.d.ts", "**/*.tsx"],

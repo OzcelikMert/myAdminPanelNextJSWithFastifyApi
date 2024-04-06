@@ -1,9 +1,9 @@
 import React, {Component, FormEvent} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {ComponentForm, ComponentFormType} from "components/elements/form";
-import ReactHandleFormLibrary from "library/react/handles/form";
-import ComponentToast from "components/elements/toast";
-import {UserService} from "services/user.service";
+import {ComponentForm, ComponentFormType} from "@components/elements/form";
+import ReactHandleFormLibrary from "@library/react/handles/form";
+import ComponentToast from "@components/elements/toast";
+import {UserService} from "@services/user.service";
 
 type IPageState = {
     isSubmitting: boolean

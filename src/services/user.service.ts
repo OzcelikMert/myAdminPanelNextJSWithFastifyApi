@@ -1,4 +1,4 @@
-import {ApiEndPoints} from "constants/apiEndPoints";
+import {ApiEndPoints} from "@constants/apiEndPoints";
 import {
     IUserGetWithIdParamService,
     IUserGetManyParamService,
@@ -10,8 +10,8 @@ import {
     IUserUpdatePasswordParamService,
     IUserUpdateProfileImageParamService
 } from "types/services/user.service";
-import ApiRequest from "library/api/request";
-import {PathUtil} from "utils/path.util";
+import ApiRequest from "@library/api/request";
+import {PathUtil} from "@utils/path.util";
 import {IUserModel} from "types/models/user.model";
 
 const getWithId = (params: IUserGetWithIdParamService, signal?: AbortSignal) => {

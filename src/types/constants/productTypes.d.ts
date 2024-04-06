@@ -1,5 +1,5 @@
 import {ILanguageKeys} from "./languageKeys";
-import {ProductTypeId} from "constants/productTypes";
+import {ProductTypeId} from "@constants/productTypes";
 
 export interface IProductType {
     id: ProductTypeId,

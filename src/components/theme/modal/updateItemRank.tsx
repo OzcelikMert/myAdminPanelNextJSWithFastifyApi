@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {ComponentFormLoadingButton,  ComponentFormType} from "components/elements/form";
-import ReactHandleFormLibrary from "library/react/handles/form";
+import {ComponentFormLoadingButton,  ComponentFormType} from "@components/elements/form";
+import ReactHandleFormLibrary from "@library/react/handles/form";
 import {Modal} from "react-bootstrap";
 import {IPagePropCommon} from "types/pageProps";
 

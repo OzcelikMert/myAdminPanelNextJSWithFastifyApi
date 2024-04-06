@@ -1,4 +1,4 @@
-import {GalleryTypeId} from "constants/galleryTypeId";
+import {GalleryTypeId} from "@constants/galleryTypeId";
 import {IUserPopulateService} from "types/services/user.service";
 import {IGalleryModel} from "types/models/gallery.model";
 

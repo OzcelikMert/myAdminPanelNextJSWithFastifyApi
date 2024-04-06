@@ -1,5 +1,5 @@
 import {ILanguageKeys} from "./languageKeys";
-import {UserRoleId, UserRoleRank} from "constants/userRoles";
+import {UserRoleId, UserRoleRank} from "@constants/userRoles";
 
 export interface IUserRole {
     id: UserRoleId,

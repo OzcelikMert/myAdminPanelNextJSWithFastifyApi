@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {PageTypeId, pageTypes} from "constants/pageTypes";
+import {PageTypeId, pageTypes} from "@constants/pageTypes";
 
 type IPageState = {};
 

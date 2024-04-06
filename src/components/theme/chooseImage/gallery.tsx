@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Modal, Tab, Tabs} from "react-bootstrap";
-import PageGalleryList from "pages/gallery/list";
-import PageGalleryUpload from "pages/gallery/upload";
+import PageGalleryList from "@pages/gallery/list";
+import PageGalleryUpload from "@pages/gallery/upload";
 import {IPagePropCommon} from "types/pageProps";
 import {IGalleryGetResultService} from "types/services/gallery.service";
 

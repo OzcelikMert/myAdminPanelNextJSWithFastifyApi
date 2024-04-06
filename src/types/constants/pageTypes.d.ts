@@ -1,4 +1,4 @@
-import {PageTypeId} from "constants/pageTypes";
+import {PageTypeId} from "@constants/pageTypes";
 import {ILanguageKeys} from "./languageKeys";
 
 export interface IPageType {

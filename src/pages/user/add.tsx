@@ -2,30 +2,30 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import moment from "moment";
 import {IPagePropCommon} from "types/pageProps";
-import ReactHandleFormLibrary from "library/react/handles/form";
+import ReactHandleFormLibrary from "@library/react/handles/form";
 import {
     ComponentFieldSet,
     ComponentForm,
     ComponentFormCheckBox,
     ComponentFormSelect,
     ComponentFormType
-} from "components/elements/form";
-import V, {DateMask} from "library/variable";
-import {UserService} from "services/user.service";
+} from "@components/elements/form";
+import V, {DateMask} from "@library/variable";
+import {UserService} from "@services/user.service";
 import {IUserUpdateWithIdParamService} from "types/services/user.service";
-import {IThemeFormSelectValue} from "components/elements/form/input/select";
-import {UserEndPointPermission} from "constants/endPointPermissions/user.endPoint.permission";
-import {PermissionUtil} from "utils/permission.util";
-import {ComponentUtil} from "utils/component.util";
-import {StatusId} from "constants/status";
-import {UserRoleId, userRoles} from "constants/userRoles";
-import {EndPoints} from "constants/endPoints";
-import {permissions} from "constants/permissions";
+import {IThemeFormSelectValue} from "@components/elements/form/input/select";
+import {UserEndPointPermission} from "@constants/endPointPermissions/user.endPoint.permission";
+import {PermissionUtil} from "@utils/permission.util";
+import {ComponentUtil} from "@utils/component.util";
+import {StatusId} from "@constants/status";
+import {UserRoleId, userRoles} from "@constants/userRoles";
+import {EndPoints} from "@constants/endPoints";
+import {permissions} from "@constants/permissions";
 import {IPermissionGroup} from "types/constants/permissionGroups";
 import {IPermission} from "types/constants/permissions";
-import {permissionGroups} from "constants/permissionGroups";
-import {RouteUtil} from "utils/route.util";
-import ComponentToast from "components/elements/toast";
+import {permissionGroups} from "@constants/permissionGroups";
+import {RouteUtil} from "@utils/route.util";
+import ComponentToast from "@components/elements/toast";
 
 type IPageState = {
     mainTabActiveKey: string

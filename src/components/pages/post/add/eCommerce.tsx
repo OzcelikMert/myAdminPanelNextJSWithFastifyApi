@@ -1,20 +1,20 @@
 import React, {Component} from 'react';
-import {ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form";
-import ReactHandleFormLibrary from "library/react/handles/form";
+import {ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "@components/elements/form";
+import ReactHandleFormLibrary from "@library/react/handles/form";
 import {IPostECommerceAttributeModel, IPostECommerceVariationModel} from "types/models/post.model";
 import {Accordion, Card, Tab, Tabs} from "react-bootstrap";
-import ComponentAccordionToggle from "components/elements/accordion/toggle";
-import ComponentThemeChooseImage from "components/theme/chooseImage";
+import ComponentAccordionToggle from "@components/elements/accordion/toggle";
+import ComponentThemeChooseImage from "@components/theme/chooseImage";
 import Image from "next/image";
-import {ProductTypeId} from "constants/productTypes";
-import PagePostAdd, {IPageState as PostPageState} from "pages/post/[postTypeId]/add";
-import {AttributeTypeId} from "constants/attributeTypes";
+import {ProductTypeId} from "@constants/productTypes";
+import PagePostAdd, {IPageState as PostPageState} from "@pages/post/[postTypeId]/add";
+import {AttributeTypeId} from "@constants/attributeTypes";
 import dynamic from "next/dynamic";
-import ComponentToolTip from "components/elements/tooltip";
+import ComponentToolTip from "@components/elements/tooltip";
 import Swal from "sweetalert2";
-import {ImageSourceUtil} from "utils/imageSource.util";
+import {ImageSourceUtil} from "@utils/imageSource.util";
 
-const ComponentThemeRichTextBox = dynamic(() => import("components/theme/richTextBox"), {
+const ComponentThemeRichTextBox = dynamic(() => import("@components/theme/richTextBox"), {
     ssr: false,
     loading: () => <p>Loading...</p>
 });

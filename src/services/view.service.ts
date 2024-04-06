@@ -1,11 +1,11 @@
-import {ApiEndPoints} from "constants/apiEndPoints";
+import {ApiEndPoints} from "@constants/apiEndPoints";
 import {
     IViewGetStatisticsResultService,
     IViewGetNumberResultService,
     IViewAddParamService,
 } from "types/services/view.service";
-import ApiRequest from "library/api/request";
-import {PathUtil} from "utils/path.util";
+import ApiRequest from "@library/api/request";
+import {PathUtil} from "@utils/path.util";
 import {IViewModel} from "types/models/view.model";
 
 const getNumber = (signal?: any) => {

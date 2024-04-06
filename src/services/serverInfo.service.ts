@@ -1,7 +1,7 @@
-import {ApiEndPoints} from "constants/apiEndPoints";
+import {ApiEndPoints} from "@constants/apiEndPoints";
 import {IServerInfoGetResultService} from "types/services/serverInfo.service";
-import ApiRequest from "library/api/request";
-import {PathUtil} from "utils/path.util";
+import ApiRequest from "@library/api/request";
+import {PathUtil} from "@utils/path.util";
 
 const get = (signal?: AbortSignal) => {
     return new ApiRequest({

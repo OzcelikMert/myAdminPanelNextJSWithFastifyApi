@@ -1,7 +1,7 @@
-import {EndPoints} from "constants/endPoints/index";
-import {PostEndPoint} from "constants/endPoints/post.endPoint";
-import {PostTypeId} from "constants/postTypes";
-import {PathUtil} from "utils/path.util";
+import {EndPoints} from "@constants/endPoints/index";
+import {PostEndPoint} from "@constants/endPoints/post.endPoint";
+import {PostTypeId} from "@constants/postTypes";
+import {PathUtil} from "@utils/path.util";
 
 export class ThemeContentEndPoint {
     private mainPath: string;

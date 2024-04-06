@@ -1,24 +1,24 @@
 import React, {Component, FormEvent} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {ComponentFieldSet, ComponentForm, ComponentFormType} from "components/elements/form";
-import ReactHandleFormLibrary from "library/react/handles/form";
-import ComponentThemeChooseImage from "components/theme/chooseImage";
-import {UserService} from "services/user.service";
-import ComponentToast from "components/elements/toast";
+import {ComponentFieldSet, ComponentForm, ComponentFormType} from "@components/elements/form";
+import ReactHandleFormLibrary from "@library/react/handles/form";
+import ComponentThemeChooseImage from "@components/theme/chooseImage";
+import {UserService} from "@services/user.service";
+import ComponentToast from "@components/elements/toast";
 import Image from "next/image"
-import ComponentThemeBadgeStatus from "components/theme/badge/status";
-import ComponentThemeBadgeUserRole from "components/theme/badge/userRole";
+import ComponentThemeBadgeStatus from "@components/theme/badge/status";
+import ComponentThemeBadgeUserRole from "@components/theme/badge/userRole";
 import {
     IUserGetResultService,
     IUserUpdateProfileImageParamService,
     IUserUpdateProfileParamService
 } from "types/services/user.service";
-import {permissions} from "constants/permissions";
-import {permissionGroups} from "constants/permissionGroups";
+import {permissions} from "@constants/permissions";
+import {permissionGroups} from "@constants/permissionGroups";
 import {IPermissionGroup} from "types/constants/permissionGroups";
 import {IPermission} from "types/constants/permissions";
-import {ImageSourceUtil} from "utils/imageSource.util";
-import ComponentSpinnerDonut from "components/elements/spinners/donut";
+import {ImageSourceUtil} from "@utils/imageSource.util";
+import ComponentSpinnerDonut from "@components/elements/spinners/donut";
 
 type IPageState = {
     isSubmitting: boolean

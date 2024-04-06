@@ -1,7 +1,7 @@
-import {EndPoints} from "constants/endPoints/index";
-import {PathUtil} from "utils/path.util";
-import {PostTypeId} from "constants/postTypes";
-import {PostEndPoint} from "constants/endPoints/post.endPoint";
+import {EndPoints} from "@constants/endPoints/index";
+import {PathUtil} from "@utils/path.util";
+import {PostTypeId} from "@constants/postTypes";
+import {PostEndPoint} from "@constants/endPoints/post.endPoint";
 
 export class ECommerceEndPoint {
     private mainPath: string;

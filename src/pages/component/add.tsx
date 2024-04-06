@@ -1,24 +1,24 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
-import HandleForm from "library/react/handles/form";
+import HandleForm from "@library/react/handles/form";
 import Swal from "sweetalert2";
-import {IThemeFormSelectValue} from "components/elements/form/input/select";
+import {IThemeFormSelectValue} from "@components/elements/form/input/select";
 import {IComponentUpdateWithIdParamService} from "types/services/component.service";
 import {IPagePropCommon} from "types/pageProps";
 import {IComponentElementModel} from "types/models/component.model";
-import {PermissionUtil} from "utils/permission.util";
-import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
-import {ElementTypeId, elementTypes} from "constants/elementTypes";
-import {ComponentService} from "services/component.service";
-import {EndPoints} from "constants/endPoints";
+import {PermissionUtil} from "@utils/permission.util";
+import {ComponentEndPointPermission} from "@constants/endPointPermissions/component.endPoint.permission";
+import {ElementTypeId, elementTypes} from "@constants/elementTypes";
+import {ComponentService} from "@services/component.service";
+import {EndPoints} from "@constants/endPoints";
 import {cloneDeepWith} from "lodash";
-import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
-import {UserRoleId} from "constants/userRoles";
-import ComponentPageComponentElementTypeInput from "components/pages/component/add/elementTypeInput";
-import {ComponentTypeId, componentTypes} from "constants/componentTypes";
-import ReactHandleFormLibrary from "library/react/handles/form";
-import {RouteUtil} from "utils/route.util";
-import ComponentToast from "components/elements/toast";
+import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "@components/elements/form";
+import {UserRoleId} from "@constants/userRoles";
+import ComponentPageComponentElementTypeInput from "@components/pages/component/add/elementTypeInput";
+import {ComponentTypeId, componentTypes} from "@constants/componentTypes";
+import ReactHandleFormLibrary from "@library/react/handles/form";
+import {RouteUtil} from "@utils/route.util";
+import ComponentToast from "@components/elements/toast";
 
 type IPageState = {
     elementTypes: IThemeFormSelectValue[]

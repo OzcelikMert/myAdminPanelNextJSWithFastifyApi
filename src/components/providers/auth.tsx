@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {IPagePropCommon} from "types/pageProps";
-import {AuthService} from "services/auth.service";
-import {ApiErrorCodes} from "library/api/errorCodes";
-import {EndPoints} from "constants/endPoints";
-import {RouteUtil} from "utils/route.util";
+import {AuthService} from "@services/auth.service";
+import {ApiErrorCodes} from "@library/api/errorCodes";
+import {EndPoints} from "@constants/endPoints";
+import {RouteUtil} from "@utils/route.util";
 
 type IPageState = {
     isAuth: boolean

@@ -1,23 +1,23 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
-import {ComponentForm, ComponentFormSelect, ComponentFormType,} from "components/elements/form"
+import {ComponentForm, ComponentFormSelect, ComponentFormType,} from "@components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
-import V from "library/variable";
-import ReactHandleFormLibrary from "library/react/handles/form";
-import ComponentThemeChooseImage from "components/theme/chooseImage";
-import {PostTermService} from "services/postTerm.service";
+import V from "@library/variable";
+import ReactHandleFormLibrary from "@library/react/handles/form";
+import ComponentThemeChooseImage from "@components/theme/chooseImage";
+import {PostTermService} from "@services/postTerm.service";
 import {IPostTermUpdateWithIdParamService} from "types/services/postTerm.service";
 import Image from "next/image"
-import {IThemeFormSelectValue} from "components/elements/form/input/select";
-import {PostTypeId} from "constants/postTypes";
-import {PostTermTypeId} from "constants/postTermTypes";
-import {PermissionUtil, PostPermissionMethod} from "utils/permission.util";
-import {PostUtil} from "utils/post.util";
-import {StatusId} from "constants/status";
-import {ComponentUtil} from "utils/component.util";
-import {ImageSourceUtil} from "utils/imageSource.util";
-import {RouteUtil} from "utils/route.util";
-import ComponentToast from "components/elements/toast";
+import {IThemeFormSelectValue} from "@components/elements/form/input/select";
+import {PostTypeId} from "@constants/postTypes";
+import {PostTermTypeId} from "@constants/postTermTypes";
+import {PermissionUtil, PostPermissionMethod} from "@utils/permission.util";
+import {PostUtil} from "@utils/post.util";
+import {StatusId} from "@constants/status";
+import {ComponentUtil} from "@utils/component.util";
+import {ImageSourceUtil} from "@utils/imageSource.util";
+import {RouteUtil} from "@utils/route.util";
+import ComponentToast from "@components/elements/toast";
 
 type IPageState = {
     mainTabActiveKey: string

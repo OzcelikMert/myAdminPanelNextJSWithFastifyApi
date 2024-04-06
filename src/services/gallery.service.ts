@@ -1,13 +1,13 @@
-import {ApiEndPoints} from "constants/apiEndPoints";
+import {ApiEndPoints} from "@constants/apiEndPoints";
 import {
     IGalleryDeleteManyParamService,
     IGalleryAddParamService,
     IGalleryGetManyParamService,
     IGalleryGetResultService, IGalleryImageProperties
 } from "types/services/gallery.service";
-import ApiRequest from "library/api/request";
-import {PathUtil} from "utils/path.util";
-import {IApiRequestParam} from "library/types/api";
+import ApiRequest from "@library/api/request";
+import {PathUtil} from "@utils/path.util";
+import {IApiRequestParam} from "@library/types/api";
 import {IGalleryModel} from "types/models/gallery.model";
 
 const get = (params: IGalleryGetManyParamService, signal?: AbortSignal) => {

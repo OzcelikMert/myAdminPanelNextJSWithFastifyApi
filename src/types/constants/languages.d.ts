@@ -1,4 +1,4 @@
-import {LanguageId} from "constants/languages";
+import {LanguageId} from "@constants/languages";
 
 export interface ILanguage {
     id: LanguageId,

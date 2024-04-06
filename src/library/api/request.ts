@@ -1,7 +1,7 @@
-import {IApiRequestParam, IApiRequestParamMethod} from "library/types/api";
+import {IApiRequestParam, IApiRequestParamMethod} from "@library/types/api";
 import axios from "axios";
-import {ApiTimeouts} from "library/api/timeouts";
-import {ApiResult} from "library/api/result";
+import {ApiTimeouts} from "@library/api/timeouts";
+import {ApiResult} from "@library/api/result";
 
 class ApiRequest {
     constructor(params: IApiRequestParam) {

@@ -1,15 +1,15 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import Swal from "sweetalert2";
-import {GalleryService} from "services/gallery.service";
+import {GalleryService} from "@services/gallery.service";
 import {TableColumn} from "react-data-table-component";
-import ComponentToast from "components/elements/toast";
-import ComponentDataTable from "components/elements/table/dataTable";
+import ComponentToast from "@components/elements/toast";
+import ComponentDataTable from "@components/elements/table/dataTable";
 import Image from "next/image"
-import {GalleryTypeId} from "constants/galleryTypeId";
-import {ImageSourceUtil} from "utils/imageSource.util";
+import {GalleryTypeId} from "@constants/galleryTypeId";
+import {ImageSourceUtil} from "@utils/imageSource.util";
 import {IGalleryGetResultService} from "types/services/gallery.service";
-import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
+import ComponentTableUpdatedBy from "@components/elements/table/updatedBy";
 
 type IPageState = {
     items: IGalleryGetResultService[]

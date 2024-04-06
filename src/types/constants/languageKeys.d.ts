@@ -1,3 +1,3 @@
-import {languageKeys} from "constants/languageKeys";
+import {languageKeys} from "@constants/languageKeys";
 
 export type ILanguageKeys = typeof languageKeys[number];

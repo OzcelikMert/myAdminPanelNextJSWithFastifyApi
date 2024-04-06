@@ -1,20 +1,20 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
-import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form"
+import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "@components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
-import ReactHandleFormLibrary from "library/react/handles/form";
+import ReactHandleFormLibrary from "@library/react/handles/form";
 import {ILanguageUpdateWithIdParamService} from "types/services/language.service";
-import {LanguageService} from "services/language.service";
+import {LanguageService} from "@services/language.service";
 import Image from "next/image";
-import {IThemeFormSelectValue} from "components/elements/form/input/select";
-import {PermissionUtil} from "utils/permission.util";
-import {LanguageEndPointPermission} from "constants/endPointPermissions/language.endPoint.permission";
-import {StatusId} from "constants/status";
-import {ComponentUtil} from "utils/component.util";
-import {EndPoints} from "constants/endPoints";
-import {ImageSourceUtil} from "utils/imageSource.util";
-import {RouteUtil} from "utils/route.util";
-import ComponentToast from "components/elements/toast";
+import {IThemeFormSelectValue} from "@components/elements/form/input/select";
+import {PermissionUtil} from "@utils/permission.util";
+import {LanguageEndPointPermission} from "@constants/endPointPermissions/language.endPoint.permission";
+import {StatusId} from "@constants/status";
+import {ComponentUtil} from "@utils/component.util";
+import {EndPoints} from "@constants/endPoints";
+import {ImageSourceUtil} from "@utils/imageSource.util";
+import {RouteUtil} from "@utils/route.util";
+import ComponentToast from "@components/elements/toast";
 
 type IPageState = {
     mainTabActiveKey: string

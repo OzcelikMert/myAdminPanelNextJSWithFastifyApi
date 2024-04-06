@@ -1,19 +1,19 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
-import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form"
+import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "@components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
-import V from "library/variable";
-import ReactHandleFormLibrary from "library/react/handles/form";
+import V from "@library/variable";
+import ReactHandleFormLibrary from "@library/react/handles/form";
 import {INavigationUpdateWithIdParamService} from "types/services/navigation.service";
-import {NavigationService} from "services/navigation.service";
-import {IThemeFormSelectValue} from "components/elements/form/input/select";
-import {PermissionUtil} from "utils/permission.util";
-import {NavigationEndPointPermission} from "constants/endPointPermissions/navigation.endPoint.permission";
-import {ComponentUtil} from "utils/component.util";
-import {StatusId} from "constants/status";
-import {EndPoints} from "constants/endPoints";
-import {RouteUtil} from "utils/route.util";
-import ComponentToast from "components/elements/toast";
+import {NavigationService} from "@services/navigation.service";
+import {IThemeFormSelectValue} from "@components/elements/form/input/select";
+import {PermissionUtil} from "@utils/permission.util";
+import {NavigationEndPointPermission} from "@constants/endPointPermissions/navigation.endPoint.permission";
+import {ComponentUtil} from "@utils/component.util";
+import {StatusId} from "@constants/status";
+import {EndPoints} from "@constants/endPoints";
+import {RouteUtil} from "@utils/route.util";
+import ComponentToast from "@components/elements/toast";
 
 type IPageState = {
     items: IThemeFormSelectValue[]

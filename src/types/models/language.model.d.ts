@@ -1,4 +1,4 @@
-import {StatusId} from "constants/status";
+import {StatusId} from "@constants/status";
 
 export interface ILanguageModel {
     _id: string

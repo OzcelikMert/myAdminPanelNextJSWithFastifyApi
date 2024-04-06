@@ -4,15 +4,15 @@ import {IUserModel} from "types/models/user.model";
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet} from "../../elements/form";
 import Image from "next/image"
-import ComponentThemeBadgeStatus from "components/theme/badge/status";
-import ComponentThemeBadgeUserRole from "components/theme/badge/userRole";
-import {StatusId} from "constants/status";
+import ComponentThemeBadgeStatus from "@components/theme/badge/status";
+import ComponentThemeBadgeUserRole from "@components/theme/badge/userRole";
+import {StatusId} from "@constants/status";
 import {IPermissionGroup} from "types/constants/permissionGroups";
-import {permissions} from "constants/permissions";
-import {permissionGroups} from "constants/permissionGroups";
+import {permissions} from "@constants/permissions";
+import {permissionGroups} from "@constants/permissionGroups";
 import {IPermission} from "types/constants/permissions";
-import {ImageSourceUtil} from "utils/imageSource.util";
-import {PermissionUtil} from "utils/permission.util";
+import {ImageSourceUtil} from "@utils/imageSource.util";
+import {PermissionUtil} from "@utils/permission.util";
 
 type IPageState = {};
 

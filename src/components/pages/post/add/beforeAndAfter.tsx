@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {Tab, Tabs} from "react-bootstrap";
-import ComponentThemeChooseImage from "components/theme/chooseImage";
+import ComponentThemeChooseImage from "@components/theme/chooseImage";
 import Image from "next/image";
-import PagePostAdd, {IPageState as PostPageState} from "pages/post/[postTypeId]/add";
-import ComponentFieldSet from "components/elements/fieldSet";
-import {ImageSourceUtil} from "utils/imageSource.util";
+import PagePostAdd, {IPageState as PostPageState} from "@pages/post/[postTypeId]/add";
+import ComponentFieldSet from "@components/elements/fieldSet";
+import {ImageSourceUtil} from "@utils/imageSource.util";
 
 type IPageState = {
     mainTabActiveKey: string

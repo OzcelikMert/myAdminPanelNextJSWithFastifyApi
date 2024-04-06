@@ -1,6 +1,6 @@
 import {IEndPointPermission} from "types/constants/endPoint.permissions";
-import {UserRoleId} from "constants/userRoles";
-import {PostEndPointPermission} from "constants/endPointPermissions/post.endPoint.permission";
+import {UserRoleId} from "@constants/userRoles";
+import {PostEndPointPermission} from "@constants/endPointPermissions/post.endPoint.permission";
 
 const get: IEndPointPermission = {
     permissionId: [

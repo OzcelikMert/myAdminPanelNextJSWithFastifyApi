@@ -1,6 +1,6 @@
-import {UserRoleId} from "constants/userRoles";
-import {StatusId} from "constants/status";
-import {PermissionId} from "constants/permissions";
+import {UserRoleId} from "@constants/userRoles";
+import {StatusId} from "@constants/status";
+import {PermissionId} from "@constants/permissions";
 import {IUserPopulateService} from "types/services/user.service";
 
 export interface IUserModel {

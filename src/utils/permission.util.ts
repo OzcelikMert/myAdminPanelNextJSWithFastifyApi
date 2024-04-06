@@ -1,14 +1,14 @@
-import {UserRoleId, userRoles} from "constants/userRoles";
-import {PermissionId} from "constants/permissions";
+import {UserRoleId, userRoles} from "@constants/userRoles";
+import {PermissionId} from "@constants/permissions";
 import {ISessionAuthModel} from "types/models/sessionAuth.model";
-import {PostTypeId} from "constants/postTypes";
-import {PostEndPointPermission} from "constants/endPointPermissions/post.endPoint.permission";
+import {PostTypeId} from "@constants/postTypes";
+import {PostEndPointPermission} from "@constants/endPointPermissions/post.endPoint.permission";
 import {IEndPointPermission} from "types/constants/endPoint.permissions";
 import {IPagePropCommon} from "types/pageProps";
-import {EndPoints} from "constants/endPoints";
-import ComponentToast from "components/elements/toast";
+import {EndPoints} from "@constants/endPoints";
+import ComponentToast from "@components/elements/toast";
 import {bool} from "prop-types";
-import {RouteUtil} from "utils/route.util";
+import {RouteUtil} from "@utils/route.util";
 
 export enum PostPermissionMethod {
     GET,

@@ -1,13 +1,13 @@
-import {PostTypeId} from "constants/postTypes";
-import {GalleryEndPoint} from "constants/endPoints/gallery.endPoint";
-import {NavigationEndPoint} from "constants/endPoints/navigation.endPoint";
-import {PostEndPoint} from "constants/endPoints/post.endPoint";
-import {ThemeContentEndPoint} from "constants/endPoints/themeContent.endPoint";
-import {ECommerceEndPoint} from "constants/endPoints/eCommerce.endPoint";
-import {SettingsEndPoint} from "constants/endPoints/settings.endPoint";
-import {UserEndPoint} from "constants/endPoints/user.endPoint";
-import {LanguageEndPoint} from "constants/endPoints/language.endPoint";
-import {ComponentEndPoint} from "constants/endPoints/component.endPoint";
+import {PostTypeId} from "@constants/postTypes";
+import {GalleryEndPoint} from "@constants/endPoints/gallery.endPoint";
+import {NavigationEndPoint} from "@constants/endPoints/navigation.endPoint";
+import {PostEndPoint} from "@constants/endPoints/post.endPoint";
+import {ThemeContentEndPoint} from "@constants/endPoints/themeContent.endPoint";
+import {ECommerceEndPoint} from "@constants/endPoints/eCommerce.endPoint";
+import {SettingsEndPoint} from "@constants/endPoints/settings.endPoint";
+import {UserEndPoint} from "@constants/endPoints/user.endPoint";
+import {LanguageEndPoint} from "@constants/endPoints/language.endPoint";
+import {ComponentEndPoint} from "@constants/endPoints/component.endPoint";
 
 export class EndPoints {
     static get LOGIN() { return "/login"; }

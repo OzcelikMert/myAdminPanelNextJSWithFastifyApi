@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {UserRoleId, userRoles} from "constants/userRoles";
+import {UserRoleId, userRoles} from "@constants/userRoles";
 
 type IPageState = {};
 

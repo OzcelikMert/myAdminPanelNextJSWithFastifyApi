@@ -3,15 +3,15 @@ import {Dropdown} from 'react-bootstrap';
 import Link from 'next/link';
 import {Trans} from 'react-i18next';
 import {IPagePropCommon} from "types/pageProps";
-import {AuthService} from "services/auth.service";
-import {LocalStorageUtil} from "utils/localStorage.util";
+import {AuthService} from "@services/auth.service";
+import {LocalStorageUtil} from "@utils/localStorage.util";
 import DarkModeToggle from "react-dark-mode-toggle";
-import {ThemeUtil} from "utils/theme.util";
+import {ThemeUtil} from "@utils/theme.util";
 import Image from "next/image"
 import {IThemeKeys} from "types/constants/themeKeys";
-import {EndPoints} from "constants/endPoints";
-import {ImageSourceUtil} from "utils/imageSource.util";
-import {RouteUtil} from "utils/route.util";
+import {EndPoints} from "@constants/endPoints";
+import {ImageSourceUtil} from "@utils/imageSource.util";
+import {RouteUtil} from "@utils/route.util";
 
 type IPageState = {
     isDarkTheme: boolean

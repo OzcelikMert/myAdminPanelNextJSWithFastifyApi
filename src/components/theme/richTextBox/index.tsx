@@ -1,10 +1,10 @@
 import React, { Component, Ref, createRef } from 'react'
 import JoditEditor, { Jodit as JoditReact } from "jodit-react";
-import ComponentThemeChooseImage from "components/theme/chooseImage";
+import ComponentThemeChooseImage from "@components/theme/chooseImage";
 import { IPagePropCommon } from "types/pageProps";
 import { Config } from "jodit/types/config";
 import Spinner from "react-bootstrap/Spinner";
-import { ImageSourceUtil } from "utils/imageSource.util";
+import { ImageSourceUtil } from "@utils/imageSource.util";
 import { IJodit } from "jodit/types/types";
 
 

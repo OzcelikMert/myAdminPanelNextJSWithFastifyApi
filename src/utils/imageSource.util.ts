@@ -1,5 +1,5 @@
-import V from "library/variable";
-import {PathUtil} from "utils/path.util";
+import V from "@library/variable";
+import {PathUtil} from "@utils/path.util";
 
 const getUploadedImageSrc = (imageName?: string): string => {
     return imageName && !V.isEmpty(imageName)

@@ -1,4 +1,4 @@
-import {ApiEndPoints} from "constants/apiEndPoints";
+import {ApiEndPoints} from "@constants/apiEndPoints";
 import {
     ISettingGetParamService,
     ISettingUpdateGeneralParamService,
@@ -8,8 +8,8 @@ import {
     ISettingUpdateSocialMediaParamService,
     ISettingGetResultService, ISettingUpdatePathParamService
 } from "types/services/setting.service";
-import {PathUtil} from "utils/path.util";
-import ApiRequest from "library/api/request";
+import {PathUtil} from "@utils/path.util";
+import ApiRequest from "@library/api/request";
 
 const get = (params: ISettingGetParamService, signal?: AbortSignal) => {
     return new ApiRequest({

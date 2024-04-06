@@ -2,18 +2,18 @@ import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
-import ComponentToast from "components/elements/toast";
-import ComponentDataTable from "components/elements/table/dataTable";
-import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
-import {PermissionUtil} from "utils/permission.util";
-import {EndPoints} from "constants/endPoints";
+import ComponentToast from "@components/elements/toast";
+import ComponentDataTable from "@components/elements/table/dataTable";
+import ComponentTableUpdatedBy from "@components/elements/table/updatedBy";
+import {PermissionUtil} from "@utils/permission.util";
+import {EndPoints} from "@constants/endPoints";
 import {IComponentGetResultService} from "types/services/component.service";
-import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
-import {ComponentService} from "services/component.service";
-import {UserRoleId} from "constants/userRoles";
-import ComponentThemeBadgeComponentType from "components/theme/badge/componentType";
-import {ComponentTypeId} from "constants/componentTypes";
-import {RouteUtil} from "utils/route.util";
+import {ComponentEndPointPermission} from "@constants/endPointPermissions/component.endPoint.permission";
+import {ComponentService} from "@services/component.service";
+import {UserRoleId} from "@constants/userRoles";
+import ComponentThemeBadgeComponentType from "@components/theme/badge/componentType";
+import {ComponentTypeId} from "@constants/componentTypes";
+import {RouteUtil} from "@utils/route.util";
 
 type IPageState = {
     searchKey: string

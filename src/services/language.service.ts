@@ -1,4 +1,4 @@
-import {ApiEndPoints} from "constants/apiEndPoints";
+import {ApiEndPoints} from "@constants/apiEndPoints";
 import {
     ILanguageAddParamService, ILanguageGetManyParamService,
     ILanguageGetResultService,
@@ -6,8 +6,8 @@ import {
     ILanguageUpdateWithIdParamService,
     ILanguageUpdateRankWithIdParamService
 } from "types/services/language.service";
-import ApiRequest from "library/api/request";
-import {PathUtil} from "utils/path.util";
+import ApiRequest from "@library/api/request";
+import {PathUtil} from "@utils/path.util";
 import {ILanguageModel} from "types/models/language.model";
 
 const getWithId = (params: ILanguageGetWithIdParamService, signal?: AbortSignal) =>{

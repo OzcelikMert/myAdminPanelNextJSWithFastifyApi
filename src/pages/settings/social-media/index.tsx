@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {ComponentFieldSet, ComponentForm, ComponentFormType} from "components/elements/form";
-import {SettingService} from "services/setting.service";
-import ComponentToast from "components/elements/toast";
+import {ComponentFieldSet, ComponentForm, ComponentFormType} from "@components/elements/form";
+import {SettingService} from "@services/setting.service";
+import ComponentToast from "@components/elements/toast";
 import {ISettingUpdateSocialMediaParamService,} from "types/services/setting.service";
 import {ISettingSocialMediaModel} from 'types/models/setting.model';
-import {PermissionUtil} from "utils/permission.util";
-import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
-import {SettingProjectionKeys} from "constants/settingProjections";
-import {UserRoleId} from "constants/userRoles";
+import {PermissionUtil} from "@utils/permission.util";
+import {SettingsEndPointPermission} from "@constants/endPointPermissions/settings.endPoint.permission";
+import {SettingProjectionKeys} from "@constants/settingProjections";
+import {UserRoleId} from "@constants/userRoles";
 import {cloneDeepWith} from "lodash";
 import Swal from "sweetalert2";
 

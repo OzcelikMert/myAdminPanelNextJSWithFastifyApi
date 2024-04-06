@@ -1,8 +1,8 @@
 import React, {Component, createRef, RefObject} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {IUploadingFiles} from "types/pages/gallery/upload";
-import {GalleryService} from "services/gallery.service";
-import ComponentToast from "components/elements/toast";
+import {GalleryService} from "@services/gallery.service";
+import ComponentToast from "@components/elements/toast";
 import Image from "next/image"
 import {IGalleryGetResultService} from "types/services/gallery.service";
 

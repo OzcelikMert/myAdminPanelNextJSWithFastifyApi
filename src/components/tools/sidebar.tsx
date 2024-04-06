@@ -3,10 +3,10 @@ import {Collapse} from 'react-bootstrap';
 import {IPagePropCommon} from "types/pageProps";
 import {ISidebarPath} from "types/constants/sidebarNavs";
 import clone from "clone";
-import {sidebarNavs} from "constants/sidebarNavs";
-import {PermissionUtil} from "utils/permission.util";
-import {RouteUtil} from "utils/route.util";
-import {EndPoints} from "constants/endPoints";
+import {sidebarNavs} from "@constants/sidebarNavs";
+import {PermissionUtil} from "@utils/permission.util";
+import {RouteUtil} from "@utils/route.util";
+import {EndPoints} from "@constants/endPoints";
 
 type IPageState = {
     isMenuOpen: { [key: string]: any }

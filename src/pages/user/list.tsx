@@ -3,21 +3,21 @@ import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
 import {IUserGetResultService} from "types/services/user.service";
-import ComponentThemeUsersProfileCard from "components/theme/users/profileCard";
-import {UserService} from "services/user.service";
-import ComponentToast from "components/elements/toast";
-import ComponentDataTable from "components/elements/table/dataTable";
+import ComponentThemeUsersProfileCard from "@components/theme/users/profileCard";
+import {UserService} from "@services/user.service";
+import ComponentToast from "@components/elements/toast";
+import ComponentDataTable from "@components/elements/table/dataTable";
 import Image from "next/image"
-import ComponentThemeBadgeStatus from "components/theme/badge/status";
-import ComponentThemeBadgeUserRole from "components/theme/badge/userRole";
-import {UserRoleId, userRoles} from "constants/userRoles";
-import {PermissionUtil} from "utils/permission.util";
-import {UserEndPointPermission} from "constants/endPointPermissions/user.endPoint.permission";
-import {EndPoints} from "constants/endPoints";
-import {ImageSourceUtil} from "utils/imageSource.util";
-import {status} from "constants/status";
-import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
-import {RouteUtil} from "utils/route.util";
+import ComponentThemeBadgeStatus from "@components/theme/badge/status";
+import ComponentThemeBadgeUserRole from "@components/theme/badge/userRole";
+import {UserRoleId, userRoles} from "@constants/userRoles";
+import {PermissionUtil} from "@utils/permission.util";
+import {UserEndPointPermission} from "@constants/endPointPermissions/user.endPoint.permission";
+import {EndPoints} from "@constants/endPoints";
+import {ImageSourceUtil} from "@utils/imageSource.util";
+import {status} from "@constants/status";
+import ComponentTableUpdatedBy from "@components/elements/table/updatedBy";
+import {RouteUtil} from "@utils/route.util";
 
 type IPageState = {
     searchKey: string

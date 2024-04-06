@@ -1,8 +1,8 @@
-import {ApiEndPoints} from "constants/apiEndPoints";
+import {ApiEndPoints} from "@constants/apiEndPoints";
 import {IUserGetResultService} from "types/services/user.service";
 import {IAuthLoginParamService} from "types/services/auth.service";
-import ApiRequest from "library/api/request";
-import {PathUtil} from "utils/path.util";
+import ApiRequest from "@library/api/request";
+import {PathUtil} from "@utils/path.util";
 import {ISessionAuthModel} from "types/models/sessionAuth.model";
 
 const getSession = (signal?: AbortSignal) => {

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import PagePostAdd, {IPageState as PostPageState} from "pages/post/[postTypeId]/add";
-import {ComponentFieldSet, ComponentFormType} from "components/elements/form";
+import PagePostAdd, {IPageState as PostPageState} from "@pages/post/[postTypeId]/add";
+import {ComponentFieldSet, ComponentFormType} from "@components/elements/form";
 import {IPostContentButtonModel} from "types/models/post.model";
 
 type IPageState = {};

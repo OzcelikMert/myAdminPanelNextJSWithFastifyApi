@@ -1,23 +1,23 @@
 import React, {Component} from 'react';
 import {IPagePropCommon} from "types/pageProps";
-import ComponentToolNavbar from "components/tools/navbar";
-import ComponentToolSidebar from "components/tools/sidebar";
-import ComponentToolFooter from "components/tools/footer";
+import ComponentToolNavbar from "@components/tools/navbar";
+import ComponentToolSidebar from "@components/tools/sidebar";
+import ComponentToolFooter from "@components/tools/footer";
 import {IGetStateApp, ISetStateApp} from "types/pages/_app";
-import ComponentThemeBreadCrumb from "components/theme/breadCrumb";
-import ComponentThemeContentLanguage from "components/theme/contentLanguage";
+import ComponentThemeBreadCrumb from "@components/theme/breadCrumb";
+import ComponentThemeContentLanguage from "@components/theme/contentLanguage";
 import {AppProps} from "next/app";
-import ComponentHead from "components/head";
+import ComponentHead from "@components/head";
 import {useTranslation} from "react-i18next";
-import ComponentProviderAuth from "components/providers/auth";
-import ComponentProviderAppInit from "components/providers/appInit";
-import Variable from "library/variable";
+import ComponentProviderAuth from "@components/providers/auth";
+import ComponentProviderAppInit from "@components/providers/appInit";
+import Variable from "@library/variable";
 import {ToastContainer} from "react-toastify";
-import {CurrencyId} from "constants/currencyTypes";
-import {multiLanguagePaths} from "constants/multiLanguagePaths";
-import {EndPoints} from "constants/endPoints";
-import ComponentSpinnerDonut from "components/elements/spinners/donut";
-import ComponentToolLock from "components/tools/lock";
+import {CurrencyId} from "@constants/currencyTypes";
+import {multiLanguagePaths} from "@constants/multiLanguagePaths";
+import {EndPoints} from "@constants/endPoints";
+import ComponentSpinnerDonut from "@components/elements/spinners/donut";
+import ComponentToolLock from "@components/tools/lock";
 import {cloneDeepWith} from "lodash";
 
 type IPageState = {

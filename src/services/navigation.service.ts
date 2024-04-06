@@ -1,4 +1,4 @@
-import {ApiEndPoints} from "constants/apiEndPoints";
+import {ApiEndPoints} from "@constants/apiEndPoints";
 import {
     INavigationAddParamService,
     INavigationGetWithIdParamService,
@@ -9,8 +9,8 @@ import {
     INavigationUpdateWithIdParamService,
     INavigationUpdateRankWithIdParamService
 } from "types/services/navigation.service";
-import {PathUtil} from "utils/path.util";
-import ApiRequest from "library/api/request";
+import {PathUtil} from "@utils/path.util";
+import ApiRequest from "@library/api/request";
 import {INavigationModel} from "types/models/navigation.model";
 
 const getWithId = (params: INavigationGetWithIdParamService, signal?: AbortSignal) =>  {

@@ -2,19 +2,19 @@ import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
-import ComponentToast from "components/elements/toast";
-import ComponentDataTable from "components/elements/table/dataTable";
+import ComponentToast from "@components/elements/toast";
+import ComponentDataTable from "@components/elements/table/dataTable";
 import {INavigationGetResultService} from "types/services/navigation.service";
-import {NavigationService} from "services/navigation.service";
-import {IThemeToggleMenuItem} from "components/elements/table/toggleMenu";
-import ComponentThemeBadgeStatus, {getStatusIcon} from "components/theme/badge/status";
-import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
-import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
-import {PermissionUtil} from "utils/permission.util";
-import {NavigationEndPointPermission} from "constants/endPointPermissions/navigation.endPoint.permission";
-import {status, StatusId} from "constants/status";
-import {EndPoints} from "constants/endPoints";
-import {RouteUtil} from "utils/route.util";
+import {NavigationService} from "@services/navigation.service";
+import {IThemeToggleMenuItem} from "@components/elements/table/toggleMenu";
+import ComponentThemeBadgeStatus, {getStatusIcon} from "@components/theme/badge/status";
+import ComponentTableUpdatedBy from "@components/elements/table/updatedBy";
+import ComponentThemeModalUpdateItemRank from "@components/theme/modal/updateItemRank";
+import {PermissionUtil} from "@utils/permission.util";
+import {NavigationEndPointPermission} from "@constants/endPointPermissions/navigation.endPoint.permission";
+import {status, StatusId} from "@constants/status";
+import {EndPoints} from "@constants/endPoints";
+import {RouteUtil} from "@utils/route.util";
 
 type IPageState = {
     searchKey: string

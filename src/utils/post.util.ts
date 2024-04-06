@@ -1,9 +1,9 @@
-import {PostTypeId, postTypes} from "constants/postTypes";
+import {PostTypeId, postTypes} from "@constants/postTypes";
 import {IPostGetPageTitleParamUtil} from "types/utils/post.util";
-import {postTermTypes} from "constants/postTermTypes";
-import {EndPoints} from "constants/endPoints";
-import {PathUtil} from "utils/path.util";
-import {PostEndPoint} from "constants/endPoints/post.endPoint";
+import {postTermTypes} from "@constants/postTermTypes";
+import {EndPoints} from "@constants/endPoints";
+import {PathUtil} from "@utils/path.util";
+import {PostEndPoint} from "@constants/endPoints/post.endPoint";
 
 const getPagePath = (postTypeId: PostTypeId) => {
     let pagePath = "";

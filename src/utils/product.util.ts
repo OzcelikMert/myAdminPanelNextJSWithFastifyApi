@@ -1,6 +1,6 @@
 import {IPostECommercePricingModel} from "types/models/post.model";
-import {ProductTypeId} from "constants/productTypes";
-import {CurrencyId, currencyTypes} from "constants/currencyTypes";
+import {ProductTypeId} from "@constants/productTypes";
+import {CurrencyId, currencyTypes} from "@constants/currencyTypes";
 import {IPostGetManyResultService} from "types/services/post.service";
 
 const getCurrencyType = (currencyId: CurrencyId = CurrencyId.TurkishLira) => {

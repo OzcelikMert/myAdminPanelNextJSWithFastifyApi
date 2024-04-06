@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {IPagePropCommon} from "types/pageProps";
-import {LanguageService} from "services/language.service";
-import {SettingService} from "services/setting.service";
-import {StatusId} from "constants/status";
-import {CurrencyId} from "constants/currencyTypes";
-import {SettingProjectionKeys} from "constants/settingProjections";
+import {LanguageService} from "@services/language.service";
+import {SettingService} from "@services/setting.service";
+import {StatusId} from "@constants/status";
+import {CurrencyId} from "@constants/currencyTypes";
+import {SettingProjectionKeys} from "@constants/settingProjections";
 
 type IPageState = {};
 

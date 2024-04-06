@@ -1,15 +1,15 @@
 import {PostTypeId} from "./postTypes";
 import {ISidebarPath} from "types/constants/sidebarNavs";
-import {EndPoints} from "constants/endPoints";
-import {NavigationEndPointPermission} from "constants/endPointPermissions/navigation.endPoint.permission";
-import {PostEndPointPermission} from "constants/endPointPermissions/post.endPoint.permission";
-import {ThemeContentEndPointPermission} from "constants/endPointPermissions/themeContent.endPoint.permission";
-import {ECommerceEndPointPermission} from "constants/endPointPermissions/eCommerce.endPoint.permission";
-import {UserEndPointPermission} from "constants/endPointPermissions/user.endPoint.permission";
-import {SubscriberEndPointPermission} from "constants/endPointPermissions/subscriber.endPoint.permission";
-import {LanguageEndPointPermission} from "constants/endPointPermissions/language.endPoint.permission";
-import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
-import {ComponentEndPointPermission} from "constants/endPointPermissions/component.endPoint.permission";
+import {EndPoints} from "@constants/endPoints";
+import {NavigationEndPointPermission} from "@constants/endPointPermissions/navigation.endPoint.permission";
+import {PostEndPointPermission} from "@constants/endPointPermissions/post.endPoint.permission";
+import {ThemeContentEndPointPermission} from "@constants/endPointPermissions/themeContent.endPoint.permission";
+import {ECommerceEndPointPermission} from "@constants/endPointPermissions/eCommerce.endPoint.permission";
+import {UserEndPointPermission} from "@constants/endPointPermissions/user.endPoint.permission";
+import {SubscriberEndPointPermission} from "@constants/endPointPermissions/subscriber.endPoint.permission";
+import {LanguageEndPointPermission} from "@constants/endPointPermissions/language.endPoint.permission";
+import {SettingsEndPointPermission} from "@constants/endPointPermissions/settings.endPoint.permission";
+import {ComponentEndPointPermission} from "@constants/endPointPermissions/component.endPoint.permission";
 
 export const sidebarNavs: ISidebarPath[] = [
     {path: EndPoints.DASHBOARD, icon: `home`, title: "dashboard"},

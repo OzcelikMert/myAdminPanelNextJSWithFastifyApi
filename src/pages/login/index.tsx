@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
-import ThemeInputType from "components/elements/form/input/type";
+import ThemeInputType from "@components/elements/form/input/type";
 import {IPagePropCommon} from "types/pageProps";
-import {ComponentForm, ComponentFormCheckBox} from "components/elements/form";
-import ReactHandleFormLibrary from "library/react/handles/form";
-import {AuthService} from "services/auth.service";
+import {ComponentForm, ComponentFormCheckBox} from "@components/elements/form";
+import ReactHandleFormLibrary from "@library/react/handles/form";
+import {AuthService} from "@services/auth.service";
 import {IUserGetResultService} from "types/services/user.service";
 import Image from "next/image"
-import {EndPoints} from "constants/endPoints";
-import {StatusId} from "constants/status";
-import {RouteUtil} from "utils/route.util";
+import {EndPoints} from "@constants/endPoints";
+import {StatusId} from "@constants/status";
+import {RouteUtil} from "@utils/route.util";
 
 type IPageState = {
     isSubmitting: boolean

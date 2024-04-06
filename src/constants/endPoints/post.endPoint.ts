@@ -1,7 +1,7 @@
-import {PostTermTypeId} from "constants/postTermTypes";
-import {EndPoints} from "constants/endPoints/index";
-import {PathUtil} from "utils/path.util";
-import {PostTermEndPoint} from "constants/endPoints/postTerm.endPoint";
+import {PostTermTypeId} from "@constants/postTermTypes";
+import {EndPoints} from "@constants/endPoints/index";
+import {PathUtil} from "@utils/path.util";
+import {PostTermEndPoint} from "@constants/endPoints/postTerm.endPoint";
 
 export class PostEndPoint {
     private mainPath: string;

@@ -1,23 +1,23 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
-import {IThemeToggleMenuItem} from "components/elements/table/toggleMenu";
+import {IThemeToggleMenuItem} from "@components/elements/table/toggleMenu";
 import Swal from "sweetalert2";
 import {IPostTermGetResultService} from "types/services/postTerm.service";
-import {PostTermService} from "services/postTerm.service";
-import ComponentToast from "components/elements/toast";
-import ComponentDataTable from "components/elements/table/dataTable";
+import {PostTermService} from "@services/postTerm.service";
+import ComponentToast from "@components/elements/toast";
+import ComponentDataTable from "@components/elements/table/dataTable";
 import Image from "next/image"
-import ComponentThemeBadgeStatus, {getStatusIcon} from "components/theme/badge/status";
-import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
-import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
-import {PostTermTypeId} from "constants/postTermTypes";
-import {PostTypeId} from "constants/postTypes";
-import {PermissionUtil, PostPermissionMethod} from "utils/permission.util";
-import {PostUtil} from "utils/post.util";
-import {status, StatusId} from "constants/status";
-import {ImageSourceUtil} from "utils/imageSource.util";
-import {RouteUtil} from "utils/route.util";
+import ComponentThemeBadgeStatus, {getStatusIcon} from "@components/theme/badge/status";
+import ComponentTableUpdatedBy from "@components/elements/table/updatedBy";
+import ComponentThemeModalUpdateItemRank from "@components/theme/modal/updateItemRank";
+import {PostTermTypeId} from "@constants/postTermTypes";
+import {PostTypeId} from "@constants/postTypes";
+import {PermissionUtil, PostPermissionMethod} from "@utils/permission.util";
+import {PostUtil} from "@utils/post.util";
+import {status, StatusId} from "@constants/status";
+import {ImageSourceUtil} from "@utils/imageSource.util";
+import {RouteUtil} from "@utils/route.util";
 
 type IPageState = {
     typeId: PostTermTypeId

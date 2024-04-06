@@ -1,19 +1,19 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
-import ComponentDataTable from "components/elements/table/dataTable";
+import ComponentDataTable from "@components/elements/table/dataTable";
 import {ILanguageGetResultService} from "types/services/language.service";
-import {LanguageService} from "services/language.service";
+import {LanguageService} from "@services/language.service";
 import Image from "next/image";
-import ComponentThemeBadgeStatus from "components/theme/badge/status";
-import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
-import ComponentToast from "components/elements/toast";
-import {PermissionUtil} from "utils/permission.util";
-import {LanguageEndPointPermission} from "constants/endPointPermissions/language.endPoint.permission";
-import {EndPoints} from "constants/endPoints";
-import {ImageSourceUtil} from "utils/imageSource.util";
-import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
-import {RouteUtil} from "utils/route.util";
+import ComponentThemeBadgeStatus from "@components/theme/badge/status";
+import ComponentThemeModalUpdateItemRank from "@components/theme/modal/updateItemRank";
+import ComponentToast from "@components/elements/toast";
+import {PermissionUtil} from "@utils/permission.util";
+import {LanguageEndPointPermission} from "@constants/endPointPermissions/language.endPoint.permission";
+import {EndPoints} from "@constants/endPoints";
+import {ImageSourceUtil} from "@utils/imageSource.util";
+import ComponentTableUpdatedBy from "@components/elements/table/updatedBy";
+import {RouteUtil} from "@utils/route.util";
 
 type IPageState = {
     searchKey: string

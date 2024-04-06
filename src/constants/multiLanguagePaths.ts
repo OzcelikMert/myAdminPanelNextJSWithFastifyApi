@@ -1,5 +1,5 @@
-import {EndPoints} from "constants/endPoints";
-import {PathUtil} from "utils/path.util";
+import {EndPoints} from "@constants/endPoints";
+import {PathUtil} from "@utils/path.util";
 
 export const multiLanguagePaths = [
     EndPoints.POST_WITH().EDIT(),

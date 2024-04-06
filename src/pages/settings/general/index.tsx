@@ -1,25 +1,25 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "components/elements/form";
-import ReactHandleFormLibrary from "library/react/handles/form";
-import {SettingService} from "services/setting.service";
-import {ServerInfoService} from "services/serverInfo.service";
-import ComponentToast from "components/elements/toast";
-import ComponentThemeChooseImage from "components/theme/chooseImage";
+import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "@components/elements/form";
+import ReactHandleFormLibrary from "@library/react/handles/form";
+import {SettingService} from "@services/setting.service";
+import {ServerInfoService} from "@services/serverInfo.service";
+import ComponentToast from "@components/elements/toast";
+import ComponentThemeChooseImage from "@components/theme/chooseImage";
 import {ISettingUpdateGeneralParamService} from "types/services/setting.service";
 import {Tab, Tabs} from "react-bootstrap";
 import Image from "next/image"
-import {IThemeFormSelectValue} from "components/elements/form/input/select";
+import {IThemeFormSelectValue} from "@components/elements/form/input/select";
 import {IServerInfoGetResultService} from "types/services/serverInfo.service";
-import {LocalStorageUtil} from "utils/localStorage.util";
-import {PermissionUtil} from "utils/permission.util";
-import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
-import {SettingProjectionKeys} from "constants/settingProjections";
-import {languages} from "constants/languages";
-import {ComponentUtil} from "utils/component.util";
-import {ImageSourceUtil} from "utils/imageSource.util";
-import {UserRoleId} from "constants/userRoles";
-import ComponentSpinnerDonut from "components/elements/spinners/donut";
+import {LocalStorageUtil} from "@utils/localStorage.util";
+import {PermissionUtil} from "@utils/permission.util";
+import {SettingsEndPointPermission} from "@constants/endPointPermissions/settings.endPoint.permission";
+import {SettingProjectionKeys} from "@constants/settingProjections";
+import {languages} from "@constants/languages";
+import {ComponentUtil} from "@utils/component.util";
+import {ImageSourceUtil} from "@utils/imageSource.util";
+import {UserRoleId} from "@constants/userRoles";
+import ComponentSpinnerDonut from "@components/elements/spinners/donut";
 
 type IPageState = {
     panelLanguages: IThemeFormSelectValue[]

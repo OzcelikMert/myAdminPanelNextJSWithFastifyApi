@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Link from "next/link";
-import {EndPoints} from "constants/endPoints";
+import {EndPoints} from "@constants/endPoints";
 
 type IPageState = {};
 

@@ -1,5 +1,5 @@
-import {PathUtil} from "utils/path.util";
-import {ApiEndPoints} from "constants/apiEndPoints/index";
+import {PathUtil} from "@utils/path.util";
+import {ApiEndPoints} from "@constants/apiEndPoints/index";
 
 export class ComponentApiEndPoint {
     private mainPath: string;

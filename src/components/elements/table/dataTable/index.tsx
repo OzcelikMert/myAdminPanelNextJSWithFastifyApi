@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import DataTable, {TableProps} from "react-data-table-component";
-import {ComponentFormCheckBox, ComponentFormType} from "components/elements/form";
-import ComponentTableToggleMenu, {IThemeToggleMenuItem} from "components/elements/table/toggleMenu";
-import ComponentSpinnerDonut from "components/elements/spinners/donut";
+import {ComponentFormCheckBox, ComponentFormType} from "@components/elements/form";
+import ComponentTableToggleMenu, {IThemeToggleMenuItem} from "@components/elements/table/toggleMenu";
+import ComponentSpinnerDonut from "@components/elements/spinners/donut";
 
 type IPagePropI18 = {
     search?: string

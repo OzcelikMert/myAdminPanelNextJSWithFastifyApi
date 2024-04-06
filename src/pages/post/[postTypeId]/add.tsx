@@ -1,43 +1,43 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import moment from "moment";
-import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "components/elements/form"
+import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "@components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
-import ReactHandleFormLibrary from "library/react/handles/form";
-import ComponentThemeChooseImage from "components/theme/chooseImage";
-import {PostTermService} from "services/postTerm.service";
-import {PostService} from "services/post.service";
+import ReactHandleFormLibrary from "@library/react/handles/form";
+import ComponentThemeChooseImage from "@components/theme/chooseImage";
+import {PostTermService} from "@services/postTerm.service";
+import {PostService} from "@services/post.service";
 import {IPostUpdateWithIdParamService} from "types/services/post.service";
-import ComponentToolTip from "components/elements/tooltip";
+import ComponentToolTip from "@components/elements/tooltip";
 import Image from "next/image"
 import dynamic from "next/dynamic";
-import {ProductTypeId, productTypes} from "constants/productTypes";
-import {IThemeFormSelectValue} from "components/elements/form/input/select";
-import ComponentPagePostAddECommerce from "components/pages/post/add/eCommerce";
-import ComponentPagePostAddButton from "components/pages/post/add/button";
-import ComponentPagePostAddBeforeAndAfter from "components/pages/post/add/beforeAndAfter";
-import ComponentPagePostAddChooseCategory from "components/pages/post/add/chooseCategory";
-import ComponentPagePostAddChooseTag from "components/pages/post/add/chooseTag";
-import {PermissionUtil, PostPermissionMethod} from "utils/permission.util";
-import {PostTypeId} from "constants/postTypes";
-import {PostUtil} from "utils/post.util";
-import {languageKeys} from "constants/languageKeys";
-import {attributeTypes} from "constants/attributeTypes";
-import {PageTypeId, pageTypes} from "constants/pageTypes";
-import {ComponentUtil} from "utils/component.util";
-import {StatusId} from "constants/status";
-import {PostTermTypeId} from "constants/postTermTypes";
-import {ImageSourceUtil} from "utils/imageSource.util";
-import {ComponentService} from "services/component.service";
-import ComponentPagePostAddComponent from "components/pages/post/add/component";
-import {ComponentTypeId} from "constants/componentTypes";
-import {UserService} from "services/user.service";
-import {UserRoleId} from "constants/userRoles";
+import {ProductTypeId, productTypes} from "@constants/productTypes";
+import {IThemeFormSelectValue} from "@components/elements/form/input/select";
+import ComponentPagePostAddECommerce from "@components/pages/post/add/eCommerce";
+import ComponentPagePostAddButton from "@components/pages/post/add/button";
+import ComponentPagePostAddBeforeAndAfter from "@components/pages/post/add/beforeAndAfter";
+import ComponentPagePostAddChooseCategory from "@components/pages/post/add/chooseCategory";
+import ComponentPagePostAddChooseTag from "@components/pages/post/add/chooseTag";
+import {PermissionUtil, PostPermissionMethod} from "@utils/permission.util";
+import {PostTypeId} from "@constants/postTypes";
+import {PostUtil} from "@utils/post.util";
+import {languageKeys} from "@constants/languageKeys";
+import {attributeTypes} from "@constants/attributeTypes";
+import {PageTypeId, pageTypes} from "@constants/pageTypes";
+import {ComponentUtil} from "@utils/component.util";
+import {StatusId} from "@constants/status";
+import {PostTermTypeId} from "@constants/postTermTypes";
+import {ImageSourceUtil} from "@utils/imageSource.util";
+import {ComponentService} from "@services/component.service";
+import ComponentPagePostAddComponent from "@components/pages/post/add/component";
+import {ComponentTypeId} from "@constants/componentTypes";
+import {UserService} from "@services/user.service";
+import {UserRoleId} from "@constants/userRoles";
 import {IUserPopulateService} from "types/services/user.service";
-import {RouteUtil} from "utils/route.util";
-import ComponentToast from "components/elements/toast";
+import {RouteUtil} from "@utils/route.util";
+import ComponentToast from "@components/elements/toast";
 
-const ComponentThemeRichTextBox = dynamic(() => import("components/theme/richTextBox"), {ssr: false});
+const ComponentThemeRichTextBox = dynamic(() => import("@components/theme/richTextBox"), {ssr: false});
 
 export type IPageState = {
     langKeys: IThemeFormSelectValue[]

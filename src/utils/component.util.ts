@@ -1,6 +1,6 @@
 import {IPagePropCommon} from "types/pageProps";
-import {StatusId, status} from "constants/status";
-import {UserRoleId, userRoles} from "constants/userRoles";
+import {StatusId, status} from "@constants/status";
+import {UserRoleId, userRoles} from "@constants/userRoles";
 import {ILanguage} from "types/constants/languages";
 
 const getStatusForSelect = (statusId: StatusId[], t: IPagePropCommon["t"]) => {

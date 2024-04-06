@@ -1,6 +1,6 @@
-import {ApiEndPoints} from "constants/apiEndPoints";
-import {PathUtil} from "utils/path.util";
-import ApiRequest from "library/api/request";
+import {ApiEndPoints} from "@constants/apiEndPoints";
+import {PathUtil} from "@utils/path.util";
+import ApiRequest from "@library/api/request";
 import {
     IComponentAddParamService, IComponentDeleteManyParamService,
     IComponentGetManyParamService,

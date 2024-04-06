@@ -1,4 +1,4 @@
-import {ApiEndPoints} from "constants/apiEndPoints";
+import {ApiEndPoints} from "@constants/apiEndPoints";
 import {
     ISubscriberAddParamService,
     ISubscriberGetWithIdParamService,
@@ -7,8 +7,8 @@ import {
     ISubscriberGetResultService,
     ISubscriberGetManyParamService
 } from "types/services/subscriber.service";
-import ApiRequest from "library/api/request";
-import {PathUtil} from "utils/path.util";
+import ApiRequest from "@library/api/request";
+import {PathUtil} from "@utils/path.util";
 import {ISubscriberModel} from "types/models/subscriber.model";
 
 const getWithId = (params: ISubscriberGetWithIdParamService, signal?: AbortSignal) => {

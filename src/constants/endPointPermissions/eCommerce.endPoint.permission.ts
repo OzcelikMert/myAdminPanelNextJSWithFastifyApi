@@ -1,6 +1,6 @@
 import {IEndPointPermission} from "types/constants/endPoint.permissions";
-import {UserRoleId} from "constants/userRoles";
-import {PermissionId} from "constants/permissions";
+import {UserRoleId} from "@constants/userRoles";
+import {PermissionId} from "@constants/permissions";
 
 const settings: IEndPointPermission = {
     permissionId: [PermissionId.ECommerce],

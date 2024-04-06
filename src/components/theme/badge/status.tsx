@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import {status, StatusId} from "constants/status";
+import {status, StatusId} from "@constants/status";
 import {IPagePropCommon} from "types/pageProps";
-import ComponentToolTip from "components/elements/tooltip";
+import ComponentToolTip from "@components/elements/tooltip";
 
 type IPageState = {};
 

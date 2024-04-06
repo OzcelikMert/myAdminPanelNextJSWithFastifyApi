@@ -1,5 +1,5 @@
-import {ApiEndPoints} from "constants/apiEndPoints/index";
-import {PathUtil} from "utils/path.util";
+import {ApiEndPoints} from "@constants/apiEndPoints/index";
+import {PathUtil} from "@utils/path.util";
 
 export class PostTermApiEndPoint {
     private mainPath: string;

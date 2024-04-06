@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
-import {ComponentForm, ComponentFormSelect} from "components/elements/form";
-import ReactHandleFormLibrary from "library/react/handles/form";
-import {SettingService} from "services/setting.service";
-import ComponentToast from "components/elements/toast";
+import {ComponentForm, ComponentFormSelect} from "@components/elements/form";
+import ReactHandleFormLibrary from "@library/react/handles/form";
+import {SettingService} from "@services/setting.service";
+import ComponentToast from "@components/elements/toast";
 import {ISettingUpdateECommerceParamService} from "types/services/setting.service";
 import {Tab, Tabs} from "react-bootstrap";
-import {CurrencyId, currencyTypes} from "constants/currencyTypes";
-import {IThemeFormSelectValue} from "components/elements/form/input/select";
-import {SettingProjectionKeys} from "constants/settingProjections";
-import {PermissionUtil} from "utils/permission.util";
-import {ECommerceEndPointPermission} from "constants/endPointPermissions/eCommerce.endPoint.permission";
+import {CurrencyId, currencyTypes} from "@constants/currencyTypes";
+import {IThemeFormSelectValue} from "@components/elements/form/input/select";
+import {SettingProjectionKeys} from "@constants/settingProjections";
+import {PermissionUtil} from "@utils/permission.util";
+import {ECommerceEndPointPermission} from "@constants/endPointPermissions/eCommerce.endPoint.permission";
 
 type IPageState = {
     currencyTypes: IThemeFormSelectValue[]

@@ -1,7 +1,7 @@
 import {IUserModel} from "../models/user.model";
-import {StatusId} from "constants/status";
-import {UserRoleId} from "constants/userRoles";
-import {PermissionId} from "constants/permissions";
+import {StatusId} from "@constants/status";
+import {UserRoleId} from "@constants/userRoles";
+import {PermissionId} from "@constants/permissions";
 
 export interface IUserPopulateService {
     _id: string

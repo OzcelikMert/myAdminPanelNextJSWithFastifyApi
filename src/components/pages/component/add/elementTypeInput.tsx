@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
-import {ComponentFormType} from "components/elements/form";
-import ComponentThemeChooseImage from "components/theme/chooseImage";
+import {ComponentFormType} from "@components/elements/form";
+import ComponentThemeChooseImage from "@components/theme/chooseImage";
 import Image from "next/image";
-import {ImageSourceUtil} from "utils/imageSource.util";
+import {ImageSourceUtil} from "@utils/imageSource.util";
 import {IPagePropCommon} from "types/pageProps";
 import dynamic from "next/dynamic";
 import {IComponentElementModel} from "types/models/component.model";
-import {ElementTypeId} from "constants/elementTypes";
+import {ElementTypeId} from "@constants/elementTypes";
 
-const ComponentThemeRichTextBox = dynamic(() => import("components/theme/richTextBox"), {ssr: false});
+const ComponentThemeRichTextBox = dynamic(() => import("@components/theme/richTextBox"), {ssr: false});
 
 type IPageState = {
 

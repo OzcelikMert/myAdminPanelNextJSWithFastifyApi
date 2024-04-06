@@ -1,8 +1,8 @@
-import {PostTypeId} from "constants/postTypes";
-import {StatusId} from "constants/status";
-import {PageTypeId} from "constants/pageTypes";
-import {ProductTypeId} from "constants/productTypes";
-import {AttributeTypeId} from "constants/attributeTypes";
+import {PostTypeId} from "@constants/postTypes";
+import {StatusId} from "@constants/status";
+import {PageTypeId} from "@constants/pageTypes";
+import {ProductTypeId} from "@constants/productTypes";
+import {AttributeTypeId} from "@constants/attributeTypes";
 
 export interface IPostModel {
     _id: string

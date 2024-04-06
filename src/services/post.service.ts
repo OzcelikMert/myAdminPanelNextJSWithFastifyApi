@@ -1,4 +1,4 @@
-import {ApiEndPoints} from "constants/apiEndPoints";
+import {ApiEndPoints} from "@constants/apiEndPoints";
 import {
     IPostAddParamService,
     IPostDeleteManyParamService,
@@ -9,8 +9,8 @@ import {
     IPostUpdateWithIdParamService,
     IPostUpdateRankWithIdParamService,
 } from "types/services/post.service";
-import ApiRequest from "library/api/request";
-import {PathUtil} from "utils/path.util";
+import ApiRequest from "@library/api/request";
+import {PathUtil} from "@utils/path.util";
 import {IPostModel} from "types/models/post.model";
 
 const getWithId = (params: IPostGetWithIdParamService, signal?: AbortSignal) => {

@@ -3,19 +3,19 @@ import dynamic from "next/dynamic";
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
 import {IPostGetManyResultService} from "types/services/post.service";
-import {PostService} from "services/post.service";
-import {ViewService} from "services/view.service";
+import {PostService} from "@services/post.service";
+import {ViewService} from "@services/view.service";
 import {IViewGetNumberResultService, IViewGetStatisticsResultService} from "types/services/view.service";
-import ComponentDataTable from "components/elements/table/dataTable";
+import ComponentDataTable from "@components/elements/table/dataTable";
 import Image from "next/image"
-import ComponentChartArea from "components/elements/charts/area";
-import ComponentThemeBadgeStatus from "components/theme/badge/status";
-import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
-import {PostUtil} from "utils/post.util";
-import {ImageSourceUtil} from "utils/imageSource.util";
-import {postTypes} from "constants/postTypes";
-import {RouteUtil} from "utils/route.util";
-import {PostSortTypeId} from "constants/postSortTypes";
+import ComponentChartArea from "@components/elements/charts/area";
+import ComponentThemeBadgeStatus from "@components/theme/badge/status";
+import ComponentTableUpdatedBy from "@components/elements/table/updatedBy";
+import {PostUtil} from "@utils/post.util";
+import {ImageSourceUtil} from "@utils/imageSource.util";
+import {postTypes} from "@constants/postTypes";
+import {RouteUtil} from "@utils/route.util";
+import {PostSortTypeId} from "@constants/postSortTypes";
 
 const WorldMap = dynamic(() => import('react-svg-worldmap'), {ssr: false});
 

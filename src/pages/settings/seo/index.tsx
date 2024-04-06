@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
-import {ComponentForm, ComponentFormTags, ComponentFormType} from "components/elements/form";
+import {ComponentForm, ComponentFormTags, ComponentFormType} from "@components/elements/form";
 import {IPagePropCommon} from "types/pageProps";
-import ReactHandleFormLibrary from "library/react/handles/form";
-import {SettingService} from "services/setting.service";
-import ComponentToast from "components/elements/toast";
+import ReactHandleFormLibrary from "@library/react/handles/form";
+import {SettingService} from "@services/setting.service";
+import ComponentToast from "@components/elements/toast";
 import {ISettingUpdateSEOParamService} from "types/services/setting.service";
-import {PermissionUtil} from "utils/permission.util";
-import {SettingsEndPointPermission} from "constants/endPointPermissions/settings.endPoint.permission";
-import {SettingProjectionKeys} from "constants/settingProjections";
+import {PermissionUtil} from "@utils/permission.util";
+import {SettingsEndPointPermission} from "@constants/endPointPermissions/settings.endPoint.permission";
+import {SettingProjectionKeys} from "@constants/settingProjections";
 
 type IPageState = {
     isSubmitting: boolean

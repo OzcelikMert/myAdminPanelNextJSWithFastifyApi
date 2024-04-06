@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import PagePostAdd from "pages/post/[postTypeId]/add";
-import {ComponentFormLoadingButton, ComponentFormSelect, ComponentFormType} from "components/elements/form";
-import ReactHandleFormLibrary from "library/react/handles/form";
+import PagePostAdd from "@pages/post/[postTypeId]/add";
+import {ComponentFormLoadingButton, ComponentFormSelect, ComponentFormType} from "@components/elements/form";
+import ReactHandleFormLibrary from "@library/react/handles/form";
 import {Modal} from "react-bootstrap";
-import {PostTermService} from "services/postTerm.service";
-import {PostTermTypeId} from "constants/postTermTypes";
-import {StatusId} from "constants/status";
-import ComponentToast from "components/elements/toast";
+import {PostTermService} from "@services/postTerm.service";
+import {PostTermTypeId} from "@constants/postTermTypes";
+import {StatusId} from "@constants/status";
+import ComponentToast from "@components/elements/toast";
 
 type IPageState = {
     isShowModal: boolean

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import V from "library/variable";
+import V from "@library/variable";
 
 type IPageState = {
     tags: string[]

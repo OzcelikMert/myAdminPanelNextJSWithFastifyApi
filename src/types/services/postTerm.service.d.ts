@@ -1,8 +1,8 @@
 import {IUserPopulateService} from "./user.service";
 import {IPostTermContentModel, IPostTermModel} from "../models/postTerm.model";
-import {PostTermTypeId} from "constants/postTermTypes";
-import {PostTypeId} from "constants/postTypes";
-import {StatusId} from "constants/status";
+import {PostTermTypeId} from "@constants/postTermTypes";
+import {PostTypeId} from "@constants/postTypes";
+import {StatusId} from "@constants/status";
 
 export interface IPostTermPopulateService {
     _id: string,

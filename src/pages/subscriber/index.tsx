@@ -2,15 +2,15 @@ import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import  {TableColumn} from "react-data-table-component";
 import Swal from "sweetalert2";
-import ComponentToast from "components/elements/toast";
+import ComponentToast from "@components/elements/toast";
 import {ISubscriberGetResultService} from "types/services/subscriber.service";
-import {SubscriberService} from "services/subscriber.service";
-import {IThemeToggleMenuItem} from "components/elements/table/toggleMenu";
-import ComponentDataTable from "components/elements/table/dataTable";
-import {getStatusIcon} from "components/theme/badge/status";
-import {status, StatusId} from "constants/status";
-import {PermissionUtil} from "utils/permission.util";
-import {SubscriberEndPointPermission} from "constants/endPointPermissions/subscriber.endPoint.permission";
+import {SubscriberService} from "@services/subscriber.service";
+import {IThemeToggleMenuItem} from "@components/elements/table/toggleMenu";
+import ComponentDataTable from "@components/elements/table/dataTable";
+import {getStatusIcon} from "@components/theme/badge/status";
+import {status, StatusId} from "@constants/status";
+import {PermissionUtil} from "@utils/permission.util";
+import {SubscriberEndPointPermission} from "@constants/endPointPermissions/subscriber.endPoint.permission";
 
 type IPageState = {
     searchKey: string

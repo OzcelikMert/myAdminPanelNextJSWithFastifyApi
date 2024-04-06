@@ -1,28 +1,28 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {TableColumn} from "react-data-table-component";
-import {IThemeToggleMenuItem} from "components/elements/table/toggleMenu";
+import {IThemeToggleMenuItem} from "@components/elements/table/toggleMenu";
 import Swal from "sweetalert2";
-import {PostService} from "services/post.service";
+import {PostService} from "@services/post.service";
 import {IPostGetManyResultService} from "types/services/post.service";
-import ComponentToast from "components/elements/toast";
-import ComponentDataTable from "components/elements/table/dataTable";
+import ComponentToast from "@components/elements/toast";
+import ComponentDataTable from "@components/elements/table/dataTable";
 import Image from "next/image"
-import ComponentThemeBadgeStatus, {getStatusIcon} from "components/theme/badge/status";
-import ComponentTableUpdatedBy from "components/elements/table/updatedBy";
-import ComponentThemeModalUpdateItemRank from "components/theme/modal/updateItemRank";
-import {ProductTypeId} from "constants/productTypes";
-import ComponentThemeBadgeProductType from "components/theme/badge/productType";
-import ComponentThemeBadgePageType from "components/theme/badge/pageType";
-import {PostTypeId} from "constants/postTypes";
-import {PostUtil} from "utils/post.util";
-import {PermissionUtil, PostPermissionMethod} from "utils/permission.util";
-import {status, StatusId} from "constants/status";
-import {ImageSourceUtil} from "utils/imageSource.util";
-import {ProductUtil} from "utils/product.util";
-import {PageTypeId, pageTypes} from "constants/pageTypes";
-import {PostTermTypeId} from "constants/postTermTypes";
-import {RouteUtil} from "utils/route.util";
+import ComponentThemeBadgeStatus, {getStatusIcon} from "@components/theme/badge/status";
+import ComponentTableUpdatedBy from "@components/elements/table/updatedBy";
+import ComponentThemeModalUpdateItemRank from "@components/theme/modal/updateItemRank";
+import {ProductTypeId} from "@constants/productTypes";
+import ComponentThemeBadgeProductType from "@components/theme/badge/productType";
+import ComponentThemeBadgePageType from "@components/theme/badge/pageType";
+import {PostTypeId} from "@constants/postTypes";
+import {PostUtil} from "@utils/post.util";
+import {PermissionUtil, PostPermissionMethod} from "@utils/permission.util";
+import {status, StatusId} from "@constants/status";
+import {ImageSourceUtil} from "@utils/imageSource.util";
+import {ProductUtil} from "@utils/product.util";
+import {PageTypeId, pageTypes} from "@constants/pageTypes";
+import {PostTermTypeId} from "@constants/postTermTypes";
+import {RouteUtil} from "@utils/route.util";
 
 type IPageState = {
     typeId: PostTypeId

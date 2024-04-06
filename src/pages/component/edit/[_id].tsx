@@ -1,2 +1,2 @@
-import PageComponentAdd from "pages/component/add";
+import PageComponentAdd from "@pages/component/add";
 export default PageComponentAdd;

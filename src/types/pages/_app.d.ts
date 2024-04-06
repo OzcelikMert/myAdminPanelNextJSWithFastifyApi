@@ -1,4 +1,4 @@
-import {CurrencyId} from "constants/currencyTypes";
+import {CurrencyId} from "@constants/currencyTypes";
 import {ISessionAuthModel} from "types/models/sessionAuth.model";
 import {ILanguageGetResultService} from "types/services/language.service";
 

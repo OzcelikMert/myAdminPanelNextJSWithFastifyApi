@@ -1,5 +1,5 @@
-import {PathUtil} from "utils/path.util";
-import {EndPoints} from "constants/endPoints/index";
+import {PathUtil} from "@utils/path.util";
+import {EndPoints} from "@constants/endPoints/index";
 
 export class GalleryEndPoint {
     private mainPath: string;

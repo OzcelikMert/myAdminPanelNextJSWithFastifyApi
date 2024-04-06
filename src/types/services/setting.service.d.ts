@@ -3,7 +3,7 @@ import {
     ISettingModel, ISettingECommerceModel,
     ISettingSeoContentModel, ISettingSocialMediaModel, ISettingPathModel,
 } from "../models/setting.model";
-import {SettingProjectionKeys} from "constants/settingProjections";
+import {SettingProjectionKeys} from "@constants/settingProjections";
 
 export type ISettingGetResultService = {} & ISettingModel
 
