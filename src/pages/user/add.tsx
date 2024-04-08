@@ -103,7 +103,6 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
         this.setState((state: IPageState) => {
             state.status = ComponentUtil.getStatusForSelect([
                 StatusId.Active,
-                StatusId.Pending,
                 StatusId.Disabled,
                 StatusId.Banned
             ], this.props.t);
