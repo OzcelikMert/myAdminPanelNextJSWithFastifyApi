@@ -54,7 +54,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                 _id: _id,
                 typeId: Number(typeId),
                 postTypeId: Number(postTypeId),
-                mainId: "",
+                parentId: "",
                 statusId: 0,
                 rank: 0,
                 contents: {
@@ -172,7 +172,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                     state.formData = {
                         ...state.formData,
                         ...item,
-                        mainId: item.mainId?._id || "",
+                        parentId: item.parentId?._id || "",
                         contents: {
                             ...state.formData.contents,
                             ...item.contents,
@@ -221,7 +221,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                 this.setState((state: IPageState) => {
                     state.formData = {
                         ...state.formData,
-                        mainId: "",
+                        parentId: "",
                         statusId: StatusId.Active,
                         rank: 0,
                         contents: {
@@ -310,10 +310,10 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                                     ${this.props.t("main")} 
                                     ${this.props.t((this.state.formData.typeId == PostTermTypeId.Category) ? "category" : "tag")}
                                 `}
-                                name="formData.mainId"
+                                name="formData.parentId"
                                 placeholder={this.props.t("chooseMainCategory")}
                                 options={this.state.items}
-                                value={this.state.items.findSingle("value", this.state.formData.mainId || "")}
+                                value={this.state.items.findSingle("value", this.state.formData.parentId || "")}
                                 onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                             />
                         </div> : null

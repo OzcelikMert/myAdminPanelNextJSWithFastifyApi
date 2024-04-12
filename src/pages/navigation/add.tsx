@@ -140,7 +140,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                     state.formData = {
                         ...state.formData,
                         ...item,
-                        mainId: item.mainId?._id || "",
+                        parentId: item.parentId?._id || "",
                         contents: {
                             ...state.formData.contents,
                             ...item.contents,
@@ -261,10 +261,10 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                 <div className="col-md-7 mb-3">
                     <ComponentFormSelect
                         title={this.props.t("main")}
-                        name="formData.mainId"
+                        name="formData.parentId"
                         placeholder={this.props.t("chooseMain")}
                         options={this.state.items}
-                        value={this.state.items.findSingle("value", this.state.formData.mainId || "")}
+                        value={this.state.items.findSingle("value", this.state.formData.parentId || "")}
                         onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>

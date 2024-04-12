@@ -18,10 +18,10 @@ export interface INavigationAlternateService {
 export type INavigationGetResultService = {
     authorId: IUserPopulateService,
     lastAuthorId: IUserPopulateService,
-    mainId?: INavigatePopulateService,
+    parentId?: INavigatePopulateService,
     contents?: INavigationContentModel
     alternates?: INavigationAlternateService[]
-} & Omit<INavigationModel, "contents"|"mainId"|"authorId"|"lastAuthorId">
+} & Omit<INavigationModel, "contents"|"parentId"|"authorId"|"lastAuthorId">
 
 export interface INavigationGetWithIdParamService {
     _id: string

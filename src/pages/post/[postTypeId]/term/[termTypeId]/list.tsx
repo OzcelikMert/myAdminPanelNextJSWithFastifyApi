@@ -287,7 +287,7 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
             },
             {
                 name: this.props.t("main"),
-                selector: row => row.mainId ? row.mainId.contents?.title || this.props.t("[noLangAdd]") : this.props.t("notSelected"),
+                selector: row => row.parentId ? row.parentId.contents?.title || this.props.t("[noLangAdd]") : this.props.t("notSelected"),
                 sortable: true,
             },
             (

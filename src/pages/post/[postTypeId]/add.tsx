@@ -50,7 +50,7 @@ export type IPageState = {
     categories: IThemeFormSelectValue[]
     tags: IThemeFormSelectValue[]
     attributes: IThemeFormSelectValue[],
-    variations: (IThemeFormSelectValue & { mainId: string })[],
+    variations: (IThemeFormSelectValue & { parentId: string })[],
     status: IThemeFormSelectValue[]
     isSubmitting: boolean
     mainTitle: string
@@ -291,7 +291,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                         state.variations.push({
                             value: term._id,
                             label: term.contents?.title || this.props.t("[noLangAdd]"),
-                            mainId: term.mainId?._id || ""
+                            parentId: term.parentId?._id || ""
                         });
                     }
                 }

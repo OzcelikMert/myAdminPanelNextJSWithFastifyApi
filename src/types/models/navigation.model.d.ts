@@ -3,7 +3,7 @@ import {StatusId} from "@constants/status";
 export interface INavigationModel {
     _id: string
     statusId: StatusId,
-    mainId?: string
+    parentId?: string
     authorId: string
     lastAuthorId: string
     rank: number

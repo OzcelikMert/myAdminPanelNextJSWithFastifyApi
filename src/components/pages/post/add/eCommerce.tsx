@@ -452,7 +452,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                         title={this.props.page.props.t("variations")}
                                         isMulti
                                         closeMenuOnSelect={false}
-                                        options={this.props.page.state.variations.findMulti("mainId", attribute.attributeId)}
+                                        options={this.props.page.state.variations.findMulti("parentId", attribute.attributeId)}
                                         value={this.props.page.state.variations.findMulti("value", attribute.variations)}
                                         onChange={(item: any, e) => this.onChangeAttributeVariations(attribute, item)}
                                     />

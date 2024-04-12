@@ -21,6 +21,8 @@ export interface IPostModel {
     beforeAndAfter?: IPostBeforeAndAfterModel
     eCommerce?: IPostECommerceModel
     components?: string[]
+    comments?: IPostCommentModel[]
+    similarItems?: string[]
     updatedAt?: string
     createdAt?: string
 }
@@ -114,4 +116,13 @@ export interface IPostECommerceVariationContentModel {
     image?: string
     content?: string,
     shortContent?: string,
+}
+
+export interface IPostCommentModel {
+    _id?: string
+    parentId?: string
+    authorId: string
+    message: string
+    likes: string[]
+    dislikes: string[]
 }

@@ -6,7 +6,7 @@ export interface IPostTermModel {
     _id: string
     postTypeId: PostTypeId,
     typeId: PostTermTypeId,
-    mainId?: string
+    parentId?: string
     statusId: StatusId,
     authorId: string
     lastAuthorId: string
