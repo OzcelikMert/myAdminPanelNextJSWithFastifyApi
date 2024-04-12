@@ -1,4 +1,8 @@
 {
+  "noIndex" : "İndexlenmesin",
+  "blog": "Yazı",
+  "portfolio": "Portföy",
+  "products": "Ürünler",
   "newPath": "Yeni Yol",
   "pathMask": "Yol Maskesi",
   "path": "Yol",

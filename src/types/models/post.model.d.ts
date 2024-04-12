@@ -23,6 +23,7 @@ export interface IPostModel {
     components?: string[]
     comments?: IPostCommentModel[]
     similarItems?: string[]
+    isNoIndex?: boolean
     updatedAt?: string
     createdAt?: string
 }

@@ -497,7 +497,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                             />
                         </div> : null
                 }
-                <div className="col-md-7">
+                <div className="col-md-7 mb-3">
                     <ComponentFormCheckBox
                         title={this.props.t("isFixed")}
                         name="formData.isFixed"
@@ -505,6 +505,18 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                         onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
+                {
+                    [PostTypeId.Page].includes(Number(this.state.formData.typeId)) &&
+                    PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
+                        ? <div className="col-md-7">
+                            <ComponentFormCheckBox
+                                title={this.props.t("noIndex")}
+                                name="formData.isNoIndex"
+                                checked={Boolean(this.state.formData.isNoIndex)}
+                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                            />
+                        </div> : null
+                }
             </div>
         );
     }
@@ -512,7 +524,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     TabContent = () => {
         return (
             <div className="row">
-                <div className="col-md-7 mb-3">
+                <div className="col-md-12 mb-3">
                     <ComponentThemeRichTextBox
                         value={this.state.formData.contents.content || ""}
                         onChange={newContent => this.onChangeContent(newContent)}
@@ -620,6 +632,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     }
 
     render() {
+        let isUserSuperAdmin = PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin);
         return this.props.getStateApp.isPageLoading ? null : (
             <div className="page-post">
                 <div className="row mb-3">
@@ -691,7 +704,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                                     : null
                             }
                             {
-                                [PostTypeId.Page].includes(this.state.formData.typeId)
+                                isUserSuperAdmin && [PostTypeId.Page].includes(this.state.formData.typeId)
                                     ? <ComponentPagePostAddComponent page={this}/>
                                     : null
                             }

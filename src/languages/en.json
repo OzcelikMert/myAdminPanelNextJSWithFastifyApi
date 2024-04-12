@@ -1,4 +1,8 @@
 {
+  "noIndex" : "No Index",
+  "blog": "Blog",
+  "portfolio": "Portfolio",
+  "products": "Products",
   "newPath": "New Path",
   "pathMask": "Path Mask",
   "path": "Path",

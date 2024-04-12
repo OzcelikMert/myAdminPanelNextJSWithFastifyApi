@@ -1,4 +1,8 @@
 export const languageKeys = [
+    "noIndex",
+    "blog",
+    "portfolio",
+    "products",
     "newPath",
     "pathMask",
     "path",

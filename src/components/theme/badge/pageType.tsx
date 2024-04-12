@@ -27,8 +27,14 @@ export function getPageTypeColor(typeId: PageTypeId): string {
     switch (typeId) {
         case PageTypeId.Default: className = `dark`; break;
         case PageTypeId.HomePage: className = `primary`; break;
-        case PageTypeId.Blogs: className = `warning`; break;
         case PageTypeId.Contact: className = `info`; break;
+        case PageTypeId.Blogs:
+        case PageTypeId.Blog:
+        case PageTypeId.Portfolios:
+        case PageTypeId.Portfolio:
+        case PageTypeId.Products:
+        case PageTypeId.Product:
+            className = `warning`; break;
         case PageTypeId.ErrorPage404: className = `danger`; break;
     }
     return className;
