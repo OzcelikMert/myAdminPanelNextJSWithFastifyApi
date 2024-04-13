@@ -23,6 +23,7 @@ import {ProductUtil} from "@utils/product.util";
 import {PageTypeId, pageTypes} from "@constants/pageTypes";
 import {PostTermTypeId} from "@constants/postTermTypes";
 import {RouteUtil} from "@utils/route.util";
+import {UserRoleId} from "@constants/userRoles";
 
 type IPageState = {
     typeId: PostTypeId
@@ -381,10 +382,11 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                 sortable: true,
                 selector: row => row.rank ?? 0,
                 cell: row => {
-                    return PermissionUtil.check(
+                    return (row.typeId == PostTypeId.Page && PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)) ||
+                        (row.typeId != PostTypeId.Page && PermissionUtil.check(
                         this.props.getStateApp.sessionAuth!,
                         PermissionUtil.getPostPermission(this.state.typeId, PostPermissionMethod.UPDATE)
-                    ) ? (
+                    )) ? (
                         <span className="cursor-pointer" onClick={() => this.onClickUpdateRank(row._id)}>
                             {row.rank ?? 0} <i className="fa fa-pencil-square-o"></i>
                         </span>
@@ -418,6 +420,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
     }
 
     render() {
+        let isUserSuperAdmin = PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin);
         let item = this.state.items.findSingle("_id", this.state.selectedItemId);
         return this.props.getStateApp.isPageLoading ? null : (
             <div className="page-post">
@@ -511,16 +514,7 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
                                         search: this.props.t("search"),
                                         noRecords: this.props.t("noRecords")
                                     }}
-                                    isSelectable={(
-                                        PermissionUtil.check(
-                                            this.props.getStateApp.sessionAuth!,
-                                            PermissionUtil.getPostPermission(this.state.typeId, PostPermissionMethod.UPDATE)
-                                        ) ||
-                                        PermissionUtil.check(
-                                            this.props.getStateApp.sessionAuth!,
-                                            PermissionUtil.getPostPermission(this.state.typeId, PostPermissionMethod.DELETE)
-                                        )
-                                    )}
+                                    isSelectable={(isUserSuperAdmin)}
                                     isAllSelectable={true}
                                     isSearchable={true}
                                     isActiveToggleMenu={true}

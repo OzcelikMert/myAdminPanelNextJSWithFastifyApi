@@ -435,6 +435,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     }
 
     TabOptions = () => {
+        let isUserSuperAdmin = PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin);
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
@@ -469,8 +470,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                     />
                 </div>
                 {
-                    [PostTypeId.Page].includes(Number(this.state.formData.typeId)) &&
-                    PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
+                    [PostTypeId.Page].includes(Number(this.state.formData.typeId)) && isUserSuperAdmin
                         ? <div className="col-md-7 mb-3">
                             <ComponentFormSelect
                                 title={this.props.t("pageType")}
@@ -506,8 +506,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                     />
                 </div>
                 {
-                    [PostTypeId.Page].includes(Number(this.state.formData.typeId)) &&
-                    PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
+                    [PostTypeId.Page].includes(this.state.formData.typeId) && isUserSuperAdmin
                         ? <div className="col-md-7">
                             <ComponentFormCheckBox
                                 title={this.props.t("noIndex")}
@@ -648,9 +647,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                                 this.state.formData._id && [PostTypeId.Page, PostTypeId.Blog, PostTypeId.Portfolio, PostTypeId.Service].includes(Number(this.state.formData.typeId))
                                     ? <this.TotalViews/> : null
                             }
-                            {
-
-                            }
                         </div>
                     </div>
                 </div>
@@ -685,9 +681,13 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                                                             }
                                                         </Tab> : null
                                                 }
-                                                <Tab eventKey="options" title={this.props.t("options")}>
-                                                    <this.TabOptions/>
-                                                </Tab>
+                                                {
+                                                    this.state.formData.typeId == PostTypeId.Page && !isUserSuperAdmin
+                                                        ? null
+                                                        : <Tab eventKey="options" title={this.props.t("options")}>
+                                                            <this.TabOptions/>
+                                                        </Tab>
+                                                }
                                             </Tabs>
                                         </div>
                                     </div>

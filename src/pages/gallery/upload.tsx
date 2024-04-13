@@ -31,10 +31,12 @@ class PageGalleryUpload extends Component<IPageProps, IPageState> {
     }
 
     componentDidMount() {
-        this.setPageTitle()
-        this.props.setStateApp({
-            isPageLoading: false
-        })
+        if (!this.props.isModal) {
+            this.setPageTitle();
+            this.props.setStateApp({
+                isPageLoading: false
+            })
+        }
     }
 
     componentWillUnmount() {

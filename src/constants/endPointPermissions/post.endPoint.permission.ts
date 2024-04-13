@@ -23,8 +23,8 @@ const getSlider: IEndPointPermission = {
 }
 
 const addPage: IEndPointPermission = {
-    permissionId: [PermissionId.PageAdd],
-    userRoleId: UserRoleId.Editor
+    permissionId: [],
+    userRoleId: UserRoleId.SuperAdmin
 }
 
 const updatePage: IEndPointPermission = {
@@ -33,12 +33,12 @@ const updatePage: IEndPointPermission = {
 }
 
 const removePage: IEndPointPermission = {
-    permissionId: [PermissionId.PageDelete],
-    userRoleId: UserRoleId.Editor
+    permissionId: [],
+    userRoleId: UserRoleId.SuperAdmin
 }
 
 const getPage: IEndPointPermission = {
-    permissionId: [PermissionId.PageAdd, PermissionId.PageEdit, PermissionId.PageDelete],
+    permissionId: [PermissionId.PageEdit],
     userRoleId: UserRoleId.Editor
 }
 
