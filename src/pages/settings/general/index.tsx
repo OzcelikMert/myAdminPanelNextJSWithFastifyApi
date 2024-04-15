@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType} from "@components/elements/form";
-import ReactHandleFormLibrary from "@library/react/handles/form";
+import {HandleFormLibrary} from "@library/react/handles/form";
 import {SettingService} from "@services/setting.service";
 import {ServerInfoService} from "@services/serverInfo.service";
 import ComponentToast from "@components/elements/toast";
@@ -157,7 +157,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         name="formData.head"
                         type="textarea"
                         value={this.state.formData.head}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -166,7 +166,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         name="formData.script"
                         type="textarea"
                         value={this.state.formData.script}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
             </div>
@@ -182,7 +182,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         name="formData.contact.email"
                         type="email"
                         value={this.state.formData.contact?.email}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -191,7 +191,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         name="formData.contact.phone"
                         type="tel"
                         value={this.state.formData.contact?.phone}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -200,7 +200,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         name="formData.contact.address"
                         type="text"
                         value={this.state.formData.contact?.address}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 ,
@@ -210,7 +210,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         name="formData.contact.addressMap"
                         type="text"
                         value={this.state.formData.contact?.addressMap}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
             </div>
@@ -312,7 +312,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                         isSearchable={false}
                         options={this.state.panelLanguages}
                         value={this.state.panelLanguages.findSingle("value", this.state.formData.panelLangId)}
-                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
+                        onChange={(item: any, e) => HandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
             </div>

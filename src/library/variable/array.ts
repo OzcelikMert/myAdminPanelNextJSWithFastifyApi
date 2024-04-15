@@ -19,68 +19,82 @@ function convertQueryData(data: any): string {
 
 Array.prototype.indexOfKey = function (key, value) {
     let findIndex = -1;
+    let index = 0;
     if(typeof value !== "undefined"){
-        findIndex = this.map(data => {
-            let _data: any = data;
-            if(typeof key === "string"){
-                if(key.length > 0){
-                    for(const name of key.split(".")) {
-                        if(typeof _data !== "undefined"){
-                            _data = _data[name];
-                        }
+        for (const item of this) {
+            let _data: any = item;
+
+            if(key.length > 0){
+                for(const name of key.split(".")) {
+                    if(typeof _data !== "undefined"){
+                        _data = _data[name];
                     }
                 }
             }
-            return convertQueryData(_data);
-        }).indexOf(convertQueryData(value))
+
+            if(convertQueryData(_data) == convertQueryData(value)) {
+                findIndex = index;
+                break;
+            }
+            index++;
+        }
     }
     return findIndex;
 }
 Array.prototype.findSingle = function (key, value) {
-    return this.find(function (data) {
-        let query: boolean = false;
+    let foundItem = null;
 
-        if(typeof value !== "undefined"){
-            let _data = data;
-            if(typeof key === "string"){
-                if(key.length > 0){
-                    for(const name of key.split(".")) {
-                        if(typeof _data !== "undefined"){
-                            _data = _data[name];
-                        }
+    if(typeof value !== "undefined"){
+        for (const item of this) {
+            let _data: any = item;
+
+            if(key.length > 0){
+                for(const name of key.split(".")) {
+                    if(typeof _data !== "undefined"){
+                        _data = _data[name];
                     }
                 }
             }
-            query = convertQueryData(_data) == convertQueryData(value);
-        }
 
-        return query;
-    });
+            if(convertQueryData(_data) == convertQueryData(value)) {
+                foundItem = item;
+                break;
+            }
+        }
+    }
+
+    return foundItem;
 }
 Array.prototype.findMulti = function (key, value, isEquals = true) {
-    let founds = Array();
-    this.find(function (data) {
-        let query: boolean = false;
-        if(typeof value !== "undefined"){
-            let _data = data;
-            if(typeof key === "string"){
-                if(key.length > 0){
-                    for(const name of key.split(".")) {
-                        if(typeof _data !== "undefined"){
-                            _data = _data[name];
-                        }
+    let foundItems = [];
+
+    if(typeof value !== "undefined") {
+        for (const item of this) {
+            let _data: any = item;
+
+            if(key.length > 0){
+                for(const name of key.split(".")) {
+                    if(typeof _data !== "undefined"){
+                        _data = _data[name];
                     }
                 }
             }
+
+            let query = false;
+
             if(Array.isArray(value)){
-                query = value.map(v => convertQueryData(v)).includes(convertQueryData(_data));
+                query = value.some(v => convertQueryData(v) == convertQueryData(_data));
             }else {
                 query = convertQueryData(_data) == convertQueryData(value);
             }
+
+            if(query == isEquals) {
+                foundItems.push(item);
+            }
         }
-        if (query === isEquals) founds.push(Object.assign(data));
-    });
-    return founds;
+    }
+
+    return foundItems;
 }
 Array.prototype.orderBy = function (key, sort_type) {
     return this.sort(function (a, b) {

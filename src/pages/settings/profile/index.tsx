@@ -1,7 +1,7 @@
 import React, {Component, FormEvent} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentFieldSet, ComponentForm, ComponentFormType} from "@components/elements/form";
-import ReactHandleFormLibrary from "@library/react/handles/form";
+import {HandleFormLibrary} from "@library/react/handles/form";
 import ComponentThemeChooseImage from "@components/theme/chooseImage";
 import {UserService} from "@services/user.service";
 import ComponentToast from "@components/elements/toast";
@@ -277,7 +277,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                             type="text"
                                             required={true}
                                             value={this.state.formData.name}
-                                            onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                            onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
@@ -286,7 +286,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                             name="formData.comment"
                                             type="textarea"
                                             value={this.state.formData.comment}
-                                            onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                            onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
@@ -295,7 +295,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                             name="formData.phone"
                                             type="text"
                                             value={this.state.formData.phone}
-                                            onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                            onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
@@ -304,7 +304,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                             name="formData.facebook"
                                             type="url"
                                             value={this.state.formData.facebook}
-                                            onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                            onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
@@ -313,7 +313,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                             name="formData.instagram"
                                             type="url"
                                             value={this.state.formData.instagram}
-                                            onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                            onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                                         />
                                     </div>
                                     <div className="col-md-12 mb-3">
@@ -322,7 +322,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                                             name="formData.twitter"
                                             type="url"
                                             value={this.state.formData.twitter}
-                                            onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                            onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                                         />
                                     </div>
                                 </div>

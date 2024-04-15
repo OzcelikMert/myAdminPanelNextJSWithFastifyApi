@@ -3,7 +3,7 @@ import {Tab, Tabs} from "react-bootstrap";
 import moment from "moment";
 import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "@components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
-import ReactHandleFormLibrary from "@library/react/handles/form";
+import {HandleFormLibrary} from "@library/react/handles/form";
 import ComponentThemeChooseImage from "@components/theme/chooseImage";
 import {PostTermService} from "@services/postTerm.service";
 import {PostService} from "@services/post.service";
@@ -444,7 +444,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                         name="formData.statusId"
                         options={this.state.status}
                         value={this.state.status?.findSingle("value", this.state.formData.statusId)}
-                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
+                        onChange={(item: any, e) => HandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
                 {
@@ -455,7 +455,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                                 type="date"
                                 name="formData.dateStart"
                                 value={moment(this.state.formData.dateStart).format("YYYY-MM-DD")}
-                                onChange={(event) => ReactHandleFormLibrary.onChangeInput(event, this)}
+                                onChange={(event) => HandleFormLibrary.onChangeInput(event, this)}
                             />
                         </div> : null
                 }
@@ -466,7 +466,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                         type="number"
                         required={true}
                         value={this.state.formData.rank}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 {
@@ -477,7 +477,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                                 name="formData.pageTypeId"
                                 options={this.state.pageTypes}
                                 value={this.state.pageTypes?.findSingle("value", this.state.formData.pageTypeId || "")}
-                                onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
+                                onChange={(item: any, e) => HandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                             />
                         </div> : null
                 }
@@ -493,7 +493,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                                 closeMenuOnSelect={false}
                                 options={this.state.authors}
                                 value={this.state.authors?.filter(selectAuthor => this.state.formData.authors?.includes(selectAuthor.value))}
-                                onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item, this)}
+                                onChange={(item: any, e) => HandleFormLibrary.onChangeSelect(e.name, item, this)}
                             />
                         </div> : null
                 }
@@ -502,7 +502,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                         title={this.props.t("isFixed")}
                         name="formData.isFixed"
                         checked={Boolean(this.state.formData.isFixed)}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 {
@@ -512,7 +512,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                                 title={this.props.t("noIndex")}
                                 name="formData.isNoIndex"
                                 checked={Boolean(this.state.formData.isNoIndex)}
-                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                             />
                         </div> : null
                 }
@@ -561,7 +561,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                                 name="formData.contents.icon"
                                 type="text"
                                 value={this.state.formData.contents.icon}
-                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                             />
                         </div> : null
                 }
@@ -602,7 +602,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                         type="text"
                         required={true}
                         value={this.state.formData.contents.title}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -611,7 +611,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                         name="formData.contents.shortContent"
                         type="textarea"
                         value={this.state.formData.contents.shortContent}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 {

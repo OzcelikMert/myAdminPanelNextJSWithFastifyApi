@@ -10,7 +10,7 @@ import {
     IUserUpdatePasswordParamService,
     IUserUpdateProfileImageParamService
 } from "types/services/user.service";
-import ApiRequest from "@library/api/request";
+import {ApiRequest} from "@library/api/request";
 import {PathUtil} from "@utils/path.util";
 import {IUserModel} from "types/models/user.model";
 

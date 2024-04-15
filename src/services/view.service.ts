@@ -4,7 +4,7 @@ import {
     IViewGetNumberResultService,
     IViewAddParamService,
 } from "types/services/view.service";
-import ApiRequest from "@library/api/request";
+import {ApiRequest} from "@library/api/request";
 import {PathUtil} from "@utils/path.util";
 import {IViewModel} from "types/models/view.model";
 

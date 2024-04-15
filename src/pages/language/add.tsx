@@ -2,7 +2,7 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "@components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
-import ReactHandleFormLibrary from "@library/react/handles/form";
+import {HandleFormLibrary} from "@library/react/handles/form";
 import {ILanguageUpdateWithIdParamService} from "types/services/language.service";
 import {LanguageService} from "@services/language.service";
 import Image from "next/image";
@@ -169,7 +169,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
                         name="formData.statusId"
                         options={this.state.status}
                         value={this.state.status?.findSingle("value", this.state.formData.statusId)}
-                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
+                        onChange={(item: any, e) => HandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -179,7 +179,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
                         type="number"
                         required={true}
                         value={this.state.formData.rank}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -187,7 +187,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
                         title={this.props.t("default")}
                         name="formData.isDefault"
                         checked={Boolean(this.state.formData.isDefault)}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
             </div>
@@ -214,7 +214,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
                                 name="formData.image"
                                 options={this.state.flags}
                                 value={this.state.flags.findSingle("value", this.state.formData.image || "")}
-                                onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
+                                onChange={(item: any, e) => HandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                             />
                         </div>
                     </div>
@@ -226,7 +226,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
                         type="text"
                         required={true}
                         value={this.state.formData.title}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -236,7 +236,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
                         type="text"
                         required={true}
                         value={this.state.formData.shortKey}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -246,7 +246,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
                         type="text"
                         required={true}
                         value={this.state.formData.locale}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
             </div>

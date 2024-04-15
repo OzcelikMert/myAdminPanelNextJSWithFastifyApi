@@ -2,7 +2,7 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import moment from "moment";
 import {IPagePropCommon} from "types/pageProps";
-import ReactHandleFormLibrary from "@library/react/handles/form";
+import {HandleFormLibrary} from "@library/react/handles/form";
 import {
     ComponentFieldSet,
     ComponentForm,
@@ -10,7 +10,7 @@ import {
     ComponentFormSelect,
     ComponentFormType
 } from "@components/elements/form";
-import V, {DateMask} from "@library/variable";
+import {VariableLibrary} from "@library/variable";
 import {UserService} from "@services/user.service";
 import {IUserUpdateWithIdParamService} from "types/services/user.service";
 import {IThemeFormSelectValue} from "@components/elements/form/input/select";
@@ -26,6 +26,7 @@ import {IPermission} from "types/constants/permissions";
 import {permissionGroups} from "@constants/permissionGroups";
 import {RouteUtil} from "@utils/route.util";
 import ComponentToast from "@components/elements/toast";
+import {DateMask} from "@library/variable/date";
 
 type IPageState = {
     mainTabActiveKey: string
@@ -284,7 +285,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                         options={this.state.userRoles}
                         value={this.state.userRoles?.findSingle("value", this.state.formData.roleId)}
                         onChange={(item: any, e) => {
-                            ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this);
+                            HandleFormLibrary.onChangeSelect(e.name, item.value, this);
                             this.onChangeUserRole(item.value);
                         }}
                     />
@@ -295,7 +296,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                         name="formData.statusId"
                         options={this.state.status}
                         value={this.state.status?.findSingle("value", this.state.formData.statusId)}
-                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
+                        onChange={(item: any, e) => HandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
                 {
@@ -307,7 +308,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                                     type="date"
                                     name="formData.banDateEnd"
                                     value={moment(this.state.formData.banDateEnd).format("YYYY-MM-DD")}
-                                    onChange={(event) => ReactHandleFormLibrary.onChangeInput(event, this)}
+                                    onChange={(event) => HandleFormLibrary.onChangeInput(event, this)}
                                 />
                             </div>
                             <div className="mb-3">
@@ -316,7 +317,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                                     name="formData.banComment"
                                     type="textarea"
                                     value={this.state.formData.banComment}
-                                    onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                    onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                                 />
                             </div>
                         </div> : null
@@ -335,7 +336,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                         type="text"
                         required={true}
                         value={this.state.formData.name}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -346,7 +347,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                         required={true}
                         autoComplete={"new-password"}
                         value={this.state.formData.email}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -355,9 +356,9 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                         name="formData.password"
                         type="password"
                         autoComplete={"new-password"}
-                        required={V.isEmpty(this.state.formData._id)}
+                        required={VariableLibrary.isEmpty(this.state.formData._id)}
                         value={this.state.formData.password}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
             </div>

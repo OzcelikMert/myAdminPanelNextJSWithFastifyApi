@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import V from "@library/variable";
+import {VariableLibrary} from "@library/variable";
 
 type IPageState = {
     tags: string[]
@@ -38,7 +38,7 @@ class ComponentFormTags extends Component<IPageProps, IPageState> {
     }
 
     onKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-        if (event.key === "Enter" && !V.isEmpty(this.state.currentTags)) {
+        if (event.key === "Enter" && !VariableLibrary.isEmpty(this.state.currentTags)) {
             this.setState((state: IPageState) => {
                 let newTag = state.currentTags.trim()
 

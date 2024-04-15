@@ -2,8 +2,8 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "@components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
-import V from "@library/variable";
-import ReactHandleFormLibrary from "@library/react/handles/form";
+import {VariableLibrary} from "@library/variable";
+import {HandleFormLibrary} from "@library/react/handles/form";
 import {INavigationUpdateWithIdParamService} from "types/services/navigation.service";
 import {NavigationService} from "@services/navigation.service";
 import {IThemeFormSelectValue} from "@components/elements/form/input/select";
@@ -113,7 +113,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
             this.setState((state: IPageState) => {
                 state.items = [{value: "", label: this.props.t("notSelected")}];
                 serviceResult.data!.forEach(item => {
-                    if (!V.isEmpty(this.state.formData._id)) {
+                    if (!VariableLibrary.isEmpty(this.state.formData._id)) {
                         if (this.state.formData._id == item._id) return;
                     }
                     state.items.push({
@@ -202,7 +202,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                         name="formData.statusId"
                         options={this.state.status}
                         value={this.state.status?.findSingle("value", this.state.formData.statusId)}
-                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
+                        onChange={(item: any, e) => HandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -212,7 +212,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                         type="number"
                         required={true}
                         value={this.state.formData.rank}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7">
@@ -220,7 +220,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                         title={this.props.t("primary")}
                         name="formData.isPrimary"
                         checked={Boolean(this.state.formData.isPrimary)}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7">
@@ -228,7 +228,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                         title={this.props.t("secondary")}
                         name="formData.isSecondary"
                         checked={Boolean(this.state.formData.isSecondary)}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
             </div>
@@ -245,7 +245,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                         type="text"
                         required={true}
                         value={this.state.formData.contents.title}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -255,7 +255,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                         type="text"
                         required={true}
                         value={this.state.formData.contents.url}
-                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -265,7 +265,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
                         placeholder={this.props.t("chooseMain")}
                         options={this.state.items}
                         value={this.state.items.findSingle("value", this.state.formData.parentId || "")}
-                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
+                        onChange={(item: any, e) => HandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
             </div>

@@ -3,7 +3,7 @@ import axios from "axios";
 import {ApiTimeouts} from "@library/api/timeouts";
 import {ApiResult} from "@library/api/result";
 
-class ApiRequest {
+export class ApiRequest {
     constructor(params: IApiRequestParam) {
         this.params = params;
     }
@@ -65,5 +65,3 @@ class ApiRequest {
         return await this.request<Data, CustomData>("DELETE");
     }
 }
-
-export default ApiRequest;

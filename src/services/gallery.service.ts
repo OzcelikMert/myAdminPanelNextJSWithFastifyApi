@@ -5,7 +5,7 @@ import {
     IGalleryGetManyParamService,
     IGalleryGetResultService, IGalleryImageProperties
 } from "types/services/gallery.service";
-import ApiRequest from "@library/api/request";
+import {ApiRequest} from "@library/api/request";
 import {PathUtil} from "@utils/path.util";
 import {IApiRequestParam} from "@library/types/api";
 import {IGalleryModel} from "types/models/gallery.model";

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentForm, ComponentFormSelect} from "@components/elements/form";
-import ReactHandleFormLibrary from "@library/react/handles/form";
+import {HandleFormLibrary} from "@library/react/handles/form";
 import {SettingService} from "@services/setting.service";
 import ComponentToast from "@components/elements/toast";
 import {ISettingUpdateECommerceParamService} from "types/services/setting.service";
@@ -117,7 +117,7 @@ export default class PageECommerceSettings extends Component<IPageProps, IPageSt
                         isSearchable={false}
                         options={this.state.currencyTypes}
                         value={this.state.currencyTypes.findSingle("value", this.state.formData.eCommerce.currencyId)}
-                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
+                        onChange={(item: any, e) => HandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
             </div>

@@ -16,7 +16,7 @@ import {ComponentFieldSet, ComponentForm, ComponentFormSelect, ComponentFormType
 import {UserRoleId} from "@constants/userRoles";
 import ComponentPageComponentElementTypeInput from "@components/pages/component/add/elementTypeInput";
 import {ComponentTypeId, componentTypes} from "@constants/componentTypes";
-import ReactHandleFormLibrary from "@library/react/handles/form";
+import {HandleFormLibrary} from "@library/react/handles/form";
 import {RouteUtil} from "@utils/route.util";
 import ComponentToast from "@components/elements/toast";
 
@@ -391,7 +391,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                         placeholder={this.props.t("typeId")}
                         options={this.state.componentTypes}
                         value={this.state.componentTypes.findSingle("value", this.state.formData.typeId)}
-                        onChange={(item: any, e) => ReactHandleFormLibrary.onChangeSelect(e.name, item.value, this)}
+                        onChange={(item: any, e) => HandleFormLibrary.onChangeSelect(e.name, item.value, this)}
                     />
                 </div>
             </div>

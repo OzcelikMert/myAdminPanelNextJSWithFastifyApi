@@ -1,4 +1,4 @@
-class ThreadLibrary {
+export class ThreadLibrary {
     static start(func: () => void, ms: number = 100): void {
         setTimeout(() => func(), ms);
     }
@@ -6,5 +6,3 @@ class ThreadLibrary {
         return new Promise(resolve => setTimeout(resolve, 750));
     }
 }
-
-export default ThreadLibrary;

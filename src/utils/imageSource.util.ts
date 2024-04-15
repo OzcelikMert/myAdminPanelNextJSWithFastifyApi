@@ -1,8 +1,8 @@
-import V from "@library/variable";
+import {VariableLibrary} from "@library/variable";
 import {PathUtil} from "@utils/path.util";
 
 const getUploadedImageSrc = (imageName?: string): string => {
-    return imageName && !V.isEmpty(imageName)
+    return imageName && !VariableLibrary.isEmpty(imageName)
         ? (imageName.isUrl())
             ? imageName
             : PathUtil.getImageURL() + imageName
@@ -10,7 +10,7 @@ const getUploadedImageSrc = (imageName?: string): string => {
 }
 
 const getUploadedFlagSrc = (imageName?: string): string => {
-    return imageName && !V.isEmpty(imageName)
+    return imageName && !VariableLibrary.isEmpty(imageName)
         ? (imageName.isUrl())
             ? imageName
             : PathUtil.getFlagURL() + imageName

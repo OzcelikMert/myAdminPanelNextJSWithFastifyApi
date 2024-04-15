@@ -1,12 +1,24 @@
 declare global {
     interface Date {
         addDays(n: any): void
-        nextDay() : void
+
+        nextDay(): void
+
         addMonths(n: any): void
+
         addYears(n: any): void
-        getStringWithMask(mask: string | DateMask, utc?: boolean) : string
-        diffMinutes(date: Date): Number
+
+        getStringWithMask(mask: string | DateMask, utc?: boolean): string
+
         diffDays(date: Date): Number
+
+        diffMinutes(date: Date): Number
+
+        diffSeconds(date: Date): number
+    }
+
+    interface DateConstructor {
+        convertHoursToMS(hours: number): number
     }
 }
 
@@ -45,7 +57,7 @@ Date.prototype.getStringWithMask = function (mask, utc = false) {
         timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
         timezoneClip = /[^-+\dA-Z]/g;
 
-    function pad(val: any, len: any = 0) : any {
+    function pad(val: any, len: any = 0): any {
         val = String(val);
         len = len || 2;
         while (val.length < len) val = "0" + val;
@@ -115,15 +127,22 @@ Date.prototype.getStringWithMask = function (mask, utc = false) {
         return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
     });
 };
-Date.prototype.diffMinutes = function (date) {
-    let diff =(date.getTime() - this.getTime()) / 1000;
-    diff /= 60;
-    return Math.round(diff);
-}
 Date.prototype.diffDays = function (date) {
     let diff = (date.getTime() - this.getTime()) / 1000;
     diff /= (60 * 60 * 24);
     return Math.ceil(diff);
+}
+Date.prototype.diffMinutes = function (date) {
+    let diff = (this.getTime() - date.getTime()) / 1000;
+    diff /= 60;
+    return Math.round(diff);
+}
+Date.prototype.diffSeconds = function (date) {
+    let diff = (this.getTime() - date.getTime()) / 1000;
+    return Math.round(diff);
+}
+Date.convertHoursToMS = function (hours) {
+    return (1000 * 60 * 60) * hours;
 }
 
 export default {}

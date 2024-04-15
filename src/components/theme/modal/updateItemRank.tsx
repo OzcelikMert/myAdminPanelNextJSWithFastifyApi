@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {ComponentFormLoadingButton,  ComponentFormType} from "@components/elements/form";
-import ReactHandleFormLibrary from "@library/react/handles/form";
+import {HandleFormLibrary} from "@library/react/handles/form";
 import {Modal} from "react-bootstrap";
 import {IPagePropCommon} from "types/pageProps";
 
@@ -74,7 +74,7 @@ export default class ComponentThemeModalUpdateItemRank extends Component<IPagePr
                                         type="number"
                                         required={true}
                                         value={this.state.newRank}
-                                        onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                                     />
                                 </div>
                                 <div className="col-md-12 mt-4 text-end submit">

@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {IPagePropCommon} from "types/pageProps";
 import {AuthService} from "@services/auth.service";
-import {EndPoints} from "@constants/endPoints";
 import Image from "next/image";
 import {ImageSourceUtil} from "@utils/imageSource.util";
 import {ComponentForm} from "@components/elements/form";
 import ThemeInputType from "@components/elements/form/input/type";
-import ReactHandleFormLibrary from "@library/react/handles/form";
+import {HandleFormLibrary} from "@library/react/handles/form";
 
 type IPageState = {
     isSubmitting: boolean
@@ -91,7 +90,7 @@ export default class ComponentToolLock extends Component<IPageProps, IPageState>
                                                 name="formData.password"
                                                 required={true}
                                                 value={this.state.formData.password}
-                                                onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                                onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                                             />
                                         </div>
                                         <div className="col-md-12">

@@ -16,9 +16,19 @@ const setTheme = (theme: IThemeKeys) => {
     window.localStorage.setItem("adminTheme", theme);
 }
 
+const getKeepMeEmail = () => {
+    return window.localStorage.getItem("adminKeepMeEmail") ?? "";
+}
+
+const setKeepMeEmail = (email: string) => {
+    window.localStorage.setItem("adminKeepMeEmail", email);
+}
+
 export const LocalStorageUtil = {
     getLanguageId: getLanguageId,
     setLanguageId: setLanguageId,
     getTheme: getTheme,
     setTheme: setTheme,
+    getKeepMeEmail,
+    setKeepMeEmail
 }

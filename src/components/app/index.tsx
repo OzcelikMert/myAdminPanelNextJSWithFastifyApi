@@ -11,7 +11,7 @@ import ComponentHead from "@components/head";
 import {useTranslation} from "react-i18next";
 import ComponentProviderAuth from "@components/providers/auth";
 import ComponentProviderAppInit from "@components/providers/appInit";
-import Variable from "@library/variable";
+import {VariableLibrary} from "@library/variable";
 import {ToastContainer} from "react-toastify";
 import {CurrencyId} from "@constants/currencyTypes";
 import {multiLanguagePaths} from "@constants/multiLanguagePaths";
@@ -93,7 +93,7 @@ class ComponentApp extends Component<IPageProps, IPageState> {
 
     setStateApp(data: ISetStateApp, callBack?: () => void) {
         this.setState((state: IPageState) => {
-            state = Variable.nestedObjectAssign(cloneDeepWith(state), data);
+            state = VariableLibrary.nestedObjectAssign(cloneDeepWith(state), data);
             return state;
         }, () => {
             if (callBack) {

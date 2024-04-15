@@ -1,7 +1,7 @@
 import React, {Component, FormEvent} from 'react'
 import {IPagePropCommon} from "types/pageProps";
 import {ComponentForm, ComponentFormType} from "@components/elements/form";
-import ReactHandleFormLibrary from "@library/react/handles/form";
+import {HandleFormLibrary} from "@library/react/handles/form";
 import ComponentToast from "@components/elements/toast";
 import {UserService} from "@services/user.service";
 
@@ -105,7 +105,7 @@ export default class PageChangePassword extends Component<IPageProps, IPageState
                                                     autoComplete={"new-password"}
                                                     required={true}
                                                     value={this.state.formData.password}
-                                                    onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                                    onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                                                 />
                                             </div>
                                             <div className="col-md-7 mb-3">
@@ -116,7 +116,7 @@ export default class PageChangePassword extends Component<IPageProps, IPageState
                                                     autoComplete={"new-password"}
                                                     required={true}
                                                     value={this.state.formData.newPassword}
-                                                    onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                                    onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                                                 />
                                             </div>
                                             <div className="col-md-7 mb-3">
@@ -127,7 +127,7 @@ export default class PageChangePassword extends Component<IPageProps, IPageState
                                                     autoComplete={"new-password"}
                                                     required={true}
                                                     value={this.state.formData.confirmPassword}
-                                                    onChange={e => ReactHandleFormLibrary.onChangeInput(e, this)}
+                                                    onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                                                 />
                                             </div>
                                         </div>
