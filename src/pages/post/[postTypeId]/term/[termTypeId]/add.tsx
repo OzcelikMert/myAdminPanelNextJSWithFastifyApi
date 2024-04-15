@@ -187,7 +187,9 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                 }, () => resolve(1))
             })
         } else {
-            this.navigatePage();
+            if (!this.state.formData._id) {
+                await this.navigatePage();
+            }
         }
     }
 
@@ -299,6 +301,15 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                         type="text"
                         required={true}
                         value={this.state.formData.contents.title}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
+                    />
+                </div>
+                <div className="col-md-7 mb-3">
+                    <ComponentFormType
+                        title={this.props.t("shortContent").toCapitalizeCase()}
+                        name="formData.contents.shortContent"
+                        type="textarea"
+                        value={this.state.formData.contents.shortContent}
                         onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>

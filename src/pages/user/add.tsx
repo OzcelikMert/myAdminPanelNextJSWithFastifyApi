@@ -182,7 +182,10 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
                     title: this.props.t("successful"),
                     content: `${this.props.t(this.state.formData._id ? "itemEdited" : "itemAdded")}!`
                 })
-                await this.navigatePage();
+
+                if (!this.state.formData._id) {
+                    await this.navigatePage();
+                }
             }
         })
     }

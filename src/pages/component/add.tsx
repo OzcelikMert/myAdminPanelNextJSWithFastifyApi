@@ -1,6 +1,5 @@
 import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
-import HandleForm from "@library/react/handles/form";
 import Swal from "sweetalert2";
 import {IThemeFormSelectValue} from "@components/elements/form/input/select";
 import {IComponentUpdateWithIdParamService} from "types/services/component.service";
@@ -371,7 +370,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                         type="text"
                         required={true}
                         value={this.state.formData.title}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mb-3">
@@ -381,7 +380,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                         type="text"
                         required={true}
                         value={this.state.formData.key}
-                        onChange={e => HandleForm.onChangeInput(e, this)}
+                        onChange={e => HandleFormLibrary.onChangeInput(e, this)}
                     />
                 </div>
                 <div className="col-md-7 mt-3">

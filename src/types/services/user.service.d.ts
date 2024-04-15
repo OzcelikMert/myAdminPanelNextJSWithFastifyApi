@@ -8,6 +8,9 @@ export interface IUserPopulateService {
     name: string,
     url: string,
     image: string
+    facebook?: string
+    instagram?: string
+    twitter?: string
 }
 
 export type IUserGetResultService = {

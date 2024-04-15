@@ -1,4 +1,4 @@
-import React, { Component, Ref, createRef } from 'react'
+import React, { Component, createRef } from 'react'
 import JoditEditor, { Jodit as JoditReact } from "jodit-react";
 import ComponentThemeChooseImage from "@components/theme/chooseImage";
 import { IPagePropCommon } from "types/pageProps";
@@ -82,8 +82,6 @@ export default class ComponentThemeRichTextBox extends Component<IPageProps, IPa
     }
 
     render() {
-        console.log("ref", this.ref.current);
-        console.log("view", this.view);
         return this.state.isLoading ? <Spinner animation="border" /> : (
             <div id={`themeRichTextBox_${String.createId()}`}>
                 <ComponentThemeChooseImage
@@ -106,7 +104,7 @@ export default class ComponentThemeRichTextBox extends Component<IPageProps, IPa
                             ref={this.ref}
                             value={this.state.value}
                             config={this.state.config}
-                            onBlur={newContent => this.props.onChange(newContent)}
+                            onBlur={newContent => this.props.onChange(this.ref.current?.value || "")}
                         />
                     }
                 </React.Fragment>
