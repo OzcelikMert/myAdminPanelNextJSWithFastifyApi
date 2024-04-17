@@ -107,7 +107,6 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
     }
 
     onAccept(index: number) {
-        console.log(index, this.state.formData.contactForms[index], this.state.selectedData);
         this.setState((state: IPageState) => {
             state.formData.contactForms[index] = state.selectedData!;
             state.selectedData = undefined;

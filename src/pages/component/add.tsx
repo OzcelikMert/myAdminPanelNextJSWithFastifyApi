@@ -160,7 +160,6 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
             isSubmitting: true
         }, async () => {
             let params = this.state.formData;
-            console.log(params);
 
             let serviceResult = await ((params._id)
                 ? ComponentService.updateWithId(params, this.abortController.signal)

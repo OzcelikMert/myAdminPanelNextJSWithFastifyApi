@@ -416,7 +416,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     }
 
     onChangeContent(newContent: string) {
-        console.log(newContent);
         this.setState((state: IPageState) => {
             state.formData.contents.content = newContent;
             return state;
