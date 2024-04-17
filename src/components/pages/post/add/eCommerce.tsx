@@ -265,11 +265,6 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                 <div className="col-md-7 mb-3">
                     <ComponentThemeChooseImage
                         {...this.props.page.props}
-                        isShow={this.props.page.state.selectGalleryECommerce}
-                        onHide={() => this.props.page.setState((state: PostPageState) => {
-                            state.selectGalleryECommerce = false;
-                            return state;
-                        })}
                         onSelected={images => this.props.page.setState((state: PostPageState) => {
                             if (typeof state.formData.eCommerce !== "undefined") {
                                 state.formData.eCommerce.images = images;
@@ -278,13 +273,8 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                         })}
                         isMulti={true}
                         selectedImages={this.props.page.state.formData.eCommerce?.images}
+                        showModalButtonText={this.props.page.props.t("gallery")}
                     />
-                    <button
-                        type="button"
-                        className="btn btn-gradient-info btn-lg ms-1"
-                        onClick={() => this.onChange(this.props.page.state, `selectGalleryECommerce`, true)}
-                    ><i className="fa fa-pencil-square-o"></i> Resim Sec
-                    </button>
                 </div>
                 <div className="col-md-12 mb-3">
                     <div className="row">
@@ -554,11 +544,6 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                         <div className="col-md-7 mb-3">
                                             <ComponentThemeChooseImage
                                                 {...this.props.page.props}
-                                                isShow={this.props.page.state[`selectImage${variation._id}`]}
-                                                onHide={() => this.props.page.setState((state: PostPageState) => {
-                                                    state[`selectImage${variation._id}`] = false;
-                                                    return state;
-                                                })}
                                                 onSelected={images => this.props.page.setState((state: PostPageState) => {
                                                     if (variation.contents) {
                                                         variation.contents.image = images[0];
@@ -568,19 +553,10 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                                 })}
                                                 isMulti={false}
                                                 selectedImages={(variation.contents && variation.contents.image) ? [variation.contents.image] : undefined}
+                                                isShowReviewImage={true}
+                                                reviewImage={variation.contents?.image}
+                                                reviewImageClassName={"post-image"}
                                             />
-                                            <Image
-                                                src={ImageSourceUtil.getUploadedImageSrc(variation.contents?.image)}
-                                                alt="Empty Image"
-                                                className="post-image img-fluid"
-                                                width={100}
-                                                height={100}
-                                            />
-                                            <button
-                                                type="button"
-                                                className="btn btn-gradient-warning btn-xs ms-1"
-                                                onClick={() => this.onChange(this.props.page.state, `selectImage${variation._id}`, true)}
-                                            ><i className="fa fa-pencil-square-o"></i></button>
                                         </div>
                                         <div className="col-md-12 mb-3">
                                             <ComponentFormType
@@ -612,24 +588,14 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                         <div className="col-md-7 mb-3">
                                             <ComponentThemeChooseImage
                                                 {...this.props.page.props}
-                                                isShow={this.props.page.state[`selectGallery${variation._id}`]}
-                                                onHide={() => this.props.page.setState((state: PostPageState) => {
-                                                    state[`selectGallery${variation._id}`] = false;
-                                                    return state;
-                                                })}
                                                 onSelected={images => this.props.page.setState((state: PostPageState) => {
                                                     variation.images = images;
                                                     return state
                                                 })}
                                                 isMulti={true}
                                                 selectedImages={variation.images}
+                                                showModalButtonText={this.props.page.props.t("gallery")}
                                             />
-                                            <button
-                                                type="button"
-                                                className="btn btn-gradient-info btn-lg ms-1"
-                                                onClick={() => this.onChange(this.props.page.state, `selectGallery${variation._id}`, true)}
-                                            ><i className="fa fa-pencil-square-o"></i> Resim Sec
-                                            </button>
                                         </div>
                                         <div className="col-md-12 mb-3">
                                             <div className="row">

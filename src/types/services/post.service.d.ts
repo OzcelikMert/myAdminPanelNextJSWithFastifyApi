@@ -66,7 +66,9 @@ export interface IPostGetManyParamService {
     page?: number
     ignorePostId?: string[]
     title?: string
+    authorId?: string
     categories?: string[]
+    tags?: string[]
 }
 
 export interface IPostGetCountParamService {

@@ -35,23 +35,14 @@ export default class ComponentPagePostAddBeforeAndAfter extends Component<IPageP
                 <div className="col-md-7 mb-3">
                     <ComponentThemeChooseImage
                         {...this.props.page.props}
-                        isShow={this.props.page.state.isSelectionImages}
-                        onHide={() => this.props.page.setState({isSelectionImages: false})}
                         onSelected={images => this.props.page.setState((state: PostPageState) => {
                             if(state.formData.beforeAndAfter) state.formData.beforeAndAfter.images = images;
                             return state;
                         })}
                         isMulti={true}
                         selectedImages={this.props.page.state.formData.beforeAndAfter?.images}
+                        showModalButtonText={this.props.page.props.t("gallery")}
                     />
-                    <button
-                        type="button"
-                        className="btn btn-gradient-info btn-lg ms-1"
-                        onClick={() => {
-                            this.props.page.setState({isSelectionImages: true})
-                        }}
-                    ><i className="fa fa-pencil-square-o"></i> Resim Sec
-                    </button>
                 </div>
                 <div className="col-md-12 mb-3">
                     <div className="row">
@@ -81,62 +72,32 @@ export default class ComponentPagePostAddBeforeAndAfter extends Component<IPageP
                     <ComponentFieldSet legend={this.props.page.props.t("imageBefore")}>
                         <ComponentThemeChooseImage
                             {...this.props.page.props}
-                            isShow={this.props.page.state.isSelectionImageBefore}
-                            onHide={() => this.props.page.setState({isSelectionImageBefore: false})}
                             onSelected={images => this.props.page.setState((state: PostPageState) => {
                                 if(state.formData.beforeAndAfter) state.formData.beforeAndAfter.imageBefore = images[0];
                                 return state
                             })}
                             isMulti={false}
                             selectedImages={(this.props.page.state.formData.beforeAndAfter?.imageBefore) ? [this.props.page.state.formData.beforeAndAfter.imageBefore] : undefined}
+                            isShowReviewImage={true}
+                            reviewImage={this.props.page.state.formData.beforeAndAfter?.imageBefore}
+                            reviewImageClassName={"post-image"}
                         />
-                        <div>
-                            <Image
-                                src={ImageSourceUtil.getUploadedImageSrc(this.props.page.state.formData.beforeAndAfter?.imageBefore)}
-                                alt="Empty Image"
-                                className="post-image img-fluid"
-                                width={100}
-                                height={100}
-                            />
-                            <button
-                                type="button"
-                                className="btn btn-gradient-warning btn-xs ms-1"
-                                onClick={() => {
-                                    this.props.page.setState({isSelectionImageBefore: true})
-                                }}
-                            ><i className="fa fa-pencil-square-o"></i></button>
-                        </div>
                     </ComponentFieldSet>
                 </div>
                 <div className="col-md-7 mb-3">
                     <ComponentFieldSet legend={this.props.page.props.t("imageAfter")}>
                         <ComponentThemeChooseImage
                             {...this.props.page.props}
-                            isShow={this.props.page.state.isSelectionImageAfter}
-                            onHide={() => this.props.page.setState({isSelectionImageAfter: false})}
                             onSelected={images => this.props.page.setState((state: PostPageState) => {
                                 if(state.formData.beforeAndAfter) state.formData.beforeAndAfter.imageAfter = images[0];
                                 return state
                             })}
                             isMulti={false}
                             selectedImages={(this.props.page.state.formData.beforeAndAfter?.imageAfter) ? [this.props.page.state.formData.beforeAndAfter.imageAfter] : undefined}
+                            isShowReviewImage={true}
+                            reviewImage={this.props.page.state.formData.beforeAndAfter?.imageAfter}
+                            reviewImageClassName={"post-image"}
                         />
-                        <div>
-                            <Image
-                                src={ImageSourceUtil.getUploadedImageSrc(this.props.page.state.formData.beforeAndAfter?.imageAfter)}
-                                alt="Empty Image"
-                                className="post-image img-fluid"
-                                width={100}
-                                height={100}
-                            />
-                            <button
-                                type="button"
-                                className="btn btn-gradient-warning btn-xs ms-1"
-                                onClick={() => {
-                                    this.props.page.setState({isSelectionImageAfter: true})
-                                }}
-                            ><i className="fa fa-pencil-square-o"></i></button>
-                        </div>
                     </ComponentFieldSet>
                 </div>
             </div>

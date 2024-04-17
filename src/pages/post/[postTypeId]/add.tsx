@@ -55,7 +55,6 @@ export type IPageState = {
     isSubmitting: boolean
     mainTitle: string
     formData: IPostUpdateWithIdParamService & { authorId?: IUserPopulateService },
-    isSelectionImage: boolean
     isIconActive: boolean
 } & { [key: string]: any };
 
@@ -92,7 +91,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                     title: "",
                 }
             },
-            isSelectionImage: false,
             isIconActive: false
         }
     }
@@ -571,29 +569,16 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                         ? <div className="col-md-7 mb-3">
                             <ComponentThemeChooseImage
                                 {...this.props}
-                                isShow={this.state.isSelectionImage}
-                                onHide={() => this.setState({isSelectionImage: false})}
                                 onSelected={images => this.setState((state: IPageState) => {
                                     state.formData.contents.image = images[0];
                                     return state
                                 })}
                                 isMulti={false}
                                 selectedImages={(this.state.formData.contents.image) ? [this.state.formData.contents.image] : undefined}
+                                isShowReviewImage={true}
+                                reviewImage={this.state.formData.contents.image}
+                                reviewImageClassName={"post-image"}
                             />
-                            <Image
-                                src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.contents.image)}
-                                alt="Empty Image"
-                                className="post-image img-fluid"
-                                width={100}
-                                height={100}
-                            />
-                            <button
-                                type="button"
-                                className="btn btn-gradient-warning btn-xs ms-1"
-                                onClick={() => {
-                                    this.setState({isSelectionImage: true})
-                                }}
-                            ><i className="fa fa-pencil-square-o"></i></button>
                         </div> : null
                 }
                 <div className="col-md-7 mb-3">

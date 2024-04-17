@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {ComponentFormType} from "@components/elements/form";
 import ComponentThemeChooseImage from "@components/theme/chooseImage";
-import Image from "next/image";
-import {ImageSourceUtil} from "@utils/imageSource.util";
 import {IPagePropCommon} from "types/pageProps";
 import dynamic from "next/dynamic";
 import {IComponentElementModel} from "types/models/component.model";
@@ -10,9 +8,7 @@ import {ElementTypeId} from "@constants/elementTypes";
 
 const ComponentThemeRichTextBox = dynamic(() => import("@components/theme/richTextBox"), {ssr: false});
 
-type IPageState = {
-
-} & { [key: string]: any };
+type IPageState = {} & { [key: string]: any };
 
 type IPageProps = {
     data: IComponentElementModel
@@ -51,29 +47,12 @@ export default class ComponentPageComponentElementTypeInput extends Component<IP
                 <div>
                     <ComponentThemeChooseImage
                         {...this.props}
-                        isShow={this.state[this.props.data._id ?? ""]}
-                        onHide={() => this.setState((state: IPageState) => {
-                            state[this.props.data._id] = false;
-                            return state;
-                        })}
                         onSelected={images => this.props.onChange("content", images[0])}
                         isMulti={false}
+                        isShowReviewImage={true}
+                        reviewImage={this.props.data.contents?.content}
+                        reviewImageClassName={"post-image"}
                     />
-                    <Image
-                        src={ImageSourceUtil.getUploadedImageSrc(this.props.data.contents?.content)}
-                        alt="Empty Image"
-                        className="post-image img-fluid"
-                        width={250}
-                        height={250}
-                    />
-                    <button
-                        type="button"
-                        className="btn btn-gradient-warning btn-xs ms-0 ms-md-2 mt-2 mt-md-0"
-                        onClick={() => this.setState((state: IPageState) => {
-                            state[this.props.data._id ?? ""] = true;
-                            return state;
-                        })}
-                    ><i className="fa fa-pencil-square-o"></i></button>
                 </div>
         )
     }

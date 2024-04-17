@@ -81,21 +81,29 @@ export default class ComponentThemeRichTextBox extends Component<IPageProps, IPa
         })
     }
 
+    onSelectedImage(images: string[]) {
+        if (this.view) {
+            for (let image of images) {
+                this.view.selection.insertImage(ImageSourceUtil.getUploadedImageSrc(image));
+            }
+        }
+    }
+
+    onHideGalleryModal() {
+        this.setState({
+            isGalleryShow: false
+        })
+    }
+
     render() {
         return this.state.isLoading ? <Spinner animation="border" /> : (
             <div id={`themeRichTextBox_${String.createId()}`}>
                 <ComponentThemeChooseImage
                     {...this.props}
-                    isShow={this.state.isGalleryShow}
-                    onHide={() => this.setState({ isGalleryShow: false })}
-                    onSelected={images => {
-                        if (this.view) {
-                            for (let image of images) {
-                                this.view.selection.insertImage(ImageSourceUtil.getUploadedImageSrc(image));
-                            }
-                        }
-                    }}
+                    onSelected={images => this.onSelectedImage(images)}
                     isMulti={true}
+                    isShow={this.state.isGalleryShow}
+                    onHideModal={() => this.onHideGalleryModal()}
                 />
                 <React.Fragment>
                     {

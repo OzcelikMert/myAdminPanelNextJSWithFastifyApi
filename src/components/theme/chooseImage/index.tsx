@@ -1,36 +1,109 @@
 import React, {Component} from "react";
 import {IPagePropCommon} from "types/pageProps";
 import ComponentThemeChooseImageGallery from "./gallery";
+import Image from "next/image";
+import {ImageSourceUtil} from "@utils/imageSource.util";
 
-type IPageState = {};
+type IPageState = {
+    isShowModal: boolean
+};
 
 type IPageProps = {
-    isShow: boolean
+    isShow?: boolean
+    onHideModal?: () => void
     onSelected: (images: string[]) => void
     isMulti?: boolean
-    onHide: () => void
     selectedImages?: string[]
+    isShowReviewImage?: boolean
+    reviewImage?: string
+    reviewImageClassName?: string
+    reviewImageWidth?: number
+    reviewImageHeight?: number
+    showModalButtonText?: string | JSX.Element
+    showModalButtonOnClick?: () => void
 } & IPagePropCommon;
 
 class ComponentThemeChooseImage extends Component<IPageProps, IPageState> {
     constructor(props: IPageProps) {
         super(props);
-        this.state = {}
+        this.state = {
+            isShowModal: false
+        }
     }
 
     onSelected(images: string[]) {
         this.props.onSelected(images);
-        this.props.onHide();
+        this.onHide();
+    }
+
+    onClickClear() {
+        this.props.onSelected([]);
+    }
+
+    onHide() {
+        this.setState({
+            isShowModal: false
+        }, () => {
+            if(this.props.onHideModal){
+                this.props.onHideModal();
+            }
+        })
+        let $html = document.querySelector("html");
+        if($html){
+            $html.style.overflow = "unset";
+        }
+    }
+
+    onClickShow() {
+        this.setState({
+            isShowModal: true
+        }, () => {
+            if(this.props.showModalButtonOnClick){
+                this.props.showModalButtonOnClick();
+            }
+        })
+        let $html = document.querySelector("html");
+        if($html){
+            $html.style.overflow = "hidden";
+        }
     }
 
     render() {
         return (
-            <ComponentThemeChooseImageGallery
-                {...this.props}
-                isShow={this.props.isShow}
-                onSubmit={images => this.onSelected(images)}
-                onClose={() => this.props.onHide()}
-            />
+            <div className="choose-images d-flex flex-row align-items-center">
+                <ComponentThemeChooseImageGallery
+                    {...this.props}
+                    isShow={typeof this.props.isShow != "undefined" ? this.props.isShow : this.state.isShowModal}
+                    onSubmit={images => this.onSelected(images)}
+                    onClose={() => this.onHide()}
+                />
+                {
+                    this.props.isShowReviewImage
+                        ? <Image
+                            src={ImageSourceUtil.getUploadedImageSrc(this.props.reviewImage)}
+                            alt="Review Image"
+                            className={`review-img img-fluid ${this.props.reviewImageClassName}`}
+                            width={this.props.reviewImageWidth ?? 100}
+                            height={this.props.reviewImageHeight ?? 100}
+                        /> : null
+                }
+                <div className="buttons">
+                    <button type="button" className="btn btn-gradient-warning btn-xs ms-2" onClick={() => this.onClickShow()}>
+                        {
+                            this.props.showModalButtonText ?? <i className="fa fa-pencil-square-o"></i>
+                        }
+                    </button>
+                    {
+                        this.props.selectedImages && this.props.selectedImages.length > 0
+                            ? <button type="button" className="btn btn-gradient-danger btn-xs ms-2" onClick={() => this.onClickClear()}>
+                                {
+                                    this.props.showModalButtonText ?? <i className="fa fa-remove"></i>
+                                }
+                            </button> : null
+                    }
+
+                </div>
+            </div>
         )
     }
 }

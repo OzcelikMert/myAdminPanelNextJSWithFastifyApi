@@ -26,7 +26,6 @@ type IPageState = {
     isSubmitting: boolean
     mainTitle: string
     formData: IPostTermUpdateWithIdParamService,
-    isSelectionImage: boolean
 };
 
 type IPageProps = {
@@ -63,8 +62,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                     title: "",
                     url: "",
                 }
-            },
-            isSelectionImage: false
+            }
         }
     }
 
@@ -279,20 +277,18 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
         return (
             <div className="row">
                 <div className="col-md-7 mb-3">
-                    <Image
-                        src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.contents.image)}
-                        alt="Empty Image"
-                        className="post-image img-fluid"
-                        width={100}
-                        height={100}
+                    <ComponentThemeChooseImage
+                        {...this.props}
+                        onSelected={images => this.setState((state: IPageState) => {
+                            state.formData.contents.image = images[0];
+                            return state
+                        })}
+                        isMulti={false}
+                        selectedImages={(this.state.formData.contents.image) ? [this.state.formData.contents.image] : undefined}
+                        isShowReviewImage={true}
+                        reviewImage={this.state.formData.contents.image}
+                        reviewImageClassName={"post-image"}
                     />
-                    <button
-                        type="button"
-                        className="btn btn-gradient-warning btn-xs ms-1"
-                        onClick={() => {
-                            this.setState({isSelectionImage: true})
-                        }}
-                    ><i className="fa fa-pencil-square-o"></i></button>
                 </div>
                 <div className="col-md-7 mb-3">
                     <ComponentFormType
@@ -337,16 +333,6 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
     render() {
         return this.props.getStateApp.isPageLoading ? null : (
             <div className="page-post-term">
-                <ComponentThemeChooseImage
-                    {...this.props}
-                    isShow={this.state.isSelectionImage}
-                    onHide={() => this.setState({isSelectionImage: false})}
-                    onSelected={images => this.setState((state: IPageState) => {
-                        state.formData.contents.image = images[0];
-                        return state
-                    })}
-                    isMulti={false}
-                />
                 <div className="row mb-3">
                     <div className="col-md-3">
                         <div className="row">

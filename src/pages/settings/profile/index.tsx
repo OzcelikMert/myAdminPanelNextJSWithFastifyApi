@@ -23,7 +23,6 @@ import ComponentSpinnerDonut from "@components/elements/spinners/donut";
 type IPageState = {
     isSubmitting: boolean
     isImageChanging: boolean
-    isSelectionImage: boolean
     user?: IUserGetResultService
     formData: IUserUpdateProfileParamService & IUserUpdateProfileImageParamService
 };
@@ -38,7 +37,6 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
         this.state = {
             isSubmitting: false,
             isImageChanging: false,
-            isSelectionImage: false,
             formData: {
                 image: "",
                 name: "",
@@ -234,22 +232,16 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                         {
                             this.state.isImageChanging
                                 ? <ComponentSpinnerDonut customClass="profile-image-spinner"/>
-                                :
-                                <Image
-                                    className="rounded-circle"
-                                    width={150}
-                                    height={150}
-                                    src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.image)}
-                                    alt={this.props.getStateApp.sessionAuth!.user.name}
+                                : <ComponentThemeChooseImage
+                                    {...this.props}
+                                    onSelected={images => this.onChangeImage(images[0])}
+                                    isMulti={false}
+                                    isShowReviewImage={true}
+                                    reviewImage={this.state.formData.image}
+                                    reviewImageClassName={"post-image"}
                                 />
 
                         }
-                        <button
-                            className="btn btn-gradient-dark w-25 mt-3"
-                            onClick={() => this.setState({isSelectionImage: true})}
-                        >
-                            <i className="fa fa-pencil-square-o"></i>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -337,13 +329,6 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
     render() {
         return this.props.getStateApp.isPageLoading ? null : (
             <div className="page-settings page-profile">
-                <ComponentThemeChooseImage
-                    {...this.props}
-                    isShow={this.state.isSelectionImage}
-                    onHide={() => this.setState({isSelectionImage: false})}
-                    onSelected={images => this.onChangeImage(images[0])}
-                    isMulti={false}
-                />
                 <div className="row">
                     <div className="col-md-12">
                         <div className="row">

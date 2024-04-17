@@ -28,9 +28,6 @@ type IPageState = {
     formData: ISettingUpdateGeneralParamService & { panelLangId: string },
     mainTabActiveKey: string
     isServerInfoLoading: boolean
-    isLogoSelection: boolean
-    isLogoSecondSelection: boolean
-    isIconSelection: boolean
 }
 
 type IPageProps = {} & IPagePropCommon;
@@ -41,9 +38,6 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
     constructor(props: IPageProps) {
         super(props);
         this.state = {
-            isIconSelection: false,
-            isLogoSecondSelection: false,
-            isLogoSelection: false,
             isServerInfoLoading: true,
             panelLanguages: [],
             isSubmitting: false,
@@ -224,84 +218,45 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
                     <ComponentFieldSet legend={this.props.t("logo")}>
                         <ComponentThemeChooseImage
                             {...this.props}
-                            isShow={this.state.isLogoSelection}
-                            onHide={() => this.setState({isLogoSelection: false})}
                             onSelected={images => this.setState((state: IPageState) => {
                                 state.formData.logo = images[0];
                                 return state;
                             })}
                             isMulti={false}
+                            isShowReviewImage={true}
+                            reviewImage={this.state.formData.logo}
+                            reviewImageClassName={"post-image"}
                         />
-                        <div>
-                            <Image
-                                src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.logo)}
-                                alt="Empty Image"
-                                className="post-image img-fluid"
-                                width={100}
-                                height={100}
-                            />
-                            <button
-                                type="button"
-                                className="btn btn-gradient-warning btn-xs ms-1"
-                                onClick={() => this.setState({isLogoSelection: true})}
-                            ><i className="fa fa-pencil-square-o"></i></button>
-                        </div>
                     </ComponentFieldSet>
                 </div>
                 <div className="col-md-7 mb-3">
                     <ComponentFieldSet legend={this.props.t("logo") + " - 2"}>
                         <ComponentThemeChooseImage
                             {...this.props}
-                            isShow={this.state.isLogoSecondSelection}
-                            onHide={() => this.setState({isLogoSecondSelection: false})}
                             onSelected={images => this.setState((state: IPageState) => {
                                 state.formData.logoTwo = images[0];
                                 return state;
                             })}
                             isMulti={false}
+                            isShowReviewImage={true}
+                            reviewImage={this.state.formData.logoTwo}
+                            reviewImageClassName={"post-image"}
                         />
-                        <div>
-                            <Image
-                                src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.logoTwo)}
-                                alt="Empty Image"
-                                className="post-image img-fluid"
-                                width={100}
-                                height={100}
-                            />
-                            <button
-                                type="button"
-                                className="btn btn-gradient-warning btn-xs ms-1"
-                                onClick={() => this.setState({isLogoSecondSelection: true})}
-                            ><i className="fa fa-pencil-square-o"></i></button>
-                        </div>
                     </ComponentFieldSet>
                 </div>
                 <div className="col-md-7 mb-3">
                     <ComponentFieldSet legend={this.props.t("icon")}>
                         <ComponentThemeChooseImage
                             {...this.props}
-                            isShow={this.state.isIconSelection}
-                            onHide={() => this.setState({isIconSelection: false})}
                             onSelected={images => this.setState((state: IPageState) => {
                                 state.formData.icon = images[0];
                                 return state;
                             })}
                             isMulti={false}
+                            isShowReviewImage={true}
+                            reviewImage={this.state.formData.icon}
+                            reviewImageClassName={"post-image"}
                         />
-                        <div>
-                            <Image
-                                src={ImageSourceUtil.getUploadedImageSrc(this.state.formData.icon)}
-                                alt="Empty Image"
-                                className="post-image img-fluid"
-                                width={100}
-                                height={100}
-                            />
-                            <button
-                                type="button"
-                                className="btn btn-gradient-warning btn-xs ms-1"
-                                onClick={() => this.setState({isIconSelection: true})}
-                            ><i className="fa fa-pencil-square-o"></i></button>
-                        </div>
                     </ComponentFieldSet>
                 </div>
                 <div className="col-md-7 mb-3">
