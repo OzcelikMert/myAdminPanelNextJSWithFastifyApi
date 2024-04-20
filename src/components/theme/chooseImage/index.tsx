@@ -21,6 +21,7 @@ type IPageProps = {
     reviewImageHeight?: number
     showModalButtonText?: string | JSX.Element
     showModalButtonOnClick?: () => void
+    hideShowModalButton?: boolean
 } & IPagePropCommon;
 
 class ComponentThemeChooseImage extends Component<IPageProps, IPageState> {
@@ -88,11 +89,14 @@ class ComponentThemeChooseImage extends Component<IPageProps, IPageState> {
                         /> : null
                 }
                 <div className="buttons">
-                    <button type="button" className="btn btn-gradient-warning btn-xs ms-2" onClick={() => this.onClickShow()}>
-                        {
-                            this.props.showModalButtonText ?? <i className="fa fa-pencil-square-o"></i>
-                        }
-                    </button>
+                    {
+                        !this.props.hideShowModalButton
+                            ? <button type="button" className="btn btn-gradient-warning btn-xs ms-2" onClick={() => this.onClickShow()}>
+                                {
+                                    this.props.showModalButtonText ?? <i className="fa fa-pencil-square-o"></i>
+                                }
+                            </button> : null
+                    }
                     {
                         this.props.selectedImages && this.props.selectedImages.length > 0
                             ? <button type="button" className="btn btn-gradient-danger btn-xs ms-2" onClick={() => this.onClickClear()}>

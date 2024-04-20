@@ -104,6 +104,7 @@ export default class ComponentThemeRichTextBox extends Component<IPageProps, IPa
                     isMulti={true}
                     isShow={this.state.isGalleryShow}
                     onHideModal={() => this.onHideGalleryModal()}
+                    hideShowModalButton={true}
                 />
                 <React.Fragment>
                     {
