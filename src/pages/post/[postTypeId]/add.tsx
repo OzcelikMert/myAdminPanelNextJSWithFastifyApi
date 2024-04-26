@@ -436,15 +436,20 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
         let isUserSuperAdmin = PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin);
         return (
             <div className="row">
-                <div className="col-md-7 mb-3">
-                    <ComponentFormSelect
-                        title={this.props.t("status")}
-                        name="formData.statusId"
-                        options={this.state.status}
-                        value={this.state.status?.findSingle("value", this.state.formData.statusId)}
-                        onChange={(item: any, e) => HandleFormLibrary.onChangeSelect(e.name, item.value, this)}
-                    />
-                </div>
+                {
+                    !this.state.formData._id ||
+                    PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.Editor) ||
+                    this.props.getStateApp.sessionAuth!.user.userId == this.state.formData.authorId?._id
+                        ? <div className="col-md-7 mb-3">
+                            <ComponentFormSelect
+                                title={this.props.t("status")}
+                                name="formData.statusId"
+                                options={this.state.status}
+                                value={this.state.status?.findSingle("value", this.state.formData.statusId)}
+                                onChange={(item: any, e) => HandleFormLibrary.onChangeSelect(e.name, item.value, this)}
+                            />
+                        </div> : null
+                }
                 {
                     this.state.formData.statusId == StatusId.Pending
                         ? <div className="col-md-7 mb-3">
