@@ -7,7 +7,6 @@ import {HandleFormLibrary} from "@library/react/handles/form";
 import ComponentThemeChooseImage from "@components/theme/chooseImage";
 import {PostTermService} from "@services/postTerm.service";
 import {IPostTermUpdateWithIdParamService} from "types/services/postTerm.service";
-import Image from "next/image"
 import {IThemeFormSelectValue} from "@components/elements/form/input/select";
 import {PostTypeId} from "@constants/postTypes";
 import {PostTermTypeId} from "@constants/postTermTypes";
@@ -15,7 +14,6 @@ import {PermissionUtil, PostPermissionMethod} from "@utils/permission.util";
 import {PostUtil} from "@utils/post.util";
 import {StatusId} from "@constants/status";
 import {ComponentUtil} from "@utils/component.util";
-import {ImageSourceUtil} from "@utils/imageSource.util";
 import {RouteUtil} from "@utils/route.util";
 import ComponentToast from "@components/elements/toast";
 
@@ -273,6 +271,21 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
         );
     }
 
+    get getSelectMainInputTitle() {
+        let title = this.props.t("main");
+
+        switch (this.state.formData.typeId) {
+            case PostTermTypeId.Category:
+                title = `${this.props.t("main")} ${this.props.t("category")}`;
+                break;
+            case PostTermTypeId.Variations:
+                title = `${this.props.t("attribute")}`;
+                break;
+        }
+
+        return title;
+    }
+
     TabGeneral = () => {
         return (
             <div className="row">
@@ -310,13 +323,10 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                     />
                 </div>
                 {
-                    [PostTermTypeId.Category, PostTermTypeId.Variations, PostTermTypeId.Attributes].includes(Number(this.state.formData.typeId))
+                    [PostTermTypeId.Category, PostTermTypeId.Variations].includes(Number(this.state.formData.typeId))
                         ? <div className="col-md-7 mb-3">
                             <ComponentFormSelect
-                                title={`
-                                    ${this.props.t("main")} 
-                                    ${this.props.t((this.state.formData.typeId == PostTermTypeId.Category) ? "category" : "tag")}
-                                `}
+                                title={this.getSelectMainInputTitle}
                                 name="formData.parentId"
                                 placeholder={this.props.t("chooseMainCategory")}
                                 options={this.state.items}

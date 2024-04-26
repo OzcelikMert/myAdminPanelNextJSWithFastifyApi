@@ -273,7 +273,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                         })}
                         isMulti={true}
                         selectedImages={this.props.page.state.formData.eCommerce?.images}
-                        showModalButtonText={this.props.page.props.t("gallery")}
+                        showModalButtonText={this.props.page.props.t("selectImages")}
                     />
                 </div>
                 <div className="col-md-12 mb-3">
@@ -283,10 +283,12 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                 <div className="col-md-3 mb-3">
                                     <Image
                                         src={ImageSourceUtil.getUploadedImageSrc(image)}
-                                        alt="Empty Image"
+                                        alt={image}
                                         className="post-image img-fluid"
-                                        width={100}
-                                        height={100}
+                                        layout='responsive'
+                                        objectFit='contain'
+                                        width={0}
+                                        height={0}
                                     />
                                 </div>
                             ))

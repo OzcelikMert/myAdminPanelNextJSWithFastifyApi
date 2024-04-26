@@ -84,8 +84,8 @@ class ComponentThemeChooseImage extends Component<IPageProps, IPageState> {
                             src={ImageSourceUtil.getUploadedImageSrc(this.props.reviewImage)}
                             alt="Review Image"
                             className={`review-img img-fluid ${this.props.reviewImageClassName}`}
-                            width={this.props.reviewImageWidth ?? 100}
-                            height={this.props.reviewImageHeight ?? 100}
+                            width={this.props.reviewImageWidth ?? 150}
+                            height={this.props.reviewImageHeight ?? 150}
                         /> : null
                 }
                 <div className="buttons">
@@ -93,16 +93,14 @@ class ComponentThemeChooseImage extends Component<IPageProps, IPageState> {
                         !this.props.hideShowModalButton
                             ? <button type="button" className="btn btn-gradient-warning btn-xs ms-2" onClick={() => this.onClickShow()}>
                                 {
-                                    this.props.showModalButtonText ?? <i className="fa fa-pencil-square-o"></i>
+                                    this.props.showModalButtonText ? <i>{this.props.showModalButtonText }</i> : <i className="fa fa-pencil-square-o"></i>
                                 }
                             </button> : null
                     }
                     {
                         this.props.selectedImages && this.props.selectedImages.length > 0
                             ? <button type="button" className="btn btn-gradient-danger btn-xs ms-2" onClick={() => this.onClickClear()}>
-                                {
-                                    this.props.showModalButtonText ?? <i className="fa fa-remove"></i>
-                                }
+                                <i className="fa fa-remove"></i>
                             </button> : null
                     }
 

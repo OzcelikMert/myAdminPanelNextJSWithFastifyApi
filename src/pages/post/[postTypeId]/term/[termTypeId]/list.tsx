@@ -285,11 +285,14 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                 ),
                 width: "250px",
             },
-            {
-                name: this.props.t("main"),
-                selector: row => row.parentId ? row.parentId.contents?.title || this.props.t("[noLangAdd]") : this.props.t("notSelected"),
-                sortable: true,
-            },
+            (
+                [PostTermTypeId.Category, PostTermTypeId.Variations].includes(this.state.typeId) ?
+                    {
+                        name: this.props.t("main"),
+                        selector: row => row.parentId ? row.parentId.contents?.title || this.props.t("[noLangAdd]") : this.props.t("notSelected"),
+                        sortable: true,
+                    } : {}
+            ),
             (
                 [PostTermTypeId.Category].includes(this.state.typeId) ?
                     {

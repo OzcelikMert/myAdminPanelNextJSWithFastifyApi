@@ -1,4 +1,5 @@
 export const languageKeys = [
+    "selectImages",
     "noIndex",
     "blog",
     "portfolio",
