@@ -16,6 +16,7 @@ type IPageState = {
     isSubmitting: boolean
     formData: ISettingUpdateSocialMediaParamService,
     selectedData?: ISettingSocialMediaModel
+    items?: ISettingSocialMediaModel[]
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -56,6 +57,7 @@ export default class PageSettingsSocialMedia extends Component<IPageProps, IPage
         if (serviceResult.status && serviceResult.data) {
             let setting = serviceResult.data;
             this.setState((state: IPageState) => {
+                state.items = setting.socialMedia;
                 state.formData = {
                     socialMedia: setting.socialMedia || []
                 }

@@ -17,7 +17,6 @@ class ComponentFormSelect extends Component<IPageProps, IPageState> {
                 <span className="label">{this.props.title}</span>
                 <div className="field">
                     <Select
-
                         className="custom-select"
                         classNamePrefix="custom-select"
                         {...this.props}

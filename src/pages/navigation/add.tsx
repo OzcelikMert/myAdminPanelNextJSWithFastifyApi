@@ -4,7 +4,7 @@ import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentForm
 import {IPagePropCommon} from "types/pageProps";
 import {VariableLibrary} from "@library/variable";
 import {HandleFormLibrary} from "@library/react/handles/form";
-import {INavigationUpdateWithIdParamService} from "types/services/navigation.service";
+import {INavigationGetResultService, INavigationUpdateWithIdParamService} from "types/services/navigation.service";
 import {NavigationService} from "@services/navigation.service";
 import {IThemeFormSelectValue} from "@components/elements/form/input/select";
 import {PermissionUtil} from "@utils/permission.util";
@@ -22,6 +22,7 @@ type IPageState = {
     isSubmitting: boolean
     mainTitle: string
     formData: INavigationUpdateWithIdParamService,
+    item?: INavigationGetResultService
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -137,6 +138,7 @@ export default class PageNavigationAdd extends Component<IPageProps, IPageState>
 
             await new Promise(resolve => {
                 this.setState((state: IPageState) => {
+                    state.item = item;
                     state.formData = {
                         ...state.formData,
                         ...item,

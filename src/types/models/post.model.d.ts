@@ -32,7 +32,7 @@ export interface IPostContentModel {
     langId: string
     image?: string
     icon?: string
-    title?: string,
+    title: string,
     content?: string,
     shortContent?: string,
     url?: string,
@@ -95,25 +95,20 @@ export interface IPostECommerceVariationModel<T = string> {
     _id?: string
     rank: number
     selectedVariations: IPostECommerceVariationSelectedModel<T>[]
-    images: string[]
-    contents?: IPostECommerceVariationContentModel
-    inventory: IPostECommerceInventoryModel
-    shipping: IPostECommerceShippingModel
-    pricing: IPostECommercePricingModel
+    itemId: IPostECommerceVariationItemModel
     isWarningForIsThereOther?: boolean
     isDefault?: boolean
+}
+
+export interface IPostECommerceVariationItemModel {
+    _id: string
+    statusId: StatusId,
+    contents: Omit<IPostContentModel, "buttons"|"icon">
+    eCommerce: Omit<IPostECommerceModel, "variationDefaults"|"variations"|"typeId"|"attributes">
 }
 
 export interface IPostECommerceVariationSelectedModel<T = string> {
     _id?: string
     attributeId: T
     variationId: T
-}
-
-export interface IPostECommerceVariationContentModel {
-    _id?: string
-    langId: string
-    image?: string
-    content?: string,
-    shortContent?: string,
 }

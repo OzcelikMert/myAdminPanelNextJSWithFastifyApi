@@ -23,7 +23,7 @@ import ComponentSpinnerDonut from "@components/elements/spinners/donut";
 type IPageState = {
     isSubmitting: boolean
     isImageChanging: boolean
-    user?: IUserGetResultService
+    item?: IUserGetResultService
     formData: IUserUpdateProfileParamService & IUserUpdateProfileImageParamService
 };
 
@@ -71,7 +71,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
             const user = serviceResult.data;
             await new Promise(resolve => {
                 this.setState((state: IPageState) => {
-                    state.user = user;
+                    state.item = user;
                     state.formData = {
                         image: user.image,
                         name: user.name,
@@ -153,24 +153,24 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
                     <div className="row">
                         <div className="col-sm-12 pb-2 pt-2">
                             <span className="mb-2 fw-bold">{this.props.t("email")}:
-                                <h6 className="d-inline-block ms-2">{this.state.user?.email}</h6>
+                                <h6 className="d-inline-block ms-2">{this.state.item?.email}</h6>
                             </span>
                         </div>
                         <div className="col-sm-12 pb-2 pt-2">
                             <span className="mb-2 fw-bold">{this.props.t("role")}:
-                                <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={this.state.user!.roleId}
+                                <ComponentThemeBadgeUserRole t={this.props.t} userRoleId={this.state.item!.roleId}
                                                              className="ms-2"/>
                             </span>
                         </div>
                         <div className="col-sm-12 pb-2 pt-2">
                             <span className="mb-2 fw-bold">{this.props.t("status")}:
-                                <ComponentThemeBadgeStatus t={this.props.t} statusId={this.state.user!.statusId}
+                                <ComponentThemeBadgeStatus t={this.props.t} statusId={this.state.item!.statusId}
                                                            className="ms-2"/>
                             </span>
                         </div>
                         <div className="col-sm-12 pb-2 pt-2">
                             <span className="mb-2 fw-bold">{this.props.t("createdDate")}:
-                                <h6 className="d-inline-block ms-2">{new Date(this.state.user?.createdAt || "").toLocaleString()}</h6>
+                                <h6 className="d-inline-block ms-2">{new Date(this.state.item?.createdAt || "").toLocaleString()}</h6>
                             </span>
                         </div>
                     </div>
@@ -180,7 +180,7 @@ export default class PageSettingsProfile extends Component<IPageProps, IPageStat
     )
 
     Permissions = () => {
-        let foundPermissions = permissions.findMulti("id", this.state.user!.permissions);
+        let foundPermissions = permissions.findMulti("id", this.state.item!.permissions);
         let foundPermissionGroups = permissionGroups.findMulti("id", foundPermissions.map(permission => permission.groupId));
         foundPermissionGroups = foundPermissionGroups.filter((group, index) => foundPermissionGroups.indexOfKey("id", group.id) === index);
 

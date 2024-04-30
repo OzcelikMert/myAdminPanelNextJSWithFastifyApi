@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 type IPageState = {
     isSubmitting: boolean
     formData: ISettingUpdateContactFormParamService
+    items?: ISettingContactFormModel[]
     selectedData?: ISettingContactFormModel
 };
 
@@ -56,6 +57,7 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
         if (serviceResult.status && serviceResult.data) {
             let setting = serviceResult.data;
             this.setState((state: IPageState) => {
+                state.items = setting.contactForms;
                 state.formData = {
                     contactForms: setting.contactForms ?? []
                 }

@@ -2,7 +2,7 @@ import React, {Component, FormEvent} from 'react'
 import {Tab, Tabs} from "react-bootstrap";
 import Swal from "sweetalert2";
 import {IThemeFormSelectValue} from "@components/elements/form/input/select";
-import {IComponentUpdateWithIdParamService} from "types/services/component.service";
+import {IComponentGetResultService, IComponentUpdateWithIdParamService} from "types/services/component.service";
 import {IPagePropCommon} from "types/pageProps";
 import {IComponentElementModel} from "types/models/component.model";
 import {PermissionUtil} from "@utils/permission.util";
@@ -26,6 +26,7 @@ type IPageState = {
     isSubmitting: boolean
     mainTitle: string,
     formData: IComponentUpdateWithIdParamService,
+    item?: IComponentGetResultService
     selectedData?: IComponentElementModel
 };
 
@@ -122,9 +123,9 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
         }, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             const item = serviceResult.data;
-
             await new Promise(resolve => {
                 this.setState((state: IPageState) => {
+                    state.item = item;
                     state.formData = {
                         ...state.formData,
                         ...item,

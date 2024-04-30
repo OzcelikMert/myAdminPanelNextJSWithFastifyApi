@@ -13,6 +13,7 @@ import dynamic from "next/dynamic";
 import ComponentToolTip from "@components/elements/tooltip";
 import Swal from "sweetalert2";
 import {ImageSourceUtil} from "@utils/imageSource.util";
+import {StatusId} from "@constants/status";
 
 const ComponentThemeRichTextBox = dynamic(() => import("@components/theme/richTextBox"), {
     ssr: false,
@@ -21,7 +22,10 @@ const ComponentThemeRichTextBox = dynamic(() => import("@components/theme/richTe
 
 type IPageState = {
     mainTabActiveKey: string
-} & { [key: string]: any };
+    variationTabActiveKey: string
+    attributeAccordionToggleKey: string
+    variationAccordionToggleKey: string
+};
 
 type IPageProps = {
     page: PagePostAdd
@@ -31,7 +35,10 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
     constructor(props: IPageProps) {
         super(props);
         this.state = {
-            mainTabActiveKey: "options"
+            mainTabActiveKey: "options",
+            variationTabActiveKey: "general",
+            attributeAccordionToggleKey: "",
+            variationAccordionToggleKey: ""
         }
     }
 
@@ -87,17 +94,21 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
     }
 
     onAddNewAttribute() {
+        let _id = String.createId();
         this.props.page.setState((state: PostPageState) => {
             if (typeof state.formData.eCommerce !== "undefined") {
                 if (typeof state.formData.eCommerce.attributes === "undefined") state.formData.eCommerce.attributes = [];
                 state.formData.eCommerce.attributes.push({
-                    _id: String.createId(),
+                    _id: _id,
                     attributeId: "",
                     typeId: AttributeTypeId.Text,
                     variations: []
                 })
             }
             return state;
+        })
+        this.setState({
+            attributeAccordionToggleKey: _id
         })
     }
 
@@ -117,39 +128,59 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
         })
     }
 
+    onChangeAttribute(attribute: IPostECommerceAttributeModel, attributeId: string) {
+        if(attribute.attributeId == attributeId) return false;
+        this.props.page.setState((state: PostPageState) => {
+            attribute.attributeId = attributeId;
+            attribute.variations = [];
+            return state;
+        })
+    }
+
     onAddNewVariation() {
+        let _id = String.createId();
         this.props.page.setState((state: PostPageState) => {
             if (typeof state.formData.eCommerce !== "undefined") {
                 if (typeof state.formData.eCommerce.variations === "undefined") state.formData.eCommerce.variations = [];
                 state.formData.eCommerce.variations.push({
-                    _id: String.createId(),
+                    _id: _id,
                     selectedVariations: [],
-                    images: [],
-                    rank: 0,
-                    pricing: {
-                        taxIncluded: 0,
-                        compared: 0,
-                        shipping: 0,
-                        taxExcluded: 0,
-                        taxRate: 0
-                    },
-                    shipping: {
-                        width: "",
-                        height: "",
-                        depth: "",
-                        weight: ""
-                    },
-                    inventory: {
-                        sku: "",
-                        quantity: 0,
-                        isManageStock: false
-                    },
-                    contents: {
-                        langId: state.formData.contents.langId,
+                    rank: state.formData.eCommerce.variations.length ?? 0,
+                    itemId: {
+                        _id: String.createId(),
+                        statusId: StatusId.Active,
+                        contents: {
+                            title: "",
+                            langId: state.formData.contents.langId,
+                        },
+                        eCommerce: {
+                            images: [],
+                            pricing: {
+                                taxIncluded: 0,
+                                compared: 0,
+                                shipping: 0,
+                                taxExcluded: 0,
+                                taxRate: 0
+                            },
+                            shipping: {
+                                width: "",
+                                height: "",
+                                depth: "",
+                                weight: ""
+                            },
+                            inventory: {
+                                sku: "",
+                                quantity: 0,
+                                isManageStock: false
+                            },
+                        }
                     }
                 })
             }
             return state;
+        })
+        this.setState({
+            variationAccordionToggleKey: _id
         })
     }
 
@@ -173,7 +204,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
         }
     }
 
-    onChangeVariationAttributeChild(data: IPostECommerceVariationModel<string>, attributeId: string, value: string) {
+    onChangeVariationAttribute(data: IPostECommerceVariationModel<string>, attributeId: string, value: string) {
         this.props.page.setState((state: PostPageState) => {
             if (typeof state.formData.eCommerce !== "undefined") {
                 let findIndex = data.selectedVariations.indexOfKey("attributeId", attributeId);
@@ -189,6 +220,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
             return state;
         }, () => {
             this.findSameVariation();
+            this.findDefaultVariation();
         })
     }
 
@@ -210,6 +242,18 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
         }, () => {
             this.findDefaultVariation();
         })
+    }
+
+    onClickAttributeAccordionToggle(_id: string) {
+        this.setState({
+            attributeAccordionToggleKey: _id == this.state.attributeAccordionToggleKey ? "" : _id
+        });
+    }
+
+    onClickVariationAccordionToggle(_id: string) {
+        this.setState({
+            variationAccordionToggleKey: _id == this.state.variationAccordionToggleKey ? "" : _id
+        });
     }
 
     TabPricing = () => {
@@ -394,7 +438,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
     }
 
     TabAttributes = () => {
-        const Attribute = (attribute: IPostECommerceAttributeModel<string>, index: number) => {
+        const Attribute = (attribute: IPostECommerceAttributeModel, index: number) => {
             return (
                 <Card>
                     <Card.Header>
@@ -406,7 +450,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                             title={this.props.page.props.t("attribute")}
                                             options={this.props.page.state.attributes}
                                             value={this.props.page.state.attributes.findSingle("value", attribute.attributeId)}
-                                            onChange={(item: any, e) => this.onChange(attribute, "attributeId", item.value)}
+                                            onChange={(item: any, e) => this.onChangeAttribute(attribute, item.value)}
                                         />
                                     </div>
                                     <div className="col-md-6 mt-2 mt-md-0">
@@ -427,8 +471,9 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                             <i className="mdi mdi-trash-can"></i></button>
                                     </div>
                                     <div className="col-md-6 text-center pt-1 mt-5 m-md-auto">
-                                        <ComponentAccordionToggle eventKey={attribute._id || ""}>
-                                            <div className="fs-4 cursor-pointer"><i className="mdi mdi-menu"></i>
+                                        <ComponentAccordionToggle eventKey={attribute._id || ""} onClick={() => this.onClickAttributeAccordionToggle(attribute._id ?? "")}>
+                                            <div className="fs-4 cursor-pointer">
+                                                <i className={`mdi mdi-chevron-${this.state.attributeAccordionToggleKey == attribute._id ? "up" : "down"}`}></i>
                                             </div>
                                         </ComponentAccordionToggle>
                                     </div>
@@ -436,7 +481,7 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                             </div>
                         </div>
                     </Card.Header>
-                    <Accordion.Collapse eventKey={attribute._id || ""}>
+                    <Accordion.Collapse eventKey={attribute._id || ""} in={this.state.attributeAccordionToggleKey == attribute._id}>
                         <Card.Body>
                             <div className="row">
                                 <div className="col-md-12">
@@ -477,21 +522,26 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
     }
 
     TabVariations = () => {
-        const Variation = (variation: IPostECommerceVariationModel<string>, index: number) => {
+        const Variation = (variation: IPostECommerceVariationModel, index: number) => {
             return (
-                <Card>
+                <Card key={variation._id ?? index}>
                     <Card.Header>
                         <div className="row">
                             <div className="col-9">
                                 <div className="row">
+                                    <div className="col-md-1 text-start pt-1 mt-5 m-md-auto">
+                                        <div className="fs-4 cursor-pointer">
+                                            <i className="mdi mdi-menu"></i>
+                                        </div>
+                                    </div>
                                     {
                                         this.props.page.state.formData.eCommerce?.attributes?.map(attribute => (
-                                            <div className="col-md-4 mt-3">
+                                            <div className="col-md mt-3">
                                                 <ComponentFormSelect
                                                     title={this.props.page.state.attributes.findSingle("value", attribute.attributeId)?.label}
                                                     options={this.props.page.state.variations.findMulti("value", attribute.variations)}
                                                     value={this.props.page.state.variations.findSingle("value", variation.selectedVariations.findSingle("attributeId", attribute.attributeId)?.variationId)}
-                                                    onChange={(item: any, e) => this.onChangeVariationAttributeChild(variation, attribute.attributeId, item.value)}
+                                                    onChange={(item: any, e) => this.onChangeVariationAttribute(variation, attribute.attributeId, item.value)}
                                                 />
                                             </div>
                                         ))
@@ -500,11 +550,11 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                             </div>
                             <div className="col-3 m-auto">
                                 <div className="row">
-                                    <div className="col-md text-center text-md-end">
+                                    <div className="col-md text-center text-md-end m-md-auto">
                                         {
                                             variation.isDefault
                                                 ? <ComponentToolTip message={this.props.page.props.t("default")}>
-                                                    <label className="badge badge-gradient-success pt-2 pb-2 ps-4 pe-4">
+                                                    <label className="badge badge-gradient-success px-4 py-2">
                                                         <i className="mdi mdi-check"></i>
                                                     </label>
                                                 </ComponentToolTip>
@@ -525,20 +575,21 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                             </div> : null
                                     }
                                     <div className="col-md text-center pt-1 mt-5 m-md-auto">
-                                        <ComponentAccordionToggle eventKey={variation._id || ""}>
-                                            <div className="fs-4 cursor-pointer"><i
-                                                className="mdi mdi-menu"></i></div>
+                                        <ComponentAccordionToggle eventKey={variation._id || ""} onClick={() => this.onClickVariationAccordionToggle(variation._id ?? "")}>
+                                            <div className="fs-4 cursor-pointer">
+                                                <i className={`mdi mdi-chevron-${this.state.variationAccordionToggleKey == variation._id ? "up" : "down"}`}></i>
+                                            </div>
                                         </ComponentAccordionToggle>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </Card.Header>
-                    <Accordion.Collapse eventKey={variation._id || ""}>
+                    <Accordion.Collapse eventKey={variation._id || ""} in={this.state.variationAccordionToggleKey == variation._id}>
                         <Card.Body>
                             <Tabs
-                                onSelect={(key: any) => this.onChange(this.props.page.state, `activeKey${variation._id}`, key)}
-                                activeKey={this.props.page.state[`activeKey${variation._id}`] || "general"}
+                                onSelect={(key: any) => this.setState({variationTabActiveKey: key})}
+                                activeKey={this.state.variationTabActiveKey}
                                 className="mb-5"
                                 transition={false}>
                                 <Tab eventKey="general" title={this.props.page.props.t("general")}>
@@ -547,25 +598,32 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                             <ComponentThemeChooseImage
                                                 {...this.props.page.props}
                                                 onSelected={images => this.props.page.setState((state: PostPageState) => {
-                                                    if (variation.contents) {
-                                                        variation.contents.image = images[0];
+                                                    if (variation.itemId.contents) {
+                                                        variation.itemId.contents.image = images[0];
                                                     }
-                                                    state[`selectImage${variation._id}`] = false;
                                                     return state;
                                                 })}
                                                 isMulti={false}
-                                                selectedImages={(variation.contents && variation.contents.image) ? [variation.contents.image] : undefined}
+                                                selectedImages={(variation.itemId.contents && variation.itemId.contents.image) ? [variation.itemId.contents.image] : undefined}
                                                 isShowReviewImage={true}
-                                                reviewImage={variation.contents?.image}
+                                                reviewImage={variation.itemId.contents?.image}
                                                 reviewImageClassName={"post-image"}
+                                            />
+                                        </div>
+                                        <div className="col-md-12 mb-3">
+                                            <ComponentFormType
+                                                title={this.props.page.props.t("title")}
+                                                type="text"
+                                                value={variation.itemId.contents.title}
+                                                onChange={e => this.onChange(variation.itemId.contents, "title", e.target.value)}
                                             />
                                         </div>
                                         <div className="col-md-12 mb-3">
                                             <ComponentFormType
                                                 title={this.props.page.props.t("shortContent").toCapitalizeCase()}
                                                 type="textarea"
-                                                value={variation.contents?.shortContent}
-                                                onChange={e => this.onChange(variation.contents, "shortContent", e.target.value)}
+                                                value={variation.itemId.contents?.shortContent}
+                                                onChange={e => this.onChange(variation.itemId.contents, "shortContent", e.target.value)}
                                             />
                                         </div>
                                     </div>
@@ -574,10 +632,10 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                     <div className="row mb-4">
                                         <div className="col-md-12 mb-3">
                                             {
-                                                (this.props.page.state[`activeKey${variation._id}`] === "content")
+                                                (this.state.variationTabActiveKey === "content")
                                                     ? <ComponentThemeRichTextBox
-                                                        value={variation.contents?.content || ""}
-                                                        onChange={newContent => this.onChange(variation.contents, "content", newContent)}
+                                                        value={variation.itemId.contents?.content || ""}
+                                                        onChange={newContent => this.onChange(variation.itemId.contents, "content", newContent)}
                                                         {...this.props.page.props}
                                                     />
                                                     : ""
@@ -591,18 +649,18 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                             <ComponentThemeChooseImage
                                                 {...this.props.page.props}
                                                 onSelected={images => this.props.page.setState((state: PostPageState) => {
-                                                    variation.images = images;
+                                                    variation.itemId.eCommerce.images = images;
                                                     return state
                                                 })}
                                                 isMulti={true}
-                                                selectedImages={variation.images}
+                                                selectedImages={variation.itemId.eCommerce.images}
                                                 showModalButtonText={this.props.page.props.t("gallery")}
                                             />
                                         </div>
                                         <div className="col-md-12 mb-3">
                                             <div className="row">
                                                 {
-                                                    variation.images.map(image => (
+                                                    variation.itemId.eCommerce.images.map(image => (
                                                         <div className="col-md-3 mb-3">
                                                             <Image
                                                                 src={ImageSourceUtil.getUploadedImageSrc(image)}
@@ -624,32 +682,32 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                             <ComponentFormType
                                                 title={this.props.page.props.t("taxIncludedPrice")}
                                                 type="number"
-                                                value={variation.pricing?.taxIncluded}
-                                                onChange={e => this.onChange(variation.pricing, "taxIncluded", Number(e.target.value) || 0)}
+                                                value={variation.itemId.eCommerce.pricing?.taxIncluded}
+                                                onChange={e => this.onChange(variation.itemId.eCommerce.pricing, "taxIncluded", Number(e.target.value) || 0)}
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
                                             <ComponentFormType
                                                 title={this.props.page.props.t("taxExcludedPrice")}
                                                 type="number"
-                                                value={variation.pricing?.taxExcluded}
-                                                onChange={e => this.onChange(variation.pricing, "taxExcluded", Number(e.target.value) || 0)}
+                                                value={variation.itemId.eCommerce.pricing?.taxExcluded}
+                                                onChange={e => this.onChange(variation.itemId.eCommerce.pricing, "taxExcluded", Number(e.target.value) || 0)}
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
                                             <ComponentFormType
                                                 title={this.props.page.props.t("taxRate")}
                                                 type="number"
-                                                value={variation.pricing?.taxRate}
-                                                onChange={e => this.onChange(variation.pricing, "taxRate", Number(e.target.value) || 0)}
+                                                value={variation.itemId.eCommerce.pricing?.taxRate}
+                                                onChange={e => this.onChange(variation.itemId.eCommerce.pricing, "taxRate", Number(e.target.value) || 0)}
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
                                             <ComponentFormType
                                                 title={this.props.page.props.t("comparedPrice")}
                                                 type="number"
-                                                value={variation.pricing?.compared}
-                                                onChange={e => this.onChange(variation.pricing, "compared", Number(e.target.value) || 0)}
+                                                value={variation.itemId.eCommerce.pricing?.compared}
+                                                onChange={e => this.onChange(variation.itemId.eCommerce.pricing, "compared", Number(e.target.value) || 0)}
                                             />
                                         </div>
                                     </div>
@@ -660,24 +718,24 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                             <ComponentFormType
                                                 title={this.props.page.props.t("sku")}
                                                 type="text"
-                                                value={variation.inventory?.sku}
-                                                onChange={e => this.onChange(variation.inventory, "sku", e.target.value)}
+                                                value={variation.itemId.eCommerce.inventory?.sku}
+                                                onChange={e => this.onChange(variation.itemId.eCommerce.inventory, "sku", e.target.value)}
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
                                             <ComponentFormType
-                                                disabled={!variation.inventory?.isManageStock || false}
+                                                disabled={!variation.itemId.eCommerce.inventory?.isManageStock || false}
                                                 title={this.props.page.props.t("quantity")}
                                                 type="number"
-                                                value={variation.inventory?.quantity}
-                                                onChange={e => this.onChange(variation.inventory, "quantity", e.target.value)}
+                                                value={variation.itemId.eCommerce.inventory?.quantity}
+                                                onChange={e => this.onChange(variation.itemId.eCommerce.inventory, "quantity", Number(e.target.value ?? 0))}
                                             />
                                         </div>
                                         <div className="col-md-7 mb-3">
                                             <ComponentFormCheckBox
                                                 title={this.props.page.props.t("isManageStock")}
-                                                checked={Boolean(variation.inventory?.isManageStock)}
-                                                onChange={e => this.onChange(variation.inventory, "isManageStock", e.target.checked)}
+                                                checked={Boolean(variation.itemId.eCommerce.inventory?.isManageStock)}
+                                                onChange={e => this.onChange(variation.itemId.eCommerce.inventory, "isManageStock", e.target.checked)}
                                             />
                                         </div>
                                     </div>
@@ -688,40 +746,40 @@ export default class ComponentPagePostAddECommerce extends Component<IPageProps,
                                             <ComponentFormType
                                                 title={this.props.page.props.t("width")}
                                                 type="text"
-                                                value={variation.shipping?.width}
-                                                onChange={e => this.onChange(variation.shipping, "width", e.target.value)}
+                                                value={variation.itemId.eCommerce.shipping?.width}
+                                                onChange={e => this.onChange(variation.itemId.eCommerce.shipping, "width", e.target.value)}
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
                                             <ComponentFormType
                                                 title={this.props.page.props.t("height")}
                                                 type="text"
-                                                value={variation.shipping?.height}
-                                                onChange={e => this.onChange(variation.shipping, "height", e.target.value)}
+                                                value={variation.itemId.eCommerce.shipping?.height}
+                                                onChange={e => this.onChange(variation.itemId.eCommerce.shipping, "height", e.target.value)}
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
                                             <ComponentFormType
                                                 title={this.props.page.props.t("depth")}
                                                 type="text"
-                                                value={variation.shipping?.depth}
-                                                onChange={e => this.onChange(variation.shipping, "depth", e.target.value)}
+                                                value={variation.itemId.eCommerce.shipping?.depth}
+                                                onChange={e => this.onChange(variation.itemId.eCommerce.shipping, "depth", e.target.value)}
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
                                             <ComponentFormType
                                                 title={this.props.page.props.t("weight")}
                                                 type="text"
-                                                value={variation.shipping?.weight}
-                                                onChange={e => this.onChange(variation.shipping, "weight", e.target.value)}
+                                                value={variation.itemId.eCommerce.shipping?.weight}
+                                                onChange={e => this.onChange(variation.itemId.eCommerce.shipping, "weight", e.target.value)}
                                             />
                                         </div>
                                         <div className="col-md-6 mb-3">
                                             <ComponentFormType
                                                 title={this.props.page.props.t("shippingPrice")}
                                                 type="number"
-                                                value={variation.pricing?.shipping}
-                                                onChange={e => this.onChange(variation.pricing, "shipping", e.target.value)}
+                                                value={variation.itemId.eCommerce.pricing?.shipping}
+                                                onChange={e => this.onChange(variation.itemId.eCommerce.pricing, "shipping", Number(e.target.value ?? 0))}
                                             />
                                         </div>
                                     </div>

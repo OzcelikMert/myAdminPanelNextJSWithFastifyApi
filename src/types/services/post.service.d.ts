@@ -19,7 +19,7 @@ export interface IPostAlternateService {
     url?: string
 }
 
-export type IPostGetOneResultService = {
+export type IPostGetResultService = {
     authorId: IUserPopulateService,
     lastAuthorId: IUserPopulateService,
     authors?: IUserPopulateService[],
@@ -30,22 +30,18 @@ export type IPostGetOneResultService = {
     contents?: IPostContentModel
     alternates?: IPostAlternateService[]
     eCommerce?: (Omit<IPostECommerceModel<IPostTermPopulateService, IPostTermPopulateService[]>, "variations"> & {
-        variations?: (Omit<IPostECommerceVariationModel<IPostTermPopulateService>, "contents"> & {
-            contents?: IPostECommerceVariationContentModel
-            alternates?: IPostAlternateService[]
-        })[]
+        variations?: IPostECommerceVariationModel<IPostTermPopulateService>[]
     })
 } & Omit<IPostModel, "contents"|"categories"|"tags"|"eCommerce"|"authorId"|"lastAuthorId"|"components"|"authors">
 
 export type IPostGetManyResultService = {
     eCommerce?: (Omit<IPostECommerceModel, "variations"> & {
         variations?: (Omit<IPostECommerceVariationModel, "contents"> & {
-            contents?: IPostECommerceVariationContentModel
             alternates?: IPostAlternateService[]
         })[]
     })
     components?: IPostModel["components"]
-} & Omit<IPostGetOneResultService, "eCommerce"|"components">
+} & Omit<IPostGetResultService, "eCommerce"|"components">
 
 export interface IPostGetWithIdParamService {
     typeId: PostTypeId,
@@ -80,9 +76,15 @@ export interface IPostGetCountParamService {
 
 export type IPostAddParamService = {} & Omit<IPostModel, "_id"|"views"|"authorId"|"lastAuthorId">
 
+export type IPostAddProductParamService = {} & Omit<IPostModel, "_id"|"views"|"authorId"|"lastAuthorId"|"pageTypeId"|"isNoIndex"|"beforeAndAfter"|"components">
+
 export type IPostUpdateWithIdParamService = {
     _id: string
 } & IPostAddParamService
+
+export type IPostUpdateProductWithIdParamService = {
+    _id: string
+} & IPostAddProductParamService
 
 export type IPostUpdateRankWithIdParamService = {
     _id: string
@@ -105,4 +107,8 @@ export type IPostUpdateStatusManyParamService = {
 export interface IPostDeleteManyParamService {
     _id: string[]
     typeId: PostTypeId
+}
+
+export interface IPostDeleteProductManyParamService {
+    _id: string[]
 }

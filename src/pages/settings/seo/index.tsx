@@ -8,10 +8,12 @@ import {ISettingUpdateSEOParamService} from "types/services/setting.service";
 import {PermissionUtil} from "@utils/permission.util";
 import {SettingsEndPointPermission} from "@constants/endPointPermissions/settings.endPoint.permission";
 import {SettingProjectionKeys} from "@constants/settingProjections";
+import {ISettingSeoContentModel} from "types/models/setting.model";
 
 type IPageState = {
     isSubmitting: boolean
     formData: ISettingUpdateSEOParamService
+    item?: ISettingSeoContentModel
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -70,6 +72,7 @@ class PageSettingsSEO extends Component<IPageProps, IPageState> {
         if (serviceResult.status && serviceResult.data) {
             let setting = serviceResult.data;
             this.setState((state: IPageState) => {
+                state.item = setting.seoContents;
                 state.formData = {
                     seoContents: {
                         ...state.formData.seoContents,

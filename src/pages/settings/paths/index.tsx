@@ -15,6 +15,7 @@ type IPageState = {
     isSubmitting: boolean
     formData: ISettingUpdatePathParamService,
     selectedData?: ISettingPathModel
+    items?: ISettingPathModel[]
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -68,6 +69,7 @@ export default class PageSettingsPaths extends Component<IPageProps, IPageState>
         if (serviceResult.status && serviceResult.data) {
             let setting = serviceResult.data;
             this.setState((state: IPageState) => {
+                state.items = setting.paths;
                 state.formData = {
                     paths: setting.paths?.map(path => ({
                         ...path,

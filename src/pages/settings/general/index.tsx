@@ -6,7 +6,7 @@ import {SettingService} from "@services/setting.service";
 import {ServerInfoService} from "@services/serverInfo.service";
 import ComponentToast from "@components/elements/toast";
 import ComponentThemeChooseImage from "@components/theme/chooseImage";
-import {ISettingUpdateGeneralParamService} from "types/services/setting.service";
+import {ISettingGetResultService, ISettingUpdateGeneralParamService} from "types/services/setting.service";
 import {Tab, Tabs} from "react-bootstrap";
 import Image from "next/image"
 import {IThemeFormSelectValue} from "@components/elements/form/input/select";
@@ -28,6 +28,7 @@ type IPageState = {
     formData: ISettingUpdateGeneralParamService & { panelLangId: string },
     mainTabActiveKey: string
     isServerInfoLoading: boolean
+    item?: ISettingGetResultService
 }
 
 type IPageProps = {} & IPagePropCommon;
@@ -79,6 +80,7 @@ export default class PageSettingsGeneral extends Component<IPageProps, IPageStat
         if (serviceResult.status && serviceResult.data) {
             let setting = serviceResult.data;
             this.setState((state: IPageState) => {
+                state.item = setting;
                 state.formData = {
                     ...this.state.formData,
                     logo: setting.logo,

@@ -7,9 +7,8 @@ import {HandleFormLibrary} from "@library/react/handles/form";
 import ComponentThemeChooseImage from "@components/theme/chooseImage";
 import {PostTermService} from "@services/postTerm.service";
 import {PostService} from "@services/post.service";
-import {IPostUpdateWithIdParamService} from "types/services/post.service";
+import {IPostGetResultService, IPostUpdateWithIdParamService} from "types/services/post.service";
 import ComponentToolTip from "@components/elements/tooltip";
-import Image from "next/image"
 import dynamic from "next/dynamic";
 import {ProductTypeId, productTypes} from "@constants/productTypes";
 import {IThemeFormSelectValue} from "@components/elements/form/input/select";
@@ -27,15 +26,14 @@ import {PageTypeId, pageTypes} from "@constants/pageTypes";
 import {ComponentUtil} from "@utils/component.util";
 import {StatusId} from "@constants/status";
 import {PostTermTypeId} from "@constants/postTermTypes";
-import {ImageSourceUtil} from "@utils/imageSource.util";
 import {ComponentService} from "@services/component.service";
 import ComponentPagePostAddComponent from "@components/pages/post/add/component";
 import {ComponentTypeId} from "@constants/componentTypes";
 import {UserService} from "@services/user.service";
 import {UserRoleId} from "@constants/userRoles";
-import {IUserPopulateService} from "types/services/user.service";
 import {RouteUtil} from "@utils/route.util";
 import ComponentToast from "@components/elements/toast";
+import {ApiResult} from "@library/api/result";
 
 const ComponentThemeRichTextBox = dynamic(() => import("@components/theme/richTextBox"), {ssr: false});
 
@@ -54,9 +52,10 @@ export type IPageState = {
     status: IThemeFormSelectValue[]
     isSubmitting: boolean
     mainTitle: string
-    formData: IPostUpdateWithIdParamService & { authorId?: IUserPopulateService },
+    formData: IPostUpdateWithIdParamService,
+    item?: IPostGetResultService
     isIconActive: boolean
-} & { [key: string]: any };
+};
 
 type IPageProps = {} & IPagePropCommon;
 
@@ -309,6 +308,8 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
 
             await new Promise(resolve => {
                 this.setState((state: IPageState) => {
+                    state.item = item;
+
                     state.formData = {
                         ...state.formData,
                         ...item as IPostUpdateWithIdParamService,
@@ -347,9 +348,12 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                             })),
                             variations: item.eCommerce.variations?.map(variation => ({
                                 ...variation,
-                                contents: {
-                                    ...variation.contents,
-                                    langId: this.props.getStateApp.appData.currentLangId,
+                                itemId: {
+                                    ...variation.itemId,
+                                    contents: {
+                                        ...variation.itemId.contents,
+                                        langId: this.props.getStateApp.appData.currentLangId,
+                                    }
                                 },
                                 selectedVariations: variation.selectedVariations.map(selectedVariation => ({
                                     ...selectedVariation,
@@ -394,9 +398,17 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 ...this.state.formData,
             };
 
-            let serviceResult = await ((params._id)
-                ? PostService.updateWithId(params, this.abortController.signal)
-                : PostService.add(params, this.abortController.signal));
+            let serviceResult;
+
+            if(this.state.formData.typeId == PostTypeId.Product){
+                serviceResult = await ((params._id)
+                    ? PostService.updateProductWithId(params, this.abortController.signal)
+                    : PostService.addProduct(params, this.abortController.signal));
+            }else {
+                serviceResult = await ((params._id)
+                    ? PostService.updateWithId(params, this.abortController.signal)
+                    : PostService.add(params, this.abortController.signal));
+            }
 
             this.setState({
                 isSubmitting: false
@@ -439,7 +451,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 {
                     !this.state.formData._id ||
                     PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.Editor) ||
-                    this.props.getStateApp.sessionAuth!.user.userId == this.state.formData.authorId?._id
+                    this.props.getStateApp.sessionAuth!.user.userId == this.state.item?.authorId?._id
                         ? <div className="col-md-7 mb-3">
                             <ComponentFormSelect
                                 title={this.props.t("status")}
@@ -487,7 +499,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                 {
                     !this.state.formData._id ||
                     PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.Editor) ||
-                    this.props.getStateApp.sessionAuth!.user.userId == this.state.formData.authorId?._id
+                    this.props.getStateApp.sessionAuth!.user.userId == this.state.item?.authorId?._id
                         ? <div className="col-md-7 mb-3">
                             <ComponentFormSelect
                                 title={this.props.t("authors")}

@@ -3,7 +3,7 @@ import {Tab, Tabs} from "react-bootstrap";
 import {ComponentForm, ComponentFormCheckBox, ComponentFormSelect, ComponentFormType} from "@components/elements/form"
 import {IPagePropCommon} from "types/pageProps";
 import {HandleFormLibrary} from "@library/react/handles/form";
-import {ILanguageUpdateWithIdParamService} from "types/services/language.service";
+import {ILanguageGetResultService, ILanguageUpdateWithIdParamService} from "types/services/language.service";
 import {LanguageService} from "@services/language.service";
 import Image from "next/image";
 import {IThemeFormSelectValue} from "@components/elements/form/input/select";
@@ -22,6 +22,7 @@ type IPageState = {
     flags: IThemeFormSelectValue[]
     isSubmitting: boolean
     mainTitle: string
+    item?: ILanguageGetResultService
     formData: ILanguageUpdateWithIdParamService,
 };
 
@@ -113,6 +114,7 @@ export default class PageSettingLanguageAdd extends Component<IPageProps, IPageS
 
             await new Promise(resolve => {
                 this.setState((state: IPageState) => {
+                    state.item = item;
                     state.formData = {
                         ...state.formData,
                         ...item,

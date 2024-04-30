@@ -6,7 +6,7 @@ import {VariableLibrary} from "@library/variable";
 import {HandleFormLibrary} from "@library/react/handles/form";
 import ComponentThemeChooseImage from "@components/theme/chooseImage";
 import {PostTermService} from "@services/postTerm.service";
-import {IPostTermUpdateWithIdParamService} from "types/services/postTerm.service";
+import {IPostTermGetResultService, IPostTermUpdateWithIdParamService} from "types/services/postTerm.service";
 import {IThemeFormSelectValue} from "@components/elements/form/input/select";
 import {PostTypeId} from "@constants/postTypes";
 import {PostTermTypeId} from "@constants/postTermTypes";
@@ -24,6 +24,7 @@ type IPageState = {
     isSubmitting: boolean
     mainTitle: string
     formData: IPostTermUpdateWithIdParamService,
+    item?: IPostTermGetResultService
 };
 
 type IPageProps = {
@@ -165,6 +166,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
 
             await new Promise(resolve => {
                 this.setState((state: IPageState) => {
+                    state.item = item;
                     state.formData = {
                         ...state.formData,
                         ...item,

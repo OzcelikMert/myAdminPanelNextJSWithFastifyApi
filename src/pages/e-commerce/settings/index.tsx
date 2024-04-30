@@ -11,11 +11,13 @@ import {IThemeFormSelectValue} from "@components/elements/form/input/select";
 import {SettingProjectionKeys} from "@constants/settingProjections";
 import {PermissionUtil} from "@utils/permission.util";
 import {ECommerceEndPointPermission} from "@constants/endPointPermissions/eCommerce.endPoint.permission";
+import {ISettingECommerceModel} from "types/models/setting.model";
 
 type IPageState = {
     currencyTypes: IThemeFormSelectValue[]
     isSubmitting: boolean
     formData: ISettingUpdateECommerceParamService,
+    item?: ISettingECommerceModel
     mainTabActiveKey: string
 };
 
@@ -62,6 +64,7 @@ export default class PageECommerceSettings extends Component<IPageProps, IPageSt
         if (serviceResult.status && serviceResult.data) {
             let setting = serviceResult.data;
             this.setState((state: IPageState) => {
+                state.item = setting.eCommerce;
                 state.formData = {
                     eCommerce: {
                         ...state.formData.eCommerce,

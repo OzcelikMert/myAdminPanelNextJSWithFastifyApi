@@ -12,7 +12,7 @@ import {
 } from "@components/elements/form";
 import {VariableLibrary} from "@library/variable";
 import {UserService} from "@services/user.service";
-import {IUserUpdateWithIdParamService} from "types/services/user.service";
+import {IUserGetResultService, IUserUpdateWithIdParamService} from "types/services/user.service";
 import {IThemeFormSelectValue} from "@components/elements/form/input/select";
 import {UserEndPointPermission} from "@constants/endPointPermissions/user.endPoint.permission";
 import {PermissionUtil} from "@utils/permission.util";
@@ -37,6 +37,7 @@ type IPageState = {
     mainTitle: string,
     isSubmitting: boolean
     formData: IUserUpdateWithIdParamService
+    item?: IUserGetResultService
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -130,6 +131,7 @@ export default class PageUserAdd extends Component<IPageProps, IPageState> {
             const user = serviceResult.data;
             await new Promise(resolve => {
                 this.setState((state: IPageState) => {
+                    state.item = user;
                     state.formData = user;
                     state.mainTitle = user.name;
                     return state;

@@ -27,7 +27,7 @@ const getPricingDefault = (item: IPostGetManyResultService) => {
                 let variation = item.eCommerce.variations[0];
                 data = {
                     ...data,
-                    ...variation.pricing
+                    ...variation.itemId.eCommerce.pricing
                 }
             }
         }

@@ -3,11 +3,11 @@ import { useAccordionButton } from 'react-bootstrap/AccordionButton';
 type IPageProps = {
     children: any
     eventKey: string
-    onTrigger?: () => void
+    onClick?: () => void
 }
 
 export default function ComponentAccordionToggle(props: IPageProps) {
-    const decoratedOnClick = useAccordionButton(props.eventKey, props.onTrigger);
+    const decoratedOnClick = useAccordionButton(props.eventKey, props.onClick);
 
     return (
         <div onClick={decoratedOnClick}>
