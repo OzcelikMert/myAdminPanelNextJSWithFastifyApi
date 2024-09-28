@@ -150,7 +150,7 @@ export default class PageComponentList extends Component<IPageProps, IPageState>
                 name: this.props.t("typeId"),
                 sortable: true,
                 selector: row => row.typeId,
-                cell: row => <ComponentThemeBadgeComponentType t={this.props.t} typeId={row.typeId || ComponentTypeId.Theme}/>
+                cell: row => <ComponentThemeBadgeComponentType t={this.props.t} typeId={row.typeId || ComponentTypeId.Private}/>
             },
             {
                 name: this.props.t("updatedBy"),

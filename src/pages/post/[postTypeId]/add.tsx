@@ -33,7 +33,6 @@ import {UserService} from "@services/user.service";
 import {UserRoleId} from "@constants/userRoles";
 import {RouteUtil} from "@utils/route.util";
 import ComponentToast from "@components/elements/toast";
-import {ApiResult} from "@library/api/result";
 
 const ComponentThemeRichTextBox = dynamic(() => import("@components/theme/richTextBox"), {ssr: false});
 
@@ -243,7 +242,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     async getComponents() {
         let serviceResult = await ComponentService.getMany({
             langId: this.props.getStateApp.appData.mainLangId,
-            typeId: ComponentTypeId.Theme
+            typeId: ComponentTypeId.Private
         }, this.abortController.signal);
         if (serviceResult.status && serviceResult.data) {
             this.setState((state: IPageState) => {
@@ -331,7 +330,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
                     }
 
                     if (item.components) {
-                        state.formData.components = item.components.map(component => component._id);
+                        state.formData.components = item.components.map(component => component);
                     }
 
                     if (item.authors) {

@@ -25,8 +25,8 @@ export default class ComponentThemeBadgeComponentType extends Component<IPagePro
 export function getComponentTypeColor(typeId: ComponentTypeId): string {
     let className = ``;
     switch (typeId) {
-        case ComponentTypeId.Tool: className = `dark`; break;
-        case ComponentTypeId.Theme: className = `primary`; break;
+        case ComponentTypeId.Public: className = `primary`; break;
+        case ComponentTypeId.Private: className = `dark`; break;
     }
     return className;
 }

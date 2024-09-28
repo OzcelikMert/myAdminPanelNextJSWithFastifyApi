@@ -1,4 +1,6 @@
 export const languageKeys = [
+    "public",
+    "private",
     "selectImages",
     "noIndex",
     "blog",

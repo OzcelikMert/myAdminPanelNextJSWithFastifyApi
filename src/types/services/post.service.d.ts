@@ -26,13 +26,12 @@ export type IPostGetResultService = {
     views?: number,
     categories?: IPostTermPopulateService[]
     tags?: IPostTermPopulateService[]
-    components?: IComponentModel[]
     contents?: IPostContentModel
     alternates?: IPostAlternateService[]
     eCommerce?: (Omit<IPostECommerceModel<IPostTermPopulateService, IPostTermPopulateService[]>, "variations"> & {
         variations?: IPostECommerceVariationModel<IPostTermPopulateService>[]
     })
-} & Omit<IPostModel, "contents"|"categories"|"tags"|"eCommerce"|"authorId"|"lastAuthorId"|"components"|"authors">
+} & Omit<IPostModel, "contents"|"categories"|"tags"|"eCommerce"|"authorId"|"lastAuthorId"|"authors">
 
 export type IPostGetManyResultService = {
     eCommerce?: (Omit<IPostECommerceModel, "variations"> & {
@@ -40,8 +39,7 @@ export type IPostGetManyResultService = {
             alternates?: IPostAlternateService[]
         })[]
     })
-    components?: IPostModel["components"]
-} & Omit<IPostGetResultService, "eCommerce"|"components">
+} & Omit<IPostGetResultService, "eCommerce">
 
 export interface IPostGetWithIdParamService {
     typeId: PostTypeId,

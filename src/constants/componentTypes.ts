@@ -1,11 +1,11 @@
 import {IComponentType} from "types/constants/componentTypes";
 
 export enum ComponentTypeId {
-    Tool = 1,
-    Theme
+    Public = 1,
+    Private
 }
 
 export const componentTypes: Array<IComponentType> = [
-    {id: ComponentTypeId.Tool, langKey: "tool"},
-    {id: ComponentTypeId.Theme, langKey: "theme"}
+    {id: ComponentTypeId.Public, langKey: "public"},
+    {id: ComponentTypeId.Private, langKey: "private"}
 ]

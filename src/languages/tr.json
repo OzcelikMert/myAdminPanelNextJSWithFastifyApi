@@ -1,4 +1,6 @@
 {
+  "private": "Private",
+  "public": "Public",
   "selectImages": "Resimler Seç",
   "noIndex" : "İndexlenmesin",
   "blog": "Yazı",

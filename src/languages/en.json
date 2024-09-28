@@ -1,4 +1,6 @@
 {
+  "public": "Public",
+  "private": "Private",
   "selectImages": "Select Images",
   "noIndex" : "No Index",
   "blog": "Blog",

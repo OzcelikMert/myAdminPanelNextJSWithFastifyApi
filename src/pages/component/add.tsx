@@ -48,7 +48,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                 elements: [],
                 key: "",
                 title: "",
-                typeId: ComponentTypeId.Theme
+                typeId: ComponentTypeId.Private
             }
         }
     }
