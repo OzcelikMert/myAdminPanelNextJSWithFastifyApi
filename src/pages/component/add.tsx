@@ -191,9 +191,10 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
     }
 
     onCreateElement() {
+        let _id = String.createId();
         this.setState((state: IPageState) => {
             state.formData.elements = [...state.formData.elements, {
-                _id: String.createId(),
+                _id: _id,
                 title: "",
                 rank: state.formData.elements.length + 1,
                 typeId: ElementTypeId.Text,
@@ -203,7 +204,7 @@ export default class PageComponentAdd extends Component<IPageProps, IPageState> 
                 }
             }]
             return state;
-        }, () => this.onEdit(this.state.formData.elements.length - 1))
+        }, () => this.onEdit(this.state.formData.elements.indexOfKey("_id", _id)))
     }
 
     onAccept(index: number) {
