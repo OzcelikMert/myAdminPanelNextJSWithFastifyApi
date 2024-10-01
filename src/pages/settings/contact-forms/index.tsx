@@ -95,14 +95,15 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
         this.setState((state: IPageState) => {
             state.formData.contactForms = [...state.formData.contactForms, {
                 _id: String.createId(),
+                title: "",
                 key: "",
                 port: 465,
-                outGoingServer: "",
-                inComingServer: "",
-                outGoingEmail: "",
+                host: "",
+                targetEmail: "",
                 name: "",
                 password: "",
-                email: ""
+                email: "",
+                hasSSL: true
             }];
             return state;
         }, () => this.onEdit(this.state.formData.contactForms.length - 1))
@@ -152,7 +153,7 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
         return (
             <div className={`col-md-12 ${index > 0 ? "mt-5" : ""}`}>
                 <ComponentFieldSet
-                    legend={`${this.props.t("contactForm")} (#${props.key})`}
+                    legend={`${props.title} (#${props.key})`}
                     legendElement={
                         PermissionUtil.checkPermissionRoleRank(this.props.getStateApp.sessionAuth!.user.roleId, UserRoleId.SuperAdmin)
                             ? (<span>
@@ -175,15 +176,15 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
                         </div>
                         <div className="col-md-12 mt-4">
                             <ComponentFormType
-                                type="text"
-                                title={this.props.t("outGoingEmail")}
-                                value={props.outGoingEmail}
-                                onChange={e => this.onInputChange(props, "outGoingEmail", e.target.value)}
+                                type="email"
+                                title={this.props.t("targetEmail")}
+                                value={props.targetEmail}
+                                onChange={e => this.onInputChange(props, "targetEmail", e.target.value)}
                             />
                         </div>
                         <div className="col-md-12 mt-4">
                             <ComponentFormType
-                                type="text"
+                                type="email"
                                 title={this.props.t("email")}
                                 value={props.email}
                                 onChange={e => this.onInputChange(props, "email", e.target.value)}
@@ -200,26 +201,31 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
                         <div className="col-md-12 mt-4">
                             <ComponentFormType
                                 type="text"
-                                title={this.props.t("outGoingServer")}
-                                value={props.outGoingServer}
-                                onChange={e => this.onInputChange(props, "outGoingServer", e.target.value)}
+                                title={this.props.t("host")}
+                                value={props.host}
+                                onChange={e => this.onInputChange(props, "host", e.target.value)}
                             />
                         </div>
                         <div className="col-md-12 mt-4">
                             <ComponentFormType
-                                type="text"
-                                title={this.props.t("inComingServer")}
-                                value={props.inComingServer}
-                                onChange={e => this.onInputChange(props, "inComingServer", e.target.value)}
-                            />
-                        </div>
-                        <div className="col-md-12 mt-4">
-                            <ComponentFormType
-                                type="text"
+                                type="number"
                                 title={this.props.t("port")}
                                 value={props.port}
-                                onChange={e => this.onInputChange(props, "port", e.target.value)}
+                                onChange={e => this.onInputChange(props, "port", Number(e.target.value))}
                             />
+                        </div>
+                        <div className="col-md-7 mt-4">
+                            <div className="form-switch">
+                                <input
+                                    checked={props.hasSSL}
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="hasSSL"
+                                    onChange={e => this.onInputChange(props, "hasSSL", Boolean(e.target.checked))}
+                                />
+                                <label className="form-check-label ms-2"
+                                       htmlFor="hasSSL">{this.props.t("hasSSL")}</label>
+                            </div>
                         </div>
                     </div>
                 </ComponentFieldSet>
@@ -233,6 +239,15 @@ class PageSettingsContactForms extends Component<IPageProps, IPageState> {
                 <ComponentFieldSet legend={this.props.t("newContactForm")}>
                     <div className="row mt-3">
                         <div className="col-md-12">
+                            <ComponentFormType
+                                title={`${this.props.t("title")}*`}
+                                type="text"
+                                required={true}
+                                value={props.title}
+                                onChange={e => this.onInputChange(props, "title", e.target.value)}
+                            />
+                        </div>
+                        <div className="col-md-12 mt-4">
                             <ComponentFormType
                                 title={`${this.props.t("key")}*`}
                                 type="text"

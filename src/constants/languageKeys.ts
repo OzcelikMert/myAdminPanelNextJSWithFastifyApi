@@ -1,4 +1,7 @@
 export const languageKeys = [
+    "host",
+    "targetEmail",
+    "hasSSL",
     "public",
     "private",
     "selectImages",

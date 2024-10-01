@@ -1,4 +1,7 @@
 {
+  "host": "Host",
+  "targetEmail": "Hedef Eposta",
+  "hasSSL": "SSL Sertifikası Var",
   "private": "Private",
   "public": "Public",
   "selectImages": "Resimler Seç",

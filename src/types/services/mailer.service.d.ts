@@ -1,6 +1,6 @@
 export interface IMailerSendParamService {
-    contactFormId: string
+    _id?: string
+    key?: string
     email: string
     message: string
-    replyMessage?: string
 }

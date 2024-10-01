@@ -1,4 +1,7 @@
 {
+  "host": "Host",
+  "targetEmail": "Target Email",
+  "hasSSL": "Has SSL Certificate",
   "public": "Public",
   "private": "Private",
   "selectImages": "Select Images",

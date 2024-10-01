@@ -34,14 +34,15 @@ export interface ISettingSocialMediaModel {
 
 export interface ISettingContactFormModel {
     _id?: string
+    title: string
     name: string
     key: string
-    outGoingEmail: string
+    targetEmail: string
     email: string
     password?: string
-    outGoingServer: string
-    inComingServer: string
+    host: string
     port: number
+    hasSSL: boolean
 }
 
 export interface ISettingSeoContentModel {
