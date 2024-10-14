@@ -16,6 +16,7 @@ import {StatusId} from "@constants/status";
 import {ComponentUtil} from "@utils/component.util";
 import {RouteUtil} from "@utils/route.util";
 import ComponentToast from "@components/elements/toast";
+import ComponentToolTip from "@components/elements/tooltip";
 
 type IPageState = {
     mainTabActiveKey: string
@@ -247,6 +248,16 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
         })
     }
 
+    TotalViews = () => {
+        return <div className="col-6">
+            <ComponentToolTip message={this.props.t("views")}>
+                <label className="badge badge-gradient-primary w-100 p-2 fs-6 rounded-3">
+                    <i className="mdi mdi-eye"></i> {this.state.formData.contents.views || 0}
+                </label>
+            </ComponentToolTip>
+        </div>;
+    }
+
     TabOptions = () => {
         return (
             <div className="row">
@@ -357,6 +368,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
                                         </button> : null
                                 }
                             </div>
+                            <this.TotalViews/>
                         </div>
                     </div>
                 </div>

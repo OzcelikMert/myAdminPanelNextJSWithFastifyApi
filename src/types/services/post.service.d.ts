@@ -4,13 +4,11 @@ import {
     IPostContentModel,
     IPostModel,
     IPostECommerceModel,
-    IPostECommerceVariationContentModel,
     IPostECommerceVariationModel
 } from "../models/post.model";
 import {PostTypeId} from "@constants/postTypes";
 import {PageTypeId} from "@constants/pageTypes";
 import {StatusId} from "@constants/status";
-import {IComponentModel} from "types/models/component.model";
 import {PostSortTypeId} from "@constants/postSortTypes";
 
 export interface IPostAlternateService {

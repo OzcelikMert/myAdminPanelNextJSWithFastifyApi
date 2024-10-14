@@ -22,4 +22,5 @@ export interface IPostTermContentModel {
     title?: string
     shortContent?: string
     url?: string
+    views?: number
 }

@@ -302,6 +302,11 @@ export default class PagePostTermList extends Component<IPageProps, IPageState> 
                     } : {}
             ),
             {
+                name: this.props.t("views"),
+                selector: row => row.views || 0,
+                sortable: true
+            },
+            {
                 name: this.props.t("status"),
                 sortable: true,
                 cell: row => <ComponentThemeBadgeStatus t={this.props.t} statusId={row.statusId}/>
