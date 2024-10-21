@@ -1,10 +1,11 @@
 {
-  "name": "my-admin-panel-next-js",
+  "name": "my-admin-panel-next-js-with-fastify",
   "version": "0.1.1",
-  "description": "Admin Panel Next JS",
+  "description": "Admin Panel Next JS With Fastify",
   "private": true,
   "author": "Mert ÖZÇELİK",
   "license": "ISC",
+  "repository": "OzcelikMert/myAdminPanelNextJSWithFastifyApi",
   "scripts": {
     "dev": "next dev -p 3001",
     "build": "next build",
