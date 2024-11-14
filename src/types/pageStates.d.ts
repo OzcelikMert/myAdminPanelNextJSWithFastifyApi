@@ -1,3 +1,1 @@
-export interface IPageStateCommon {
-
-}
+export interface IPageStateCommon {}

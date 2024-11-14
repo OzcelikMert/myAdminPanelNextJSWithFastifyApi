@@ -1,2 +1,2 @@
-import PageNavigationAdd from "@pages/navigation/add";
+import PageNavigationAdd from '@pages/navigation/add';
 export default PageNavigationAdd;

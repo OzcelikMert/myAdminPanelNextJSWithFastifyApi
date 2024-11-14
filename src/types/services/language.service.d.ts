@@ -1,26 +1,26 @@
-import {ILanguageModel} from "../models/language.model";
-import {StatusId} from "@constants/status";
+import { ILanguageModel } from '../models/language.model';
+import { StatusId } from '@constants/status';
 
-export type ILanguageGetResultService = {} & ILanguageModel
+export type ILanguageGetResultService = {} & ILanguageModel;
 
 export interface ILanguageGetWithIdParamService {
-    _id: string
-    shortKey?: string
-    locale?: string
+  _id: string;
+  shortKey?: string;
+  locale?: string;
 }
 
 export interface ILanguageGetManyParamService {
-    _id?: string[]
-    statusId?: StatusId
+  _id?: string[];
+  statusId?: StatusId;
 }
 
-export type ILanguageAddParamService = {} & Omit<ILanguageModel, "_id">
+export type ILanguageAddParamService = {} & Omit<ILanguageModel, '_id'>;
 
 export type ILanguageUpdateWithIdParamService = {
-    _id: string
-} & ILanguageAddParamService
+  _id: string;
+} & ILanguageAddParamService;
 
 export type ILanguageUpdateRankWithIdParamService = {
-    _id: string
-    rank: number
-}
+  _id: string;
+  rank: number;
+};

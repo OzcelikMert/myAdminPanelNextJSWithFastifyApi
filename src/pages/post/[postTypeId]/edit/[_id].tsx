@@ -1,2 +1,2 @@
-import PagePostAdd from "@pages/post/[postTypeId]/add";
+import PagePostAdd from '@pages/post/[postTypeId]/add';
 export default PagePostAdd;

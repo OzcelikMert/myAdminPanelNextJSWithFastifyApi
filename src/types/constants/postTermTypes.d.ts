@@ -1,8 +1,8 @@
-import {ILanguageKeys} from "./languageKeys";
-import {PostTermTypeId} from "@constants/postTermTypes";
+import { ILanguageKeys } from './languageKeys';
+import { PostTermTypeId } from '@constants/postTermTypes';
 
 export interface IPostTermType {
-    id: PostTermTypeId,
-    rank: number,
-    langKey: ILanguageKeys
+  id: PostTermTypeId;
+  rank: number;
+  langKey: ILanguageKeys;
 }

@@ -1,35 +1,41 @@
 import {
-    ISettingContactFormModel,
-    ISettingModel, ISettingECommerceModel,
-    ISettingSeoContentModel, ISettingSocialMediaModel, ISettingPathModel,
-} from "../models/setting.model";
-import {SettingProjectionKeys} from "@constants/settingProjections";
+  ISettingContactFormModel,
+  ISettingModel,
+  ISettingECommerceModel,
+  ISettingSeoContentModel,
+  ISettingSocialMediaModel,
+  ISettingPathModel,
+} from '../models/setting.model';
+import { SettingProjectionKeys } from '@constants/settingProjections';
 
-export type ISettingGetResultService = {} & ISettingModel
+export type ISettingGetResultService = {} & ISettingModel;
 
 export type ISettingGetParamService = {
-    langId?: string
-    projection?: SettingProjectionKeys
-}
+  langId?: string;
+  projection?: SettingProjectionKeys;
+};
 
-export type ISettingUpdateGeneralParamService = {} & Omit<ISettingModel, "seoContents"|"contactForms"|"socialMedia"|"paths">
+export type ISettingUpdateGeneralParamService = {} & Omit<
+  ISettingModel,
+  'seoContents' | 'contactForms' | 'socialMedia' | 'paths'
+>;
 
 export type ISettingUpdateSEOParamService = {
-    seoContents: ISettingSeoContentModel
-}
+  seoContents: ISettingSeoContentModel;
+};
 
 export type ISettingUpdateECommerceParamService = {
-    eCommerce: ISettingECommerceModel
-}
+  eCommerce: ISettingECommerceModel;
+};
 
 export type ISettingUpdateContactFormParamService = {
-    contactForms: ISettingContactFormModel[]
-}
+  contactForms: ISettingContactFormModel[];
+};
 
 export type ISettingUpdateSocialMediaParamService = {
-    socialMedia: ISettingSocialMediaModel[]
-}
+  socialMedia: ISettingSocialMediaModel[];
+};
 
 export type ISettingUpdatePathParamService = {
-    paths: ISettingPathModel[]
-}
+  paths: ISettingPathModel[];
+};

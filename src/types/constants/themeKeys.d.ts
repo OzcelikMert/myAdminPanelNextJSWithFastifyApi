@@ -1,3 +1,3 @@
-import {themeKeysArray} from "@constants/themeKeys";
+import { themeKeysArray } from '@constants/themeKeys';
 
-export type IThemeKeys = typeof themeKeysArray[number];
+export type IThemeKeys = (typeof themeKeysArray)[number];

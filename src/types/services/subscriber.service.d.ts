@@ -1,22 +1,22 @@
-import {ISubscriberModel} from "../models/subscriber.model";
+import { ISubscriberModel } from '../models/subscriber.model';
 
-export type ISubscriberGetResultService = {} & ISubscriberModel
+export type ISubscriberGetResultService = {} & ISubscriberModel;
 
 export interface ISubscriberGetWithIdParamService {
-    _id: string
+  _id: string;
 }
 
 export interface ISubscriberGetManyParamService {
-    _id?: string[]
-    email?: string[]
+  _id?: string[];
+  email?: string[];
 }
 
-export type ISubscriberAddParamService = {} & Omit<ISubscriberModel, "_id">
+export type ISubscriberAddParamService = {} & Omit<ISubscriberModel, '_id'>;
 
 export interface ISubscriberDeleteWithIdParamService {
-    _id: string
+  _id: string;
 }
 
 export interface ISubscriberDeleteManyParamService {
-    _id: string[]
+  _id: string[];
 }

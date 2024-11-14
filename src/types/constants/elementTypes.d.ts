@@ -1,7 +1,7 @@
-import {ILanguageKeys} from "./languageKeys";
-import {ElementTypeId} from "@constants/elementTypes";
+import { ILanguageKeys } from './languageKeys';
+import { ElementTypeId } from '@constants/elementTypes';
 
 export interface IElementType {
-    id: ElementTypeId,
-    langKey: ILanguageKeys
+  id: ElementTypeId;
+  langKey: ILanguageKeys;
 }

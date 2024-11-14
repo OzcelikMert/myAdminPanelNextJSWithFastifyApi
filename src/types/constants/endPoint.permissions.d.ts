@@ -1,7 +1,7 @@
-import {PermissionId} from "@constants/permissions";
-import {UserRoleId} from "@constants/userRoles";
+import { PermissionId } from '@constants/permissions';
+import { UserRoleId } from '@constants/userRoles';
 
 export interface IEndPointPermission {
-    permissionId: PermissionId[],
-    userRoleId: UserRoleId
+  permissionId: PermissionId[];
+  userRoleId: UserRoleId;
 }
