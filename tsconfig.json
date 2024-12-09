@@ -14,8 +14,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": "src",
-    "typeRoots" : ["../node_modules/@types", "types", "node"],
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "typeRoots": ["../node_modules/@types", "types", "node"],
     "paths": {
       "@pages/*": ["pages/*"],
       "@components/*": ["components/*"],
@@ -27,6 +28,14 @@
       "@utils/*": ["utils/*"]
     }
   },
-  "include": ["../next-env.d.ts", "**/*.ts", "**/*.d.ts", "**/*.tsx"],
-  "exclude": ["../node_modules", "**/.*/"]
+  "include": [
+    "../next-env.d.ts", 
+    "**/*.ts", 
+    "**/*.d.ts", 
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "../node_modules", 
+    "**/.*/"
+  ]
 }

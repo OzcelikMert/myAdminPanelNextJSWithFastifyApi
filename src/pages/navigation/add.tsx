@@ -51,7 +51,7 @@ export default class PageNavigationAdd extends Component<
       mainTitle: '',
       formData: {
         _id: (this.props.router.query._id as string) ?? '',
-        statusId: 0,
+        statusId: StatusId.Active,
         rank: 0,
         contents: {
           langId: this.props.getStateApp.appData.currentLangId,

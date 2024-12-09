@@ -62,7 +62,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
         typeId: Number(typeId),
         postTypeId: Number(postTypeId),
         parentId: '',
-        statusId: 0,
+        statusId: StatusId.Active,
         rank: 0,
         contents: {
           langId: this.props.getStateApp.appData.currentLangId,

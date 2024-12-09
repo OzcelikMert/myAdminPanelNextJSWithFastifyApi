@@ -92,7 +92,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
       formData: {
         _id: (this.props.router.query._id as string) ?? '',
         typeId: Number(this.props.router.query.postTypeId ?? 1),
-        statusId: 0,
+        statusId: StatusId.Active,
         rank: 0,
         isFixed: false,
         contents: {
