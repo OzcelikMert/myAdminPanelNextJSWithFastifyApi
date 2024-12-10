@@ -1,4 +1,6 @@
 export const languageKeys = [
+  'warningAboutMissingLanguagesWithVariable',
+  'googleAnalyticURL',
   'host',
   'targetEmail',
   'hasSSL',

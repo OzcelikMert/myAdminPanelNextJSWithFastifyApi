@@ -14,7 +14,7 @@ const ComponentThemeRichTextBox = dynamic(
 type IPageState = {} & { [key: string]: any };
 
 type IPageProps = {
-  data: IComponentElementModel;
+  data: Partial<IComponentElementModel>;
   onChange: (key: string, value: any) => void;
 } & IPagePropCommon;
 

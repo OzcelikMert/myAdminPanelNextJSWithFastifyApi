@@ -26,6 +26,8 @@ import { PageTypeId, pageTypes } from '@constants/pageTypes';
 import { PostTermTypeId } from '@constants/postTermTypes';
 import { RouteUtil } from '@utils/route.util';
 import { UserRoleId } from '@constants/userRoles';
+import ComponentToolTip from '@components/elements/tooltip';
+import ComponentThemeToolTipMissingLanguages from '@components/theme/tooltip/missingLanguages';
 
 type IPageState = {
   typeId: PostTypeId;
@@ -354,6 +356,13 @@ export default class PagePostList extends Component<IPageProps, IPageState> {
         cell: (row) => (
           <div className="row w-100">
             <div className="col-md-8">
+              {
+                <ComponentThemeToolTipMissingLanguages
+                  itemLanguages={row.alternates ?? []}
+                  contentLanguages={this.props.getStateApp.appData.contentLanguages}
+                  t={this.props.t}
+                />
+              }
               {row.contents?.title || this.props.t('[noLangAdd]')}
             </div>
             <div className="col-md-4">

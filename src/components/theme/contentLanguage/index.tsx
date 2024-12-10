@@ -21,6 +21,7 @@ export default class ComponentThemeContentLanguage extends Component<
   IPageProps,
   IPageState
 > {
+
   Item = (props: IContentLanguage) => (
     <div className={`row p-0`}>
       <div className="col-6 text-end">
@@ -33,7 +34,7 @@ export default class ComponentThemeContentLanguage extends Component<
         />
       </div>
       <div className="col-6 text-start content-language-title">
-        <h6>{props.title}</h6>
+        <h6>{props.title} ({props.locale.toUpperCase()})</h6>
       </div>
     </div>
   );

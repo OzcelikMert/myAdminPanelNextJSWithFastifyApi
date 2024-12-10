@@ -1,4 +1,6 @@
 {
+  "warningAboutMissingLanguagesWithVariable": "This item has some missing languages! The missing languages are: '{{missingLanguages}}'",
+  "googleAnalyticURL": "Google Analytic URL",
   "host": "Host",
   "targetEmail": "Target Email",
   "hasSSL": "Has SSL Certificate",
@@ -108,7 +110,7 @@
   "notSelected": "Not selected",
   "content": "Content",
   "save": "Save",
-  "returnBack": "Return back",
+  "returnBack": "Return Back",
   "upload": "Upload",
   "successful": "Successful",
   "itemAdded": "Item successfully created",

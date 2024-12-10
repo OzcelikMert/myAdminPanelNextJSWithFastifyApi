@@ -6,6 +6,7 @@ export interface ISettingModel {
   logoTwo?: string;
   head?: string;
   script?: string;
+  googleAnalyticURL?: string;
   seoContents?: ISettingSeoContentModel;
   contact?: ISettingContactModel;
   contactForms?: ISettingContactFormModel[];

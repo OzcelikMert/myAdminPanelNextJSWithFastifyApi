@@ -17,6 +17,7 @@ import { NavigationEndPointPermission } from '@constants/endPointPermissions/nav
 import { status, StatusId } from '@constants/status';
 import { EndPoints } from '@constants/endPoints';
 import { RouteUtil } from '@utils/route.util';
+import ComponentThemeToolTipMissingLanguages from '@components/theme/tooltip/missingLanguages';
 
 type IPageState = {
   searchKey: string;
@@ -281,6 +282,13 @@ export default class PageNavigationList extends Component<
         cell: (row) => (
           <div className="row w-100">
             <div className="col-md-12">
+              {
+                <ComponentThemeToolTipMissingLanguages
+                  itemLanguages={row.alternates ?? []}
+                  contentLanguages={this.props.getStateApp.appData.contentLanguages}
+                  t={this.props.t}
+                />
+              }
               {row.parentId ? <span className="pe-3">-</span> : null}
               {row.contents?.title || this.props.t('[noLangAdd]')}
             </div>

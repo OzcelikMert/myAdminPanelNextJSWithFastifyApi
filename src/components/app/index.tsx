@@ -45,7 +45,7 @@ class ComponentApp extends Component<IPageProps, IPageState> {
         currentLangId: '',
         contentLanguages: [],
         currencyId: CurrencyId.TurkishLira,
-      },
+      }
     };
   }
 

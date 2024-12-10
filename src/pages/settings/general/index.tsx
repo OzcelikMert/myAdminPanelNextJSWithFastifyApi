@@ -34,7 +34,6 @@ type IPageState = {
   formData: ISettingUpdateGeneralParamService & { panelLangId: string };
   mainTabActiveKey: string;
   isServerInfoLoading: boolean;
-  item?: ISettingGetResultService;
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -100,17 +99,9 @@ export default class PageSettingsGeneral extends Component<
     if (serviceResult.status && serviceResult.data) {
       const setting = serviceResult.data;
       this.setState((state: IPageState) => {
-        state.item = setting;
         state.formData = {
           ...this.state.formData,
-          logo: setting.logo,
-          logoTwo: setting.logoTwo,
-          icon: setting.icon,
-          head: setting.head,
-          script: setting.script,
-          contact: {
-            ...setting.contact,
-          },
+          ...setting
         };
         return state;
       });
@@ -204,6 +195,15 @@ export default class PageSettingsGeneral extends Component<
             onChange={(e) => HandleFormLibrary.onChangeInput(e, this)}
           />
         </div>
+        <div className="col-md-7 mb-3">
+          <ComponentFormType
+            title={this.props.t('googleAnalyticURL')}
+            name="formData.googleAnalyticURL"
+            type="url"
+            value={this.state.formData.googleAnalyticURL}
+            onChange={(e) => HandleFormLibrary.onChangeInput(e, this)}
+          />
+        </div>
       </div>
     );
   };
@@ -238,7 +238,6 @@ export default class PageSettingsGeneral extends Component<
             onChange={(e) => HandleFormLibrary.onChangeInput(e, this)}
           />
         </div>
-        ,
         <div className="col-md-7 mb-3">
           <ComponentFormType
             title={this.props.t('addressMap')}
@@ -255,7 +254,7 @@ export default class PageSettingsGeneral extends Component<
   TabGeneral = () => {
     return (
       <div className="row">
-        <div className="col-md-7 mb-3">
+        <div className="col-md-4 mb-3">
           <ComponentFieldSet legend={this.props.t('logo')}>
             <ComponentThemeChooseImage
               {...this.props}
@@ -272,7 +271,7 @@ export default class PageSettingsGeneral extends Component<
             />
           </ComponentFieldSet>
         </div>
-        <div className="col-md-7 mb-3">
+        <div className="col-md-4 mb-3">
           <ComponentFieldSet legend={this.props.t('logo') + ' - 2'}>
             <ComponentThemeChooseImage
               {...this.props}
@@ -289,7 +288,7 @@ export default class PageSettingsGeneral extends Component<
             />
           </ComponentFieldSet>
         </div>
-        <div className="col-md-7 mb-3">
+        <div className="col-md-4 mb-3">
           <ComponentFieldSet legend={this.props.t('icon')}>
             <ComponentThemeChooseImage
               {...this.props}

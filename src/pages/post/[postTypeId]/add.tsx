@@ -41,6 +41,7 @@ import { UserService } from '@services/user.service';
 import { UserRoleId } from '@constants/userRoles';
 import { RouteUtil } from '@utils/route.util';
 import ComponentToast from '@components/elements/toast';
+import ComponentThemeToolTipMissingLanguages from '@components/theme/tooltip/missingLanguages';
 
 const ComponentThemeRichTextBox = dynamic(
   () => import('@components/theme/richTextBox'),
@@ -48,7 +49,6 @@ const ComponentThemeRichTextBox = dynamic(
 );
 
 export type IPageState = {
-  langKeys: IThemeFormSelectValue[];
   authors: IThemeFormSelectValue[];
   pageTypes: IThemeFormSelectValue[];
   attributeTypes: IThemeFormSelectValue[];
@@ -83,7 +83,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
       attributes: [],
       variations: [],
       categories: [],
-      langKeys: [],
       pageTypes: [],
       tags: [],
       status: [],
@@ -114,7 +113,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
         PermissionUtil.getPostPermission(this.state.formData.typeId, methodType)
       )
     ) {
-      this.getLangKeys();
       if (
         ![
           PostTypeId.Slider,
@@ -204,16 +202,6 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     }
 
     this.props.setBreadCrumb(titles);
-  }
-
-  getLangKeys() {
-    this.setState((state: IPageState) => {
-      state.langKeys = languageKeys.map((langKey) => ({
-        label: langKey,
-        value: langKey,
-      }));
-      return state;
-    });
   }
 
   getAttributeTypes() {
@@ -531,6 +519,35 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     );
   };
 
+  Header = () => {
+    return (
+      <div className="col-md-3">
+        <div className="row">
+          <div className="col-6">
+            <button
+              className="btn btn-gradient-dark btn-lg btn-icon-text w-100"
+              onClick={() => this.navigatePage()}
+            >
+              <i className="mdi mdi-arrow-left"></i>{' '}
+              {this.props.t('returnBack')}
+            </button>
+          </div>
+          {
+            this.state.formData._id &&
+            [
+              PostTypeId.Page,
+              PostTypeId.Blog,
+              PostTypeId.Portfolio,
+              PostTypeId.Service,
+            ].includes(Number(this.state.formData.typeId)) ? (
+              <this.TotalViews />
+            ) : null
+          }
+        </div>
+      </div>
+    );
+  }
+
   TabOptions = () => {
     const isUserSuperAdmin = PermissionUtil.checkPermissionRoleRank(
       this.props.getStateApp.sessionAuth!.user.roleId,
@@ -767,28 +784,7 @@ export default class PagePostAdd extends Component<IPageProps, IPageState> {
     return this.props.getStateApp.isPageLoading ? null : (
       <div className="page-post">
         <div className="row mb-3">
-          <div className="col-md-3">
-            <div className="row">
-              <div className="col-6">
-                <button
-                  className="btn btn-gradient-dark btn-lg btn-icon-text w-100"
-                  onClick={() => this.navigatePage()}
-                >
-                  <i className="mdi mdi-arrow-left"></i>{' '}
-                  {this.props.t('returnBack')}
-                </button>
-              </div>
-              {this.state.formData._id &&
-              [
-                PostTypeId.Page,
-                PostTypeId.Blog,
-                PostTypeId.Portfolio,
-                PostTypeId.Service,
-              ].includes(Number(this.state.formData.typeId)) ? (
-                <this.TotalViews />
-              ) : null}
-            </div>
-          </div>
+          <this.Header />
         </div>
         <div className="row">
           <div className="col-md-12">

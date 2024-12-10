@@ -1,4 +1,6 @@
 {
+  "warningAboutMissingLanguagesWithVariable": "Bu öğe bazı eksik diller içeriyor! Eksik diller şunlardır: '{{missingLanguages}}'",
+  "googleAnalyticURL": "Google Analytic URL",
   "host": "Host",
   "targetEmail": "Hedef Eposta",
   "hasSSL": "SSL Sertifikası Var",

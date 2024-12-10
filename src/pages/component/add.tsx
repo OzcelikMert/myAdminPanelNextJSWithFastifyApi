@@ -3,6 +3,7 @@ import { Tab, Tabs } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { IThemeFormSelectValue } from '@components/elements/form/input/select';
 import {
+  IComponentElementGetResultService,
   IComponentGetResultService,
   IComponentUpdateWithIdParamService,
 } from 'types/services/component.service';
@@ -26,6 +27,7 @@ import { ComponentTypeId, componentTypes } from '@constants/componentTypes';
 import { HandleFormLibrary } from '@library/react/handles/form';
 import { RouteUtil } from '@utils/route.util';
 import ComponentToast from '@components/elements/toast';
+import ComponentThemeToolTipMissingLanguages from '@components/theme/tooltip/missingLanguages';
 
 type IPageState = {
   elementTypes: IThemeFormSelectValue[];
@@ -289,7 +291,28 @@ export default class PageComponentAdd extends Component<
     }
   }
 
-  ComponentElement = (props: IComponentElementModel, index: number) => {
+  Header = () => {
+    return (
+      <div className="col-md-3">
+        <div className="row">
+          <div className="col-6">
+            <button
+              className="btn btn-gradient-dark btn-lg btn-icon-text w-100"
+              onClick={() => this.navigatePage()}
+            >
+              <i className="mdi mdi-arrow-left"></i>{' '}
+              {this.props.t('returnBack')}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  ComponentElement = (
+    props: IComponentElementGetResultService,
+    index: number
+  ) => {
     return (
       <div className={`col-md-12 ${index > 0 ? 'mt-5' : ''}`}>
         <ComponentFieldSet
@@ -313,7 +336,7 @@ export default class PageComponentAdd extends Component<
           }
         >
           <div className="row">
-            <div className="col-md-12">
+            <div className="col-md">
               <ComponentPageComponentElementTypeInput
                 {...this.props}
                 data={props}
@@ -322,13 +345,27 @@ export default class PageComponentAdd extends Component<
                 }
               />
             </div>
+            {
+              <ComponentThemeToolTipMissingLanguages
+                itemLanguages={props.alternates ?? []}
+                contentLanguages={
+                  this.props.getStateApp.appData.contentLanguages
+                }
+                t={this.props.t}
+                div={true}
+                divClass="col-md-1"
+              />
+            }
           </div>
         </ComponentFieldSet>
       </div>
     );
   };
 
-  ComponentElementEdit = (props: IComponentElementModel, index: number) => {
+  ComponentElementEdit = (
+    props: IComponentElementGetResultService,
+    index: number
+  ) => {
     return (
       <div className={`col-md-12 ${index > 0 ? 'mt-5' : ''}`}>
         <ComponentFieldSet legend={this.props.t('newElement')}>
@@ -487,19 +524,7 @@ export default class PageComponentAdd extends Component<
     return this.props.getStateApp.isPageLoading ? null : (
       <div className="page-post">
         <div className="row mb-3">
-          <div className="col-md-3">
-            <div className="row">
-              <div className="col-6">
-                <button
-                  className="btn btn-gradient-dark btn-lg btn-icon-text w-100"
-                  onClick={() => this.navigatePage()}
-                >
-                  <i className="mdi mdi-arrow-left"></i>{' '}
-                  {this.props.t('returnBack')}
-                </button>
-              </div>
-            </div>
-          </div>
+          <this.Header />
         </div>
         <div className="row">
           <div className="col-md-12">

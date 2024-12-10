@@ -20,6 +20,7 @@ import { PostUtil } from '@utils/post.util';
 import { status, StatusId } from '@constants/status';
 import { ImageSourceUtil } from '@utils/imageSource.util';
 import { RouteUtil } from '@utils/route.util';
+import ComponentThemeToolTipMissingLanguages from '@components/theme/tooltip/missingLanguages';
 
 type IPageState = {
   typeId: PostTermTypeId;
@@ -337,6 +338,13 @@ export default class PagePostTermList extends Component<
         cell: (row) => (
           <div className="row w-100">
             <div className="col-md-12">
+              {
+                <ComponentThemeToolTipMissingLanguages
+                  itemLanguages={row.alternates ?? []}
+                  contentLanguages={this.props.getStateApp.appData.contentLanguages}
+                  t={this.props.t}
+                />
+              }
               {row.contents?.title || this.props.t('[noLangAdd]')}
             </div>
           </div>

@@ -14,6 +14,7 @@ import { UserRoleId } from '@constants/userRoles';
 import ComponentThemeBadgeComponentType from '@components/theme/badge/componentType';
 import { ComponentTypeId } from '@constants/componentTypes';
 import { RouteUtil } from '@utils/route.util';
+import ComponentThemeToolTipMissingLanguages from '@components/theme/tooltip/missingLanguages';
 
 type IPageState = {
   searchKey: string;
@@ -149,11 +150,22 @@ export default class PageComponentList extends Component<
       {
         name: this.props.t('title'),
         selector: (row) => row.title,
-        cell: (row) => (
-          <div className="row w-100">
-            <div className="col-md-12">{row.title}</div>
-          </div>
-        ),
+        cell: (row) => {
+          return (
+            <div className="row w-100">
+              <div className="col-md-12">
+                {
+                  <ComponentThemeToolTipMissingLanguages
+                    itemLanguages={row.elements.map(element => element.alternates ?? []) ?? []}
+                    contentLanguages={this.props.getStateApp.appData.contentLanguages}
+                    t={this.props.t}
+                  />
+                }
+                {row.title}
+                </div>
+            </div>
+          )
+        },
         sortable: true,
       },
       PermissionUtil.checkPermissionRoleRank(

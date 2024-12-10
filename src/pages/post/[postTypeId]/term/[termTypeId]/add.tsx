@@ -305,6 +305,27 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
     );
   };
 
+  Header = () => {
+    return (
+      <div className="col-md-3">
+        <div className="row">
+          <div className="col-6">
+            {!this.props.isModal ? (
+              <button
+                className="btn btn-gradient-dark btn-lg btn-icon-text w-100"
+                onClick={() => this.navigatePage()}
+              >
+                <i className="mdi mdi-arrow-left"></i>{' '}
+                {this.props.t('returnBack')}
+              </button>
+            ) : null}
+          </div>
+          <this.TotalViews />
+        </div>
+      </div>
+    );
+  };
+
   TabOptions = () => {
     return (
       <div className="row">
@@ -420,22 +441,7 @@ export default class PagePostTermAdd extends Component<IPageProps, IPageState> {
     return this.props.getStateApp.isPageLoading ? null : (
       <div className="page-post-term">
         <div className="row mb-3">
-          <div className="col-md-3">
-            <div className="row">
-              <div className="col-6">
-                {!this.props.isModal ? (
-                  <button
-                    className="btn btn-gradient-dark btn-lg btn-icon-text w-100"
-                    onClick={() => this.navigatePage()}
-                  >
-                    <i className="mdi mdi-arrow-left"></i>{' '}
-                    {this.props.t('returnBack')}
-                  </button>
-                ) : null}
-              </div>
-              <this.TotalViews />
-            </div>
-          </div>
+          <this.Header />
         </div>
         <div className="row">
           <div className="col-md-12">

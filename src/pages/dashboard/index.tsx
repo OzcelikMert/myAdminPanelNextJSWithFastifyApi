@@ -19,6 +19,9 @@ import { ImageSourceUtil } from '@utils/imageSource.util';
 import { postTypes } from '@constants/postTypes';
 import { RouteUtil } from '@utils/route.util';
 import { PostSortTypeId } from '@constants/postSortTypes';
+import { ISettingGetResultService } from 'types/services/setting.service';
+import { SettingService } from '@services/setting.service';
+import { SettingProjectionKeys } from '@constants/settingProjections';
 
 const WorldMap = dynamic(() => import('react-svg-worldmap'), { ssr: false });
 
@@ -29,6 +32,7 @@ type IPageState = {
     statistics: IViewGetStatisticsResultService;
   };
   worldMapSize: 'lg' | 'xl' | 'xxl';
+  settings: ISettingGetResultService
 };
 
 type IPageProps = {} & IPagePropCommon;
@@ -53,6 +57,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
         },
       },
       worldMapSize: 'lg',
+      settings: {}
     };
   }
 
@@ -60,6 +65,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
     this.setPageTitle();
     await this.getViewNumber();
     await this.getViewStatistics();
+    await this.getSettings();
     await this.getLastPosts();
     this.props.setStateApp(
       {
@@ -116,6 +122,22 @@ class PageDashboard extends Component<IPageProps, IPageState> {
       this.setState((state: IPageState) => {
         state.visitorData.statistics = serviceResult.data!;
         return state;
+      });
+    }
+  }
+
+  async getSettings() {
+    const serviceResult = await SettingService.get(
+      {
+        projection: SettingProjectionKeys.General
+      },
+      this.abortController.signal
+    );
+
+    if(serviceResult.status && serviceResult.data){
+      this.setState((state: IPageState) => {
+          state.settings = serviceResult.data!;
+          return state;
       });
     }
   }
@@ -293,8 +315,7 @@ class PageDashboard extends Component<IPageProps, IPageState> {
                         <a
                           target="_blank"
                           className="text-info fs-6 text-decoration-none"
-                          href="https://analytics.google.com/"
-                          rel="noreferrer"
+                          href={this.state.settings.googleAnalyticURL ?? "javascript:void(0);"}
                         >
                           {this.props.t('clickToSee')}
                         </a>

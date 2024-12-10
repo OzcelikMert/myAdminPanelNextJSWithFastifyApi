@@ -8,7 +8,13 @@ import {
 } from '../models/setting.model';
 import { SettingProjectionKeys } from '@constants/settingProjections';
 
-export type ISettingGetResultService = {} & ISettingModel;
+export interface ISettingSeoContentAlternateService {
+  langId: string;
+}
+
+export type ISettingGetResultService = {
+  seoContentAlternates?: ISettingSeoContentAlternateService[]
+} & ISettingModel;
 
 export type ISettingGetParamService = {
   langId?: string;
