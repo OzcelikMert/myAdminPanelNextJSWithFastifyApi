@@ -50,7 +50,7 @@ export default class ComponentThemeToolTipMissingLanguages extends Component<
 
   Icon = () => {
     return (
-      <i className={`mdi mdi-alert-circle text-warning fs-4 ${this.props.div ? "" : 'pe-1'}`}></i>
+      <i className={`mdi mdi-alert-circle text-warning fs-4`}></i>
     );
   }
 
@@ -59,12 +59,14 @@ export default class ComponentThemeToolTipMissingLanguages extends Component<
       return null;
     }
 
+
+
     return (
       <ComponentToolTip message={this.props.t("warningAboutMissingLanguagesWithVariable").replace("{{missingLanguages}}", this.state.missingLanguages.map(missingLanguage => missingLanguage.locale.toUpperCase()).join(", "))}>
         {
           this.props.div
             ? <div className={`${this.props.divClass}`}><this.Icon /></div>
-            : <this.Icon />
+            : <span><this.Icon />{" "}</span>
         }
       </ComponentToolTip>
     );
